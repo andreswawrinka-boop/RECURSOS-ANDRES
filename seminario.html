@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seminario de Casos Clínicos · Anestesiología</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F6;--bg-2:#F7F9FC;
+  --panel:#FFFFFF;--panel-2:#F3F6FC;--panel-3:#EAF0FA;
+  --line:#E3E9F3;--line-soft:rgba(0,0,0,.08);
+  --text:#000000;--muted:#000000;--dim:#000000;
+  --mint:#10B981;--mint-2:#059669;
+  --amber:#F59E0B;--amber-2:#D97706;
+  --red:#EF4444;--sky:#2563EB;
+  --c1:#4F46E5;--c2:#0EA5A4;--c3:#2563EB;--c4:#9333EA;--c5:#10B981;--c6:#E11D48;
+  --card:#FFFFFF;--border:var(--line);--dark:#000000;
+  --radius:18px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:
+    radial-gradient(1100px 520px at 88% -6%, rgba(79,70,229,.10), transparent 60%),
+    radial-gradient(900px 520px at 6% 2%, rgba(14,165,164,.10), transparent 58%),
+    radial-gradient(800px 500px at 50% 108%, rgba(147,51,234,.08), transparent 60%),
+    var(--bg);
+  background-attachment:fixed;color:#000000;font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
+.container{max-width:1200px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+.cuadros-grid{max-width:1160px;margin:0 auto 24px;display:grid;grid-template-columns:1fr 1.3fr;gap:16px;align-items:stretch;}
+.cuadros-grid > section{margin:0;max-width:none;display:flex;flex-direction:column;}
+.cuadros-grid > section > .estudiantes-box,.cuadros-grid > section > .rubrica-box{flex:1;overflow:visible;}
+.cuadros-grid .rubrica-box{margin-bottom:0;}
+.cuadros-grid .rubrica-table{min-width:0;}
+.cuadros-grid .rubrica-table-wrap{overflow-x:visible;}
+.cuadros-grid .rating-btns{flex-wrap:wrap;}
+@media(max-width:980px){.cuadros-grid{grid-template-columns:1fr;}.cuadros-grid .rubrica-table{min-width:600px;}.cuadros-grid .rubrica-table-wrap{overflow-x:auto;}}
+section{margin-bottom:8px;}
+
+/* ── HEADER ── */
+header{padding:0;text-align:center;}
+.header-inner{background:
+    radial-gradient(700px 320px at 84% -20%, rgba(79,70,229,.14), transparent 60%),
+    radial-gradient(620px 320px at 6% -10%, rgba(14,165,164,.14), transparent 60%),
+    linear-gradient(180deg,#FFFFFF,#F5F8FD);
+  padding:44px 24px 36px;position:relative;overflow:hidden;border-radius:0 0 28px 28px;margin-bottom:14px;border:1px solid var(--line);border-top:none;box-shadow:0 16px 40px rgba(20,27,46,.08);}
+.header-inner::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c4),var(--c5),var(--c6));}
+h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:clamp(28px,5vw,54px);line-height:1;letter-spacing:-1px;margin-bottom:10px;color:#000000;}
+h1 .line2{display:block;background:linear-gradient(90deg,var(--mint),var(--sky),var(--c4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.subtitle{color:#000000;font-size:14px;font-weight:500;margin-bottom:20px;}
+
+/* CRONÓMETRO */
+.crono-general{margin:22px auto 0;max-width:520px;background:var(--panel);border:2px solid var(--mint);border-radius:16px;padding:14px 18px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 26px rgba(16,185,129,.14);}
+.cg-label{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#000000;}
+.cg-time{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;color:#000000;font-variant-numeric:tabular-nums;}
+.cg-time.warning{color:#D97706;}
+.cg-time.danger{color:#DC2626;}
+.cg-bar-wrap{flex:1;height:6px;background:rgba(0,0,0,.08);border-radius:6px;overflow:hidden;}
+.cg-bar{height:100%;background:#10B981;width:100%;transition:width 1s linear,background .3s;}
+.cg-btns{display:flex;gap:6px;}
+.cg-btn{padding:8px 12px;background:#10B981;border:none;border-radius:8px;color:#FFFFFF;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:filter .2s;}
+.cg-btn:hover{filter:brightness(1.05);}
+.cg-btn-reset{background:#E3E9F3;color:#000000;}
+.cg-btn-start.pausado{background:#F59E0B;}
+
+/* SECTION LABEL */
+.section-label{font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:#000000;margin-bottom:14px;display:flex;align-items:center;gap:11px;font-family:'JetBrains Mono',monospace;}
+.section-label::before{content:'';width:8px;height:8px;border-radius:2px;background:var(--mint);box-shadow:0 0 10px var(--mint);flex-shrink:0;}
+.section-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent);}
+
+/* ── FLUJO ── */
+.flujo-turno{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px 6px;margin:0 auto 20px;max-width:1160px;padding:13px 16px;background:var(--panel);border:2px solid var(--mint);border-radius:14px;box-shadow:0 10px 26px rgba(16,185,129,.12);}
+.flujo-step{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:#000000;}
+.flujo-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#10B981;color:#FFFFFF;font-family:'Bricolage Grotesque',sans-serif;font-size:12px;font-weight:800;}
+.flujo-arrow{color:#000000;font-weight:800;}
+.flujo-loop{margin-left:8px;font-size:11px;font-weight:800;color:#EC4899;background:rgba(236,72,153,.10);padding:4px 10px;border-radius:10px;}
+@media(max-width:640px){.flujo-arrow{display:none;}.flujo-turno{gap:9px 16px;}.flujo-step{font-size:11px;}}
+
+/* TURNO + ROBO */
+.turno-robo-row{display:flex;gap:18px;align-items:stretch;flex-wrap:wrap;}
+.turno-col{flex:1 1 320px;min-width:0;display:flex;flex-direction:column;}
+.robo-col{flex:1 1 260px;min-width:0;display:flex;flex-direction:column;}
+.turno-col .section-label,.robo-col .section-label{margin-bottom:12px;}
+.turno-col .sorpresa-box{flex:1;}
+.robo-col .robo-box{flex:1;display:flex;flex-direction:column;justify-content:center;}
+@media(max-width:640px){.turno-robo-row{flex-direction:column;}}
+.robo-box{background:var(--panel);border:2px solid var(--amber);border-radius:var(--radius);padding:14px 16px;box-shadow:0 10px 34px rgba(20,27,46,.10);}
+
+/* ESTUDIANTES */
+.estudiantes-box{background:var(--panel);border:2px solid var(--mint);border-radius:var(--radius);padding:14px 16px;margin-bottom:0;box-shadow:0 10px 34px rgba(20,27,46,.10);}
+.est-title{font-family:'Bricolage Grotesque',sans-serif;font-size:16px;letter-spacing:2px;color:#000000;margin-bottom:2px;}
+.est-sub{font-size:11px;color:#000000;font-weight:500;margin-bottom:9px;line-height:1.35;}
+.est-add-row{display:flex;gap:10px;margin-bottom:14px;}
+.est-input{flex:1;background:rgba(0,0,0,.05);border:2px solid rgba(0,0,0,.11);border-radius:10px;padding:8px 12px;color:#000000;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:500;outline:none;transition:border-color .2s;}
+.est-input::placeholder{color:#000000;opacity:.5;}
+.est-input:focus{border-color:#10B981;}
+.est-add-btn{padding:8px 18px;background:#10B981;border:none;border-radius:10px;color:#FFFFFF;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:800;cursor:pointer;transition:background .2s;white-space:nowrap;}
+.est-add-btn:hover{background:#059669;}
+.est-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;min-height:38px;}
+.est-empty{color:#000000;font-size:12px;padding:6px;font-style:italic;opacity:.7;}
+.est-chip{display:flex;align-items:center;gap:7px;background:rgba(0,0,0,.06);border:2px solid rgba(0,0,0,.10);border-radius:9px;padding:6px 12px;font-size:12px;font-weight:700;color:#000000;transition:background .2s;}
+.est-chip.selected{background:rgba(16,185,129,.25);border-color:#10B981;}
+.est-chip-del{background:none;border:none;color:#000000;cursor:pointer;font-size:14px;padding:0;line-height:1;transition:color .2s;opacity:.5;}
+.est-chip-del:hover{color:#EF4444;opacity:1;}
+.est-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+.est-sorteo-btn{padding:11px 24px;background:linear-gradient(135deg,#10B981,#0E9E86);color:#FFFFFF;border:none;border-radius:12px;font-family:'Bricolage Grotesque',sans-serif;font-size:18px;letter-spacing:2px;cursor:pointer;transition:transform .15s,box-shadow .2s;box-shadow:0 4px 14px rgba(16,185,129,.4);}
+.est-sorteo-btn:hover{transform:scale(1.04);}
+.est-reset-btn{padding:11px 15px;background:rgba(239,68,68,.15);border:2px solid rgba(239,68,68,.35);border-radius:12px;color:#DC2626;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:800;cursor:pointer;transition:background .2s;}
+.est-reset-btn:hover{background:rgba(239,68,68,.30);}
+.est-resultado{background:linear-gradient(135deg,rgba(16,185,129,.15),rgba(37,99,235,.10));border:2px solid #10B981;border-radius:12px;padding:14px 16px;text-align:center;}
+.est-res-label{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#000000;margin-bottom:6px;}
+.est-res-nombre{font-family:'Bricolage Grotesque',sans-serif;font-size:22px;color:#000000;letter-spacing:1px;}
+.est-res-sub{font-size:12px;color:#000000;margin-top:6px;font-weight:500;}
+
+/* RÚBRICA */
+.rubrica-box{background:var(--panel);border:2px solid #2563EB;border-radius:var(--radius);padding:14px 16px;box-shadow:0 10px 34px rgba(20,27,46,.10);}
+.rubrica-title{font-family:'Bricolage Grotesque',sans-serif;font-size:16px;letter-spacing:2px;color:#000000;margin-bottom:2px;}
+.rubrica-sub{font-size:11px;color:#000000;font-weight:500;margin-bottom:12px;line-height:1.35;}
+.rubrica-table-wrap{overflow-x:auto;margin-bottom:10px;}
+.rubrica-table{width:100%;border-collapse:collapse;}
+.rubrica-table th{text-align:left;padding:8px 6px;color:#000000;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;border-bottom:2px solid rgba(0,0,0,.08);}
+.rubrica-table td{padding:10px 6px;border-bottom:1px solid rgba(0,0,0,.06);vertical-align:middle;color:#000000;}
+.student-name-cell{font-weight:800;font-size:13px;}
+.rating-btns{display:flex;gap:6px;align-items:center;}
+.rating-btn{background:rgba(0,0,0,.04);border:2px solid rgba(0,0,0,.10);border-radius:8px;color:#000000;font-family:'JetBrains Mono',monospace;font-weight:800;font-size:12px;cursor:pointer;transition:all .15s;padding:4px 8px;min-width:34px;height:32px;}
+.rating-btn:hover{transform:translateY(-1px);}
+.nota-cell{font-family:'Bricolage Grotesque',sans-serif;font-size:22px;text-align:center;color:#000000;font-weight:700;}
+.rubrica-legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;padding-top:10px;border-top:1px solid rgba(0,0,0,.06);}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:#000000;font-weight:600;}
+.legend-dot{width:10px;height:10px;border-radius:2px;}
+.export-btn{margin-top:10px;padding:9px 16px;background:linear-gradient(135deg,#2563EB,#4F46E5);color:#FFFFFF;border:none;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:800;cursor:pointer;transition:filter .2s;}
+.export-btn:hover{filter:brightness(1.08);}
+
+/* SORPRESA / TURNO */
+.sorpresa-box{background:var(--panel);border:2px solid var(--sky);border-radius:var(--radius);padding:16px;box-shadow:0 10px 34px rgba(20,27,46,.10);}
+.sorpresa-inner{text-align:center;}
+.sorpresa-title{font-family:'Bricolage Grotesque',sans-serif;font-size:18px;letter-spacing:2px;color:#000000;margin-bottom:8px;}
+.sorpresa-sub{font-size:12px;color:#000000;font-weight:500;margin-bottom:14px;}
+.sorpresa-btn{padding:14px 34px;background:linear-gradient(135deg,#2563EB,#4F46E5);color:#FFFFFF;border:none;border-radius:14px;font-family:'Bricolage Grotesque',sans-serif;font-size:22px;letter-spacing:2px;cursor:pointer;transition:transform .15s,box-shadow .2s;box-shadow:0 6px 22px rgba(37,99,235,.4);}
+.sorpresa-btn:hover{transform:scale(1.04);}
+.sorpresa-btn.girando{animation:girar .5s infinite;}
+@keyframes girar{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+.sorpresa-resultado{display:none;}
+.sr-header{margin-bottom:12px;}
+.sr-emoji{font-size:44px;line-height:1;margin-bottom:6px;}
+.sr-nombre{font-family:'Bricolage Grotesque',sans-serif;font-size:20px;color:#000000;letter-spacing:1px;}
+.sr-desc{font-size:12px;color:#000000;font-weight:500;margin-top:4px;}
+.sr-crono-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px;}
+.sr-btn-girar,.sr-btn-ir{padding:10px 18px;border:none;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:800;cursor:pointer;color:#FFFFFF;}
+.sr-btn-girar{background:#2563EB;}
+.sr-btn-ir{background:#10B981;}
+
+/* NUEVO TURNO */
+.nuevo-turno-wrap{text-align:center;margin-bottom:20px;}
+.btn-nuevo-turno{padding:20px 56px;background:linear-gradient(135deg,#0EA5A4,#06B6D4);color:#FFFFFF;border:none;border-radius:20px;font-family:'Bricolage Grotesque',sans-serif;font-size:30px;letter-spacing:3px;cursor:pointer;transition:transform .15s;box-shadow:0 8px 32px rgba(14,165,164,.5);}
+.btn-nuevo-turno:hover{transform:scale(1.04);}
+.btn-nuevo-turno:active{transform:scale(.97);}
+
+/* ROBO */
+.btn-robo{padding:12px 24px;background:linear-gradient(135deg,#EC4899,#DB2777);border:none;border-radius:12px;color:#FFFFFF;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;letter-spacing:1px;cursor:pointer;transition:all .2s;width:100%;box-shadow:0 6px 18px rgba(236,72,153,.35);}
+.btn-robo:hover{filter:brightness(1.08);}
+.robo-selector{display:none;margin-top:12px;background:rgba(0,0,0,.045);border-radius:12px;padding:14px;}
+.robo-selector.visible{display:block;}
+.robo-selector-label{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#000000;margin-bottom:10px;}
+.robo-chips{display:flex;flex-wrap:wrap;gap:8px;}
+.robo-chip{padding:8px 16px;background:#FFFFFF;border:2px solid rgba(0,0,0,.10);border-radius:9px;color:#000000;font-size:13px;font-weight:800;cursor:pointer;transition:all .2s;}
+.robo-chip:hover{background:rgba(245,158,11,.15);border-color:#F59E0B;}
+
+/* BANNER estudiante activo */
+.banner-activo{display:none;position:fixed;top:0;left:0;right:0;z-index:997;background:linear-gradient(90deg,#10B981,#2563EB);color:#FFFFFF;padding:10px 22px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.14);}
+.banner-activo.visible{display:block;}
+.banner-activo-label{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;opacity:.9;}
+.banner-activo-nombre{font-family:'Bricolage Grotesque',sans-serif;font-size:18px;letter-spacing:1px;}
+.banner-activo-ruleta{font-size:12px;font-weight:600;opacity:.9;margin-top:2px;}
+
+/* PANEL FLOTANTE de notas */
+.panel-notas-flotante{position:fixed;top:80px;right:20px;z-index:998;background:#FFFFFF;border:2px solid #10B981;border-radius:16px;padding:14px 16px;box-shadow:0 8px 32px rgba(0,0,0,.14);min-width:220px;max-width:280px;display:none;}
+.panel-notas-flotante.visible{display:block;}
+.pnf-titulo{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#000000;margin-bottom:6px;}
+.pnf-nombre{font-family:'Bricolage Grotesque',sans-serif;font-size:15px;color:#000000;margin-bottom:10px;letter-spacing:.5px;}
+.pnf-botones{display:flex;gap:5px;justify-content:space-between;}
+.pnf-btn{flex:1;padding:8px 0;border:2px solid rgba(0,0,0,.10);background:rgba(0,0,0,.04);border-radius:8px;font-family:'JetBrains Mono',monospace;font-weight:800;font-size:13px;color:#000000;cursor:pointer;transition:all .15s;}
+.pnf-btn:hover{transform:translateY(-1px);}
+.pnf-btn.pnf-1.active{background:#DC2626;color:#FFFFFF;border-color:#DC2626;}
+.pnf-btn.pnf-2.active{background:#EA580C;color:#FFFFFF;border-color:#EA580C;}
+.pnf-btn.pnf-3.active{background:#F59E0B;color:#FFFFFF;border-color:#F59E0B;}
+.pnf-btn.pnf-4.active{background:#3B82F6;color:#FFFFFF;border-color:#3B82F6;}
+.pnf-btn.pnf-5.active{background:#10B981;color:#FFFFFF;border-color:#10B981;}
+.pnf-nota-actual{font-family:'Bricolage Grotesque',sans-serif;font-size:12px;color:#000000;margin-top:8px;text-align:center;}
+.pnf-nota-val{font-size:16px;font-weight:800;}
+.nota-guardada-badge{position:fixed;top:170px;right:24px;z-index:999;background:#10B981;border:2px solid #10B981;border-radius:12px;padding:10px 18px;color:#FFFFFF;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;letter-spacing:1px;pointer-events:none;opacity:0;transition:opacity .2s;}
+.nota-guardada-badge.show{opacity:1;}
+@keyframes notaFlash{0%{transform:scale(1)}30%{transform:scale(1.3)}100%{transform:scale(1)}}
+.nota-flash{animation:notaFlash .35s ease;}
+
+/* ── CASO CLÍNICO CARD ── */
+.caso-launcher-wrap{text-align:center;margin:16px auto 24px;}
+.btn-caso{padding:16px 42px;background:linear-gradient(135deg,#9333EA,#4F46E5);color:#FFFFFF;border:none;border-radius:16px;font-family:'Bricolage Grotesque',sans-serif;font-size:24px;letter-spacing:2px;cursor:pointer;transition:transform .15s;box-shadow:0 6px 24px rgba(147,51,234,.4);margin:0 6px;}
+.btn-caso:hover{transform:scale(1.04);}
+.btn-caso.secundario{background:linear-gradient(135deg,#F59E0B,#D97706);box-shadow:0 6px 24px rgba(245,158,11,.4);}
+
+.caso-container{max-width:1160px;margin:0 auto 40px;display:none;}
+.caso-container.visible{display:block;}
+.caso-card{background:var(--panel);border:2px solid var(--c4);border-radius:20px;padding:24px;box-shadow:0 12px 40px rgba(20,27,46,.10);}
+.caso-header{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:18px;padding-bottom:14px;border-bottom:2px solid rgba(0,0,0,.06);}
+.caso-titulo{font-family:'Bricolage Grotesque',sans-serif;font-size:26px;color:#000000;letter-spacing:1px;}
+.caso-num{display:inline-block;background:#9333EA;color:#FFFFFF;padding:4px 12px;border-radius:8px;font-size:12px;font-weight:800;letter-spacing:2px;margin-right:10px;}
+.caso-esc{font-size:13px;color:#000000;font-weight:500;margin-top:6px;line-height:1.5;}
+
+.paciente-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:20px;position:sticky;top:0;z-index:50;background:var(--panel);padding:12px 0;border-bottom:2px solid rgba(0,0,0,.10);box-shadow:0 8px 16px -10px rgba(0,0,0,.20);}
+.paciente-dato{background:linear-gradient(135deg,#4F46E5,#2563EB);color:#FFFFFF;border-radius:10px;padding:8px 10px;text-align:center;box-shadow:0 3px 10px rgba(37,99,235,.20);}
+.paciente-dato.imc{background:linear-gradient(135deg,#0EA5A4,#059669);}
+.paciente-dato.pi{background:linear-gradient(135deg,#F59E0B,#D97706);}
+.paciente-dato.pm{background:linear-gradient(135deg,#E11D48,#BE185D);}
+.pd-label{font-size:9px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:#FFFFFF;opacity:.95;}
+.pd-val{font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:800;color:#FFFFFF;margin-top:1px;line-height:1.1;}
+.pd-unit{font-size:10px;font-weight:600;color:#FFFFFF;opacity:.9;}
+
+.caso-preguntas-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:20px 0 14px;}
+.caso-preguntas-titulo{font-family:'Bricolage Grotesque',sans-serif;font-size:18px;color:#000000;letter-spacing:1.5px;}
+.btn-sortear5{padding:10px 20px;background:linear-gradient(135deg,#10B981,#059669);color:#FFFFFF;border:none;border-radius:10px;font-family:'Bricolage Grotesque',sans-serif;font-size:15px;letter-spacing:1.5px;cursor:pointer;box-shadow:0 4px 14px rgba(16,185,129,.30);transition:transform .15s;}
+.btn-sortear5:hover{transform:scale(1.04);}
+.btn-mostrar-todas{padding:8px 14px;background:#E3E9F3;color:#000000;border:2px solid rgba(0,0,0,.08);border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;}
+
+.pregunta{background:#F7F9FC;border:2px solid rgba(0,0,0,.08);border-left:5px solid #9333EA;border-radius:12px;padding:14px 16px;margin-bottom:10px;color:#000000;}
+.pregunta.destacada{border-left-color:#10B981;background:linear-gradient(90deg,rgba(16,185,129,.08),#F7F9FC 30%);}
+.p-num{font-family:'Bricolage Grotesque',sans-serif;font-size:15px;color:#9333EA;letter-spacing:1px;margin-bottom:4px;font-weight:700;}
+.pregunta.destacada .p-num{color:#059669;}
+.p-titulo{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:800;color:#000000;margin-bottom:6px;}
+.p-texto{font-size:13px;line-height:1.5;color:#000000;}
+.p-nota{display:inline-block;margin-top:6px;background:#FEF3C7;border-left:3px solid #F59E0B;padding:5px 10px;border-radius:6px;font-size:11px;color:#000000;font-weight:700;}
+.p-puntos{margin-top:10px;padding-top:10px;border-top:1px dashed rgba(0,0,0,.15);display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.p-puntos-label{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#000000;}
+.p-puntos-btns{display:flex;gap:6px;}
+.p-punto-btn{background:#FFFFFF;border:2px solid rgba(0,0,0,.15);border-radius:8px;padding:6px 14px;font-family:'JetBrains Mono',monospace;font-weight:800;font-size:14px;color:#000000;cursor:pointer;transition:all .15s;min-width:48px;}
+.p-punto-btn:hover{transform:translateY(-1px);}
+.p-punto-btn.sel-0{background:#DC2626;color:#FFFFFF;border-color:#DC2626;}
+.p-punto-btn.sel-05{background:#F59E0B;color:#FFFFFF;border-color:#F59E0B;}
+.p-punto-btn.sel-1{background:#10B981;color:#FFFFFF;border-color:#10B981;}
+.p-parcial{margin-left:auto;font-family:'Bricolage Grotesque',sans-serif;font-size:14px;color:#000000;font-weight:700;}
+.nota-turno-live{background:linear-gradient(135deg,#10B981,#059669);color:#FFFFFF;padding:14px 20px;border-radius:14px;text-align:center;margin-top:16px;box-shadow:0 6px 20px rgba(16,185,129,.30);}
+.ntl-label{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;opacity:.9;}
+.ntl-valor{font-family:'Bricolage Grotesque',sans-serif;font-size:34px;letter-spacing:2px;margin-top:4px;}
+.ntl-detalle{font-size:11px;font-weight:600;opacity:.9;margin-top:4px;}
+
+/* Cerrar caso */
+.btn-cerrar-caso{background:#EF4444;color:#FFFFFF;border:none;border-radius:10px;padding:8px 14px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:12px;cursor:pointer;}
+
+.footer{text-align:center;padding:30px 20px;color:#000000;font-size:11px;font-weight:500;opacity:.7;}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <h1><span>SEMINARIO DE</span><span class="line2">CASOS CLÍNICOS</span></h1>
+    <div class="subtitle">Anestesiología · Cálculos, farmacología y toma de decisiones</div>
+  </div>
+</header>
+
+<!-- FLUJO -->
+<div class="flujo-turno">
+  <div class="flujo-step"><span class="flujo-num">1</span> Registra estudiantes</div>
+  <div class="flujo-arrow">→</div>
+  <div class="flujo-step"><span class="flujo-num">2</span> Estudiante al azar</div>
+  <div class="flujo-arrow">→</div>
+  <div class="flujo-step"><span class="flujo-num">3</span> Girar caso clínico</div>
+  <div class="flujo-arrow">→</div>
+  <div class="flujo-step"><span class="flujo-num">4</span> Sortear 5 preguntas</div>
+  <div class="flujo-arrow">→</div>
+  <div class="flujo-step"><span class="flujo-num">5</span> Puntúa 0 / ½ / 1 por pregunta</div>
+  <div class="flujo-loop">↻ nuevo turno (otro estudiante)</div>
+</div>
+
+<!-- CUADROS: ESTUDIANTES + RÚBRICA -->
+<div class="cuadros-grid">
+  <section>
+    <div class="estudiantes-box">
+      <div class="est-title">🎓 Estudiantes de la Sesión</div>
+      <div class="est-sub">Registra a todos los estudiantes al inicio. El botón de sorteo elige uno al azar para responder cada caso.</div>
+      <div class="est-add-row">
+        <input type="text" id="estNombre" placeholder="Nombre completo del estudiante" class="est-input" onkeydown="if(event.key==='Enter')addEstudiante()">
+        <button class="est-add-btn" onclick="addEstudiante()">+ Agregar</button>
+      </div>
+      <div class="est-list" id="estList"><div class="est-empty">Aún no hay estudiantes registrados.</div></div>
+      <div class="est-actions" id="estActions" style="display:none">
+        <button class="est-sorteo-btn" onclick="sortearEstudiante()">🎲 ESTUDIANTE AL AZAR</button>
+        <button class="est-reset-btn" onclick="resetEstudiantes()">✕ Limpiar lista</button>
+      </div>
+      <div class="est-resultado" id="estResultado" style="display:none">
+        <div class="est-res-label">🎯 Estudiante seleccionado</div>
+        <div class="est-res-nombre" id="estResultadoNombre"></div>
+        <div class="est-res-sub" id="estResultadoSub">Ahora presiona 🎲 GIRAR (paso 3) para asignar el caso clínico.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="rubrica-box">
+      <div class="rubrica-title">📋 Nota por Estudiante</div>
+      <div class="rubrica-sub">Cada estudiante tiene <strong>un único turno</strong>. La nota se construye puntuando cada una de las 5 preguntas del caso con 0, 0.5 o 1 (máx 5.0). Un <strong>robo de punto suma +0.3</strong> a la nota del que roba.</div>
+      <div class="rubrica-table-wrap">
+        <table class="rubrica-table">
+          <thead><tr><th>Estudiante</th><th>Turno / Robos</th><th style="text-align:center">Nota /5.0</th></tr></thead>
+          <tbody id="rubricaBody"><tr><td colspan="3" style="text-align:center;color:#000000;font-size:13px;padding:20px;opacity:.6">Los estudiantes aparecen aquí al registrarlos.</td></tr></tbody>
+        </table>
+      </div>
+      <div class="rubrica-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#DC2626"></div>0 pts — Incorrecto</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#F59E0B"></div>0.5 pts — Parcial</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#10B981"></div>1 pt — Correcto y completo</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#EC4899"></div>+0.3 por robo</div>
+      </div>
+      <button class="export-btn" onclick="exportNotas()">📥 Exportar notas como texto</button>
+    </div>
+  </section>
+</div>
+
+<!-- BANNER estudiante activo -->
+<div class="banner-activo" id="bannerActivo">
+  <div class="banner-activo-label">Respondiendo ahora</div>
+  <div class="banner-activo-nombre" id="bannerNombre">—</div>
+  <div class="banner-activo-ruleta" id="bannerRuleta"></div>
+</div>
+
+<!-- PANEL FLOTANTE INFO TURNO -->
+<div class="panel-notas-flotante" id="panelNotasFlotante">
+  <div class="pnf-titulo">Turno actual</div>
+  <div class="pnf-nombre" id="pnfNombre">—</div>
+  <div class="pnf-nota-actual" id="pnfNotaActual"></div>
+</div>
+<div class="nota-guardada-badge" id="notaGuardadaBadge">✓ Nota guardada</div>
+
+<!-- NUEVO TURNO -->
+<div class="nuevo-turno-wrap" id="nuevoTurnoSection" style="display:none">
+  <button class="btn-nuevo-turno" onclick="nuevoTurno()">🎲 NUEVO TURNO · Estudiante al azar</button>
+</div>
+
+<!-- GIRAR CASO + ROBO -->
+<section>
+  <div class="turno-robo-row">
+    <div class="turno-col">
+      <div class="section-label">Girar el Caso Clínico</div>
+      <div class="sorpresa-box">
+        <div class="sorpresa-inner">
+          <div id="sorpresaEstadoInicial">
+            <div class="sorpresa-title">Turno del Estudiante</div>
+            <div class="sorpresa-sub">Sortea un estudiante arriba y presiona para asignar un caso al azar.</div>
+            <button class="sorpresa-btn" onclick="sortearCaso()">🎲 GIRAR</button>
+          </div>
+          <div class="sorpresa-resultado" id="sorpresaResultado" style="display:none">
+            <div class="sr-header">
+              <div class="sr-emoji" id="sorpresaResEmoji">🩺</div>
+              <div class="sr-nombre" id="sorpresaResNombre"></div>
+              <div class="sr-desc" id="sorpresaResDesc"></div>
+            </div>
+            <div class="sr-crono-btns">
+              <button class="sr-btn-girar" onclick="sortearCaso()">🎲 Girar de nuevo</button>
+              <button class="sr-btn-ir" onclick="irACaso()">↗ Abrir caso</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="robo-col">
+      <div class="section-label">Robo de Punto</div>
+      <div class="robo-box">
+        <button class="btn-robo" onclick="toggleRoboSelector()">⚡ ROBO DE PUNTO — Otro estudiante responde</button>
+        <div class="robo-selector" id="roboSelector">
+          <div class="robo-selector-label">¿Quién robó el punto?</div>
+          <div class="robo-chips" id="roboChips"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTENEDOR DEL CASO ACTIVO -->
+<div class="caso-container" id="casoContainer">
+  <div class="caso-card">
+    <div class="caso-header">
+      <div>
+        <div><span class="caso-num" id="casoNumBadge">CASO 0</span></div>
+        <div class="caso-titulo" id="casoTitulo">Caso Clínico</div>
+        <div class="caso-esc" id="casoEscenario"></div>
+      </div>
+      <button class="btn-cerrar-caso" onclick="cerrarCaso()">✕ Cerrar</button>
+    </div>
+
+    <div class="paciente-strip" id="pacienteStrip"></div>
+
+    <div class="caso-preguntas-header">
+      <div class="caso-preguntas-titulo">📋 Preguntas del caso</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn-sortear5" onclick="sortear5Preguntas()">🎲 SORTEAR 5 PREGUNTAS Y COMENZAR</button>
+        <button class="btn-mostrar-todas" onclick="mostrarTodasPreguntas()">Ver las 10 (docente)</button>
+      </div>
+    </div>
+
+    <div id="preguntasContainer"></div>
+  </div>
+</div>
+
+<div class="footer">Seminario de Casos Clínicos · Anestesiología · Uso docente</div>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// ESTUDIANTES
+// ═══════════════════════════════════════════════════════════
+let estudiantes = [];
+let ultimoSorteado = null;
+const EST_COLORS = ['#4F46E5','#0EA5A4','#F59E0B','#9333EA','#10B981','#E11D48','#2563EB','#EA580C','#7C3AED','#0891B2'];
+
+// Baraja sin reemplazo
+const _bags = {};
+function shuffleArr(arr){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function pickFromBag(key, items){
+  if(!items||!items.length) return undefined;
+  if(items.length===1) return items[0];
+  let bag=_bags[key];
+  if(!bag||bag.size!==items.length||bag.queue.length===0){
+    let q=shuffleArr(items.map((_,i)=>i));
+    const prevLast=bag?bag.last:null;
+    if(prevLast!=null&&q.length>1&&q[0]===prevLast){[q[0],q[1]]=[q[1],q[0]];}
+    bag=_bags[key]={size:items.length,queue:q,last:prevLast};
+  }
+  const idx=bag.queue.shift();bag.last=idx;return items[idx];
+}
+function resetBag(key){delete _bags[key];}
+
+function addEstudiante(){
+  const nombre=document.getElementById('estNombre').value.trim();
+  if(!nombre) return;
+  if(estudiantes.includes(nombre)){alert('Ese nombre ya está registrado.');return;}
+  if(estudiantes.length>=25){alert('Máximo 25 estudiantes.');return;}
+  estudiantes.push(nombre);
+  resetBag('students');
+  document.getElementById('estNombre').value='';
+  renderEstudiantes();
+}
+function removeEstudiante(idx){estudiantes.splice(idx,1);resetBag('students');renderEstudiantes();}
+
+function sortearEstudiante(){
+  if(!estudiantes.length) return;
+  // Solo entre los que NO han tenido turno
+  const disponibles=estudiantes.filter(n=>!ratings[n]||!ratings[n].tuvoTurno);
+  if(!disponibles.length){alert('✅ Todos los estudiantes ya tuvieron su turno.\n\nPara reiniciar los turnos, usa "Limpiar lista" o borra y vuelve a agregar estudiantes.');return;}
+  resetGirarBox();
+  // Selección justa entre disponibles
+  const elegido=disponibles[Math.floor(Math.random()*disponibles.length)];
+  document.querySelectorAll('.est-chip').forEach(c=>c.classList.remove('selected'));
+  let count=0;const total=12;
+  const interval=setInterval(()=>{
+    document.querySelectorAll('.est-chip').forEach(c=>c.classList.remove('selected'));
+    const idx=Math.floor(Math.random()*estudiantes.length);
+    document.getElementById('echip'+idx)?.classList.add('selected');
+    count++;
+    if(count>=total){
+      clearInterval(interval);
+      const finalIdx=estudiantes.indexOf(elegido);
+      document.querySelectorAll('.est-chip').forEach(c=>c.classList.remove('selected'));
+      document.getElementById('echip'+finalIdx)?.classList.add('selected');
+      ultimoSorteado=elegido;
+      const res=document.getElementById('estResultado');
+      document.getElementById('estResultadoNombre').textContent=ultimoSorteado;
+      document.getElementById('estResultadoSub').innerHTML='Ahora presiona <strong style="color:#2563EB">🎲 GIRAR</strong> (paso 3) para asignar el caso clínico.';
+      res.style.display='block';
+      res.scrollIntoView({behavior:'smooth',block:'nearest'});
+      renderRubrica();
+      pnfActualizar();
+    }
+  },80);
+}
+
+function renderEstudiantes(){
+  const list=document.getElementById('estList');
+  const actions=document.getElementById('estActions');
+  const resultado=document.getElementById('estResultado');
+  if(!estudiantes.length){
+    list.innerHTML='<div class="est-empty">Aún no hay estudiantes registrados.</div>';
+    actions.style.display='none';
+    resultado.style.display='none';
+    renderRubrica();
+    return;
+  }
+  list.innerHTML=estudiantes.map((n,i)=>{
+    const color=EST_COLORS[i%EST_COLORS.length];
+    const sel=n===ultimoSorteado?'selected':'';
+    return `<div class="est-chip ${sel}" id="echip${i}" style="border-color:${sel?color:'rgba(0,0,0,.10)'}">
+      <span style="color:${color};font-weight:800">${n}</span>
+      <button class="est-chip-del" onclick="removeEstudiante(${i})">✕</button>
+    </div>`;
+  }).join('');
+  actions.style.display='flex';
+  renderRubrica();
+  const nt=document.getElementById('nuevoTurnoSection');
+  if(nt) nt.style.display=estudiantes.length>=1?'block':'none';
+}
+
+function resetEstudiantes(){
+  if(!confirm('¿Limpiar toda la lista de estudiantes?')) return;
+  estudiantes=[];ultimoSorteado=null;ratings={};resetBag('students');
+  renderEstudiantes();
+}
+
+// ═══════════════════════════════════════════════════════════
+// RÚBRICA — UN TURNO POR ESTUDIANTE
+// ratings[nombre] = { tuvoTurno, caso, preguntasIdx:[], puntos:{i:v}, notaTurno, robos:0, notaFinal }
+// nota final = min(5.0, notaTurno + 0.3*robos)
+// ═══════════════════════════════════════════════════════════
+let ratings={};
+
+function ensureRating(nombre){
+  if(!ratings[nombre]) ratings[nombre]={tuvoTurno:false,caso:null,preguntasIdx:[],puntos:{},notaTurno:0,robos:0};
+  return ratings[nombre];
+}
+
+function marcarTurno(nombre,caso,preguntasIdx){
+  const r=ensureRating(nombre);
+  r.tuvoTurno=true;
+  r.caso=caso.num;
+  r.casoTitulo=caso.titulo;
+  r.preguntasIdx=preguntasIdx;
+  r.puntos={};
+  r.notaTurno=0;
+  renderRubrica();
+  pnfActualizar();
+}
+
+function puntuarPregunta(idxPregunta,val){
+  if(!ultimoSorteado){alert('No hay un estudiante activo.');return;}
+  const r=ensureRating(ultimoSorteado);
+  if(!r.tuvoTurno){alert('Este estudiante aún no tiene un caso asignado.');return;}
+  r.puntos[idxPregunta]=val;
+  r.notaTurno=Object.values(r.puntos).reduce((a,b)=>a+b,0);
+  // Actualizar UI de botones
+  const btns=document.querySelectorAll(`[data-preg="${idxPregunta}"] .p-punto-btn`);
+  btns.forEach(b=>b.classList.remove('sel-0','sel-05','sel-1'));
+  const sel=document.querySelector(`[data-preg="${idxPregunta}"] .p-punto-btn[data-val="${val}"]`);
+  if(sel){
+    const cls=val===0?'sel-0':val===0.5?'sel-05':'sel-1';
+    sel.classList.add(cls);
+  }
+  // Actualizar contador visible
+  actualizarNotaTurnoLive();
+  renderRubrica();
+  pnfActualizar();
+  flashNotaGuardada(ultimoSorteado,r.notaTurno+0.3*r.robos);
+}
+
+function actualizarNotaTurnoLive(){
+  const el=document.getElementById('notaTurnoLive');
+  if(!el||!ultimoSorteado) return;
+  const r=ensureRating(ultimoSorteado);
+  const notaBase=r.notaTurno;
+  const bonus=0.3*r.robos;
+  const total=Math.min(5.0,notaBase+bonus);
+  const respondidas=Object.keys(r.puntos).length;
+  el.querySelector('.ntl-valor').textContent=fmt(total,1);
+  el.querySelector('.ntl-detalle').innerHTML=`${respondidas}/5 preguntas · base ${fmt(notaBase,1)} ${bonus>0?`+ bonus robo ${fmt(bonus,1)}`:''}`;
+}
+
+function notaFinal(nombre){
+  const r=ratings[nombre];
+  if(!r||!r.tuvoTurno) return null;
+  return Math.min(5.0,r.notaTurno+0.3*r.robos);
+}
+function notaColor(n){if(n===null||n===undefined) return '#000000';const v=parseFloat(n);return v>=4.5?'#10B981':v>=3.5?'#3B82F6':v>=3?'#F59E0B':v>=2?'#EA580C':'#DC2626';}
+
+function renderRubrica(){
+  const tb=document.getElementById('rubricaBody');
+  if(!estudiantes.length){
+    tb.innerHTML='<tr><td colspan="3" style="text-align:center;color:#000000;font-size:13px;padding:20px;opacity:.6">Los estudiantes aparecen aquí al registrarlos.</td></tr>';return;
+  }
+  tb.innerHTML=estudiantes.map((n,i)=>{
+    const color=EST_COLORS[i%EST_COLORS.length];
+    const r=ratings[n];
+    const nota=notaFinal(n);
+    let detalle='';
+    if(r&&r.tuvoTurno){
+      const respondidas=Object.keys(r.puntos).length;
+      const puntos=Object.values(r.puntos);
+      detalle+=`<div style="font-size:10px;color:#000000;margin-top:3px;font-weight:600;opacity:.75">Caso ${r.caso} · ${respondidas}/5 preg · base ${fmt(r.notaTurno,1)}</div>`;
+      if(puntos.length) detalle+=`<div style="font-size:10px;color:#000000;font-weight:700;opacity:.6">Puntos: ${puntos.map(p=>p===0?'0':p===0.5?'½':'1').join(' · ')}</div>`;
+      if(r.robos>0) detalle+=`<div style="font-size:10px;color:#EC4899;margin-top:2px;font-weight:800">⚡ ${r.robos} robo${r.robos>1?'s':''} = +${fmt(0.3*r.robos,1)}</div>`;
+    } else if(r&&r.robos>0){
+      detalle+=`<div style="font-size:10px;color:#EC4899;margin-top:2px;font-weight:800">⚡ ${r.robos} robo${r.robos>1?'s':''} = +${fmt(0.3*r.robos,1)} (sin turno propio)</div>`;
+    } else {
+      detalle+=`<div style="font-size:10px;color:#000000;margin-top:3px;font-weight:600;opacity:.5;font-style:italic">Sin turno aún</div>`;
+    }
+    const active=n===ultimoSorteado?`style="background:rgba(16,185,129,.08)"`:'';
+    const notaMostrar=nota!==null?fmt(nota,1):(r&&r.robos>0?fmt(Math.min(5.0,0.3*r.robos),1):'—');
+    return `<tr ${active}>
+      <td><span class="student-name-cell" style="color:${color}">${n}</span>${detalle}</td>
+      <td style="font-size:11px;color:#000000;font-weight:600">${r&&r.tuvoTurno?`Caso ${r.caso}`:'—'}</td>
+      <td class="nota-cell" style="color:${notaColor(nota||(r&&r.robos>0?0.3*r.robos:null))}">${notaMostrar}</td>
+    </tr>`;
+  }).join('');
+}
+
+function exportNotas(){
+  if(!estudiantes.length){alert('No hay estudiantes registrados.');return;}
+  const lines=['NOTAS SEMINARIO CASOS CLÍNICOS — ANESTESIOLOGÍA','='.repeat(52),''];
+  estudiantes.forEach(n=>{
+    const r=ratings[n];
+    const nota=notaFinal(n);
+    lines.push(n);
+    if(r&&r.tuvoTurno){
+      lines.push(`  Caso ${r.caso}: ${r.casoTitulo||''}`);
+      const puntos=Object.entries(r.puntos).map(([k,v])=>`P${parseInt(k)+1}=${v}`).join('  ');
+      lines.push(`  Puntuación por pregunta: ${puntos}`);
+      lines.push(`  Nota base (suma preguntas): ${fmt(r.notaTurno,1)}/5.0`);
+      if(r.robos>0) lines.push(`  Bonus por robos: +${fmt(0.3*r.robos,1)} (${r.robos} robo${r.robos>1?'s':''})`);
+      lines.push(`  NOTA FINAL: ${fmt(nota,1)}/5.0`);
+    } else if(r&&r.robos>0){
+      lines.push(`  Sin turno propio`);
+      lines.push(`  Bonus por robos: +${fmt(0.3*r.robos,1)} (${r.robos} robo${r.robos>1?'s':''})`);
+      lines.push(`  NOTA FINAL: ${fmt(Math.min(5.0,0.3*r.robos),1)}/5.0`);
+    } else lines.push(`  Sin calificar`);
+    lines.push('');
+  });
+  const blob=new Blob([lines.join('\n')],{type:'text/plain'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='notas_seminario_casos.txt';a.click();
+}
+
+// Inicializar
+renderEstudiantes();
+
+// ═══════════════════════════════════════════════════════════
+// BANNER + ROBO + PANEL FLOTANTE
+// ═══════════════════════════════════════════════════════════
+function mostrarBanner(nombre,titulo){
+  const banner=document.getElementById('bannerActivo');if(!banner) return;
+  document.getElementById('bannerNombre').textContent=nombre;
+  document.getElementById('bannerRuleta').textContent=titulo||'';
+  banner.classList.add('visible');pnfActualizar();
+}
+function ocultarBanner(){document.getElementById('bannerActivo')?.classList.remove('visible');}
+
+function toggleRoboSelector(){
+  const sel=document.getElementById('roboSelector');if(!sel) return;
+  const visible=sel.classList.contains('visible');
+  if(!visible){
+    const chips=document.getElementById('roboChips');
+    if(chips){
+      chips.innerHTML=estudiantes.filter(n=>n!==ultimoSorteado).map(n=>{
+        const color=EST_COLORS[estudiantes.indexOf(n)%EST_COLORS.length];
+        return `<div class="robo-chip" style="border-color:${color};color:${color}" onclick="registrarRobo('${n.replace(/'/g,"\\'")}')">${n}</div>`;
+      }).join('');
+    }
+  }
+  sel.classList.toggle('visible');
+}
+function registrarRobo(nombre){
+  // NO cambia ultimoSorteado. Suma +0.3 al estudiante que roba.
+  const r=ensureRating(nombre);
+  r.robos=(r.robos||0)+1;
+  renderRubrica();
+  document.querySelector('.rubrica-box')?.scrollIntoView({behavior:'smooth',block:'nearest'});
+  document.getElementById('roboSelector')?.classList.remove('visible');
+  const badge=document.getElementById('notaGuardadaBadge');
+  if(badge){
+    const total=Math.min(5.0,(r.notaTurno||0)+0.3*r.robos);
+    badge.textContent=`⚡ Robo: ${nombre.split(' ')[0]} +0.3 → ${fmt(total,1)}/5.0`;
+    badge.classList.add('show');
+    setTimeout(()=>badge.classList.remove('show'),2800);
+  }
+  pnfActualizar();
+}
+
+function pnfActualizar(){
+  const panel=document.getElementById('panelNotasFlotante');
+  const pnfNombre=document.getElementById('pnfNombre');
+  const pnfNotaActual=document.getElementById('pnfNotaActual');
+  if(!panel) return;
+  if(!ultimoSorteado||!estudiantes.length){panel.classList.remove('visible');return;}
+  panel.classList.add('visible');
+  pnfNombre.textContent=ultimoSorteado;
+  const r=ratings[ultimoSorteado];
+  if(r&&r.tuvoTurno){
+    const nota=notaFinal(ultimoSorteado);
+    const respondidas=Object.keys(r.puntos).length;
+    const color=notaColor(nota);
+    const bonus=0.3*r.robos;
+    pnfNotaActual.innerHTML=`Caso ${r.caso} · ${respondidas}/5 preguntas<br>Nota: <span class="pnf-nota-val" style="color:${color}">${fmt(nota,1)}/5.0</span>${bonus>0?` <span style="color:#EC4899;font-weight:800">(+${fmt(bonus,1)})</span>`:''}`;
+  } else {
+    pnfNotaActual.textContent='Pulsa 🎲 GIRAR y luego sortea 5 preguntas.';
+  }
+}
+
+function flashNotaGuardada(nombre,nota){
+  const badge=document.getElementById('notaGuardadaBadge');
+  if(badge){badge.textContent=`✓ ${nombre.split(' ')[0]}: ${fmt(nota,1)}/5.0`;badge.classList.add('show');setTimeout(()=>badge.classList.remove('show'),1800);}
+}
+
+function nuevoTurno(){
+  if(!estudiantes.length){alert('Registra estudiantes primero.');return;}
+  sortearEstudiante();
+}
+
+// ═══════════════════════════════════════════════════════════
+// CÁLCULOS DE PACIENTE
+// ═══════════════════════════════════════════════════════════
+function calcIMC(peso,talla_cm){return (peso/((talla_cm/100)**2));}
+// Devine (peso ideal)
+function pesoIdeal(sexo,talla_cm){
+  const inches_sobre_60=Math.max(0,(talla_cm-152.4)/2.54);
+  return sexo==='M' ? 50+2.3*inches_sobre_60 : 45.5+2.3*inches_sobre_60;
+}
+// Janmahasatian (peso magro)
+function pesoMagro(sexo,peso,talla_cm){
+  const imc=calcIMC(peso,talla_cm);
+  return sexo==='M' ? (9270*peso)/(6680+216*imc) : (9270*peso)/(8780+244*imc);
+}
+function fmt(n,dec){return Number(n).toFixed(dec==null?1:dec);}
+
+// ═══════════════════════════════════════════════════════════
+// 20 CASOS CLÍNICOS
+// Cada caso: sexo, edad, peso, talla, esc (escenario), pediatrico
+// Parámetros específicos de las 10 preguntas
+// ═══════════════════════════════════════════════════════════
+const CASOS = [
+  {num:1, titulo:'Colecistectomía laparoscópica programada', esc:'Paciente que ingresa para colecistectomía laparoscópica electiva. Sin antecedentes de importancia. Ayuno cumplido.', sexo:'M', edad:38, peso:78, talla:172, pediatrico:false,
+    predictores:'Evalúa: Mallampati, distancia tiromentoniana, apertura oral, movilidad cervical, protrusión mandibular, distancia interincisiva, LEMON, cuello corto/circunferencia, historia de intubación difícil previa, obesidad, barba, dentición.',
+    inductor:'PROPOFOL', induc_dosis_mgkg:'1.5–2.5 mg/kg', induc_peso:'PESO MAGRO (obesos) / peso real (normopeso)',
+    rnm:'ROCURONIO', rnm_dosis_mgkg:'0.6 mg/kg (intubación estándar) / 1.2 mg/kg (secuencia rápida)', rnm_peso:'PESO IDEAL',
+    mantenimiento:'REMIFENTANILO', mant_dosis:'0.1–0.25 mcg/kg/min', mant_peso:'PESO MAGRO',
+    vasopresor:'NOREPINEFRINA', vaso_dosis:'0.05–0.3 mcg/kg/min', vaso_peso:'PESO REAL',
+    dosis_max:'LIDOCAÍNA SIN EPINEFRINA', dosis_max_valor:'4.5 mg/kg (máx 300 mg)', dosis_max_peso:'PESO IDEAL/MAGRO en obeso',
+    mecanismo:'ANESTÉSICOS LOCALES: bloqueo canal de sodio voltaje-dependiente en su forma inactivada, impide despolarización del axón, forma no ionizada atraviesa membrana, forma catiónica se une al receptor intracelular.', mecanismo_farmaco:'ANESTÉSICOS LOCALES',
+    reversor:'SUGAMMADEX', reversor_dosis:'2 mg/kg (T2) / 4 mg/kg (PTC 1–2) / 16 mg/kg (reversión inmediata)', reversor_peso:'PESO REAL'},
+
+  {num:2, titulo:'Cesárea de urgencia por sufrimiento fetal', esc:'Gestante a término que ingresa a sala para cesárea urgente. Refiere última comida hace 2 horas. Signos vitales estables.', sexo:'F', edad:28, peso:82, talla:162, pediatrico:false,
+    predictores:'En la embarazada considera además: edema faríngeo/laríngeo, ingurgitación mucosa, aumento de mama, disminución de CRF, estómago lleno funcional. Evalúa Mallampati (aumenta 1 grado en embarazo), distancia tiromentoniana, apertura oral, protrusión mandibular.',
+    inductor:'KETAMINA', induc_dosis_mgkg:'1–2 mg/kg IV', induc_peso:'PESO REAL',
+    rnm:'SUCCINILCOLINA', rnm_dosis_mgkg:'1–1.5 mg/kg (secuencia rápida)', rnm_peso:'PESO REAL',
+    mantenimiento:'PROPOFOL', mant_dosis:'75–150 mcg/kg/min (tras extracción fetal)', mant_peso:'PESO MAGRO',
+    vasopresor:'FENILEFRINA', vaso_dosis:'25–100 mcg/min en infusión / bolo 50–100 mcg', vaso_peso:'PESO REAL',
+    dosis_max:'BUPIVACAÍNA HIPERBÁRICA INTRATECAL', dosis_max_valor:'10–12 mg dosis única (no aplica mg/kg en subaracnoidea)', dosis_max_peso:'N/A (dosis fija espinal)',
+    mecanismo:'HIPNÓTICOS (KETAMINA): antagonismo no competitivo del receptor NMDA del glutamato, disociación tálamo-cortical, efecto analgésico agregado por interacción con receptores opioides y monoaminérgicos.', mecanismo_farmaco:'HIPNÓTICOS (KETAMINA)',
+    reversor:'NALOXONA', reversor_dosis:'0.04–0.4 mg IV bolo (titular)', reversor_peso:'PESO REAL'},
+
+  {num:3, titulo:'Apendicectomía en niño escolar', esc:'Paciente pediátrico programado para apendicectomía abierta de urgencia. Sin antecedentes, sin alergias conocidas.', sexo:'M', edad:7, peso:23, talla:121, pediatrico:true,
+    predictores:'Predictores pediátricos: micrognatia, cuello corto, macroglosia, síndromes craneofaciales, adenoides hipertróficas, dientes flojos, obesidad. Considera anatomía: laringe alta (C3–C4), epiglotis en omega, occipucio prominente.',
+    inductor:'TIOPENTAL', induc_dosis_mgkg:'4–6 mg/kg IV', induc_peso:'PESO REAL',
+    rnm:'ROCURONIO', rnm_dosis_mgkg:'0.6 mg/kg (0.9 mg/kg en secuencia rápida pediátrica)', rnm_peso:'PESO REAL',
+    mantenimiento:'REMIFENTANILO', mant_dosis:'0.1–0.3 mcg/kg/min', mant_peso:'PESO REAL',
+    vasopresor:'EFEDRINA', vaso_dosis:'0.1–0.3 mg/kg bolo IV', vaso_peso:'PESO REAL',
+    dosis_max:'LIDOCAÍNA SIN EPINEFRINA', dosis_max_valor:'3–5 mg/kg (pediátrico prudente 3 mg/kg)', dosis_max_peso:'PESO REAL',
+    mecanismo:'OPIOIDES: agonistas del receptor mu (analgesia, depresión respiratoria, bradicardia, miosis, tolerancia), acoplamiento a proteína Gi, cierre de canales de Ca voltaje-dependientes presinápticos y apertura de canales de K, hiperpolarización neuronal.', mecanismo_farmaco:'OPIOIDES',
+    reversor:'NEOSTIGMINA + ATROPINA', reversor_dosis:'Neostigmina 0.04–0.07 mg/kg + atropina 0.02 mg/kg', reversor_peso:'PESO REAL'},
+
+  {num:4, titulo:'By-pass gástrico en obesidad mórbida', esc:'Paciente programado para by-pass gástrico laparoscópico. IMC en rango obesidad mórbida. SAHOS conocido, HTA controlada.', sexo:'F', edad:44, peso:132, talla:158, pediatrico:false,
+    predictores:'ALTA sospecha de vía aérea difícil: cuello corto y grueso, circunferencia cervical >40 cm, Mallampati III–IV, distancia tiromentoniana corta, apertura oral limitada, SAHOS (STOP-BANG). Preparar plan A, B, C con dispositivos supraglóticos y videolaringoscopio.',
+    inductor:'PROPOFOL', induc_dosis_mgkg:'1.5–2 mg/kg', induc_peso:'PESO MAGRO (inducción)',
+    rnm:'ROCURONIO', rnm_dosis_mgkg:'0.6–1.2 mg/kg', rnm_peso:'PESO IDEAL (no real, riesgo sobredosis y bloqueo prolongado)',
+    mantenimiento:'DEXMEDETOMIDINA', mant_dosis:'0.2–0.7 mcg/kg/h', mant_peso:'PESO IDEAL',
+    vasopresor:'NOREPINEFRINA', vaso_dosis:'0.05–0.3 mcg/kg/min', vaso_peso:'PESO REAL',
+    dosis_max:'LIDOCAÍNA CON EPINEFRINA', dosis_max_valor:'7 mg/kg (máx 500 mg)', dosis_max_peso:'PESO IDEAL en obeso mórbido',
+    mecanismo:'HIPNÓTICOS (PROPOFOL): agonista GABA-A, potencia la corriente de cloro inhibitoria, hiperpolarización postsináptica. Vd elevado, aclaramiento hepático y extrahepático rápido.', mecanismo_farmaco:'HIPNÓTICOS (PROPOFOL)',
+    reversor:'SUGAMMADEX', reversor_dosis:'2 mg/kg (T2) / 4 mg/kg (PTC 1–2) / 16 mg/kg (inmediata)', reversor_peso:'PESO REAL (evidencia sugammadex)'},
+
+  {num:5, titulo:'Reducción abierta de fractura de cadera en adulto mayor', esc:'Paciente anciano que sufre caída y fractura de cadera. Antecedentes: HTA, fibrilación auricular anticoagulada, deterioro cognitivo leve.', sexo:'F', edad:82, peso:54, talla:158, pediatrico:false,
+    predictores:'En el anciano: fragilidad de dentición, artritis de columna cervical, disminución de apertura oral, atrofia mandibular, edéntula (facilita ventilación pero dificulta sello con máscara). Evaluar movilidad cervical con precaución.',
+    inductor:'ETOMIDATO', induc_dosis_mgkg:'0.2–0.3 mg/kg (0.15 en frágiles)', induc_peso:'PESO REAL',
+    rnm:'CISATRACURIO', rnm_dosis_mgkg:'0.15–0.2 mg/kg', rnm_peso:'PESO REAL (independiente de función hepatorrenal)',
+    mantenimiento:'REMIFENTANILO', mant_dosis:'0.05–0.15 mcg/kg/min (dosis reducida en anciano)', mant_peso:'PESO MAGRO',
+    vasopresor:'NOREPINEFRINA', vaso_dosis:'0.03–0.2 mcg/kg/min (iniciar bajo)', vaso_peso:'PESO REAL',
+    dosis_max:'LIDOCAÍNA SIN EPINEFRINA', dosis_max_valor:'4.5 mg/kg (reducir 30–40% en anciano)', dosis_max_peso:'PESO REAL',
+    mecanismo:'RELAJANTES NEUROMUSCULARES NO DESPOLARIZANTES: antagonismo competitivo del receptor nicotínico postsináptico en la placa motora, impiden apertura del canal iónico, bloqueo por competencia con acetilcolina, reversible.', mecanismo_farmaco:'RELAJANTES NEUROMUSCULARES NO DESPOLARIZANTES',
+    reversor:'SUGAMMADEX', reversor_dosis:'2 mg/kg (T2) / 4 mg/kg (PTC 1–2)', reversor_peso:'PESO REAL'},
+
+  {num:6, titulo:'Amigdalectomía en preescolar', esc:'Paciente pediátrico con hipertrofia adenoamigdalina y ronquido nocturno programado para amigdalectomía. Padres refieren episodios de apnea.', sexo:'F', edad:5, peso:18, talla:109, pediatrico:true,
+    predictores:'SAHOS pediátrico: hipertrofia amigdalar (grado III–IV), respirador bucal, retrognatia, obesidad, síndromes. Riesgo alto de obstrucción posinducción. Requiere manejo cuidadoso de opioides por sensibilidad aumentada al depresor respiratorio.',
+    inductor:'PROPOFOL', induc_dosis_mgkg:'2.5–3.5 mg/kg IV (dosis pediátrica mayor)', induc_peso:'PESO REAL',
+    rnm:'ROCURONIO', rnm_dosis_mgkg:'0.6 mg/kg', rnm_peso:'PESO REAL',
+    mantenimiento:'REMIFENTANILO', mant_dosis:'0.05–0.2 mcg/kg/min (bajo por SAHOS)', mant_peso:'PESO REAL',
+    vasopresor:'EFEDRINA', vaso_dosis:'0.1–0.2 mg/kg bolo', vaso_peso:'PESO REAL',
+    dosis_max:'LIDOCAÍNA CON EPINEFRINA', dosis_max_valor:'7 mg/kg (máx pediátrico prudente 5 mg/kg)', dosis_max_peso:'PESO REAL',
+    mecanismo:'RELAJANTES NEUROMUSCULARES DESPOLARIZANTES (SUCCINILCOLINA): agonista del receptor nicotínico, produce despolarización sostenida por resistencia a colinesterasas, bloqueo fase I por inactivación de canales de sodio, fase II con uso prolongado.', mecanismo_farmaco:'RELAJANTES NEUROMUSCULARES DESPOLARIZANTES (SUCCINILCOLINA)',
+    reversor:'SUGAMMADEX', reversor_dosis:'2 mg/kg (T2) — pediátrico >2 años', reversor_peso:'PESO REAL'},
+
+  {num:7, titulo:'Tiroidectomía total en paciente con bocio', esc:'Paciente para tiroidectomía total por bocio multinodular. Eufunción tiroidea. Bocio grande con desplazamiento traqueal visible en imagen.', sexo:'F', edad:52, peso:68, talla:160, pediatrico:false,
+    predictores:'Bocio: desviación/compresión traqueal, retrosternalidad, obstrucción variable. Solicitar TC de cuello y curva flujo-volumen. Considerar intubación despierta con fibroscopio si compromiso severo, tener disponibles TET de menor diámetro y broncoscopio rígido.',
+    inductor:'PROPOFOL', induc_dosis_mgkg:'1.5–2 mg/kg', induc_peso:'PESO MAGRO',
+    rnm:'ROCURONIO', rnm_dosis_mgkg:'0.6 mg/kg (evitar bloqueo si NIM del recurrente)', rnm_peso:'PESO IDEAL',
+    mantenimiento:'REMIFENTANILO', mant_dosis:'0.1–0.25 mcg/kg/min', mant_peso:'PESO MAGRO',
+    vasopresor:'NOREPINEFRINA', vaso_dosis:'0.05–0.2 mcg/kg/min', vaso_peso:'PESO REAL',
+    dosis_max:'LIDOCAÍNA SIN EPINEFRINA', dosis_max_valor:'4.5 mg/kg (máx 300 mg)', dosis_max_peso:'PESO REAL',
+    mecanismo:'ANESTÉSICOS LOCALES TIPO AMIDA (LIDOCAÍNA): bloqueo canal Na+ voltaje-dependiente estado inactivado, uso-dependencia, metabolismo hepático por CYP1A2/3A4. Cardiotoxicidad y neurotoxicidad relacionadas con Cp libre.', mecanismo_farmaco:'ANESTÉSICOS LOCALES TIPO AMIDA (LIDOCAÍNA)',
+    reversor:'SUGAMMADEX', reversor_dosis:'2 mg/kg (T2)', reversor_peso:'PESO REAL'},
+
+  {num:8, titulo:'Craneotomía por tumor supratentorial', esc:'Paciente con glioma frontal derecho programado para resección. Cefalea, sin déficit motor, sin signos de HIC severa.', sexo:'M', edad:56, peso:80, talla:175, pediatrico:false,
+    predictores:'Considerar: fijación en Mayfield que limita acceso posterior a vía aérea, posición y cabeza girada, posible ventilación prolongada. Vía aérea normal habitual, pero planificar extubación cuidadosa (evitar tos y HTA).',
+    inductor:'PROPOFOL', induc_dosis_mgkg:'1.5–2 mg/kg', induc_peso:'PESO MAGRO',
+    rnm:'ROCURONIO', rnm_dosis_mgkg:'0.6 mg/kg', rnm_peso:'PESO IDEAL',
+    mantenimiento:'PROPOFOL', mant_dosis:'100–200 mcg/kg/min (TIVA para neurocirugía)', mant_peso:'PESO MAGRO',
+    vasopresor:'NOREPINEFRINA', vaso_dosis:'0.05–0.3 mcg/kg/min (mantener PPC)', vaso_peso:'PESO REAL',
+    dosis_max:'LIDOCAÍNA SIN EPINEFRINA', dosis_max_valor:'4.5 mg/kg (bolo 1–1.5 mg/kg para atenuar respuesta a laringoscopia)', dosis_max_peso:'PESO IDEAL',
+    mecanismo:'OPIOIDES (REMIFENTANILO): agonista mu potente, éster metabolizado por esterasas plasmáticas y tisulares no específicas, aclaramiento independiente de función hepática y renal, vida media contexto-sensible constante ~3–4 min.', mecanismo_farmaco:'OPIOIDES (REMIFENTANILO)',
+    reversor:'SUGAMMADEX', reversor_dosis:'2 mg/kg (T2) / 4 mg/kg (PTC 1–2)', reversor_peso:'PESO REAL'},
+
+  {num:9, titulo:'RTU de próstata en paciente cardiópata', esc:'Paciente para RTU de próstata. Antecedentes: cardiopatía isquémica con stent hace 2 años, HTA, DM2, en tratamiento con clopidogrel suspendido hace 7 días.', sexo:'M', edad:73, peso:88, talla:170, pediatrico:false,
+    predictores:'Vía aérea del anciano: barba, artrosis cervical, edentulismo. Evaluar Mallampati, DTM, apertura, protrusión. Frecuentemente RTU se hace bajo anestesia raquídea → si aparece VAD, evaluar plan de rescate.',
+    inductor:'ETOMIDATO', induc_dosis_mgkg:'0.2–0.3 mg/kg (estabilidad hemodinámica)', induc_peso:'PESO REAL',
+    rnm:'ROCURONIO', rnm_dosis_mgkg:'0.6 mg/kg', rnm_peso:'PESO IDEAL',
+    mantenimiento:'REMIFENTANILO', mant_dosis:'0.05–0.15 mcg/kg/min', mant_peso:'PESO MAGRO',
+    vasopresor:'FENILEFRINA', vaso_dosis:'25–100 mcg/min en infusión / bolo 50–200 mcg', vaso_peso:'PESO REAL',
+    dosis_max:'BUPIVACAÍNA HIPERBÁRICA INTRATECAL', dosis_max_valor:'7.5–12 mg (dosis fija espinal)', dosis_max_peso:'N/A dosis fija',
+    mecanismo:'HIPNÓTICOS (ETOMIDATO): agonista GABA-A, alta estabilidad cardiovascular, inhibe 11-beta-hidroxilasa suprarrenal (supresión cortisol dosis dependiente incluso con bolo único).', mecanismo_farmaco:'HIPNÓTICOS (ETOMIDATO)',
+    reversor:'SUGAMMADEX', reversor_dosis:'2 mg/kg (T2) — preferido en cardiópata (evitar taquicardia por atropina)', reversor_peso:'PESO REAL'},
+
+  {num:10, titulo:'Hernioplastia inguinal ambulatoria', esc:'Paciente joven, sano, programado para hernioplastia inguinal ambulatoria. Sin antecedentes. Espera alta el mismo día.', sexo:'M', edad:32, peso:72, talla:178, pediatrico:false,
+    predictores:'Vía aérea sin predictores. Evaluar de rutina Mallampati, DTM, apertura oral, movilidad cervical, protrusión mandibular. Considera plan de anestesia locorregional (ilioinguinal-iliohipogástrico o TAP) para minimizar opioides y facilitar alta.',
+    inductor:'PROPOFOL', induc_dosis_mgkg:'2–2.5 mg/kg', induc_peso:'PESO REAL (normopeso)',
+    rnm:'ROCURONIO', rnm_dosis_mgkg:'0.6 mg/kg', rnm_peso:'PESO REAL',
+    mantenimiento:'REMIFENTANILO', mant_dosis:'0.1–0.25 mcg/kg/min', mant_peso:'PESO MAGRO',
+    vasopresor:'EFEDRINA', vaso_dosis:'5–10 mg IV bolo', vaso_peso:'PESO REAL',
+    dosis_max:'IBUPROFENO', dosis_max_valor:'400–600 mg VO cada 6–8h (máx 2400 mg/día adulto)', dosis_max_peso:'PESO REAL (dosis por peso 10 mg/kg pediátrico)',
+    mecanismo:'AINES (IBUPROFENO): inhibición no selectiva de COX-1 y COX-2, reducción de síntesis de prostaglandinas, efecto analgésico, antiinflamatorio y antipirético.', mecanismo_farmaco:'AINES (IBUPROFENO)',
+    reversor:'SUGAMMADEX', reversor_dosis:'2 mg/kg (T2)', reversor_peso:'PESO REAL'},
+
+  {num:11, titulo:'Cirugía correctora de estrabismo en lactante', esc:'Lactante mayor programado para corrección de estrabismo. Sin antecedentes patológicos.', sexo:'M', edad:2, peso:12, talla:87, pediatrico:true,
+    predictores:'Predictores pediátricos + reflejo oculocardíaco (tracción de músculos extraoculares → bradicardia). Vía aérea pequeña, laringe alta, occipucio prominente, epiglotis larga en omega.',
+    inductor:'PROPOFOL', induc_dosis_mgkg:'3–4 mg/kg IV (mayor en lactante)', induc_peso:'PESO REAL',
+    rnm:'ROCURONIO', rnm_dosis_mgkg:'0.3–0.6 mg/kg (evitar succinilcolina por riesgo hipertermia maligna en estrabismo)', rnm_peso:'PESO REAL',
+    mantenimiento:'REMIFENTANILO', mant_dosis:'0.05–0.15 mcg/kg/min', mant_peso:'PESO REAL',
+    vasopresor:'ATROPINA (para reflejo oculocardíaco)', vaso_dosis:'0.02 mg/kg IV', vaso_peso:'PESO REAL',
+    dosis_max:'LIDOCAÍNA SIN EPINEFRINA', dosis_max_valor:'3–4 mg/kg (pediátrico)', dosis_max_peso:'PESO REAL',
+    mecanismo:'OPIOIDES (FENTANILO): agonista mu, alta liposolubilidad, inicio rápido, redistribución. Metabolismo hepático CYP3A4. Riesgo depresión respiratoria dosis-dependiente y rigidez torácica con bolos rápidos.', mecanismo_farmaco:'OPIOIDES (FENTANILO)',
+    reversor:'NEOSTIGMINA + ATROPINA', reversor_dosis:'Neostigmina 0.04–0.07 mg/kg + atropina 0.02 mg/kg', reversor_peso:'PESO REAL'},
+
+  {num:12, titulo:'Toracotomía por tumor pulmonar', esc:'Paciente para lobectomía por adenocarcinoma pulmonar. EPOC moderado, tabaquismo activo suspendido hace 3 semanas.', sexo:'M', edad:64, peso:70, talla:170, pediatrico:false,
+    predictores:'EPOC: tórax en tonel, uso de músculos accesorios, riesgo de broncoespasmo, atrapamiento aéreo. Requiere tubo de doble luz (izquierdo generalmente) o bloqueador bronquial. Predecir dificultad con fibroscopio para verificar posición.',
+    inductor:'PROPOFOL', induc_dosis_mgkg:'1.5–2 mg/kg', induc_peso:'PESO MAGRO',
+    rnm:'ROCURONIO', rnm_dosis_mgkg:'0.6–0.9 mg/kg (para colocación de doble luz)', rnm_peso:'PESO IDEAL',
+    mantenimiento:'REMIFENTANILO', mant_dosis:'0.1–0.25 mcg/kg/min', mant_peso:'PESO MAGRO',
+    vasopresor:'NOREPINEFRINA', vaso_dosis:'0.05–0.3 mcg/kg/min', vaso_peso:'PESO REAL',
+    dosis_max:'LIDOCAÍNA CON EPINEFRINA', dosis_max_valor:'7 mg/kg (máx 500 mg) — infiltración de bloqueo intercostal', dosis_max_peso:'PESO IDEAL',
+    mecanismo:'HIPNÓTICOS (PROPOFOL): agonista GABA-A alostérico, prolonga apertura del canal de cloro. Broncodilatador leve, útil en EPOC. Vd grande, contexto-sensible corto en infusiones breves.', mecanismo_farmaco:'HIPNÓTICOS (PROPOFOL)',
+    reversor:'SUGAMMADEX', reversor_dosis:'2 mg/kg (T2) / 4 mg/kg (PTC 1–2)', reversor_peso:'PESO REAL'},
+
+  {num:13, titulo:'Prótesis total de rodilla', esc:'Paciente para reemplazo total de rodilla programado. HTA controlada, DM2 con HbA1c 7.2%, sobrepeso.', sexo:'F', edad:68, peso:86, talla:160, pediatrico:false,
+    predictores:'Anciana con sobrepeso: circunferencia cervical, Mallampati, apertura oral. Considerar bloqueo del canal aductor + iPACK como opción de analgesia multimodal para facilitar rehabilitación.',
+    inductor:'PROPOFOL', induc_dosis_mgkg:'1.5–2 mg/kg', induc_peso:'PESO MAGRO',
+    rnm:'ROCURONIO', rnm_dosis_mgkg:'0.6 mg/kg', rnm_peso:'PESO IDEAL',
+    mantenimiento:'DEXMEDETOMIDINA', mant_dosis:'0.2–0.7 mcg/kg/h', mant_peso:'PESO IDEAL',
+    vasopresor:'NOREPINEFRINA', vaso_dosis:'0.03–0.2 mcg/kg/min', vaso_peso:'PESO REAL',
+    dosis_max:'BUPIVACAÍNA (bloqueo periférico)', dosis_max_valor:'2 mg/kg (máx 150 mg sin epi)', dosis_max_peso:'PESO IDEAL',
+    mecanismo:'DEXMEDETOMIDINA: agonista alfa-2 adrenérgico altamente selectivo (α2:α1 ≈ 1600:1), acción a nivel de locus coeruleus (sedación) y asta dorsal (analgesia), no deprime respiración significativamente.', mecanismo_farmaco:'DEXMEDETOMIDINA',
+    reversor:'SUGAMMADEX', reversor_dosis:'2 mg/kg (T2)', reversor_peso:'PESO REAL'},
+
+  {num:14, titulo:'Cirugía de escoliosis en adolescente', esc:'Paciente adolescente para artrodesis vertebral posterior por escoliosis idiopática. Sin antecedentes. Ángulo de Cobb 55°.', sexo:'F', edad:14, peso:51, talla:162, pediatrico:true,
+    predictores:'Escoliosis grave puede alterar mecánica ventilatoria (restrictivo). Evalúa función pulmonar preoperatoria. Posición prona → asegurar TET, monitorizar presión ocular y abdominal.',
+    inductor:'PROPOFOL', induc_dosis_mgkg:'2–2.5 mg/kg', induc_peso:'PESO REAL',
+    rnm:'ROCURONIO', rnm_dosis_mgkg:'0.6 mg/kg (evitar bloqueo si monitoreo neurofisiológico intraop)', rnm_peso:'PESO REAL',
+    mantenimiento:'PROPOFOL', mant_dosis:'80–150 mcg/kg/min (TIVA compatible con potenciales evocados)', mant_peso:'PESO REAL',
+    vasopresor:'NOREPINEFRINA', vaso_dosis:'0.05–0.2 mcg/kg/min', vaso_peso:'PESO REAL',
+    dosis_max:'LIDOCAÍNA SIN EPINEFRINA', dosis_max_valor:'4.5 mg/kg (adolescente)', dosis_max_peso:'PESO REAL',
+    mecanismo:'RELAJANTES NEUROMUSCULARES NO DESPOLARIZANTES (ROCURONIO): antagonista competitivo receptor nicotínico placa motora. Metabolismo hepático (excreción biliar principal), eliminación renal menor. Sin liberación de histamina.', mecanismo_farmaco:'RELAJANTES NEUROMUSCULARES NO DESPOLARIZANTES (ROCURONIO)',
+    reversor:'SUGAMMADEX', reversor_dosis:'2 mg/kg (T2) / 4 mg/kg (PTC 1–2)', reversor_peso:'PESO REAL'},
+
+  {num:15, titulo:'Nefrectomía radical laparoscópica', esc:'Paciente para nefrectomía radical por masa renal. Función renal levemente disminuida (creatinina 1.4 mg/dL). HTA.', sexo:'M', edad:60, peso:82, talla:172, pediatrico:false,
+    predictores:'Vía aérea sin predictores especiales. Considerar posición lateral (compresión de brazo dependiente, protección oftálmica, riesgo de compromiso vascular). Neumoperitoneo + posición → efectos hemodinámicos y ventilatorios.',
+    inductor:'PROPOFOL', induc_dosis_mgkg:'1.5–2 mg/kg', induc_peso:'PESO MAGRO',
+    rnm:'CISATRACURIO', rnm_dosis_mgkg:'0.15–0.2 mg/kg (independiente de función renal)', rnm_peso:'PESO REAL',
+    mantenimiento:'REMIFENTANILO', mant_dosis:'0.1–0.2 mcg/kg/min', mant_peso:'PESO MAGRO',
+    vasopresor:'NOREPINEFRINA', vaso_dosis:'0.05–0.3 mcg/kg/min', vaso_peso:'PESO REAL',
+    dosis_max:'LIDOCAÍNA SIN EPINEFRINA', dosis_max_valor:'4.5 mg/kg (reducir en insuf renal/hepática)', dosis_max_peso:'PESO REAL',
+    mecanismo:'RELAJANTES NEUROMUSCULARES (CISATRACURIO): antagonista competitivo del receptor nicotínico. Eliminación por vía de Hofmann (degradación espontánea plasmática por pH y temperatura), sin dependencia renal o hepática.', mecanismo_farmaco:'RELAJANTES NEUROMUSCULARES (CISATRACURIO)',
+    reversor:'NEOSTIGMINA + ATROPINA', reversor_dosis:'Neostigmina 0.04–0.07 mg/kg + atropina 0.02 mg/kg', reversor_peso:'PESO REAL'},
+
+  {num:16, titulo:'Herniorrafia umbilical en lactante prematuro', esc:'Ex-prematuro de corta edad para reparación de hernia umbilical incarcerada. Edad postmenstrual límite para riesgo de apnea.', sexo:'M', edad:1, peso:10, talla:75, pediatrico:true,
+    predictores:'Ex-prematuros con edad postmenstrual <60 semanas: riesgo aumentado de apnea postoperatoria. Vigilar >12h. Vía aérea pequeña, laringe alta, epiglotis en omega, subglótico como parte más estrecha.',
+    inductor:'PROPOFOL', induc_dosis_mgkg:'2.5–3 mg/kg', induc_peso:'PESO REAL',
+    rnm:'ROCURONIO', rnm_dosis_mgkg:'0.3–0.6 mg/kg', rnm_peso:'PESO REAL',
+    mantenimiento:'REMIFENTANILO', mant_dosis:'0.05–0.15 mcg/kg/min (dosis muy baja)', mant_peso:'PESO REAL',
+    vasopresor:'ATROPINA / EFEDRINA', vaso_dosis:'Atropina 0.02 mg/kg / Efedrina 0.1 mg/kg', vaso_peso:'PESO REAL',
+    dosis_max:'LIDOCAÍNA SIN EPINEFRINA', dosis_max_valor:'3 mg/kg (dosis conservadora lactante)', dosis_max_peso:'PESO REAL',
+    mecanismo:'OPIOIDES (MORFINA): agonista mu, glucuronoconjugación hepática a M3G (neurotoxicidad) y M6G (analgesia potente). Acumulación en insuf renal. Liberación de histamina.', mecanismo_farmaco:'OPIOIDES (MORFINA)',
+    reversor:'NALOXONA', reversor_dosis:'0.01–0.1 mg/kg IV (titular con precaución)', reversor_peso:'PESO REAL'},
+
+  {num:17, titulo:'Endarterectomía carotídea', esc:'Paciente para endarterectomía carotídea derecha por estenosis sintomática >70%. HTA, dislipidemia, tabaquismo. Sin déficit residual actual.', sexo:'M', edad:71, peso:76, talla:170, pediatrico:false,
+    predictores:'Cuello corto, artrosis cervical del anciano, restricción a la extensión (por riesgo cerebrovascular y por procedimiento previo). Considerar bloqueo del plexo cervical o anestesia general — decidir según centro.',
+    inductor:'ETOMIDATO', induc_dosis_mgkg:'0.2–0.3 mg/kg (estabilidad hemodinámica)', induc_peso:'PESO REAL',
+    rnm:'ROCURONIO', rnm_dosis_mgkg:'0.6 mg/kg', rnm_peso:'PESO IDEAL',
+    mantenimiento:'REMIFENTANILO', mant_dosis:'0.05–0.15 mcg/kg/min (estabilidad hemodinámica)', mant_peso:'PESO MAGRO',
+    vasopresor:'NOREPINEFRINA', vaso_dosis:'0.05–0.3 mcg/kg/min (mantener PAM alta)', vaso_peso:'PESO REAL',
+    dosis_max:'LIDOCAÍNA CON EPINEFRINA (bloqueo cervical)', dosis_max_valor:'7 mg/kg (máx 500 mg)', dosis_max_peso:'PESO IDEAL',
+    mecanismo:'ANESTÉSICOS LOCALES: bloqueo canal de sodio voltaje-dependiente. Toxicidad sistémica (LAST): SNC (excitación → convulsión → depresión) seguido de cardiotoxicidad (arritmias, colapso).', mecanismo_farmaco:'ANESTÉSICOS LOCALES',
+    reversor:'SUGAMMADEX', reversor_dosis:'2 mg/kg (T2) — preferido en cardiópata', reversor_peso:'PESO REAL'},
+
+  {num:18, titulo:'Histerectomía abdominal por miomatosis', esc:'Paciente para histerectomía abdominal total por miomatosis uterina sintomática. Anemia moderada corregida preoperatoriamente.', sexo:'F', edad:47, peso:74, talla:163, pediatrico:false,
+    predictores:'Vía aérea generalmente sin predictores. Evaluar rutinaria Mallampati, DTM, apertura oral, protrusión, movilidad cervical, dentición.',
+    inductor:'PROPOFOL', induc_dosis_mgkg:'1.5–2 mg/kg', induc_peso:'PESO MAGRO',
+    rnm:'ROCURONIO', rnm_dosis_mgkg:'0.6 mg/kg', rnm_peso:'PESO IDEAL',
+    mantenimiento:'REMIFENTANILO', mant_dosis:'0.1–0.25 mcg/kg/min', mant_peso:'PESO MAGRO',
+    vasopresor:'NOREPINEFRINA', vaso_dosis:'0.05–0.2 mcg/kg/min', vaso_peso:'PESO REAL',
+    dosis_max:'BUPIVACAÍNA (bloqueo TAP)', dosis_max_valor:'2 mg/kg sin epi / 2.5 mg/kg con epi (máx 175 mg)', dosis_max_peso:'PESO IDEAL',
+    mecanismo:'BENZODIACEPINAS (MIDAZOLAM): agonista GABA-A, se une al sitio benzodiacepínico (α+γ), aumenta frecuencia de apertura del canal de cloro, efecto ansiolítico, sedante, amnésico, anticonvulsivante.', mecanismo_farmaco:'BENZODIACEPINAS (MIDAZOLAM)',
+    reversor:'FLUMAZENIL', reversor_dosis:'0.2 mg IV lento, repetir 0.1 mg c/1 min hasta 1 mg (máx 3 mg/h)', reversor_peso:'PESO REAL'},
+
+  {num:19, titulo:'Ventana pericárdica por derrame', esc:'Paciente en UCI con derrame pericárdico moderado con signos de taponamiento incipiente. Requiere ventana pericárdica subxifoidea. Hemodinamia lábil.', sexo:'F', edad:59, peso:60, talla:158, pediatrico:false,
+    predictores:'Vía aérea normal habitual. Riesgo mayor: colapso hemodinámico a la inducción por pérdida de precarga y disminución del tono simpático. Considerar inducción con paciente sentado y con vasopresores listos.',
+    inductor:'KETAMINA', induc_dosis_mgkg:'1–2 mg/kg IV (mantiene tono simpático)', induc_peso:'PESO REAL',
+    rnm:'ROCURONIO', rnm_dosis_mgkg:'1.2 mg/kg (secuencia rápida)', rnm_peso:'PESO IDEAL',
+    mantenimiento:'DEXMEDETOMIDINA', mant_dosis:'0.2–0.5 mcg/kg/h (baja depresión hemodinámica)', mant_peso:'PESO IDEAL',
+    vasopresor:'NOREPINEFRINA', vaso_dosis:'0.05–0.5 mcg/kg/min (titular)', vaso_peso:'PESO REAL',
+    dosis_max:'LIDOCAÍNA SIN EPINEFRINA', dosis_max_valor:'4.5 mg/kg (máx 300 mg)', dosis_max_peso:'PESO REAL',
+    mecanismo:'HIPNÓTICOS (KETAMINA): antagonista NMDA no competitivo, sedación disociativa, mantiene tono simpático (útil en shock), broncodilatador, analgésico.', mecanismo_farmaco:'HIPNÓTICOS (KETAMINA)',
+    reversor:'SUGAMMADEX', reversor_dosis:'2 mg/kg (T2) — evitar neostigmina/atropina en cardiópata inestable', reversor_peso:'PESO REAL'},
+
+  {num:20, titulo:'Fractura de tibia en adolescente sano', esc:'Paciente adolescente que sufre fractura cerrada de tibia por accidente deportivo. Programado para osteosíntesis. Ayuno inseguro (última comida 4 h previa).', sexo:'M', edad:14, peso:51, talla:162, pediatrico:true,
+    predictores:'Ayuno inseguro → secuencia rápida. Evalúa vía aérea rutinaria. Considera bloqueo poplíteo + safeno como analgesia postoperatoria para reducir opioides.',
+    inductor:'PROPOFOL', induc_dosis_mgkg:'2–2.5 mg/kg', induc_peso:'PESO REAL',
+    rnm:'ROCURONIO', rnm_dosis_mgkg:'1.2 mg/kg (secuencia rápida)', rnm_peso:'PESO REAL',
+    mantenimiento:'REMIFENTANILO', mant_dosis:'0.1–0.25 mcg/kg/min', mant_peso:'PESO REAL',
+    vasopresor:'EFEDRINA', vaso_dosis:'5–10 mg bolo', vaso_peso:'PESO REAL',
+    dosis_max:'IBUPROFENO', dosis_max_valor:'10 mg/kg cada 6–8 h (máx pediátrico 40 mg/kg/día)', dosis_max_peso:'PESO REAL',
+    mecanismo:'RELAJANTES NEUROMUSCULARES (ROCURONIO): antagonista competitivo receptor nicotínico placa motora. Inicio 60–90 s con dosis 0.9–1.2 mg/kg (alternativa a succinilcolina en secuencia rápida cuando esté disponible sugammadex).', mecanismo_farmaco:'RELAJANTES NEUROMUSCULARES (ROCURONIO)',
+    reversor:'SUGAMMADEX', reversor_dosis:'2 mg/kg (T2) / 4 mg/kg (PTC 1–2) / 16 mg/kg si reversión inmediata tras 1.2 mg/kg rocuronio', reversor_peso:'PESO REAL'},
+];
+
+// Diluciones estándar por fármaco (mg → mL finales)
+const DILUCIONES = {
+  'REMIFENTANILO': '2 mg (2 amp de 1 mg) en 100 mL SSN 0.9%',
+  'PROPOFOL': '1 frasco de 500 mg / 50 mL (viene listo para bomba, no requiere dilución adicional)',
+  'DEXMEDETOMIDINA': '200 mcg (2 mL de la amp 100 mcg/mL) en 50 mL SSN 0.9%',
+  'NOREPINEFRINA': '4 mg (1 amp de 4 mg) en 100 mL DAD 5%',
+  'FENILEFRINA': '10 mg (1 amp) en 100 mL SSN 0.9%',
+  'EFEDRINA': 'Amp 50 mg/mL. Para bolo: diluir 1 amp (50 mg) en 10 mL SSN 0.9%',
+  'ATROPINA (para reflejo oculocardíaco)': 'Amp 1 mg/mL — administración en bolo directo (no requiere dilución para infusión)',
+  'ATROPINA / EFEDRINA': 'Atropina amp 1 mg/mL en bolo. Efedrina: diluir 1 amp de 50 mg en 10 mL SSN → 5 mg/mL',
+};
+
+function getDilucion(farmaco){
+  return DILUCIONES[farmaco] || 'Consultar presentación disponible en el servicio';
+}
+
+// ═══════════════════════════════════════════════════════════
+// GENERAR LAS 10 PREGUNTAS DEL CASO
+// ═══════════════════════════════════════════════════════════
+const TEMAS_VA = [
+  {tema:'INTUBACIÓN DIFÍCIL — Mallampati', txt:'Explique la clasificación de <strong>Mallampati</strong>: cómo se realiza, sus 4 grados, qué estructuras se visualizan en cada uno y su valor predictivo para intubación difícil. ¿Qué grado esperaría en este paciente y por qué?'},
+  {tema:'INTUBACIÓN DIFÍCIL — Distancia tiromentoniana', txt:'Explique la <strong>distancia tiromentoniana</strong>: cómo se mide, punto de corte para predecir intubación difícil e interpretación clínica. Analícela en este paciente.'},
+  {tema:'INTUBACIÓN DIFÍCIL — Apertura oral', txt:'Explique la <strong>apertura oral (distancia interincisiva)</strong>: cómo se mide, valor de corte para vía aérea difícil e implicaciones en la selección de dispositivos. Aplíquelo a este paciente.'},
+  {tema:'INTUBACIÓN DIFÍCIL — Protrusión mandibular', txt:'Explique el <strong>test de protrusión mandibular (Upper Lip Bite Test)</strong>: técnica, grados y su valor como predictor. Estímelo en este paciente.'},
+  {tema:'INTUBACIÓN DIFÍCIL — LEMON', txt:'Explique el <strong>score LEMON</strong> para predicción de intubación difícil: qué evalúa cada letra, cómo se puntúa y su interpretación. Aplíquelo a este paciente.'},
+  {tema:'INTUBACIÓN DIFÍCIL — Cormack-Lehane', txt:'Explique la clasificación de <strong>Cormack-Lehane</strong>: qué es, cómo se determina, sus grados (incluyendo modificación de Cook) y qué grado esperaría en este paciente según sus predictores.'},
+  {tema:'VENTILACIÓN CON MÁSCARA DIFÍCIL — OBESE / MOANS', txt:'Explique los predictores de <strong>ventilación difícil con máscara facial</strong> (nemotecnia OBESE o MOANS). Enumérelos, explique cada uno y aplíquelos a este paciente.'},
+  {tema:'DISPOSITIVO SUPRAGLÓTICO DIFÍCIL — RODS', txt:'Explique la nemotecnia <strong>RODS</strong> para predecir dificultad en la colocación de dispositivo supraglótico. Analícela en este paciente.'},
+  {tema:'FONA DIFÍCIL — SMART / SHORT', txt:'Explique la nemotecnia <strong>SMART</strong> (o SHORT) para predecir dificultad en el acceso frontal del cuello (cricotiroidotomía). Analícela en este paciente.'},
+  {tema:'DAS 2015 — Plan A', txt:'Explique el <strong>Plan A de la guía DAS 2015</strong> para intubación difícil no anticipada: qué incluye, cuántos intentos máximo, uso de bougie/videolaringoscopio y cuándo declarar falla. Aplíquelo hipotéticamente a este paciente.'},
+  {tema:'DAS 2015 — Plan B', txt:'Explique el <strong>Plan B de la guía DAS 2015</strong>: cuál es su objetivo, qué dispositivos supraglóticos de segunda generación se recomiendan, cuántos intentos y qué decisiones se toman después. Aplíquelo a este paciente.'},
+  {tema:'DAS 2015 — Plan C', txt:'Explique el <strong>Plan C de la guía DAS 2015</strong>: cuándo se activa, cómo se ventila con máscara facial, qué maniobras y adyuvantes se utilizan y qué decisión sigue. Discútalo en el contexto de este paciente.'},
+  {tema:'DAS 2015 — Plan D (FONA)', txt:'Explique el <strong>Plan D de la guía DAS 2015 — Front of Neck Access (cricotiroidotomía de emergencia)</strong>: cuándo se declara CICO, técnica de scalpel-bougie-tube, tamaño del tubo y consideraciones postprocedimiento.'},
+];
+
+function generarPreguntas(caso){
+  const esPed=caso.pediatrico;
+  const p_esp=esPed?'No aplica cálculos de peso ideal/magro en pediátricos: usar PESO REAL siempre.':'';
+  const temaVA=TEMAS_VA[Math.floor(Math.random()*TEMAS_VA.length)];
+  return [
+    {n:1, tit:`Vía aérea — ${temaVA.tema}`,
+     texto:temaVA.txt,
+     nota:'Responda dirigido al predictor / plan solicitado; no enumere todos los predictores posibles.'},
+
+    {n:2, tit:'Selección de dispositivos de vía aérea',
+     texto:`Para este paciente indique: número de tubo orotraqueal (TOT), profundidad de inserción (cm desde comisura labial) y número de máscara laríngea apropiado.`,
+     nota:esPed?'Considera la edad y el peso pediátrico para la selección de TOT (con o sin balón), profundidad y máscara laríngea.':'Considera sexo, talla y peso del paciente adulto para elección de TOT, profundidad y máscara laríngea.'},
+
+    {n:3, tit:`Inductor: ${caso.inductor}`,
+     texto:`El inductor asignado es ${caso.inductor}. Indique presentación farmacológica (ampolla/vial, concentración), y calcule la dosis en mg y en mL para este paciente.`,
+     nota:`Se debe calcular con: ${caso.induc_peso}. ${p_esp}`},
+
+    {n:4, tit:`Relajante neuromuscular: ${caso.rnm}`,
+     texto:`El relajante neuromuscular asignado es ${caso.rnm}. Indique presentación farmacológica (ampolla, concentración), y calcule la dosis en mg y en mL para este paciente.`,
+     nota:`Se debe calcular con: ${caso.rnm_peso}. ${p_esp}`},
+
+    {n:5, tit:`Mantenimiento en infusión: ${caso.mantenimiento}`,
+     texto:`Prepare una infusión de ${caso.mantenimiento} para mantenimiento. <strong>Dilución sugerida: ${getDilucion(caso.mantenimiento)}</strong>. Calcule la concentración resultante (mg/mL o mcg/mL) y, con la dosis indicada, calcule la infusión en mL/hora. Dosis a administrar: ${caso.mant_dosis}.`,
+     nota:`Se debe calcular con: ${caso.mant_peso}. ${p_esp}`},
+
+    {n:6, tit:`Vasopresor/inotrópico: ${caso.vasopresor}`,
+     texto:`Prepare una infusión de ${caso.vasopresor}. <strong>Dilución sugerida: ${getDilucion(caso.vasopresor)}</strong>. Calcule la concentración resultante (mcg/mL) y, con la dosis propuesta, calcule la infusión en mL/hora. Dosis: ${caso.vaso_dosis}.`,
+     nota:`Se debe calcular con: ${caso.vaso_peso}. ${p_esp}`},
+
+    {n:7, tit:`Dosis máxima de anestésico local / AINE`,
+     texto:`Calcule la dosis máxima de ${caso.dosis_max} en mg y en mL para este paciente.`,
+     nota:`Se debe calcular con: ${caso.dosis_max_peso}. ${p_esp}`},
+
+    {n:8, tit:'Parámetros del ventilador',
+     texto:`Programe los parámetros del ventilador para este paciente: <strong>volumen corriente (Vt), PEEP, frecuencia respiratoria y presión meseta (plateau)</strong>. Además, <strong>calcule el driving pressure</strong> que resultaría con esos parámetros y explique qué significa clínicamente el valor obtenido.`,
+     nota:esPed?'Ajuste según peso y edad pediátrica. Explique cómo se calcula el driving pressure y qué implicación tiene el valor obtenido.':`Vt calculado con: ${caso.pediatrico?'peso real':'PESO IDEAL'}. Explique cómo se obtiene el driving pressure a partir de los parámetros programados y qué significa el valor resultante.`},
+
+    {n:9, tit:'Mecanismo de acción',
+     texto:`Explique el mecanismo de acción de ${caso.mecanismo_farmaco}.`,
+     nota:'Detalle receptor, cascada, consecuencia iónica y clínica.'},
+
+    {n:10, tit:`Reversor: ${caso.reversor}`,
+     texto:`Sobre ${caso.reversor}: presentación farmacológica (ampolla, concentración), dosis, cálculo en mg y en mL para este paciente, y mecanismo de acción.`,
+     nota:`Se debe calcular con: ${caso.reversor_peso}. ${p_esp}`},
+  ];
+}
+
+// ═══════════════════════════════════════════════════════════
+// SORTEO DEL CASO
+// ═══════════════════════════════════════════════════════════
+let casoActual=null;
+let preguntasActuales=[];
+
+function resetGirarBox(){
+  const inicial=document.getElementById('sorpresaEstadoInicial');
+  const resultado=document.getElementById('sorpresaResultado');
+  const btn=document.querySelector('.sorpresa-btn');
+  if(inicial) inicial.style.display='';
+  if(resultado) resultado.style.display='none';
+  if(btn){btn.textContent='🎲 GIRAR';btn.classList.remove('girando');}
+  ocultarBanner();
+}
+
+function sortearCaso(){
+  if(!ultimoSorteado){alert('Primero presiona "Estudiante al azar" (paso 2).');return;}
+  const btn=document.querySelector('.sorpresa-btn');
+  const inicial=document.getElementById('sorpresaEstadoInicial');
+  const resultado=document.getElementById('sorpresaResultado');
+  btn.textContent='🎲 GIRANDO...';
+  btn.classList.add('girando');
+  resultado.style.display='none';
+  let count=0;
+  const interval=setInterval(()=>{count++;if(count>=15){
+    clearInterval(interval);
+    casoActual=pickFromBag('casos',CASOS);
+    document.getElementById('sorpresaResEmoji').textContent='🩺';
+    document.getElementById('sorpresaResNombre').textContent=`CASO ${casoActual.num}: ${casoActual.titulo}`;
+    document.getElementById('sorpresaResDesc').textContent='Presiona "Abrir caso" para ver los datos del paciente y sortear las preguntas.';
+    inicial.style.display='none';
+    resultado.style.display='block';
+    if(ultimoSorteado){
+      mostrarBanner(ultimoSorteado,`CASO ${casoActual.num}: ${casoActual.titulo}`);
+    }
+    setTimeout(()=>abrirCaso(),400);
+  }},70);
+}
+
+function irACaso(){if(casoActual) abrirCaso();}
+
+function abrirCaso(){
+  if(!casoActual) return;
+  const c=casoActual;
+  document.getElementById('casoNumBadge').textContent=`CASO ${c.num}`;
+  document.getElementById('casoTitulo').textContent=c.titulo;
+  document.getElementById('casoEscenario').textContent=c.esc;
+
+  // Paciente strip
+  const imc=calcIMC(c.peso,c.talla);
+  const strip=document.getElementById('pacienteStrip');
+  let html=`
+    <div class="paciente-dato"><div class="pd-label">Sexo</div><div class="pd-val">${c.sexo==='M'?'♂ Masc':'♀ Fem'}</div></div>
+    <div class="paciente-dato"><div class="pd-label">Edad</div><div class="pd-val">${c.edad}<span class="pd-unit"> ${c.edad<15?'años':'años'}</span></div></div>
+    <div class="paciente-dato"><div class="pd-label">Peso real</div><div class="pd-val">${c.peso}<span class="pd-unit"> kg</span></div></div>
+    <div class="paciente-dato"><div class="pd-label">Talla</div><div class="pd-val">${c.talla}<span class="pd-unit"> cm</span></div></div>
+    <div class="paciente-dato imc"><div class="pd-label">IMC</div><div class="pd-val">${fmt(imc,1)}<span class="pd-unit"> kg/m²</span></div></div>`;
+  if(!c.pediatrico){
+    const pi=pesoIdeal(c.sexo,c.talla);
+    const pm=pesoMagro(c.sexo,c.peso,c.talla);
+    html+=`
+    <div class="paciente-dato pi"><div class="pd-label">Peso ideal</div><div class="pd-val">${fmt(pi,1)}<span class="pd-unit"> kg</span></div></div>
+    <div class="paciente-dato pm"><div class="pd-label">Peso magro</div><div class="pd-val">${fmt(pm,1)}<span class="pd-unit"> kg</span></div></div>`;
+  } else {
+    html+=`<div class="paciente-dato" style="background:linear-gradient(135deg,#8B5CF6,#6D28D9)"><div class="pd-label">Grupo</div><div class="pd-val" style="font-size:15px">Pediátrico</div><div class="pd-unit">peso real</div></div>`;
+  }
+  strip.innerHTML=html;
+
+  preguntasActuales=generarPreguntas(c);
+  mostrarTodasPreguntas();
+
+  document.getElementById('casoContainer').classList.add('visible');
+  document.getElementById('casoContainer').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function cerrarCaso(){
+  document.getElementById('casoContainer').classList.remove('visible');
+  casoActual=null;
+  ocultarBanner();
+}
+
+function renderPreguntas(preguntas,conPuntuacion){
+  const cont=document.getElementById('preguntasContainer');
+  const r=ultimoSorteado?ratings[ultimoSorteado]:null;
+  cont.innerHTML=preguntas.map((p,i)=>{
+    const dest=conPuntuacion?'destacada':'';
+    const puntuado=r&&r.puntos&&r.puntos[i]!==undefined?r.puntos[i]:null;
+    const cls0=puntuado===0?'sel-0':'';
+    const cls05=puntuado===0.5?'sel-05':'';
+    const cls1=puntuado===1?'sel-1':'';
+    const puntBloque=conPuntuacion?`
+      <div class="p-puntos" data-preg="${i}">
+        <span class="p-puntos-label">Puntuar:</span>
+        <div class="p-puntos-btns">
+          <button class="p-punto-btn ${cls0}" data-val="0" onclick="puntuarPregunta(${i},0)">0</button>
+          <button class="p-punto-btn ${cls05}" data-val="0.5" onclick="puntuarPregunta(${i},0.5)">½</button>
+          <button class="p-punto-btn ${cls1}" data-val="1" onclick="puntuarPregunta(${i},1)">1</button>
+        </div>
+      </div>`:'';
+    return `<div class="pregunta ${dest}">
+      <div class="p-num">Pregunta ${p.n}</div>
+      <div class="p-titulo">${p.tit}</div>
+      <div class="p-texto">${p.texto.replace(/\n/g,'<br>')}</div>
+      ${p.nota?`<div class="p-nota">⚖️ ${p.nota}</div>`:''}
+      ${puntBloque}
+    </div>`;
+  }).join('');
+  if(conPuntuacion){
+    const r2=ultimoSorteado?ratings[ultimoSorteado]:null;
+    const notaBase=r2?r2.notaTurno:0;
+    const bonus=r2?0.3*r2.robos:0;
+    const total=Math.min(5.0,notaBase+bonus);
+    const respondidas=r2?Object.keys(r2.puntos).length:0;
+    cont.insertAdjacentHTML('beforeend',`
+      <div class="nota-turno-live" id="notaTurnoLive">
+        <div class="ntl-label">Nota del turno</div>
+        <div class="ntl-valor">${fmt(total,1)}</div>
+        <div class="ntl-detalle">${respondidas}/5 preguntas · base ${fmt(notaBase,1)} ${bonus>0?`+ bonus robo ${fmt(bonus,1)}`:''}</div>
+      </div>`);
+  }
+}
+
+function mostrarTodasPreguntas(){
+  renderPreguntas(preguntasActuales,false);
+}
+
+function sortear5Preguntas(){
+  if(!preguntasActuales.length) return;
+  if(!ultimoSorteado){alert('Primero sortea un estudiante.');return;}
+  const idxs=shuffleArr([0,1,2,3,4,5,6,7,8,9]).slice(0,5).sort((a,b)=>a-b);
+  const sel=idxs.map(i=>preguntasActuales[i]);
+  // Registrar turno (una sola vez)
+  marcarTurno(ultimoSorteado,casoActual,idxs);
+  renderPreguntas(sel,true);
+  document.getElementById('preguntasContainer').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// Inicializar
+renderEstudiantes();
+</script>
+</body>
+</html>

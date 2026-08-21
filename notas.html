@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notas Anestesiología · Dr. Robayo</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --col-sanmartin:#4A148C; --col-sanmartin-l:#F3E5F5;
+  --col-sabana:#006064;    --col-sabana-l:#E0F7FA;
+  --col-rosario:#0D47A1;   --col-rosario-l:#E3F2FD;
+  --col-bosque:#1B5E20;    --col-bosque-l:#E8F5E9;
+  --col-uan:#E65100;       --col-uan-l:#FFF3E0;
+  --col-udca:#BF360C;      --col-udca-l:#FBE9E7;
+  --ink:#0D1B2A; --ink-m:#4B5563; --border:#CBD5E1;
+  --bg:#EEF2F7; --white:#fff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+
+/* ── TOPBAR ── */
+.topbar{
+  background:linear-gradient(135deg,#050F2C,#0D47A1,#01579B);
+  color:#fff;display:flex;align-items:center;justify-content:space-between;
+  padding:14px 28px;position:sticky;top:0;z-index:200;
+  box-shadow:0 4px 20px rgba(0,0,0,.2);
+  position:relative;overflow:hidden;
+}
+.topbar::after{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.05);pointer-events:none}
+.topbar-left h1{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1.5px;color:#fff;position:relative;z-index:1}
+.topbar-left p{font-size:11px;color:rgba(255,255,255,.6);margin-top:3px;font-weight:500;position:relative;z-index:1}
+.topbar-right{display:flex;gap:8px;align-items:center;position:relative;z-index:1}
+.btn-hosp{
+  padding:8px 18px;border-radius:8px;border:1.5px solid rgba(255,255,255,.3);
+  background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);
+  font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s
+}
+.btn-hosp.active{background:#fff;color:#0D47A1;border-color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.btn-hosp:hover:not(.active){background:rgba(255,255,255,.2);color:#fff}
+.btn-print-top{
+  padding:8px 18px;border-radius:8px;border:none;
+  background:linear-gradient(135deg,#FFD740,#FF8F00);color:#0D1B2A;
+  font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1px;cursor:pointer;
+  box-shadow:0 2px 8px rgba(255,143,0,.35);transition:all .2s
+}
+.btn-print-top:hover{box-shadow:0 4px 16px rgba(255,143,0,.5);transform:translateY(-1px)}
+
+/* ── SELECTOR ── */
+.selector-panel{
+  background:#fff;border-bottom:2px solid var(--border);
+  display:flex;align-items:center;gap:12px;padding:12px 24px;flex-wrap:wrap;
+  box-shadow:0 1px 4px rgba(0,0,0,.06)
+}
+.sel-lbl{font-size:10px;font-weight:800;color:var(--ink-m);text-transform:uppercase;letter-spacing:1px;font-family:'DM Sans',sans-serif}
+select{
+  padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;
+  background:#F8FAFC;color:var(--ink);cursor:pointer;min-width:180px;
+  transition:border-color .18s
+}
+select:focus{outline:none;border-color:#0D47A1;box-shadow:0 0 0 3px rgba(13,71,161,.1)}
+.btn-limpiar{
+  padding:8px 16px;border-radius:8px;border:1.5px solid #C62828;
+  background:#fff;color:#C62828;font-family:'DM Sans',sans-serif;
+  font-size:12px;font-weight:800;cursor:pointer;margin-left:auto;transition:all .2s
+}
+.btn-limpiar:hover{background:#C62828;color:#fff}
+
+/* ── MAIN AREA ── */
+.main{padding:16px 20px;width:100%}
+
+/* ── CARD ── */
+.card{
+  background:var(--white);border:2px solid var(--border);border-radius:14px;
+  margin-bottom:20px;overflow:hidden;width:100%;
+  box-shadow:0 4px 18px rgba(0,0,0,.07)
+}
+.card-header{
+  padding:14px 20px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:2px solid var(--border)
+}
+.card-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;color:var(--ink)}
+.card-body{padding:14px 16px}
+
+/* ── TABLA ── */
+.st-wrap{overflow-x:auto;width:100%}
+table{width:100%;border-collapse:collapse;font-size:11.5px;table-layout:auto}
+table th{
+  color:#fff;padding:8px 7px;
+  text-align:center;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:800;
+  letter-spacing:.5px;white-space:normal;line-height:1.3;vertical-align:bottom
+}
+table th:first-child{text-align:left;min-width:130px;max-width:180px}
+table th.th-taller{background:#0D47A1;min-width:52px}
+table th.th-examen{background:#C62828;min-width:52px}
+table th.th-seminario{background:#1B5E20;min-width:52px}
+table th.th-teorica{background:#4A148C;min-width:60px}
+table th:not([class]){background:#334155}
+table td{
+  padding:5px 6px;border-bottom:1px solid var(--border);
+  text-align:center;vertical-align:middle
+}
+table td:first-child{text-align:left}
+table tr:hover td{background:#F8FAFC}
+.grade-inp{
+  width:46px;padding:3px 4px;border:1.5px solid var(--border);border-radius:5px;
+  font-family:'DM Mono',monospace;font-size:12px;font-weight:600;
+  text-align:center;color:var(--ink);background:#F8FAFC;transition:border-color .18s
+}
+.grade-inp:focus{outline:none;border-color:#0D47A1;background:#fff}
+.name-inp{
+  width:100%;padding:4px 7px;border:1.5px solid var(--border);border-radius:5px;
+  font-family:'DM Sans',sans-serif;font-size:12px;color:var(--ink);background:#F8FAFC
+}
+.name-inp:focus{outline:none;border-color:#0D47A1;background:#fff}
+
+/* Badge inline en encabezado */
+.th-badge{
+  display:inline-block;padding:1px 6px;border-radius:4px;
+  font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px
+}
+.th-badge-t{background:#DBEAFE;color:#1D4ED8;border:1px solid #93C5FD}
+.th-badge-ex{background:#FFEBEE;color:#C62828;border:1px solid #FFCDD2}
+.th-badge-sem{background:#E8F5E9;color:#1B5E20;border:1px solid #A5D6A7}
+
+/* ── NOTAS RESUMEN ── */
+.notas-resumen{
+  padding:14px 16px;border-top:2px solid var(--border);background:#F8FAFC
+}
+.nota-box-val{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px}
+.nota-box-val.pass{color:#1B5E20}
+.nota-box-val.fail{color:#C62828}
+.nota-box-val.neutral{color:var(--ink)}
+.manual-inp{
+  width:70px;padding:4px 8px;border:2px solid var(--border);border-radius:7px;
+  font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;
+  text-align:center;color:var(--ink);background:#fff;display:block;margin:0 auto;
+  transition:border-color .18s
+}
+.manual-inp:focus{outline:none;border-color:#0D47A1}
+
+/* ── NOTA FINAL UNIVERSIDAD ── */
+.nota-final-section{
+  border-top:2px solid var(--border);padding:14px 16px;background:var(--bg)
+}
+.nota-final-title{
+  font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;
+  color:var(--ink);margin-bottom:10px;display:flex;align-items:center;gap:8px
+}
+.nota-final-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.nf-box{
+  background:#fff;border:2px solid var(--border);border-radius:10px;padding:13px;text-align:center;
+  position:relative;box-shadow:0 2px 8px rgba(0,0,0,.05);transition:border-color .2s
+}
+.nf-box:hover{border-color:#0D47A1}
+.nf-box-lbl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--ink-m);margin-bottom:2px;font-family:'DM Sans',sans-serif}
+.nf-box-desc{font-size:10px;color:var(--ink-m);margin-bottom:6px;font-family:'DM Sans',sans-serif}
+.nf-box-val{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px}
+
+/* ── SEM BADGE ── */
+#sem-label{
+  background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.35);
+  border-radius:8px;padding:5px 14px;font-size:11px;font-weight:700;letter-spacing:.5px
+}
+
+/* ── EMPTY STATE ── */
+.empty{text-align:center;padding:60px 20px;color:var(--ink-m)}
+.empty h2{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1.5px;margin-bottom:8px;color:var(--ink)}
+.empty p{font-size:13px;font-weight:500}
+
+/* ── PRINT ── */
+@media print{
+  @page{size:landscape;margin:8mm 6mm}
+  .topbar,.selector-panel,.btn-print-top,.btn-limpiar,.no-print{display:none!important}
+  body{background:#fff}
+  .main{padding:0;width:100%}
+  .card{border:1px solid #CBD5E1;margin-bottom:10px;break-inside:avoid;width:100%;box-shadow:none}
+  .name-inp,.manual-inp,.grade-inp{border:none;background:transparent}
+  table{font-size:9px}
+  table th{font-size:8px;padding:4px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  table th.th-taller{background:#0D47A1!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  table th.th-examen{background:#C62828!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  table th.th-seminario{background:#1B5E20!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  table th.th-teorica{background:#4A148C!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  table td{padding:3px 4px}
+  .grade-inp{width:36px;font-size:9px}
+  .name-inp{font-size:9px}
+  .notas-resumen,.nota-final-section{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .nota-box-val{font-size:16px}
+  .manual-inp{font-size:13px;width:54px}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <h1>Sistema de Evaluación · Anestesiología</h1>
+    <p>Dr. Andrés Robayo · Hospital Kennedy &amp; Hospital de Bosa · Bogotá</p>
+  </div>
+  <div class="topbar-right">
+    <span id="sem-label">—</span>
+    <button class="btn-hosp active" onclick="setHosp('kennedy')">🏥 Kennedy</button>
+    <button class="btn-hosp" onclick="setHosp('bosa')">🏥 Bosa</button>
+    <button class="btn-print-top" onclick="imprimir()">🖨 Imprimir</button>
+  </div>
+</div>
+
+<!-- SELECTOR -->
+<div class="selector-panel no-print">
+  <span class="sel-lbl">Semestre</span>
+  <select id="sel-sem" onchange="onSemChange()" style="min-width:90px">
+    <option value="I">Semestre I</option>
+    <option value="II">Semestre II</option>
+  </select>
+  <select id="sel-anio" onchange="onSemChange()" style="min-width:90px"></select>
+  <span class="sel-lbl" style="margin-left:8px">Universidad</span>
+  <select id="sel-uni" onchange="onUniChange()"><option value="">— Seleccione —</option></select>
+  <span class="sel-lbl">Grupo</span>
+  <select id="sel-grp" onchange="render()">
+    <option value="">— Grupo —</option>
+    <option value="Grupo 1">Grupo 1</option>
+    <option value="Grupo 2">Grupo 2</option>
+    <option value="Grupo 3">Grupo 3</option>
+    <option value="Grupo 4">Grupo 4</option>
+    <option value="Grupo 5">Grupo 5</option>
+  </select>
+  <button class="btn-limpiar" onclick="limpiarGrupo()">🗑 Limpiar grupo</button>
+</div>
+
+<!-- MAIN -->
+<div class="main" id="main-area">
+  <div class="empty">
+    <h2>Seleccione universidad y grupo</h2>
+    <p>Use los desplegables de arriba para comenzar a registrar notas.</p>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════
+// DISTRIBUCIÓN DE TALLERES POR UNIVERSIDAD
+// VP = Valoración Preanestésica (transversal)
+// ══════════════════════════════════════════════════
+const UNIV_TALLERES = {
+  rosario: [
+    'Vía Aérea',
+    'Manejo del Ventilador',
+    'Anestésicos Locales',
+    'Hipnóticos',
+    'Opioides',
+    'Bloqueantes Neuromusculares',
+    'Valoración Preanestésica',          // transversal
+  ],
+  bosque: [
+    'Vía Aérea',
+    'Manejo del Ventilador',
+    'Farmacología Clínica',
+    'Anestésicos Locales',
+    'Hipnóticos',
+    'Opioides',
+    'Bloqueantes Neuromusculares',
+    'Náuseas y Vómito Postoperatorio',
+    'Líquidos y Fluidoterapia',
+    'Valoración Preanestésica',
+  ],
+  martin: [
+    'Vía Aérea',
+    'Manejo del Ventilador',
+    'Farmacología Clínica',
+    'Anestésicos Locales',
+    'Hipnóticos',
+    'Opioides',
+    'Bloqueantes Neuromusculares',
+    'Náuseas y Vómito Postoperatorio',
+    'Líquidos y Fluidoterapia',
+    'Valoración Preanestésica',
+  ],
+  narino: [
+    'Vía Aérea',
+    'Manejo del Ventilador',
+    'Farmacología Clínica',
+    'Anestésicos Locales',
+    'Hipnóticos',
+    'Opioides',
+    'Bloqueantes Neuromusculares',
+    'Náuseas y Vómito Postoperatorio',
+    'Líquidos y Fluidoterapia',
+    'Valoración Preanestésica',
+  ],
+  sabana: [
+    'Vía Aérea',
+    'Manejo del Ventilador',
+    'Farmacología Clínica',
+    'Anestésicos Locales',
+    'Hipnóticos',
+    'Opioides',
+    'Bloqueantes Neuromusculares',
+    'Náuseas y Vómito Postoperatorio',
+    'Líquidos y Fluidoterapia',
+    'Electrocardiograma',
+    'Gases Arteriales',
+    'Valoración Preanestésica',
+  ],
+  udca: [
+    'Vía Aérea',
+    'Manejo del Ventilador',
+    'Farmacología Clínica',
+    'Anestésicos Locales',
+    'Hipnóticos',
+    'Opioides',
+    'Bloqueantes Neuromusculares',
+    'Náuseas y Vómito Postoperatorio',
+    'Líquidos y Fluidoterapia',
+    'Electrocardiograma',
+    'Gases Arteriales',
+    'Fisiología',
+    'Manejo del Dolor',
+    'Valoración Preanestésica',
+  ],
+};
+
+// ══════════════════════════════════════════════════
+// CONFIGURACIÓN DE UNIVERSIDADES
+// Ponderación teórica: Talleres 40% + Examen 30% + Seminario 30%
+// ══════════════════════════════════════════════════
+const UNIS = {
+  kennedy: [
+    { key:'martin',  label:'Universidad de San Martín',       shortLabel:'San Martín',
+      color:'var(--col-sanmartin)', light:'var(--col-sanmartin-l)',
+      grupos:5, estudiantes:3,
+      notaFinal:{
+        tipo:'pct5',
+        componentes:[
+          {id:'teorica',    label:'Nota Teórica',    pct:40, desc:'40% teórica'},
+          {id:'practica',   label:'Nota Práctica',   pct:45, desc:'45% práctica'},
+          {id:'conductual', label:'Nota Conductual', pct:15, desc:'15% conductual'},
+        ],
+        etiqueta:'Nota Final San Martín (sobre 5.0)'
+      }
+    },
+    { key:'sabana',  label:'Universidad de La Sabana',        shortLabel:'Sabana',
+      color:'var(--col-sabana)',    light:'var(--col-sabana-l)',
+      grupos:5, estudiantes:4,
+      notaFinal:{
+        tipo:'pct5_sabana',
+        componentes:[
+          {id:'teorica',   label:'Nota Teórica',           pct:40, desc:'40% teórica'},
+          {id:'prac_cond', label:'Práctica + Conductual',  pct:60, desc:'60% (práctica + conductual) ÷ 2'},
+        ],
+        etiqueta:'Nota Final La Sabana (sobre 5.0)'
+      }
+    },
+    { key:'bosque',  label:'Universidad El Bosque',           shortLabel:'El Bosque',
+      color:'var(--col-bosque)',    light:'var(--col-bosque-l)',
+      grupos:5, estudiantes:2,
+      notaFinal:null
+    },
+  ],
+  bosa: [
+    { key:'rosario', label:'Universidad del Rosario',         shortLabel:'Rosario',
+      color:'var(--col-rosario)',   light:'var(--col-rosario-l)',
+      grupos:5, estudiantes:1,
+      notaFinal:null
+    },
+    { key:'narino',  label:'Universidad Antonio Nariño (UAN)',shortLabel:'UAN',
+      color:'var(--col-uan)',       light:'var(--col-uan-l)',
+      grupos:5, estudiantes:2,
+      notaFinal:{
+        tipo:'puntos_uan',
+        componentes:[
+          {id:'teorica',   label:'Teórica',   puntos:20, desc:'20 pts (teórica ×4)'},
+          {id:'practica',  label:'Práctica',  puntos:20, desc:'20 pts (práctica ×4)'},
+          {id:'conductual',label:'Conductual',puntos:10, desc:'10 pts (conductual ×2)'},
+        ],
+        etiqueta:'Nota Final UAN (sobre 50 puntos)'
+      }
+    },
+    { key:'udca',    label:'UDCA',                            shortLabel:'UDCA',
+      color:'var(--col-udca)',      light:'var(--col-udca-l)',
+      grupos:5, estudiantes:2,
+      notaFinal:{
+        tipo:'pct5',
+        componentes:[
+          {id:'teorica',   label:'Nota Teórica',   pct:40, desc:'40% teórica'},
+          {id:'practica',  label:'Nota Práctica',  pct:50, desc:'50% práctica'},
+          {id:'conductual',label:'Nota Conductual',pct:10, desc:'10% conductual'},
+        ],
+        etiqueta:'Nota Final UDCA (sobre 5.0)'
+      }
+    },
+    { key:'martin',  label:'Universidad de San Martín',       shortLabel:'San Martín',
+      color:'var(--col-sanmartin)', light:'var(--col-sanmartin-l)',
+      grupos:5, estudiantes:3,
+      notaFinal:{
+        tipo:'pct5',
+        componentes:[
+          {id:'teorica',    label:'Nota Teórica',    pct:40, desc:'40% teórica'},
+          {id:'practica',   label:'Nota Práctica',   pct:45, desc:'45% práctica'},
+          {id:'conductual', label:'Nota Conductual', pct:15, desc:'15% conductual'},
+        ],
+        etiqueta:'Nota Final San Martín (sobre 5.0)'
+      }
+    },
+    { key:'sabana',  label:'Universidad de La Sabana',        shortLabel:'Sabana',
+      color:'var(--col-sabana)',    light:'var(--col-sabana-l)',
+      grupos:5, estudiantes:4,
+      notaFinal:{
+        tipo:'pct5_sabana',
+        componentes:[
+          {id:'teorica',   label:'Nota Teórica',           pct:40, desc:'40% teórica'},
+          {id:'prac_cond', label:'Práctica + Conductual',  pct:60, desc:'60% (práctica + conductual) ÷ 2'},
+        ],
+        etiqueta:'Nota Final La Sabana (sobre 5.0)'
+      }
+    },
+    { key:'bosque',  label:'Universidad El Bosque',           shortLabel:'El Bosque',
+      color:'var(--col-bosque)',    light:'var(--col-bosque-l)',
+      grupos:5, estudiantes:2,
+      notaFinal:null
+    },
+  ]
+};
+
+// Estado
+let HOSP  = 'kennedy';
+let UKEY  = '';
+let GRUPO = '';
+let SEM   = 'I';
+let ANIO  = new Date().getFullYear();
+let DATA  = {};
+
+function getUni(){ return (UNIS[HOSP]||[]).find(u=>u.key===UKEY); }
+
+function getTalleres(ukey){ return UNIV_TALLERES[ukey] || []; }
+
+function getData(){
+  if(!DATA[HOSP]) DATA[HOSP]={};
+  if(!DATA[HOSP][UKEY]) DATA[HOSP][UKEY]={};
+  if(!DATA[HOSP][UKEY][GRUPO]){
+    const uni = getUni();
+    const talleresNombres = getTalleres(UKEY);
+    const nSts = uni ? uni.estudiantes : 2;
+    const talleres = talleresNombres.map(nombre=>({nombre}));
+    const estudiantes = Array.from({length:nSts},()=>({nombre:'',notas:{},practica:'',conductual:''}));
+    DATA[HOSP][UKEY][GRUPO] = { talleres, estudiantes };
+  }
+  return DATA[HOSP][UKEY][GRUPO];
+}
+
+// ══════════════════════════════════════════════════
+// CONTROLES
+// ══════════════════════════════════════════════════
+function onSemChange(){
+  SEM  = document.getElementById('sel-sem').value;
+  ANIO = parseInt(document.getElementById('sel-anio').value);
+  updateSemLabel();
+}
+
+function updateSemLabel(){
+  document.getElementById('sem-label').textContent = `Semestre ${SEM}-${ANIO}`;
+}
+
+function setHosp(h){
+  HOSP=''; UKEY=''; GRUPO='';
+  document.querySelectorAll('.btn-hosp').forEach(b=>{
+    b.classList.toggle('active', b.textContent.toLowerCase().includes(h));
+  });
+  HOSP = h;
+  fillUni();
+  render();
+}
+
+function fillUni(){
+  const sel = document.getElementById('sel-uni');
+  sel.innerHTML = '<option value="">— Seleccione —</option>';
+  (UNIS[HOSP]||[]).forEach(u=>{
+    const o = document.createElement('option');
+    o.value=u.key; o.textContent=u.label;
+    sel.appendChild(o);
+  });
+  sel.value='';
+  fillGrupo();
+}
+
+function onUniChange(){
+  UKEY  = document.getElementById('sel-uni').value;
+  GRUPO = '';
+  fillGrupo();
+  // Auto-seleccionar primer grupo para mejorar UX
+  const grpSel=document.getElementById('sel-grp');
+  if(grpSel.options.length>1){
+    grpSel.selectedIndex=1;
+    GRUPO=grpSel.value;
+  }
+  render();
+}
+
+function fillGrupo(){
+  // Grupos fijos 1-5 en el HTML — solo resetear selección
+  const sel=document.getElementById('sel-grp');
+  sel.value='';
+}
+
+function render(){
+  GRUPO = document.getElementById('sel-grp').value;
+  const area = document.getElementById('main-area');
+  if(!UKEY||!GRUPO){
+    area.innerHTML='<div class="empty"><h2>Seleccione universidad y grupo</h2><p>Use los desplegables de arriba para comenzar a registrar notas.</p></div>';
+    return;
+  }
+  const uni=getUni(), d=getData();
+  area.innerHTML=buildCard(uni,d);
+}
+
+// ══════════════════════════════════════════════════
+// CONSTRUCCIÓN DEL CARD
+// ══════════════════════════════════════════════════
+function buildCard(uni,d){
+  const nT=d.talleres.length;
+  const pctTaller=+(40/nT).toFixed(4);
+  return `
+  <div class="card" id="main-card">
+    <div class="card-header" style="background:${uni.light};border-color:${uni.color}">
+      <div>
+        <div class="card-title" style="color:${uni.color}">${uni.label} · ${GRUPO}</div>
+        <div style="font-size:11px;color:${uni.color};opacity:.8;margin-top:3px">
+          ${nT} talleres (40% · ${fmtPct(pctTaller)} c/u) · Examen Final (30%) · Seminario de Integración Clínica (30%) &nbsp;|&nbsp;
+          ${d.estudiantes.length} estudiantes · Semestre ${SEM}-${ANIO}
+        </div>
+      </div>
+      <button class="no-print" onclick="addEstudiante()" style="padding:7px 14px;border:2px solid ${uni.color};background:#fff;color:${uni.color};border-radius:6px;font-weight:700;font-size:12px;cursor:pointer">+ Estudiante</button>
+    </div>
+    <div class="card-body">
+      <div class="st-wrap">${buildTablaUnificada(uni,d)}</div>
+    </div>
+    ${buildNotasResumen(uni,d)}
+    ${uni.notaFinal ? buildNotaFinal(uni,d) : ''}
+  </div>`;
+}
+
+function fmtPct(n){
+  const r=Math.round(n*100)/100;
+  return Number.isInteger(r)?r+'%':r.toFixed(2).replace(/\.?0+$/,'')+'%';
+}
+
+function buildTablaUnificada(uni,d){
+  const nT=d.talleres.length;
+  const pctT=fmtPct(40/nT);
+
+  // ── Fila 1 de encabezado: tipo (badge) ──
+  let hTipo='<th rowspan="3" style="text-align:left;vertical-align:middle;background:#0D1B2A;min-width:140px">Nombre</th>';
+  d.talleres.forEach(()=>{ hTipo+=`<th class="th-taller"><span class="th-badge th-badge-t">Taller</span></th>`; });
+  hTipo+=`<th class="th-examen"><span class="th-badge th-badge-ex">Examen</span></th>`;
+  hTipo+=`<th class="th-seminario"><span class="th-badge th-badge-sem">Seminario</span></th>`;
+  hTipo+=`<th class="th-teorica" rowspan="3" style="vertical-align:middle">Nota<br>Teórica</th>`;
+
+  // ── Fila 2: nombre del taller ──
+  let hNombre='';
+  d.talleres.forEach((t)=>{ hNombre+=`<th class="th-taller" style="font-size:9px;font-weight:600;white-space:normal;max-width:60px;line-height:1.2">${t.nombre}</th>`; });
+  hNombre+=`<th class="th-examen" style="font-size:9px;font-weight:600">Examen Final</th>`;
+  hNombre+=`<th class="th-seminario" style="font-size:9px;font-weight:600">Seminario</th>`;
+
+  // ── Fila 3: porcentaje ──
+  let hPct='';
+  d.talleres.forEach(()=>{ hPct+=`<th class="th-taller" style="font-size:10px;opacity:.85">${pctT}</th>`; });
+  hPct+=`<th class="th-examen" style="font-size:10px;opacity:.85">30%</th>`;
+  hPct+=`<th class="th-seminario" style="font-size:10px;opacity:.85">30%</th>`;
+
+  // ── Filas de datos ──
+  let rows='';
+  d.estudiantes.forEach((st,si)=>{
+    let cells=`<td><input class="name-inp" data-si="${si}" placeholder="Nombre completo" value="${st.nombre||''}" oninput="saveField(${si},'nombre',this.value)"></td>`;
+    d.talleres.forEach((_,ai)=>{
+      const v=(st.notas&&st.notas[ai]!=null)?st.notas[ai]:'';
+      cells+=`<td><input class="grade-inp" type="number" min="0" max="5" step="0.1" value="${v}" oninput="saveNota(${si},${ai},this.value)" onchange="saveNota(${si},${ai},this.value)"></td>`;
+    });
+    const ex=(st.notas&&st.notas['ex']!=null)?st.notas['ex']:'';
+    cells+=`<td><input class="grade-inp" type="number" min="0" max="5" step="0.1" value="${ex}" oninput="saveNota(${si},'ex',this.value)" onchange="saveNota(${si},'ex',this.value)"></td>`;
+    const sem=(st.notas&&st.notas['sem']!=null)?st.notas['sem']:'';
+    cells+=`<td><input class="grade-inp" type="number" min="0" max="5" step="0.1" value="${sem}" oninput="saveNota(${si},'sem',this.value)" onchange="saveNota(${si},'sem',this.value)"></td>`;
+    const nt=calcTeorica(st,d);
+    const ntDisp=nt!==null?nt.toFixed(2):'—';
+    const ntClass=nt!==null?(nt>=3?'pass':'fail'):'neutral';
+    cells+=`<td style="background:#f0f0ff"><span id="nt-${si}" class="nota-box-val ${ntClass}" style="font-size:15px">${ntDisp}</span></td>`;
+    rows+=`<tr>${cells}</tr>`;
+  });
+
+  return `<table>
+    <thead>
+      <tr>${hTipo}</tr>
+      <tr>${hNombre}</tr>
+      <tr>${hPct}</tr>
+    </thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+// Kept for compatibility (not used now but harmless)
+function buildActGrid(d){ return ''; }
+function buildTablaEstudiantes(uni,d){ return buildTablaUnificada(uni,d); }
+
+function buildNotasResumen(uni,d){
+  if(!d.estudiantes.length) return '';
+  let rows=d.estudiantes.map((st,si)=>{
+    const nt=calcTeorica(st,d);
+    const ntDisp=nt!==null?nt.toFixed(2):'—';
+    const ntC=nt!==null?(nt>=3?'pass':'fail'):'neutral';
+    return `<tr>
+      <td style="text-align:left;font-weight:600;font-size:12px;min-width:140px" class="stu-name-cell" data-si="${si}">${st.nombre||`Estudiante ${si+1}`}</td>
+      <td style="text-align:center"><span class="nota-box-val ${ntC}" style="font-size:15px">${ntDisp}</span></td>
+      <td style="text-align:center"><input class="manual-inp" type="number" min="0" max="5" step="0.1" placeholder="0.0" value="${st.practica||''}" oninput="saveField(${si},'practica',this.value)" onchange="saveField(${si},'practica',this.value)"></td>
+      <td style="text-align:center"><input class="manual-inp" type="number" min="0" max="5" step="0.1" placeholder="0.0" value="${st.conductual||''}" oninput="saveField(${si},'conductual',this.value)" onchange="saveField(${si},'conductual',this.value)"></td>
+    </tr>`;
+  }).join('');
+
+  return `<div class="notas-resumen">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink-m);margin-bottom:8px">
+      Componentes para nota final · Teórica = automática · Práctica y Conductual = manuales
+    </div>
+    <div style="overflow-x:auto">
+    <table style="min-width:400px">
+      <thead><tr>
+        <th style="text-align:left;background:#334155">Estudiante</th>
+        <th style="background:#2c3e7a">Nota Teórica</th>
+        <th style="background:#1a6b3c">Nota Práctica</th>
+        <th style="background:#6b3a00">Nota Conductual</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+  </div>`;
+}
+
+function buildNotaFinal(uni,d){
+  const nf=uni.notaFinal;
+  let rows=d.estudiantes.map((st,si)=>{
+    const nt=calcTeorica(st,d);
+    const pr=parseFloat(st.practica)||0;
+    const co=parseFloat(st.conductual)||0;
+    let cells=`<td style="text-align:left;font-weight:600;font-size:12px" class="stu-name-cell" data-si="${si}">${st.nombre||`Estudiante ${si+1}`}</td>`;
+    let final=null;
+    if(nf.tipo==='pct5'){
+      nf.componentes.forEach(comp=>{
+        let val=0;
+        if(comp.id==='teorica') val=nt!==null?nt:0;
+        else if(comp.id==='practica') val=pr;
+        else if(comp.id==='conductual') val=co;
+        const contrib=val*(comp.pct/100);
+        cells+=`<td><span style="font-size:12px;color:var(--ink-m)">${val.toFixed(2)} × ${comp.pct}%</span><br><b>${contrib.toFixed(3)}</b></td>`;
+        if(final===null) final=0;
+        final+=contrib;
+      });
+      const fc=final!==null?(final>=3?'pass':'fail'):'neutral';
+      cells+=`<td><span class="nota-box-val ${fc}" style="font-size:18px">${final!==null?final.toFixed(2):'—'}</span></td>`;
+    } else if(nf.tipo==='pct5_sabana'){
+      const promPC=(pr+co)/2;
+      const contrib_t=(nt!==null?nt:0)*0.40;
+      const contrib_pc=promPC*0.60;
+      final=contrib_t+contrib_pc;
+      cells+=`<td><span style="font-size:12px;color:var(--ink-m)">${nt!==null?nt.toFixed(2):'—'} × 40%</span><br><b>${contrib_t.toFixed(3)}</b></td>`;
+      cells+=`<td><span style="font-size:12px;color:var(--ink-m)">prom(${pr.toFixed(2)},${co.toFixed(2)}) × 60%</span><br><b>${contrib_pc.toFixed(3)}</b></td>`;
+      const fc=final>=3?'pass':'fail';
+      cells+=`<td><span class="nota-box-val ${fc}" style="font-size:18px">${final.toFixed(2)}</span></td>`;
+    } else if(nf.tipo==='puntos_uan'){
+      const pt=(nt!==null?nt:0)*4, pp=pr*4, pc=co*2;
+      final=pt+pp+pc;
+      cells+=`<td><span style="font-size:12px;color:var(--ink-m)">${nt!==null?nt.toFixed(2):'—'} × 4</span><br><b>${pt.toFixed(1)} pts</b></td>`;
+      cells+=`<td><span style="font-size:12px;color:var(--ink-m)">${pr.toFixed(2)} × 4</span><br><b>${pp.toFixed(1)} pts</b></td>`;
+      cells+=`<td><span style="font-size:12px;color:var(--ink-m)">${co.toFixed(2)} × 2</span><br><b>${pc.toFixed(1)} pts</b></td>`;
+      const fc=final>=30?'pass':'fail';
+      cells+=`<td><span class="nota-box-val ${fc}" style="font-size:18px">${final.toFixed(1)}<span style="font-size:11px;font-weight:400"> /50</span></span></td>`;
+    }
+    return `<tr>${cells}</tr>`;
+  }).join('');
+
+  let headers='<th style="text-align:left">Estudiante</th>';
+  if(nf.tipo==='pct5'){
+    nf.componentes.forEach(c=>{ headers+=`<th>${c.label}<br><span style="font-weight:400;font-size:10px">${c.desc}</span></th>`; });
+  } else if(nf.tipo==='pct5_sabana'){
+    headers+='<th>Teórica<br><span style="font-weight:400;font-size:10px">40%</span></th>';
+    headers+='<th>Práctica + Conductual<br><span style="font-weight:400;font-size:10px">60% del promedio</span></th>';
+  } else if(nf.tipo==='puntos_uan'){
+    nf.componentes.forEach(c=>{ headers+=`<th>${c.label}<br><span style="font-weight:400;font-size:10px">${c.desc}</span></th>`; });
+  }
+  headers+='<th style="background:#5b2282">NOTA FINAL</th>';
+
+  return `<div class="nota-final-section">
+    <div class="nota-final-title">
+      📋 ${nf.etiqueta}
+      <span style="font-size:11px;font-weight:400;color:var(--ink-m)">— para copiar directamente al formato de calificación</span>
+    </div>
+    <div style="overflow-x:auto">
+    <table><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>
+    </div></div>`;
+}
+
+// ══════════════════════════════════════════════════
+// CÁLCULO NOTA TEÓRICA
+// Talleres 40% + Examen 30% + Seminario 30% = 100%
+// Nota teórica = promedio ponderado de los componentes ingresados
+// ══════════════════════════════════════════════════
+function calcTeorica(st,d){
+  const nT=d.talleres.length;
+  if(!nT) return null;
+  const pctT=40/nT/100;   // peso de cada taller
+  const pctEx=0.30;        // peso examen
+  const pctSem=0.30;       // peso seminario
+
+  let suma=0, pesoAcum=0;
+
+  d.talleres.forEach((_,i)=>{
+    const v=st.notas&&st.notas[i]!=null&&st.notas[i]!==''?parseFloat(st.notas[i]):null;
+    if(v!==null){ suma+=v*pctT; pesoAcum+=pctT; }
+  });
+  const ex=st.notas&&st.notas['ex']!=null&&st.notas['ex']!==''?parseFloat(st.notas['ex']):null;
+  if(ex!==null){ suma+=ex*pctEx; pesoAcum+=pctEx; }
+  const sem=st.notas&&st.notas['sem']!=null&&st.notas['sem']!==''?parseFloat(st.notas['sem']):null;
+  if(sem!==null){ suma+=sem*pctSem; pesoAcum+=pctSem; }
+
+  if(pesoAcum===0) return null;
+  // Normalizar al peso acumulado para mostrar nota parcial coherente mientras se llena
+  return suma/pesoAcum;
+}
+
+// ══════════════════════════════════════════════════
+// SAVE / ACTIONS
+// ══════════════════════════════════════════════════
+function saveField(si,field,val){
+  const d=getData();
+  d.estudiantes[si][field]=val;
+  // Sincronizar nombre en todas las tarjetas automáticamente
+  if(field==='nombre'){
+    // Actualizar todos los inputs de nombre del mismo estudiante (índice si)
+    document.querySelectorAll(`.name-inp[data-si="${si}"]`).forEach(inp=>{
+      if(inp!==document.activeElement) inp.value=val;
+    });
+    // Actualizar celdas de texto con el nombre (resumen y nota final)
+    document.querySelectorAll(`.stu-name-cell[data-si="${si}"]`).forEach(el=>{
+      el.textContent=val||`Estudiante ${si+1}`;
+    });
+  }
+  reRenderNotas();
+}
+
+function saveNota(si,actIdx,val){
+  const d=getData();
+  if(!d.estudiantes[si].notas) d.estudiantes[si].notas={};
+  d.estudiantes[si].notas[actIdx]=val;
+  reRenderNotas();
+}
+
+function reRenderNotas(){
+  const d=getData(), uni=getUni();
+  d.estudiantes.forEach((st,si)=>{
+    const nt=calcTeorica(st,d);
+    const el=document.getElementById(`nt-${si}`);
+    if(el){
+      el.textContent=nt!==null?nt.toFixed(2):'—';
+      el.className='nota-box-val '+(nt!==null?(nt>=3?'pass':'fail'):'neutral');
+    }
+  });
+  const card=document.getElementById('main-card');
+  if(!card||!uni||!uni.notaFinal) return;
+  const nfSection=card.querySelector('.nota-final-section');
+  if(nfSection){
+    const tmp=document.createElement('div');
+    tmp.innerHTML=buildNotaFinal(uni,d);
+    nfSection.parentNode.replaceChild(tmp.firstChild,nfSection);
+  }
+}
+
+function addEstudiante(){
+  const d=getData();
+  d.estudiantes.push({nombre:'',notas:{},practica:'',conductual:''});
+  render();
+}
+
+function limpiarGrupo(){
+  if(!UKEY||!GRUPO){alert('Selecciona universidad y grupo primero.');return;}
+  if(!confirm(`¿Limpiar todos los datos de ${GRUPO} — ${getUni().label}?`)) return;
+  if(DATA[HOSP]&&DATA[HOSP][UKEY]) delete DATA[HOSP][UKEY][GRUPO];
+  render();
+}
+
+function imprimir(){
+  if(!UKEY||!GRUPO){alert('Selecciona universidad y grupo primero.');return;}
+  window.print();
+}
+
+// ══════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════
+(function init(){
+  // Poblar años: desde 2026 hasta 2031
+  const selAnio=document.getElementById('sel-anio');
+  const curYear=new Date().getFullYear();
+  const startYear=Math.max(2026,curYear);
+  for(let y=startYear;y<=startYear+5;y++){
+    const o=document.createElement('option');
+    o.value=y; o.textContent=y;
+    if(y===Math.max(2026,curYear)) o.selected=true;
+    selAnio.appendChild(o);
+  }
+  // Detectar semestre por mes
+  const selSem=document.getElementById('sel-sem');
+  selSem.value=new Date().getMonth()<6?'I':'II';
+  SEM=selSem.value; ANIO=parseInt(selAnio.value);
+  updateSemLabel();
+  fillUni();
+})();
+</script>
+</body>
+</html>

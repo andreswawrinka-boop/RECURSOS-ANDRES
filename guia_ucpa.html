@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de Recuperación Postanestésica (UCPA) — Dr. Andrés Robayo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap');
+
+  :root{
+    --bg:#F4F2EE; --panel:#FFFFFF; --border:#E2DDD6;
+    --txt:#1A1714; --txt2:#565048; --txt3:#98948C;
+    /* Admisión — verde esmeralda */
+    --vp:#1A5C2E; --vp-m:#228B48; --vp-t:#C8EDD8; --vp-ll:#F0FAF4;
+    /* Vigilancia — azul profundo */
+    --vc:#0E2A50; --vc-m:#1B4F8A; --vc-t:#C8DCF5; --vc-ll:#F0F5FD;
+    /* Complicaciones — rojo */
+    --va:#6C1010; --va-m:#A83020; --va-t:#F8D0CC; --va-ll:#FEF5F4;
+    /* Dolor — naranja */
+    --io:#7A3A08; --io-m:#C05A10; --io-t:#FAE0C8; --io-ll:#FDF5EE;
+    /* NVPO — lila */
+    --med:#3A1A6C; --med-m:#6030A0; --med-t:#E0D0F8; --med-ll:#F8F4FE;
+    /* Alta — rojo oscuro */
+    --comp:#580808; --comp-m:#8C1818; --comp-t:#F5C8C8; --comp-ll:#FEF3F3;
+    /* Taller — teal */
+    --te:#0E4040; --te-m:#1A7070; --te-t:#C0E8E8; --te-ll:#F0FAFA;
+    /* Evidencia — dorado */
+    --do:#604010; --do-m:#9C6818; --do-t:#F5E4B0; --do-ll:#FDFAF0;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;font-size:13.5px;line-height:1.65;color:var(--txt);background:var(--bg);}
+
+  /* ─── PORTADA ─── */
+  .portada{background:linear-gradient(145deg,#0A1828 0%,#1A3A20 45%,#0E2A50 100%);color:#fff;padding:54px 50px 44px;position:relative;overflow:hidden;}
+  .portada::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(52deg,transparent,transparent 55px,rgba(255,255,255,.014) 55px,rgba(255,255,255,.014) 56px);}
+  .portada::after{content:'';position:absolute;bottom:-90px;right:-50px;width:360px;height:360px;border-radius:50%;border:1px solid rgba(255,255,255,.07);}
+  .portada-kicker{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:20px;position:relative;}
+  .portada h1{font-family:'DM Serif Display',serif;font-size:38px;line-height:1.1;margin-bottom:10px;position:relative;}
+  .portada h1 .ac1{color:#80F0B8;}
+  .portada h1 .ac2{color:#FBBF24;}
+  .portada-sub{font-size:13.5px;color:rgba(255,255,255,.72);margin-bottom:28px;max-width:720px;line-height:1.7;position:relative;}
+  .portada-meta{display:flex;flex-wrap:wrap;gap:24px;border-top:1px solid rgba(255,255,255,.12);padding-top:20px;margin-top:14px;position:relative;}
+  .pm strong{display:block;font-size:10px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace;letter-spacing:.8px;text-transform:uppercase;margin-bottom:3px;}
+  .pm span{font-size:12.5px;color:rgba(255,255,255,.84);}
+
+  /* ─── CONTENEDOR ─── */
+  .cont{max-width:980px;margin:0 auto;padding:36px 20px 80px;}
+
+  /* ─── ÍNDICE ─── */
+  .indice{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:22px 26px;margin-bottom:30px;}
+  .idx-h{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:3px;text-transform:uppercase;color:var(--txt3);margin-bottom:13px;}
+  .indice ol{padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:1px 20px;}
+  .indice li{display:flex;gap:8px;align-items:baseline;padding:4px 0;border-bottom:1px solid var(--border);}
+  .indice li:last-child,.indice li:nth-last-child(2){border-bottom:none;}
+  .idx-n{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--txt3);min-width:22px;}
+  .indice a{color:var(--txt);font-size:12.5px;text-decoration:none;line-height:1.4;}
+  .indice a:hover{color:var(--vc-m);}
+
+  /* ─── SECCIONES ─── */
+  .seccion{background:var(--panel);border-radius:12px;border:1px solid var(--border);margin-bottom:24px;overflow:hidden;}
+  .sec-h{padding:14px 22px;display:flex;align-items:center;gap:11px;}
+  .sec-h.vp{background:linear-gradient(135deg,var(--vp) 0%,var(--vp-m) 100%);}
+  .sec-h.vc{background:linear-gradient(135deg,var(--vc) 0%,var(--vc-m) 100%);}
+  .sec-h.va{background:linear-gradient(135deg,var(--va) 0%,var(--va-m) 100%);}
+  .sec-h.io{background:linear-gradient(135deg,var(--io) 0%,var(--io-m) 100%);}
+  .sec-h.med{background:linear-gradient(135deg,var(--med) 0%,var(--med-m) 100%);}
+  .sec-h.comp{background:linear-gradient(135deg,var(--comp) 0%,var(--comp-m) 100%);}
+  .sec-h.te{background:linear-gradient(135deg,var(--te) 0%,var(--te-m) 100%);}
+  .sec-h.do{background:linear-gradient(135deg,var(--do) 0%,var(--do-m) 100%);}
+  .sec-num{width:27px;height:27px;border-radius:50%;background:rgba(255,255,255,.2);color:#fff;font-family:'DM Mono',monospace;font-size:11.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .sec-titulo{font-size:15px;font-weight:700;color:#fff;}
+  .sec-b{padding:20px 22px;}
+  .subsec{margin-bottom:20px;}
+  .subsec h3{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding-bottom:7px;border-bottom:2px solid;margin-bottom:10px;}
+  .h3-vp{color:var(--vp-m);border-color:var(--vp-t);}
+  .h3-vc{color:var(--vc-m);border-color:var(--vc-t);}
+  .h3-va{color:var(--va-m);border-color:var(--va-t);}
+  .h3-io{color:var(--io-m);border-color:var(--io-t);}
+  .h3-med{color:var(--med-m);border-color:var(--med-t);}
+  .h3-comp{color:var(--comp-m);border-color:var(--comp-t);}
+  .h3-te{color:var(--te-m);border-color:var(--te-t);}
+  .h3-do{color:var(--do-m);border-color:var(--do-t);}
+  .h3-n{color:var(--txt2);border-color:var(--border);}
+  p.p{font-size:13.5px;margin-bottom:10px;line-height:1.7;}
+
+  /* ─── TABLAS ─── */
+  .tw{overflow-x:auto;margin-bottom:13px;border-radius:8px;border:1px solid var(--border);}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;}
+  thead th{padding:9px 12px;text-align:left;font-size:11px;font-family:'DM Mono',monospace;letter-spacing:.4px;font-weight:600;}
+  .th-vp thead th{background:var(--vp);color:#fff;}
+  .th-vc thead th{background:var(--vc);color:#fff;}
+  .th-va thead th{background:var(--va);color:#fff;}
+  .th-io thead th{background:var(--io);color:#fff;}
+  .th-med thead th{background:var(--med);color:#fff;}
+  .th-comp thead th{background:var(--comp);color:#fff;}
+  .th-te thead th{background:var(--te);color:#fff;}
+  .th-do thead th{background:var(--do);color:#fff;}
+  .th-n thead th{background:#252018;color:#fff;}
+  tbody tr:nth-child(even){background:var(--bg);}
+  tbody tr:hover{background:var(--vc-ll);}
+  tbody td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.5;}
+  tbody td:first-child{font-weight:600;}
+
+  /* ─── CAJAS ─── */
+  .caja{border-radius:8px;padding:12px 15px;margin-bottom:12px;border-left:4px solid;font-size:13px;line-height:1.7;}
+  .c-vp{background:var(--vp-ll);border-color:var(--vp-m);}  .c-vp strong{color:var(--vp);}
+  .c-vc{background:var(--vc-ll);border-color:var(--vc-m);}  .c-vc strong{color:var(--vc-m);}
+  .c-va{background:var(--va-ll);border-color:var(--va-m);}  .c-va strong{color:var(--va-m);}
+  .c-io{background:var(--io-ll);border-color:var(--io-m);}  .c-io strong{color:var(--io-m);}
+  .c-med{background:var(--med-ll);border-color:var(--med-m);} .c-med strong{color:var(--med-m);}
+  .c-comp{background:var(--comp-ll);border-color:var(--comp-m);} .c-comp strong{color:var(--comp-m);}
+  .c-te{background:var(--te-ll);border-color:var(--te-m);}  .c-te strong{color:var(--te);}
+  .c-do{background:var(--do-ll);border-color:var(--do-m);}  .c-do strong{color:var(--do);}
+
+  /* ─── ALDRETE CARDS ─── */
+  .score-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:14px;}
+  .score-card{border-radius:10px;overflow:hidden;border:2px solid var(--border);}
+  .score-top{padding:10px 12px;color:#fff;font-family:'DM Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.5px;}
+  .score-body{padding:10px 12px;background:#fff;font-size:12px;line-height:1.55;}
+  .score-val{font-size:28px;font-weight:900;display:block;margin-bottom:3px;}
+
+  /* ─── PASOS TÉCNICA ─── */
+  .tecnica-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:15px 18px;margin-bottom:12px;}
+  .tecnica-titulo{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;padding-bottom:6px;border-bottom:1px solid var(--border);margin-bottom:10px;}
+  .paso{display:flex;gap:10px;margin-bottom:6px;font-size:13px;align-items:flex-start;}
+  .paso-n{min-width:22px;font-family:'DM Mono',monospace;font-size:11px;color:var(--txt3);margin-top:2px;flex-shrink:0;}
+
+  /* ─── ESCALA VISUAL ─── */
+  .escala{display:flex;gap:0;border-radius:8px;overflow:hidden;margin:10px 0 14px;border:1px solid var(--border);}
+  .escala-seg{flex:1;padding:8px 4px;text-align:center;font-size:11.5px;font-family:'DM Mono',monospace;}
+  .escala-n{font-size:18px;font-weight:700;display:block;}
+
+  /* ─── FÁRMACO CARD ─── */
+  .farma-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:14px;}
+  .farma-card{border-radius:9px;overflow:hidden;border:1.5px solid var(--border);}
+  .farma-h{padding:9px 13px;color:#fff;font-size:12.5px;font-weight:700;}
+  .farma-b{padding:11px 13px;background:#fff;font-size:12px;line-height:1.6;}
+  .farma-lbl{font-family:'DM Mono',monospace;font-size:9.5px;text-transform:uppercase;color:var(--txt3);margin-top:5px;}
+  .dosis{font-family:'DM Mono',monospace;background:#12100E;color:#D8C870;border-radius:4px;padding:1px 6px;font-size:11.5px;}
+  .tag{font-family:'DM Mono',monospace;font-size:10px;padding:2px 6px;border-radius:4px;display:inline-block;margin:2px 2px 0 0;}
+  .tag-vp{background:var(--vp-t);color:var(--vp);}
+  .tag-vc{background:var(--vc-t);color:var(--vc-m);}
+  .tag-va{background:var(--va-t);color:var(--va-m);}
+  .tag-io{background:var(--io-t);color:var(--io-m);}
+  .tag-med{background:var(--med-t);color:var(--med-m);}
+  .tag-te{background:var(--te-t);color:var(--te-m);}
+  .tag-do{background:var(--do-t);color:var(--do-m);}
+  .tag-comp{background:var(--comp-t);color:var(--comp-m);}
+
+  /* ─── TALLER / EJERCICIOS ─── */
+  .ej-box{border:1px solid var(--border);border-radius:10px;padding:17px 19px;margin-bottom:13px;background:var(--panel);}
+  .ej-hdr{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .ej-num{width:30px;height:30px;border-radius:50%;background:#12100E;color:#D8C870;font-family:'DM Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .ej-tit{font-weight:700;font-size:14px;flex:1;}
+  .ej-pts{font-family:'DM Mono',monospace;font-size:10.5px;background:var(--vp-t);color:var(--vp);border-radius:20px;padding:3px 10px;}
+  .ej-txt{font-size:13px;line-height:1.75;margin-bottom:8px;}
+  .ej-datos{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:10px 13px;font-size:12.5px;line-height:1.85;margin:8px 0;}
+  .ej-q{margin-top:9px;}
+  .ej-q li{font-size:13px;line-height:1.7;color:var(--txt2);margin-bottom:5px;margin-left:16px;}
+
+  /* ─── FOOTER ─── */
+  .footer{background:#0E1E30;color:rgba(255,255,255,.6);padding:22px 50px;font-size:12px;line-height:1.8;}
+  .footer-g{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:980px;margin:0 auto;}
+  .footer strong{color:rgba(255,255,255,.84);display:block;margin-bottom:3px;}
+  .copyright{background:#060E18;color:rgba(255,255,255,.3);text-align:center;padding:11px;font-size:11px;}
+
+  @media(max-width:640px){
+    .portada{padding:30px 14px 24px;} .portada h1{font-size:26px;}
+    .cont{padding:16px 10px 60px;}
+    .indice ol,.farma-grid{grid-template-columns:1fr;}
+    .score-grid{grid-template-columns:repeat(3,1fr);}
+    .footer-g{grid-template-columns:1fr;} .footer{padding:18px 14px;}
+  }
+  @media print{body{background:#fff;} .seccion{break-inside:avoid;}
+    .portada{background:#0A1828!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
+</style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<div class="portada">
+  <div class="portada-kicker">Rotación de Anestesiología · Hospital Kennedy · Subred Suroccidente · Bogotá 2025</div>
+  <h1>Área de <span class="ac1">Recuperación</span><br><span class="ac2">Postanestésica</span></h1>
+  <p class="portada-sub">Guía clínica para el estudiante: admisión y reporte SBAR, Score de Aldrete, vigilancia continua, manejo de complicaciones, dolor agudo, NVPO y criterios de alta seguros. Basada en evidencia actualizada (ASA 2024, ERAS 2024, ESA 2023, Cochrane 2023).</p>
+  <div class="portada-meta">
+    <div class="pm"><strong>Docente</strong><span>Dr. Andrés Robayo · Anestesiología y Reanimación</span></div>
+    <div class="pm"><strong>Institución</strong><span>Hospital Kennedy · Subred Suroccidente · Bogotá</span></div>
+    <div class="pm"><strong>Evidencia</strong><span>ASA 2024 · ERAS 2024 · ESA 2023 · SAMBA 2020 · Cochrane 2023</span></div>
+    <div class="pm"><strong>Audiencia</strong><span>Estudiantes de medicina · Rotación de Anestesiología</span></div>
+  </div>
+</div>
+
+<div class="cont">
+
+<!-- ÍNDICE -->
+<div class="indice">
+  <div class="idx-h">Contenido de la guía</div>
+  <ol>
+    <li><span class="idx-n">01</span><a href="#s1">Admisión a la UCPA — Reporte SBAR</a></li>
+    <li><span class="idx-n">02</span><a href="#s2">Score de Aldrete Modificado</a></li>
+    <li><span class="idx-n">03</span><a href="#s3">Vigilancia y monitoreo continuo</a></li>
+    <li><span class="idx-n">04</span><a href="#s4">Hipotermia postoperatoria</a></li>
+    <li><span class="idx-n">05</span><a href="#s5">Nivel de consciencia y despertar prolongado</a></li>
+    <li><span class="idx-n">06</span><a href="#s6">Obstrucción de vía aérea y laringoespasmo</a></li>
+    <li><span class="idx-n">07</span><a href="#s7">Bloqueo neuromuscular residual</a></li>
+    <li><span class="idx-n">08</span><a href="#s8">Depresión respiratoria por opioides (OIRD)</a></li>
+    <li><span class="idx-n">09</span><a href="#s9">Inestabilidad hemodinámica</a></li>
+    <li><span class="idx-n">10</span><a href="#s10">Control del dolor agudo postoperatorio</a></li>
+    <li><span class="idx-n">11</span><a href="#s11">NVPO — Náuseas y vómito en UCPA</a></li>
+    <li><span class="idx-n">12</span><a href="#s12">Criterios de alta y documentación</a></li>
+    <li><span class="idx-n">13</span><a href="#s13">Taller de aplicación clínica · Puntaje sobre 5.0</a></li>
+  </ol>
+</div>
+
+<!-- S1 — ADMISIÓN / SBAR -->
+<div class="seccion" id="s1">
+  <div class="sec-h vp"><div class="sec-num">01</div><div class="sec-titulo">Admisión a la UCPA — Reporte Estructurado SBAR</div></div>
+  <div class="sec-b">
+    <p class="p">La transferencia del paciente del quirófano a la UCPA es un momento de alta vulnerabilidad. La Joint Commission, la ASA y la OMS exigen un reporte estructurado antes de que el anestesiólogo se retire. El modelo <strong>SBAR</strong> (Situation – Background – Assessment – Recommendation) es el estándar internacional para esta comunicación.</p>
+
+    <div class="subsec">
+      <h3 class="h3-vp">1.1 Componentes del reporte SBAR</h3>
+      <div class="tw"><table class="th-vp">
+        <thead><tr><th>Componente</th><th>Información que incluye</th><th>Ejemplo práctico</th></tr></thead>
+        <tbody>
+          <tr><td>S — Situación</td><td>Nombre, edad, peso, cirugía realizada, tipo de anestesia, duración, estado al egreso</td><td>"Mujer 45 años, 62 kg. Colecistectomía laparoscópica. AG con intubación. 75 min. Extubada. Estable."</td></tr>
+          <tr><td>B — Background</td><td>Comorbilidades, medicamentos crónicos, alergias, ASA</td><td>"HTA controlada. Metoprolol crónico. Sin alergias conocidas. ASA II."</td></tr>
+          <tr><td>A — Assessment</td><td>Eventos intraoperatorios, medicamentos administrados (opioides totales, agentes reversión, vasopresores)</td><td>"Hipotensión post-inducción. Efedrina 10 mg IV. Fentanilo 250 µg total. Sin reversión. Propofol + Sevo."</td></tr>
+          <tr><td>R — Recommendation</td><td>Analgesia prescrita, antieméticos, restricciones, signos de alarma específicos, plan de alta</td><td>"Ketorolaco 30 mg c/8h. Ondansetrón 4 mg si NVPO. Revisar PA cada 5 min × 30 min."</td></tr>
+        </tbody>
+      </table></div>
+      <div class="caja c-va"><strong>⚠ Regla de no abandono:</strong> el anestesiólogo no puede retirarse de la UCPA hasta que la enfermera acepte formalmente el reporte y el monitoreo esté activo y estable. Si el paciente está inestable al egreso de quirófano, el anestesiólogo permanece hasta estabilización completa.</div>
+    </div>
+
+    <div class="subsec">
+      <h3 class="h3-vp">1.2 Fast-Track — vía rápida a Fase II</h3>
+      <p class="p">El paciente que cumple criterios de alta desde quirófano puede ir directamente a Fase II (sala de espera sin monitoreo continuo) saltando la Fase I de la UCPA. Requiere: Aldrete modificado ≥12/14, dolor EVA ≤3, sin NVPO activa, sin sedación excesiva.</p>
+      <div class="caja c-vp"><strong>✔ Tiempo mínimo en UCPA según tipo de anestesia:</strong><br>
+        · Anestesia general: ≥30–60 min de observación activa tras el despertar, incluso con Aldrete ≥9 de entrada.<br>
+        · Bloqueo neuroaxial: hasta regresión del bloqueo motor bilateral + nivel sensitivo ≤T10.<br>
+        · Sedación profunda: ≥30 min tras el último bolo de sedante.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S2 — ALDRETE -->
+<div class="seccion" id="s2">
+  <div class="sec-h vp"><div class="sec-num">02</div><div class="sec-titulo">Score de Aldrete Modificado — Criterios de Egreso de la UCPA</div></div>
+  <div class="sec-b">
+    <p class="p">El Score de Aldrete (1970, modificado 1995) evalúa 5 parámetros en escala de 0 a 2 cada uno. <strong>Se requiere puntaje ≥9/10 para el alta de la UCPA Fase I.</strong> Es el instrumento más validado internacionalmente para esta decisión.</p>
+
+    <div class="subsec">
+      <h3 class="h3-vp">2.1 Los cinco criterios</h3>
+      <div class="score-grid">
+        <div class="score-card">
+          <div class="score-top" style="background:var(--vp);">ACTIVIDAD</div>
+          <div class="score-body">
+            <span class="score-val" style="color:var(--vp);">2</span>
+            Mueve 4 extremidades voluntariamente
+            <div style="font-size:11px;color:var(--txt3);margin-top:4px;border-top:1px solid var(--border);padding-top:4px;">1 = 2 extremidades · 0 = ninguna</div>
+          </div>
+        </div>
+        <div class="score-card">
+          <div class="score-top" style="background:var(--vc);">RESPIRACIÓN</div>
+          <div class="score-body">
+            <span class="score-val" style="color:var(--vc);">2</span>
+            Respira profundo y tose libremente
+            <div style="font-size:11px;color:var(--txt3);margin-top:4px;border-top:1px solid var(--border);padding-top:4px;">1 = disnea · 0 = apnea</div>
+          </div>
+        </div>
+        <div class="score-card">
+          <div class="score-top" style="background:var(--io);">CIRCULACIÓN</div>
+          <div class="score-body">
+            <span class="score-val" style="color:var(--io);">2</span>
+            PA ±20% del valor preoperatorio
+            <div style="font-size:11px;color:var(--txt3);margin-top:4px;border-top:1px solid var(--border);padding-top:4px;">1 = ±20–49% · 0 = ±50%</div>
+          </div>
+        </div>
+        <div class="score-card">
+          <div class="score-top" style="background:var(--med);">CONSCIENCIA</div>
+          <div class="score-body">
+            <span class="score-val" style="color:var(--med);">2</span>
+            Despierto, orientado en tiempo y espacio
+            <div style="font-size:11px;color:var(--txt3);margin-top:4px;border-top:1px solid var(--border);padding-top:4px;">1 = se despierta al llamado · 0 = no responde</div>
+          </div>
+        </div>
+        <div class="score-card">
+          <div class="score-top" style="background:var(--va);">SpO₂</div>
+          <div class="score-body">
+            <span class="score-val" style="color:var(--va);">2</span>
+            ≥92% en aire ambiente sin O₂
+            <div style="font-size:11px;color:var(--txt3);margin-top:4px;border-top:1px solid var(--border);padding-top:4px;">1 = ≥92% con O₂ supl. · 0 = &lt;90% con O₂</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsec">
+      <h3 class="h3-vp">2.2 Score PADSS — Alta ambulatoria (domicilio)</h3>
+      <p class="p">El Post-Anesthetic Discharge Scoring System (White, 1999) evalúa criterios adicionales para el alta a domicilio en cirugía ambulatoria. Se requiere <strong>PADSS ≥9/10.</strong></p>
+      <div class="tw"><table class="th-vp">
+        <thead><tr><th>Criterio</th><th>2 puntos</th><th>1 punto</th><th>0 puntos</th></tr></thead>
+        <tbody>
+          <tr><td>Signos vitales</td><td>Cambio &lt;20% del basal</td><td>Cambio 20–40%</td><td>Cambio &gt;40%</td></tr>
+          <tr><td>Deambulación</td><td>Marcha firme, sin apoyo</td><td>Con apoyo leve</td><td>No puede deambular</td></tr>
+          <tr><td>Náusea / Vómito</td><td>Mínima, sin tratamiento</td><td>Moderada, tratada</td><td>Severa, persistente</td></tr>
+          <tr><td>Dolor</td><td>Mínimo, controlado oral</td><td>Moderado, requerió rescate</td><td>Severo, no controlado</td></tr>
+          <tr><td>Sangrado quirúrgico</td><td>Mínimo, sin cambio de apósito</td><td>Moderado, ≤2 recambios</td><td>Severo, &gt;3 recambios</td></tr>
+        </tbody>
+      </table></div>
+      <div class="caja c-do"><strong>ℹ Actualización ASA 2023 — La micción ya NO es criterio universal:</strong> la micción se exige solamente en: cirugía pélvica o perineal · anestesia espinal con bupivacaína densa · antecedente de retención urinaria · hombre &gt;60 años con HBP · opioides sistémicos en dosis altas. Para la mayoría de procedimientos ambulatorios, el paciente puede irse sin orinar si los demás criterios del PADSS se cumplen.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S3 — VIGILANCIA -->
+<div class="seccion" id="s3">
+  <div class="sec-h vc"><div class="sec-num">03</div><div class="sec-titulo">Vigilancia y Monitoreo Continuo en la UCPA</div></div>
+  <div class="sec-b">
+    <div class="subsec">
+      <h3 class="h3-vc">3.1 Parámetros, frecuencias y alarmas</h3>
+      <div class="tw"><table class="th-vc">
+        <thead><tr><th>Parámetro</th><th>Frecuencia de registro</th><th>Meta / Rango normal</th><th>Alarma — acción</th></tr></thead>
+        <tbody>
+          <tr><td>SpO₂</td><td>Continuo</td><td>≥94% en aire · ≥96% con O₂</td><td>&lt;92% → evaluación inmediata de vía aérea</td></tr>
+          <tr><td>FC / Ritmo (ECG)</td><td>Continuo</td><td>50–100 lpm · ritmo sinusal</td><td>&lt;50 o &gt;120 lpm → evaluar causa</td></tr>
+          <tr><td>PA no invasiva</td><td>c/5 min × 30 min, luego c/15 min</td><td>PAM ≥65 · PAS ≥90 mmHg</td><td>Variación &gt;20% del basal preoperatorio</td></tr>
+          <tr><td>Frecuencia respiratoria</td><td>c/15 min</td><td>12–20 rpm</td><td>&lt;8 rpm → depresión respiratoria, acción inmediata</td></tr>
+          <tr><td>Temperatura</td><td>Al ingreso y c/30 min</td><td>36–37.5°C</td><td>&lt;36°C → hipotermia → calentamiento activo</td></tr>
+          <tr><td>Nivel de consciencia</td><td>Continuo (evaluación)</td><td>Ramsay 1–2 · alerta y orientado</td><td>Ramsay ≥4 + FR &lt;10 → OIRD</td></tr>
+          <tr><td>Dolor (EVA/NRS)</td><td>c/15 min</td><td>EVA ≤3 en reposo</td><td>EVA ≥7 → analgesia de rescate inmediata</td></tr>
+          <tr><td>Diuresis (si catéter vesical)</td><td>c/30–60 min</td><td>≥0.5 mL/kg/h</td><td>&lt;0.5 mL/kg/h × 2h consecutivas</td></tr>
+          <tr><td>Glicemia (diabéticos)</td><td>Al ingreso, c/1h si &gt;200 mg/dL</td><td>140–180 mg/dL (perioperatorio)</td><td>&gt;250 o &lt;70 → corrección inmediata</td></tr>
+        </tbody>
+      </table></div>
+      <div class="caja c-vc"><strong>ℹ EtCO₂ en la UCPA — ASA Practice Guidelines 2024:</strong> la capnografía continua es recomendada en pacientes con alto riesgo de depresión respiratoria: SAHOS documentado · opioides en altas dosis intraoperatorio · obesidad IMC &gt;35 · uso de benzodiacepinas + opioides. Detecta hipoventilación antes de que la SpO₂ caiga, especialmente si el paciente recibe O₂ suplementario.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S4 — HIPOTERMIA -->
+<div class="seccion" id="s4">
+  <div class="sec-h vc"><div class="sec-num">04</div><div class="sec-titulo">Hipotermia Postoperatoria — Manejo Activo</div></div>
+  <div class="sec-b">
+    <p class="p">La hipotermia inadvertida perioperatoria (temperatura central &lt;36°C) afecta al <strong>50–90%</strong> de los pacientes sin calentamiento activo. No es un efecto menor: tiene consecuencias clínicas documentadas y relevantes en el postoperatorio.</p>
+    <div class="subsec">
+      <h3 class="h3-vc">4.1 Consecuencias y manejo</h3>
+      <div class="tw"><table class="th-vc">
+        <thead><tr><th>Consecuencia</th><th>Mecanismo</th><th>Relevancia clínica</th></tr></thead>
+        <tbody>
+          <tr><td>↑ Sangrado perioperatorio</td><td>Disfunción plaquetaria + ↓ actividad de factores de coagulación enzimáticos</td><td>Riesgo de transfusión × 1.5–2</td></tr>
+          <tr><td>↑ Infección de herida × 3</td><td>Vasoconstricción cutánea → ↓ O₂ tisular → ↓ actividad leucocitaria</td><td>Mayor estancia hospitalaria, antibióticos</td></tr>
+          <tr><td>Bloqueo NM residual prolongado</td><td>Los CND son temperatura-dependientes: a &lt;34°C la duración se duplica</td><td>Riesgo de parálisis residual en UCPA</td></tr>
+          <tr><td>Escalofríos postanestésicos</td><td>Activación del termostato hipotalámico; reflejo de escalofríos sin umbral del anestésico</td><td>↑ VO₂ hasta 600% → hipoxia en paciente vulnerable</td></tr>
+          <tr><td>Malestar e incomodidad</td><td>Activación de fibras nociceptivas cutáneas por frío</td><td>↑ ansiedad, ↑ PA, peor experiencia del paciente</td></tr>
+          <tr><td>Prolongación del despertar</td><td>Los anestésicos inhalatorios tienen mayor solubilidad y menor eliminación a &lt;36°C</td><td>Mayor tiempo en UCPA, aumento de costos</td></tr>
+        </tbody>
+      </table></div>
+      <div class="tw"><table class="th-vc">
+        <thead><tr><th>Intervención</th><th>Descripción</th><th>Nivel de evidencia</th></tr></thead>
+        <tbody>
+          <tr><td>Aire caliente forzado (Bair Hugger)</td><td>Sistema de manta con flujo de aire calentado a 38–40°C. Primera línea.</td><td>IA — mejor evidencia disponible</td></tr>
+          <tr><td>Cobertores eléctricos resistivos</td><td>Manta térmica eléctrica de baja temperatura. Alternativa cuando no hay Bair Hugger.</td><td>IB</td></tr>
+          <tr><td>Fluidos IV calentados</td><td>Calentar a 37–41°C si hay reposición de volumen en UCPA.</td><td>IB</td></tr>
+          <tr><td>Meperidina 12.5–25 mg IV</td><td>Único opioide con acción específica anti-escalofríos vía receptor κ. Efecto en 2–5 min.</td><td>IA</td></tr>
+          <tr><td>Dexmedetomidina 0.5–1 µg/kg</td><td>α₂-agonista. Alternativa no opioide para escalofríos. Menor depresión respiratoria.</td><td>IB</td></tr>
+        </tbody>
+      </table></div>
+      <div class="caja c-vc"><strong>✔ Meta:</strong> temperatura ≥36°C antes del alta de la UCPA. En pacientes con escalofríos y SpO₂ en descenso, dar O₂ suplementario simultáneamente al tratamiento farmacológico: los escalofríos pueden elevar el VO₂ un 600%, desaturando incluso al paciente sano.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S5 — CONSCIENCIA -->
+<div class="seccion" id="s5">
+  <div class="sec-h vc"><div class="sec-num">05</div><div class="sec-titulo">Nivel de Consciencia y Despertar Prolongado</div></div>
+  <div class="sec-b">
+    <div class="subsec">
+      <h3 class="h3-vc">5.1 Escala de Ramsay</h3>
+      <div class="escala">
+        <div class="escala-seg" style="background:#FEF3F3;border-right:1px solid var(--border)"><span class="escala-n" style="color:var(--va-m)">1</span>Agitado, ansioso</div>
+        <div class="escala-seg" style="background:#F0FAF4;border-right:1px solid var(--border)"><span class="escala-n" style="color:var(--vp-m)">2</span>Tranquilo, orientado ✔</div>
+        <div class="escala-seg" style="background:#FDF5EE;border-right:1px solid var(--border)"><span class="escala-n" style="color:var(--io-m)">3</span>Somnoliento</div>
+        <div class="escala-seg" style="background:#FDF5EE;border-right:1px solid var(--border)"><span class="escala-n" style="color:var(--io-m)">4</span>Dormido, responde</div>
+        <div class="escala-seg" style="background:#FEF3F3;border-right:1px solid var(--border)"><span class="escala-n" style="color:var(--va-m)">5</span>Dormido profundo</div>
+        <div class="escala-seg" style="background:#FEF3F3"><span class="escala-n" style="color:var(--comp-m)">6</span>Sin respuesta</div>
+      </div>
+      <p class="p">Meta en UCPA: <strong>Ramsay 2</strong> — tranquilo, orientado, cooperador. Ramsay ≥4 con FR &lt;10 rpm en contexto de opioides = OIRD hasta demostrar lo contrario.</p>
+    </div>
+    <div class="subsec">
+      <h3 class="h3-vc">5.2 Diagnóstico diferencial del despertar prolongado</h3>
+      <div class="tw"><table class="th-vc">
+        <thead><tr><th>Causa</th><th>Mecanismo</th><th>Diagnóstico</th><th>Manejo</th></tr></thead>
+        <tbody>
+          <tr><td>Efecto residual hipnóticos</td><td>Semivida prolongada o biotransformación lenta (obeso, anciano, hepatópata)</td><td>Clínica + contexto farmacológico</td><td>Estimulación, tiempo. Flumazenil 0.2 mg si BZD</td></tr>
+          <tr><td>Opioides en exceso (OIRD)</td><td>Depresión SNC dosis-dependiente receptor µ</td><td>Miosis + FR &lt;10 + Ramsay ≥4</td><td>Naloxona titulada 40–80 µg c/2–3 min (nunca bolo 0.4 mg)</td></tr>
+          <tr><td>Hipoglucemia</td><td>SNC dependiente de glucosa — disfunción neuronal rápida</td><td>Glicemia capilar urgente</td><td>Dextrosa 50% 20–40 mL IV → suero glucosado</td></tr>
+          <tr><td>Hiponatremia / hiperosmolaridad</td><td>Edema cerebral o deshidratación neuronal</td><td>Electrolitos séricos urgentes</td><td>Corrección lenta si Na &lt;125 mEq/L</td></tr>
+          <tr><td>Hipotermia severa (&lt;34°C)</td><td>↓ metabolismo neuronal + ↑ solubilidad de anestésicos</td><td>Temperatura central</td><td>Calentamiento activo agresivo</td></tr>
+          <tr><td>Hipercarbia (CO₂ &gt;60 mmHg)</td><td>Narcosis por CO₂ — depresión neuronal directa</td><td>EtCO₂ o gasometría arterial</td><td>Asistir ventilación, corregir causa</td></tr>
+          <tr><td>ACV perioperatorio</td><td>Isquemia cerebral focal o global (embolismo, hipoperfusión)</td><td>Déficit neurológico focal + neuroimagen</td><td>Activar protocolo de código ACV urgente</td></tr>
+          <tr><td>Síndrome anticolinérgico</td><td>Atropina, escopolamina, ketamina, difenhidramina</td><td>Midriasis + taquicardia + agitación + piel seca</td><td>Fisostigmina 1–2 mg IV lento</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+
+<!-- S6 — VÍA AÉREA -->
+<div class="seccion" id="s6">
+  <div class="sec-h va"><div class="sec-num">06</div><div class="sec-titulo">Obstrucción de Vía Aérea Superior y Laringoespasmo</div></div>
+  <div class="sec-b">
+    <p class="p">La obstrucción de la VAS es la complicación respiratoria más frecuente en UCPA (especialmente en los primeros 15 minutos). La causa más común es la relajación de tejidos blandos faríngeos (80%), seguida del laringoespasmo (5%) y las secreciones/edema.</p>
+    <div class="subsec">
+      <h3 class="h3-va">6.1 Manejo escalonado de la obstrucción</h3>
+      <div class="tecnica-box">
+        <div class="tecnica-titulo" style="color:var(--va-m)">Algoritmo de manejo — Obstrucción VAS en UCPA</div>
+        <div class="paso"><span class="paso-n">01</span><span><strong>Reconocer:</strong> ronquido/estridor, tiraje intercostal, movimiento paradójico tórax-abdomen, SpO₂ cayendo, agitación sin causa evidente.</span></div>
+        <div class="paso"><span class="paso-n">02</span><span><strong>Jaw-thrust bilateral:</strong> tracción mandibular firme con ambas manos — más efectiva que la tracción de mentón sola. Mantener extensión cervical si no hay trauma cervical.</span></div>
+        <div class="paso"><span class="paso-n">03</span><span><strong>Vía aérea oral (Guedel):</strong> si el paciente está inconsciente. Tamaño: distancia de comisura labial al lóbulo de la oreja. Si semicons­ciente o náuseas → cánula nasofaríngea (mejor tolerada).</span></div>
+        <div class="paso"><span class="paso-n">04</span><span><strong>O₂ suplementario:</strong> mascarilla facial a 8–10 L/min. Meta SpO₂ ≥95%.</span></div>
+        <div class="paso"><span class="paso-n">05</span><span><strong>Sin mejoría → CPAP con BVM + llamar al anestesiólogo:</strong> preparar equipo de intubación. No esperar más de 60–90 segundos.</span></div>
+      </div>
+    </div>
+    <div class="subsec">
+      <h3 class="h3-va">6.2 Laringoespasmo — emergencia ventilatoria</h3>
+      <div class="caja c-va"><strong>🚨 Definición:</strong> cierre espasmódico de las cuerdas vocales — ausencia total de flujo de aire a pesar de esfuerzo respiratorio. Sin flujo de aire audible. SpO₂ cae rápidamente.</div>
+      <div class="tecnica-box">
+        <div class="tecnica-titulo" style="color:var(--va-m)">Manejo del laringoespasmo</div>
+        <div class="paso"><span class="paso-n">01</span><span><strong>Punto de Larson:</strong> comprimir firmemente con ambos pulgares las apófisis mastoides bilaterales (entre el ramo ascendente de la mandíbula y el proceso mastoideo). Esta maniobra relaja el laringoespasmo en el 70–80% de los casos.</span></div>
+        <div class="paso"><span class="paso-n">02</span><span><strong>CPAP 20–30 cmH₂O</strong> con O₂ al 100% con BVM sellada. La presión positiva puede vencer el espasmo parcial.</span></div>
+        <div class="paso"><span class="paso-n">03</span><span><strong>Si persiste &gt;30–60 seg:</strong> succinilcolina 0.1–0.5 mg/kg IV (dosis de "lisis"). No esperar a SpO₂ &lt;80%. Si no hay IV disponible: succinilcolina IM 3–4 mg/kg.</span></div>
+        <div class="paso"><span class="paso-n">04</span><span><strong>Tras la relajación:</strong> intubar o mantener ventilación con BVM hasta recuperación. Investigar causa del laringoespasmo (secreciones, sangre, estimulación en plano superficial).</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S7 — BLOQUEO NM -->
+<div class="seccion" id="s7">
+  <div class="sec-h va"><div class="sec-num">07</div><div class="sec-titulo">Bloqueo Neuromuscular Residual — Riesgo Subestimado</div></div>
+  <div class="sec-b">
+    <p class="p">El bloqueo NM residual (TOF ratio &lt;0.9) ocurre en el <strong>20–40% de los pacientes</strong> que llegan a la UCPA incluso después de reversión con neostigmina. Su detección clínica es poco confiable: el paciente puede abrir los ojos y hablar con bloqueo significativo en músculos faríngeos, lo que genera riesgo real de broncoaspiración y obstrucción.</p>
+    <div class="subsec">
+      <h3 class="h3-va">7.1 Signos clínicos (poco sensibles y poco específicos)</h3>
+      <div class="tw"><table class="th-va">
+        <thead><tr><th>Signo clínico</th><th>TOF ratio aproximado</th><th>Limitación</th></tr></thead>
+        <tbody>
+          <tr><td>Incapacidad de levantar la cabeza 5 seg</td><td>&lt;0.6</td><td>El paciente puede tener TOF 0.7 y aún no levantar la cabeza por dolor o sedación</td></tr>
+          <tr><td>Diplopia o visión borrosa</td><td>&lt;0.7</td><td>El paciente puede no reportarla si está sedado</td></tr>
+          <tr><td>Debilidad al apretar la mano</td><td>&lt;0.7</td><td>Fuerza de prensión se recupera antes que los músculos faríngeos</td></tr>
+          <tr><td>Incapacidad de sacar la lengua</td><td>&lt;0.8</td><td>Maniobra poco cooperadora</td></tr>
+          <tr><td>Disfagia, voz nasal</td><td>&lt;0.9</td><td>Indica músculo cricofaríngeo aún bloqueado — riesgo de aspiración</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="subsec">
+      <h3 class="h3-va">7.2 Manejo según TOF ratio</h3>
+      <div class="tw"><table class="th-va">
+        <thead><tr><th>Situación clínica</th><th>Fármaco de reversión</th><th>Dosis</th><th>Nota</th></tr></thead>
+        <tbody>
+          <tr><td>TOF 0.4–0.9 (aminoesteroide)</td><td>Sugammadex</td><td>2 mg/kg IV</td><td>Primera línea si disponible. Cochrane 2023: menor tasa complicaciones vs. neostigmina</td></tr>
+          <tr><td>TOF 1–2 respuestas</td><td>Sugammadex</td><td>4 mg/kg IV</td><td>Bloqueo profundo residual. Neostigmina ineficaz a este nivel</td></tr>
+          <tr><td>TOF 0 (bloqueo total)</td><td>Sugammadex</td><td>16 mg/kg IV</td><td>Solo en urgencia. Raramente necesario en UCPA</td></tr>
+          <tr><td>TOF 0.4–0.9 (benzilisoquinolina)</td><td>Neostigmina + atropina/glicopirrolato</td><td>Neostigmina 0.04 mg/kg + Atropina 0.02 mg/kg</td><td>Cisatracurio/atracurio no revertidos por sugammadex</td></tr>
+        </tbody>
+      </table></div>
+      <div class="caja c-do"><strong>ℹ Evidencia 2024 (ESA/Cochrane):</strong> el sugammadex tiene menor tasa de complicaciones respiratorias en UCPA que la neostigmina (NNT≈20 para evitar una complicación). La monitoría cuantitativa del TOF con aceleromiografía (no estimación clínica) es el único método confiable para confirmar TOF ≥0.9 antes del alta.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S8 — OIRD -->
+<div class="seccion" id="s8">
+  <div class="sec-h va"><div class="sec-num">08</div><div class="sec-titulo">Depresión Respiratoria Inducida por Opioides (OIRD)</div></div>
+  <div class="sec-b">
+    <p class="p">La OIRD es la causa más <strong>prevenible</strong> de daño neurológico o muerte en el postoperatorio inmediato. Se define como FR &lt;8 rpm y/o SpO₂ &lt;90% con nivel de sedación excesiva (Ramsay ≥4) en el contexto de administración de opioides.</p>
+    <div class="subsec">
+      <h3 class="h3-va">8.1 Factores de riesgo</h3>
+      <div class="tw"><table class="th-va">
+        <thead><tr><th>Categoría</th><th>Factor de riesgo</th><th>Mecanismo</th></tr></thead>
+        <tbody>
+          <tr><td>Del paciente</td><td>SAHOS · Obesidad IMC &gt;35 · Edad &gt;75 años · EPOC severo · IRC</td><td>Menor reserva respiratoria, menor umbral de depresión</td></tr>
+          <tr><td>Del fármaco</td><td>Morfina (M6G activo) · Metadona (vida media larga) · BZD + opioides · Tramadol en metabolizadores lentos</td><td>Acumulación de metabolitos activos o efecto sinérgico</td></tr>
+          <tr><td>De la cirugía</td><td>Torácica · Abdominal alta · Duración &gt;3h · Anestesia inhalatoria</td><td>Mayor dosis intraoperatoria, depresión residual más prolongada</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="subsec">
+      <h3 class="h3-va">8.2 Protocolo de naloxona titulada</h3>
+      <div class="caja c-va"><strong>🚨 NUNCA administrar naloxona 0.4 mg en bolo directo:</strong> precipita dolor agudo severo (hasta EVA 10/10 en segundos), taquicardia, hipertensión, vómito, convulsiones y raramente edema pulmonar de reexpansión (EPR) o paro cardíaco por descarga simpática masiva. La recomendación internacional es titulación obligatoria.</div>
+      <div class="tecnica-box">
+        <div class="tecnica-titulo" style="color:var(--va-m)">Preparación y administración de naloxona titulada</div>
+        <div class="paso"><span class="paso-n">01</span><span><strong>Preparar dilución:</strong> 0.4 mg de naloxona en 10 mL de SSN = 40 µg/mL.</span></div>
+        <div class="paso"><span class="paso-n">02</span><span><strong>Mientras prepara:</strong> O₂ 100% con BVM si apnea. Estimulación verbal y esternal.</span></div>
+        <div class="paso"><span class="paso-n">03</span><span><strong>Administrar 1–2 mL (40–80 µg) IV cada 2–3 minutos</strong> hasta FR &gt;10 rpm y SpO₂ &gt;92%. La dosis total raramente supera los 200 µg.</span></div>
+        <div class="paso"><span class="paso-n">04</span><span><strong>Monitoreo estrecho × 60–90 min posteriores:</strong> la semivida de la naloxona (30–80 min) es menor que la de morfina, metadona o fentanilo. Riesgo de re-narcotización al metabolizarse la naloxona.</span></div>
+        <div class="paso"><span class="paso-n">05</span><span><strong>Si re-narcotización:</strong> infusión de naloxona 2/3 de la dosis de carga por hora. No dar de alta hasta al menos 2 horas libres de síntomas.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S9 — HEMODINÁMICA -->
+<div class="seccion" id="s9">
+  <div class="sec-h va"><div class="sec-num">09</div><div class="sec-titulo">Inestabilidad Hemodinámica — Hipotensión e Hipertensión</div></div>
+  <div class="sec-b">
+    <div class="subsec">
+      <h3 class="h3-va">9.1 Hipotensión (PAM &lt;65 mmHg o caída &gt;20% del basal)</h3>
+      <div class="tw"><table class="th-va">
+        <thead><tr><th>Causa</th><th>Mecanismo</th><th>Clave diagnóstica</th><th>Manejo específico</th></tr></thead>
+        <tbody>
+          <tr><td>Hipovolemia</td><td>Pérdidas insensibles + vasodilatación post-anestésica</td><td>Taquicardia + piel fría + responde a fluidos</td><td>Bolo cristaloide 250–500 mL</td></tr>
+          <tr><td>Vasodilatación residual</td><td>Halogenados, propofol, opioides → ↓ RVS</td><td>Taquicardia compensadora, piel caliente</td><td>Fenilefrina 50–100 µg IV (↑ RVS sin ↑ FC)</td></tr>
+          <tr><td>Sangrado activo</td><td>Pérdida de volemia intravascular</td><td>Hematoma, drenaje hemático abundante</td><td>Hemostasia quirúrgica + transfusión</td></tr>
+          <tr><td>Bradicardia refleja</td><td>Tono vagal↑ por dolor visceral, opioides</td><td>FC &lt;50 + PA baja</td><td>Efedrina 5–10 mg IV (↑ FC y PA)</td></tr>
+          <tr><td>Neumotórax a tensión</td><td>Colapso venoso + desviación mediastinal</td><td>Murmullo ↓ unilateral, ingurgitación yugular</td><td>Descompresión inmediata, toracostomía</td></tr>
+          <tr><td>Anafilaxia tardía</td><td>Respuesta IgE mediada diferida a fármacos/látex</td><td>Urticaria + broncoespasmo + hipotensión</td><td>Epinefrina 0.3 mg IM + líquidos + corticoides</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="subsec">
+      <h3 class="h3-va">9.2 Hipertensión (PAS &gt;160 o PAM &gt;110 mmHg)</h3>
+      <p class="p">La causa más frecuente de hipertensión postoperatoria es el <strong>dolor no controlado</strong>. Siempre tratar la causa antes de usar antihipertensivos. Otras causas: hipoxia, retención urinaria, hipercapnia, abstinencia de antihipertensivos, síndrome de abstinencia alcohólica.</p>
+      <div class="tw"><table class="th-va">
+        <thead><tr><th>Fármaco</th><th>Dosis IV</th><th>Indicación preferente</th><th>Precaución</th></tr></thead>
+        <tbody>
+          <tr><td>Labetalol</td><td>5–10 mg IV lento c/5–10 min</td><td>HTA + taquicardia · Disección aórtica</td><td>No en asma, bloqueo AV, IC descompensada</td></tr>
+          <tr><td>Nicardipino</td><td>5–15 mg/h en infusión</td><td>HTA perioperatoria · Paciente sin IC</td><td>Taquicardia refleja</td></tr>
+          <tr><td>Hidralazina</td><td>5–10 mg IV lento c/20 min</td><td>HTA en embarazo / preeclampsia</td><td>Taquicardia, retención de Na</td></tr>
+          <tr><td>Esmolol</td><td>0.5 mg/kg bolo → 50–300 µg/kg/min</td><td>HTA + taquicardia · Cirugía cardíaca</td><td>Vida media 9 min — muy titulable</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+
+<!-- S10 — DOLOR -->
+<div class="seccion" id="s10">
+  <div class="sec-h io"><div class="sec-num">10</div><div class="sec-titulo">Control del Dolor Agudo Postoperatorio</div></div>
+  <div class="sec-b">
+    <div class="subsec">
+      <h3 class="h3-io">10.1 Escalas de evaluación validadas</h3>
+      <div class="tw"><table class="th-io">
+        <thead><tr><th>Escala</th><th>Población</th><th>Descripción</th><th>Meta en UCPA</th></tr></thead>
+        <tbody>
+          <tr><td>EVA / NRS (Numérica)</td><td>Adulto comunicativo</td><td>0 (sin dolor) a 10 (peor dolor imaginable). El paciente señala o verbaliza el número.</td><td>EVA ≤3 en reposo antes del alta</td></tr>
+          <tr><td>Escala de caras (Wong-Baker)</td><td>Niños ≥3 años, ancianos con deterioro cognitivo leve</td><td>6 caras del 0 (sin dolor) al 10 (peor). El paciente señala la cara.</td><td>Cara 0–2</td></tr>
+          <tr><td>CPOT (Critical Care Pain Obs. Tool)</td><td>Paciente intubado / no comunicativo</td><td>4 dominios: expresión facial, movimiento, tensión muscular, vocalización. Score 0–8.</td><td>CPOT ≤2</td></tr>
+          <tr><td>BPS (Behavioral Pain Scale)</td><td>UCI, paciente sedado</td><td>3 dominios: expresión facial, miembros superiores, compliance ventilatoria. Score 3–12.</td><td>BPS &lt;5</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="subsec">
+      <h3 class="h3-io">10.2 Analgesia multimodal — estándar ERAS/PROSPECT 2024</h3>
+      <p class="p">La analgesia multimodal combina fármacos de diferentes mecanismos para lograr mejor control del dolor con menores dosis de cada agente (efecto aditivo/sinérgico) y menor incidencia de efectos adversos. Es el pilar del protocolo ERAS y de la guía PROSPECT 2024.</p>
+      <div class="tw"><table class="th-io">
+        <thead><tr><th>Fármaco</th><th>Dosis adulto</th><th>Mecanismo</th><th>Nota clínica</th></tr></thead>
+        <tbody>
+          <tr><td>Acetaminofén (paracetamol) IV</td><td>1 g IV c/6h (500 mg si &lt;50 kg)</td><td>Central + COX-3 periférico</td><td>Primera línea universal. Efecto opioide-sparing 20–30%. Administrar aunque el paciente no refiera dolor</td></tr>
+          <tr><td>Ketorolaco (AINE)</td><td>15–30 mg IV c/6–8h · máx 5 días</td><td>COX-1/2 periférico + central</td><td>Potente antiinflamatorio. Contraindicado en IRC, sangrado activo, úlcera péptica activa</td></tr>
+          <tr><td>Celecoxib (AINE-COX2)</td><td>200–400 mg oral c/12h</td><td>COX-2 selectivo periférico</td><td>Menor riesgo gástrico y plaquetario. ERAS: premedicación oral preoperatoria</td></tr>
+          <tr><td>Morfina IV titulada</td><td>2–4 mg IV c/5 min hasta EVA ≤3</td><td>Agonista µ pleno</td><td>Gold standard de rescate. Precaución en IR (M6G acumula). Histamina</td></tr>
+          <tr><td>Hidromorfona IV</td><td>0.2–0.4 mg IV c/3–4h</td><td>Agonista µ (5× potencia morfina)</td><td>Preferible en IRC moderada (metabolito inactivo). Menor prurito</td></tr>
+          <tr><td>Ketamina subanestésica</td><td>0.1–0.3 mg/kg bolo · 0.1–0.2 mg/kg/h infusión</td><td>Antagonista NMDA</td><td>Previene hiperalgesia por opioides (HIO). Potencia la analgesia sin aumentar depresión respiratoria</td></tr>
+          <tr><td>Dexmedetomidina</td><td>0.2–0.7 µg/kg/h infusión</td><td>α₂-agonista: sedación + analgesia</td><td>No deprime respiración. Ideal en SAHOS. ↓ requerimiento opioide 30–40%</td></tr>
+          <tr><td>Tramadol IV</td><td>50–100 mg lento (30 min)</td><td>Débil µ + inhibidor SNRI</td><td>Riesgo de convulsión si epilepsia. Contraindicado con IMAO. No en metabolizadores lentos CYP2D6</td></tr>
+        </tbody>
+      </table></div>
+      <div class="caja c-io"><strong>✔ Principio ATC (Around The Clock):</strong> administrar acetaminofén e AINE en horario fijo (no a demanda) como base analgésica. Los opioides se reservan para rescate EVA &gt;6. Este esquema reduce el consumo total de opioides en &gt;40%, mejora el control del dolor y disminuye efectos adversos opioides.</div>
+    </div>
+    <div class="subsec">
+      <h3 class="h3-io">10.3 PCA — Analgesia Controlada por el Paciente</h3>
+      <div class="tw"><table class="th-io">
+        <thead><tr><th>Parámetro</th><th>PCA IV morfina</th><th>PCEA (peridural)</th></tr></thead>
+        <tbody>
+          <tr><td>Concentración</td><td>1 mg/mL</td><td>Bupivacaína 0.0625–0.125% + fentanilo 2 µg/mL</td></tr>
+          <tr><td>Bolo demand</td><td>1–1.5 mg</td><td>4–6 mL</td></tr>
+          <tr><td>Lockout (intervalo mínimo)</td><td>6–8 minutos</td><td>20–30 minutos</td></tr>
+          <tr><td>Límite 4 horas</td><td>15–20 mg</td><td>Según protocolo institucional</td></tr>
+          <tr><td>Infusión basal</td><td>No recomendada de rutina (↑ OIRD)</td><td>4–6 mL/h de mezcla</td></tr>
+          <tr><td>Monitoreo requerido</td><td>FR + EVA c/1h · SpO₂ continuo si SAHOS</td><td>FR + EVA + TOF motor c/4h</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+
+<!-- S11 — NVPO -->
+<div class="seccion" id="s11">
+  <div class="sec-h med"><div class="sec-num">11</div><div class="sec-titulo">NVPO en la UCPA — Evaluación y Tratamiento de Rescate</div></div>
+  <div class="sec-b">
+    <p class="p">El NVPO afecta al 25–30% de los pacientes sin profilaxis. En la UCPA, el tratamiento de rescate debe ser con un fármaco de <strong>clase diferente</strong> a los ya administrados en profilaxis. Repetir el mismo antiemético a las 2 horas de su administración es ineficaz.</p>
+    <div class="subsec">
+      <h3 class="h3-med">11.1 Tratamiento de rescate según profilaxis recibida</h3>
+      <div class="tw"><table class="th-med">
+        <thead><tr><th>Profilaxis ya recibida</th><th>Fármaco de rescate</th><th>Dosis adulto</th><th>Mecanismo</th></tr></thead>
+        <tbody>
+          <tr><td>Ninguna profilaxis</td><td>Ondansetrón IV</td><td>4 mg IV lento (2 min)</td><td>5-HT₃ — primera línea universal</td></tr>
+          <tr><td>Ondansetrón solo</td><td>Metoclopramida IV</td><td>10 mg IV lento (15 min)</td><td>Anti-D₂ + 5-HT₄ procinético</td></tr>
+          <tr><td>Ondansetrón + dexametasona</td><td>Droperidol IV</td><td>0.625 mg IV</td><td>Anti-D₂ de alta potencia. Verificar QTc &lt;450 ms antes</td></tr>
+          <tr><td>Refractario (3 fármacos)</td><td>Prometazina IM</td><td>12.5–25 mg IM</td><td>Antihistamínico H₁ + anti-D₂. Sedante — útil si agitación simultánea</td></tr>
+          <tr><td>Alternativa no farmacológica</td><td>Acupresión P6 bilateral</td><td>30 min continuo</td><td>NNT≈5 (Cochrane 2021). Útil en embarazo, contraindicaciones farmacológicas</td></tr>
+          <tr><td>Cualquier situación</td><td>Bolo cristaloide IV</td><td>500 mL SSN o RL</td><td>Reduce NVPO ≈30% relativo. Corrige hipovolemia relativa como factor contribuyente</td></tr>
+        </tbody>
+      </table></div>
+      <div class="caja c-med"><strong>ℹ Principio de la multimodalidad antiemética:</strong> el rescate debe ser SIEMPRE con un fármaco de clase diferente. Si el paciente recibió un setrón (5-HT₃) + un corticoide (dexametasona), el tercer agente es un antagonista D₂ (droperidol, metoclopramida) o antihistamínico. Esto es análogo a la analgesia multimodal: combinar mecanismos diferentes potencia el efecto y reduce la toxicidad individual.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S12 — ALTA -->
+<div class="seccion" id="s12">
+  <div class="sec-h vp"><div class="sec-num">12</div><div class="sec-titulo">Criterios de Alta y Documentación Obligatoria</div></div>
+  <div class="sec-b">
+    <div class="subsec">
+      <h3 class="h3-vp">12.1 Criterios de alta de la UCPA Fase I a piso (hospitalización)</h3>
+      <div class="tw"><table class="th-vp">
+        <thead><tr><th>Criterio</th><th>Especificación</th></tr></thead>
+        <tbody>
+          <tr><td>Aldrete modificado</td><td>≥9/10 — verificado y documentado con hora y firma</td></tr>
+          <tr><td>Dolor</td><td>EVA ≤4 en reposo con analgesia prescrita activa</td></tr>
+          <tr><td>SpO₂</td><td>≥94% en aire ambiente o en O₂ domiciliario basal del paciente</td></tr>
+          <tr><td>Temperatura</td><td>≥36°C — si &lt;36°C, continuar calentamiento hasta cumplir</td></tr>
+          <tr><td>Sangrado</td><td>Sin sangrado activo o dentro de lo esperado para el tipo de cirugía</td></tr>
+          <tr><td>Tolerancia oral</td><td>Líquidos claros tolerados si aplica para la cirugía realizada</td></tr>
+          <tr><td>Reporte</td><td>Reporte verbal documentado a enfermería del piso con confirmación</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="subsec">
+      <h3 class="h3-vp">12.2 Criterios de alta ambulatoria (domicilio) — PADSS ≥9/10</h3>
+      <div class="caja c-do"><strong>ℹ Actualización ASA 2023 y CAS 2024 — Micción:</strong> la micción NO es criterio universal de alta ambulatoria. <strong>SÍ se requiere</strong> en: cirugía pélvica o perineal · anestesia espinal con bupivacaína densa · antecedente de retención urinaria · hombre &gt;60 años con hiperplasia benigna de próstata sintomática · uso de opioides sistémicos en dosis altas intraoperatorio. En los demás pacientes: si los restantes criterios PADSS se cumplen, el alta puede proceder sin micción previa.</div>
+    </div>
+    <div class="subsec">
+      <h3 class="h3-vp">12.3 Documentación obligatoria del egreso de UCPA</h3>
+      <div class="tecnica-box">
+        <div class="tecnica-titulo" style="color:var(--vp-m)">Registro mínimo requerido al alta</div>
+        <div class="paso"><span class="paso-n">1</span><span><strong>Signos vitales</strong> en intervalos apropiados desde el ingreso al egreso con valores numéricos documentados.</span></div>
+        <div class="paso"><span class="paso-n">2</span><span><strong>Score de Aldrete o PADSS</strong> con valor numérico, hora de obtención y firma de la enfermera responsable.</span></div>
+        <div class="paso"><span class="paso-n">3</span><span><strong>Analgésicos administrados en UCPA:</strong> nombre, dosis, hora, vía y respuesta medida con EVA pre y post.</span></div>
+        <div class="paso"><span class="paso-n">4</span><span><strong>Antieméticos de rescate</strong> (si se administraron): nombre, dosis, hora y respuesta clínica.</span></div>
+        <div class="paso"><span class="paso-n">5</span><span><strong>Complicaciones ocurridas</strong> durante la estancia en UCPA y su manejo documentado.</span></div>
+        <div class="paso"><span class="paso-n">6</span><span><strong>Destino y condición al egreso:</strong> piso/UCI/domicilio, nombre de quien recibe al paciente, hora exacta de egreso.</span></div>
+        <div class="paso"><span class="paso-n">7</span><span><strong>Para alta ambulatoria:</strong> instrucciones escritas entregadas, restricciones (no conducir × 24h, no alcohol, no decisiones legales), síntomas de alarma y número de contacto de urgencias.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S13 — TALLER -->
+<div class="seccion" id="s13">
+  <div class="sec-h te"><div class="sec-num">13</div><div class="sec-titulo">Taller de Aplicación Clínica · Puntaje sobre 5.0</div></div>
+  <div class="sec-b">
+    <div class="caja c-vc"><strong>ℹ Instrucciones:</strong> Desarrolle cada caso con razonamiento clínico completo. Justifique cada decisión con evidencia actualizada (ASA 2024, ERAS 2024, ESA 2023). Cuando haya cálculos, muestre todos los pasos. Cada ejercicio vale <strong>5.0 puntos</strong> independientemente. Las respuestas NO se incluyen en este documento — el docente evaluará con rúbrica.</div>
+
+    <!-- EJ 1 -->
+    <div class="ej-box">
+      <div class="ej-hdr"><div class="ej-num">1</div><div class="ej-tit">Admisión, Aldrete y primera hora de la UCPA</div><div class="ej-pts">5.0 pts</div></div>
+      <div class="ej-txt">Recibe en la UCPA al siguiente paciente proveniente de quirófano. El reporte del anestesiólogo fue incompleto.</div>
+      <div class="ej-datos">
+        Mujer, 52 años, 68 kg. Colecistectomía laparoscópica. AG con propofol + rocuronio + sevoflurano. Duración: 95 min. Revertida con neostigmina 0.04 mg/kg + atropina. Al egreso de quirófano: somnolienta (abre ojos al llamado), mueve 4 extremidades, PA 88/52 (basal preop: 125/78), SpO₂ 91% en aire ambiente, temperatura 35.2°C, FR 12 rpm.
+      </div>
+      <div class="ej-q"><ol>
+        <li><strong>(1.0 pt)</strong> Calcule el Score de Aldrete de esta paciente al ingreso. ¿Puede ser dada de alta de la UCPA en este momento? Justifique criterio por criterio.</li>
+        <li><strong>(1.5 pts)</strong> Identifique las tres alteraciones más urgentes en este caso, ordénelas por prioridad y describa el manejo inmediato de cada una. ¿Qué pregunta específica le haría al anestesiólogo para completar el SBAR faltante?</li>
+        <li><strong>(1.5 pts)</strong> La temperatura es 35.2°C y la paciente comienza a tener escalofríos intensos. La SpO₂ cae a 89%. Explique el mecanismo fisiopatológico por el cual los escalofríos producen caída de SpO₂ y describa el manejo completo de la hipotermia en este caso, incluyendo el fármaco de elección para los escalofríos con su dosis y mecanismo de acción.</li>
+        <li><strong>(1.0 pt)</strong> A los 45 minutos, la PA sube a 168/98, la paciente dice que le duele mucho. ¿Cuál es la causa más probable de la hipertensión y cuál es el error que comete el residente al ordenar labetalol 10 mg IV sin evaluar primero?</li>
+      </ol></div>
+    </div>
+
+    <!-- EJ 2 -->
+    <div class="ej-box">
+      <div class="ej-hdr"><div class="ej-num">2</div><div class="ej-tit">Complicaciones respiratorias — VAS, laringoespasmo y OIRD</div><div class="ej-pts">5.0 pts</div></div>
+      <div class="ej-txt">Tres situaciones independientes de la UCPA, cada una con una complicación respiratoria diferente.</div>
+      <div class="ej-datos">
+        <strong>Caso A:</strong> Hombre 48 años, IMC 38, SAHOS no tratado. Post-amigdalectomía. En la UCPA: ronquido intenso, movimiento paradójico de tórax, SpO₂ 86%. Anestesia general, fentanilo 350 µg total. Ramsay 4.<br><br>
+        <strong>Caso B:</strong> Mujer 31 años. Tiroidectomía total. Extubada hace 10 min. Súbitamente sin emisión de ruido respiratorio, esfuerzo inspiratorio intenso, SpO₂ 80% y bajando. No hay flujo de aire al auscultar.<br><br>
+        <strong>Caso C:</strong> Hombre 66 años, IRC estadio 3. Post-cirugía de cadera. Morfina 0.15 mg/kg total. FR 6 rpm, Ramsay 5, SpO₂ 83%, miosis bilateral. El residente tiene lista la jeringa con naloxona 0.4 mg para dar en bolo.
+      </div>
+      <div class="ej-q"><ol>
+        <li><strong>(1.5 pts — Caso A)</strong> Identifique el diagnóstico, describa el manejo escalonado completo incluyendo dispositivos de vía aérea y oxigenoterapia. ¿Por qué este paciente tiene mayor riesgo de OIRD que el promedio? Describa el protocolo de naloxona correcto para este caso.</li>
+        <li><strong>(2.0 pts — Caso B)</strong> Identifique el diagnóstico de Caso B. Describa la maniobra principal de rescate con su anatomía exacta. ¿Cuándo y cómo usaría succinilcolina en este caso? ¿Cuál es la dosis de "lisis" y qué diferencia tiene con la dosis de intubación?</li>
+        <li><strong>(1.5 pts — Caso C)</strong> ¿Qué error comete el residente y cuáles serían las consecuencias de 0.4 mg de naloxona en bolo directo? Describa el protocolo correcto de preparación y titulación de naloxona. ¿Cuánto tiempo debe monitorizar a este paciente tras la reversión y por qué?</li>
+      </ol></div>
+    </div>
+
+    <!-- EJ 3 -->
+    <div class="ej-box">
+      <div class="ej-hdr"><div class="ej-num">3</div><div class="ej-tit">Dolor agudo postoperatorio y analgesia multimodal</div><div class="ej-pts">5.0 pts</div></div>
+      <div class="ej-txt">Paciente con manejo inadecuado del dolor en UCPA y necesidad de diseño del plan analgésico.</div>
+      <div class="ej-datos">
+        Mujer, 58 años, 72 kg, histerectomía abdominal total. Post-operatorio inmediato. EVA 9/10 en reposo. Escalofrío. FC 118, PA 162/94. No recibió analgesia preventiva intraoperatoria. Solo ketorolaco 30 mg al cierre. Acetaminofén no fue ordenado. Sin bloqueo regional.
+      </div>
+      <div class="ej-q"><ol>
+        <li><strong>(1.0 pt)</strong> Explique el principio ATC (Around The Clock) de la analgesia multimodal. ¿Por qué administrar acetaminofén e AINE de forma horaria fija es superior a la analgesia "a demanda"? ¿Cuánto reduce el consumo de opioides este enfoque según la evidencia?</li>
+        <li><strong>(2.0 pts)</strong> Diseñe el plan analgésico multimodal completo para esta paciente en la UCPA: nombre los fármacos, dosis, vías, intervalos y orden de administración. Justifique por qué elige cada fármaco con base en el perfil de la paciente. Incluya al menos 3 fármacos de diferentes mecanismos.</li>
+        <li><strong>(1.5 pts)</strong> La paciente recibe morfina 4 mg IV con EVA inicial 9/10 y a los 15 min refiere EVA 8/10 — poco cambio. El residente propone ketamina. Explique el mecanismo de la ketamina como analgésico subanestésico y cómo previene la hiperalgesia inducida por opioides. ¿Cuál es la dosis y la forma de administración recomendada en UCPA?</li>
+        <li><strong>(0.5 pts)</strong> ¿Cuál sería la escala de dolor más apropiada para evaluar el dolor de esta paciente durante la noche en el piso, cuando estará dormida? Justifique.</li>
+      </ol></div>
+    </div>
+
+    <!-- EJ 4 -->
+    <div class="ej-box">
+      <div class="ej-hdr"><div class="ej-num">4</div><div class="ej-tit">NVPO, bloqueo neuromuscular residual y criterios de alta</div><div class="ej-pts">5.0 pts</div></div>
+      <div class="ej-txt">Dos casos con problemas frecuentes de la UCPA en cirugía ambulatoria.</div>
+      <div class="ej-datos">
+        <strong>Caso A:</strong> Mujer, 34 años, no fumadora, cinetosis frecuente, NVPO en cirugía previa hace 2 años. Laparoscopia ginecológica electiva. Apfel 4. Recibió ondansetrón 4 mg al cierre y dexametasona 8 mg a la inducción. En la UCPA a los 30 min: vómito en proyectil, EVA 2, Aldrete 9, temperatura 36.4°C.<br><br>
+        <strong>Caso B:</strong> Hombre, 55 años, 80 kg. Reparación de hernia inguinal bilateral. AG con vecuronio. Revertido con neostigmina. Al llegar a UCPA: refiere diplopia, no puede mantener la cabeza levantada más de 2 segundos, voz nasal. SpO₂ 94%.
+      </div>
+      <div class="ej-q"><ol>
+        <li><strong>(1.5 pts — Caso A)</strong> ¿Cuál es el antiemético de rescate correcto para esta paciente? Justifique por qué no debe repetir ondansetrón ni dexametasona. Describa dos fármacos de clases diferentes con dosis y sus mecanismos. ¿Podría usar una intervención no farmacológica en esta paciente?</li>
+        <li><strong>(2.0 pts — Caso B)</strong> Identifique el diagnóstico de Caso B. Explique por qué los signos clínicos de bloqueo NM residual son poco confiables y cuál es el método estándar de confirmación. ¿Cuál es el tratamiento de elección (con dosis) y por qué es superior a una segunda dosis de neostigmina?</li>
+        <li><strong>(1.5 pts)</strong> Ambos pacientes son ambulatorios. Describa los criterios PADSS que evalúa para dar el alta domiciliaria. ¿Cuáles de los dos pacientes cumple criterios ahora mismo? Para el que no cumple, ¿cuándo podría dar el alta? ¿Es obligatorio que la paciente del Caso A orine antes de irse? Justifique con la evidencia ASA 2023.</li>
+      </ol></div>
+    </div>
+
+    <!-- EJ 5 -->
+    <div class="ej-box">
+      <div class="ej-hdr"><div class="ej-num">5</div><div class="ej-tit">Caso integrador — paciente de alto riesgo en UCPA</div><div class="ej-pts">5.0 pts</div></div>
+      <div class="ej-txt">Caso complejo que integra múltiples aspectos de la guía.</div>
+      <div class="ej-datos">
+        Hombre, 71 años, 88 kg, IMC 32, SAHOS con CPAP nocturno, HTA controlada, DM tipo 2 con metformina. Resección de colon laparoscópica por adenocarcinoma. AG con intubación, fentanilo 450 µg total, morfina 8 mg, rocuronio revertido con neostigmina. Duración 3.5 horas. Al egreso de quirófano: extubado, despierto, PA 145/88, FC 92, SpO₂ 93% en aire ambiente con O₂ al 30% por cánula nasal, temperatura 35.4°C, FR 10 rpm. EVA no evaluable (desorientado).
+      </div>
+      <div class="ej-q"><ol>
+        <li><strong>(1.0 pt)</strong> Liste TODOS los factores de riesgo de este paciente para: a) OIRD, b) bloqueo NM residual, c) hipotermia postoperatoria, d) NVPO. ¿Cuáles de estos riesgos se potencian entre sí?</li>
+        <li><strong>(1.5 pts)</strong> La SpO₂ es 93% con O₂ al 30%, FR 10 rpm. ¿Cuáles son los tres diagnósticos diferenciales más probables en este momento? Describa los pasos diagnósticos y el manejo inicial de cada uno sin saber aún cuál es la causa.</li>
+        <li><strong>(1.5 pts)</strong> El paciente está desorientado y agitado. Aplique el diagnóstico diferencial AEIOU completo para este caso. Identifique las dos causas más probables dado el contexto clínico y describa cómo las confirmaría y trataría. ¿Cuál sería el fármaco sedante de elección para este paciente si requiere sedación?</li>
+        <li><strong>(1.0 pt)</strong> A las 2 horas en la UCPA el paciente ha mejorado: Aldrete 9, temperatura 36.1°C, SpO₂ 95% con cánula nasal 2 L/min, EVA 4, sin NVPO. El cirujano quiere pasarlo al piso. ¿Usted autoriza el alta de UCPA en este momento? Justifique criterio por criterio. ¿Qué instrucciones específicas da para el monitoreo en el piso dadas las comorbilidades del paciente?</li>
+      </ol></div>
+    </div>
+
+    <div class="caja c-vp"><strong>📊 Criterios de evaluación:</strong> Cada ejercicio vale 5.0 puntos. La calificación considera exactitud científica y actualización (40%) · razonamiento clínico aplicado y priorización correcta (35%) · detalle técnico-procedimental correcto (25%). Las respuestas parciales tienen puntaje proporcional al criterio del docente.</div>
+  </div>
+</div>
+
+</div><!-- /cont -->
+
+<div class="footer">
+  <div class="footer-g">
+    <div>
+      <strong>Autor y Docente Responsable</strong>
+      Dr. Andrés Robayo · Médico Especialista en Anestesiología y Reanimación<br>
+      Docente de Pregrado – Rotación de Anestesiología<br>
+      Hospital de Kennedy · Subred Suroccidente E.S.E. · Bogotá D.C., 2025
+    </div>
+    <div>
+      <strong>Referencias y Evidencia</strong>
+      ASA Practice Guidelines for Postanesthetic Care (2024)<br>
+      ERAS Society Guidelines (2024) · PROSPECT Working Group (2024)<br>
+      European Society of Anaesthesiology — ESA Guidelines (2023)<br>
+      SAMBA Consensus Guidelines on Postoperative N&amp;V (2020)<br>
+      Cochrane Reviews: Sugammadex (2023) · Antiemetics (2021) · Naloxone (2022)<br>
+      Miller's Anesthesia 9th ed. (2024) · Morgan &amp; Mikhail 7th ed. (2023)
+    </div>
+  </div>
+</div>
+<div class="copyright">
+  © 2025 Dr. Andrés Robayo – Subred Suroccidente (Hospital de Kennedy), Bogotá, Colombia.<br>
+  Material de uso exclusivo para fines académicos en la Rotación de Anestesiología. Prohibida su reproducción sin autorización escrita del autor.<br>
+  Este documento no reemplaza los protocolos institucionales vigentes ni el juicio clínico individual.
+</div>
+
+</body>
+</html>

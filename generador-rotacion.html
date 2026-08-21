@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generador de Rotación de Salas — Dr. Andrés Robayo</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#EEF2F7;--surf:#fff;--surf2:#F1F5F9;--surf3:#E2E8F0;
+  --brd:#CBD5E1;--brd2:#94A3B8;
+  --txt:#0D1B2A;--sub:#374151;--dim:#6B7280;--mut:#94A3B8;
+  --acc:#0D47A1;--acc2:#1565C0;
+  --grn:#1B5E20;--red:#C62828;--yel:#E65100;--pur:#4A148C;
+  --r:8px;--r2:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;font-size:14px;}
+
+/* ── HEADER ── */
+.app-hdr{
+  background:linear-gradient(135deg,#050F2C,#0D47A1,#01579B);
+  border-bottom:none;padding:16px 26px;
+  display:flex;align-items:center;gap:14px;
+  position:relative;overflow:hidden;
+}
+.app-hdr::after{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.05);pointer-events:none}
+.hdr-logo{width:42px;height:42px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.3);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.hdr-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1.5px;color:#fff;}
+.hdr-sub{font-size:11px;color:rgba(255,255,255,.65);margin-top:2px;font-weight:500;}
+
+/* ── STEPPER ── */
+.stepper{
+  display:flex;align-items:center;padding:0 22px;
+  background:#fff;border-bottom:2px solid var(--brd);
+  overflow-x:auto;gap:0;
+}
+.step{display:flex;align-items:center;gap:8px;cursor:pointer;padding:13px 16px;flex-shrink:0;transition:all .2s;border-bottom:3px solid transparent;margin-bottom:-2px;}
+.step:hover{background:#F8FAFC;border-bottom-color:rgba(13,71,161,.3);}
+.step.active{border-bottom-color:#0D47A1;}
+.step-n{
+  width:24px;height:24px;border-radius:50%;
+  border:2px solid var(--brd);display:flex;align-items:center;
+  justify-content:center;font-size:10px;font-weight:800;
+  color:var(--dim);transition:all .2s;font-family:'DM Mono',monospace;
+}
+.step.active .step-n{background:#0D47A1;border-color:#0D47A1;color:#fff;}
+.step.done .step-n{background:#1B5E20;border-color:#1B5E20;color:#fff;}
+.step-lbl{font-size:12px;font-weight:700;color:var(--dim);}
+.step.active .step-lbl{color:#0D47A1;}
+.step.done .step-lbl{color:#1B5E20;}
+.step-sep{width:20px;height:2px;background:var(--brd);flex-shrink:0;}
+
+/* ── LAYOUT ── */
+.main{display:grid;grid-template-columns:390px 1fr;min-height:calc(100vh - 107px);}
+.panel{background:#fff;border-right:2px solid var(--brd);overflow-y:auto;max-height:calc(100vh - 107px);}
+.pview{background:var(--bg);overflow-y:auto;max-height:calc(100vh - 107px);}
+
+/* ── FORM SECTIONS ── */
+.ps{padding:18px 20px;border-bottom:1.5px solid var(--brd);}
+.ps-title{
+  font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1.5px;
+  color:#fff;margin-bottom:12px;padding:9px 14px;
+  background:linear-gradient(135deg,#0D47A1,#1565C0);
+  border-radius:10px;display:block;
+  box-shadow:0 2px 8px rgba(13,71,161,.2);
+}
+.frow{margin-bottom:9px;}
+.frow>label{display:block;font-size:11px;color:var(--sub);margin-bottom:4px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;}
+input[type=text],input[type=date],select{
+  width:100%;background:#F8FAFC;border:1.5px solid var(--brd);
+  color:var(--txt);font-family:'DM Sans',sans-serif;font-size:13px;
+  padding:8px 11px;border-radius:var(--r);outline:none;transition:border-color .18s,box-shadow .18s;
+}
+input::placeholder{color:var(--mut);}
+input:focus,select:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(13,71,161,.1);}
+select option{background:#fff;color:var(--txt);}
+
+/* ── HOSPITAL PILLS ── */
+.hosp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.hpill{
+  padding:12px;border-radius:10px;border:2px solid var(--brd);
+  background:#F8FAFC;cursor:pointer;text-align:center;
+  font-size:13px;font-weight:800;color:var(--sub);
+  transition:all .18s;font-family:'DM Sans',sans-serif;
+}
+.hpill:hover{color:var(--txt);background:var(--surf2);}
+.hpill[data-h=kennedy].on{background:#E3F2FD;border-color:#0D47A1;color:#0D47A1;box-shadow:0 2px 10px rgba(13,71,161,.2);}
+.hpill[data-h=bosa].on{background:#FFEBEE;border-color:#C62828;color:#C62828;box-shadow:0 2px 10px rgba(198,40,40,.2);}
+
+/* ── STUDENTS ── */
+.stu-entry{
+  background:#F8FAFC;border:2px solid var(--brd);
+  border-radius:12px;padding:12px;margin-bottom:8px;
+}
+.stu-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.stu-badge{padding:4px 11px;border-radius:20px;font-size:11px;font-weight:800;display:inline-flex;align-items:center;gap:5px;}
+.stu-g2{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.stu-g2 .frow{margin:0;}
+.rmv{background:#FEF2F2;border:1.5px solid #FECACA;color:#DC2626;border-radius:7px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .18s;font-weight:700;}
+.rmv:hover{background:#FEE2E2;color:#B91C1C;}
+.addbtn{
+  background:#F0F7FF;border:2px dashed #93C5FD;
+  color:#1D4ED8;border-radius:var(--r);padding:8px 12px;
+  font-size:12.5px;cursor:pointer;width:100%;
+  font-family:'DM Sans',sans-serif;transition:all .18s;font-weight:700;margin-top:4px;
+}
+.addbtn:hover{border-color:var(--acc);background:#E0EEFF;}
+
+/* ── BUTTONS ── */
+.btn-p{
+  width:100%;padding:12px;border:none;border-radius:12px;
+  background:linear-gradient(135deg,#0D47A1,#1976D2);
+  color:#fff;font-family:'Bebas Neue',sans-serif;
+  font-size:17px;letter-spacing:1.5px;cursor:pointer;
+  transition:all .2s;margin-top:5px;
+  box-shadow:0 3px 12px rgba(13,71,161,.25);
+}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(13,71,161,.4);}
+.btn-s{
+  width:100%;padding:9px;border:2px solid var(--brd);border-radius:10px;
+  background:#fff;color:var(--sub);font-family:'DM Sans',sans-serif;
+  font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:5px;
+}
+.btn-s:hover{border-color:var(--acc);color:var(--acc);}
+.btn-grn{
+  background:linear-gradient(135deg,#1B5E20,#2E7D32);
+  color:#fff;padding:10px 20px;border:none;border-radius:10px;
+  font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;
+  cursor:pointer;transition:all .2s;
+  box-shadow:0 3px 12px rgba(27,94,32,.25);
+}
+.btn-grn:hover{box-shadow:0 6px 20px rgba(27,94,32,.4);transform:translateY(-1px);}
+
+/* ── INFO BOXES ── */
+.ibox{background:#EFF6FF;border:1.5px solid #BFDBFE;border-radius:var(--r);padding:9px 12px;font-size:12px;color:#1E40AF;line-height:1.55;margin-bottom:9px;font-weight:500;}
+.wbox{background:#FFFBEB;border:1.5px solid #FDE68A;border-radius:var(--r);padding:9px 12px;font-size:12px;color:#92400E;line-height:1.55;margin-bottom:9px;font-weight:500;}
+.gbox{background:#F0FDF4;border:1.5px solid #BBF7D0;border-radius:var(--r);padding:9px 12px;font-size:12px;color:#14532D;line-height:1.55;margin-bottom:9px;font-weight:500;}
+
+/* ── MINI CALENDAR ── */
+.mc-wrap{background:#F8FAFC;border:1.5px solid var(--brd);border-radius:10px;padding:10px;margin-top:5px;}
+.mc-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;}
+.mc-nav-btn{background:#fff;border:1.5px solid var(--brd);color:var(--sub);cursor:pointer;font-size:13px;padding:3px 8px;border-radius:6px;transition:all .15s;font-family:'DM Sans',sans-serif;font-weight:700;}
+.mc-nav-btn:hover{background:var(--acc);color:#fff;border-color:var(--acc);}
+.mc-month-lbl{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;color:var(--txt);}
+.mc-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+.mc-dh{font-size:9px;font-weight:800;color:var(--mut);text-align:center;padding:2px 0;text-transform:uppercase;}
+.mc-day{
+  font-size:10.5px;text-align:center;padding:4px 1px;border-radius:5px;
+  cursor:pointer;color:var(--sub);font-weight:600;
+  transition:all .12s;min-height:24px;
+  display:flex;align-items:center;justify-content:center;position:relative;
+}
+.mc-day:hover{background:#BFDBFE;color:#1D4ED8;}
+.mc-day.other{color:var(--mut);pointer-events:none;}
+.mc-day.today{outline:2px solid #0D47A1;outline-offset:-2px;}
+.mc-day.fest{color:#C62828;}
+.mc-day.weekend{color:#C62828;}
+
+/* DAY TYPE COLORS — light theme */
+.mc-day.t-night      {background:#312E81;color:#C4B5FD;font-weight:800;}
+.mc-day.t-posturno   {background:#4A1D96;color:#DDD6FE;font-weight:800;opacity:.85;}
+.mc-day.t-interconsult{background:#14532D;color:#4ADE80;font-weight:800;}
+.mc-day.t-recovery   {background:#075985;color:#7DD3FC;font-weight:800;}
+.mc-day.t-resonancia {background:#7C2D12;color:#FED7AA;font-weight:800;}
+.mc-day.t-tintal     {background:#0F766E;color:#99F6E4;font-weight:800;}
+.mc-day.t-urgencias  {background:#9F1239;color:#FCA5A5;font-weight:800;}
+.mc-day.t-libre      {background:#E2E8F0;color:#64748B;font-weight:700;}
+.mc-day.t-clase      {background:#78350F;color:#FDE68A;font-weight:800;}
+.mc-day.t-preclase   {background:#FEF3C7;color:#92400E;font-weight:700;border:1.5px dashed #F59E0B;}
+.mc-day.t-fest-bg    {background:#FFEBEE;color:#C62828;font-weight:800;}
+
+/* TYPE SELECTOR */
+.type-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-bottom:10px;}
+.type-btn{
+  padding:6px 4px;border-radius:8px;border:2px solid var(--brd);
+  background:#F8FAFC;cursor:pointer;font-size:10.5px;font-weight:700;
+  transition:all .18s;font-family:'DM Sans',sans-serif;
+  display:flex;align-items:center;justify-content:center;gap:4px;color:var(--sub);
+}
+.type-btn:hover{border-color:var(--sub);}
+.type-btn.active-type{border-color:var(--acc);color:#fff;box-shadow:0 2px 8px rgba(13,71,161,.25);}
+
+/* ── PREVIEW ── */
+.prev-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--dim);text-align:center;gap:12px;padding:40px;}
+.prev-ph .ico{font-size:50px;opacity:.25;}
+.prev-ph h3{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1.5px;color:var(--sub);}
+.prev-ph p{font-size:13px;max-width:300px;line-height:1.6;color:var(--mut);}
+.prev-tb{
+  padding:12px 20px;background:#fff;border-bottom:2px solid var(--brd);
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+.prev-tb h3{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;color:var(--txt);}
+.prev-lbl{font-size:11px;color:var(--mut);margin-left:auto;font-weight:700;}
+
+/* ── STUDENT CALENDAR BLOCK ── */
+.stu-cal-block{background:#F8FAFC;border:2px solid var(--brd);border-radius:12px;padding:13px;margin-bottom:12px;}
+.stu-cal-hdr{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.stu-summary{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+
+/* ── PERIODO VISUAL ── */
+.periodo-bar{background:#F8FAFC;border:1.5px solid var(--brd);border-radius:10px;padding:12px 14px;margin-bottom:8px;}
+.pb-row{display:flex;align-items:center;gap:8px;margin-bottom:4px;font-size:12px;}
+.pb-name{font-weight:700;min-width:80px;color:var(--sub);}
+.pb-bar-wrap{flex:1;background:var(--brd);border-radius:4px;height:16px;position:relative;overflow:hidden;}
+.pb-bar{height:100%;border-radius:4px;display:flex;align-items:center;padding:0 7px;font-size:9px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;}
+.pb-dates{font-size:10px;color:var(--dim);font-family:'DM Mono',monospace;min-width:140px;text-align:right;font-weight:600;}
+
+@media(max-width:900px){.main{grid-template-columns:1fr;}.panel{max-height:none;}}
+</style>
+</head>
+<body>
+
+<div class="app-hdr">
+  <div class="hdr-logo">🏥</div>
+  <div>
+    <div class="hdr-title">Generador de Rotación de Salas — Anestesiología</div>
+    <div class="hdr-sub">Dr. Andrés Robayo · Hospital de Kennedy / Bosa · Subred Suroccidente</div>
+  </div>
+</div>
+
+<div class="stepper">
+  <div class="step active" id="step1" onclick="goStep(1)"><div class="step-n">1</div><div class="step-lbl">Hospital</div></div>
+  <div class="step-sep"></div>
+  <div class="step" id="step2" onclick="goStep(2)"><div class="step-n">2</div><div class="step-lbl">Estudiantes</div></div>
+  <div class="step-sep"></div>
+  <div class="step" id="step3" onclick="goStep(3)"><div class="step-n">3</div><div class="step-lbl">Días Especiales</div></div>
+  <div class="step-sep"></div>
+  <div class="step" id="step4" onclick="goStep(4)"><div class="step-n">4</div><div class="step-lbl">Generar</div></div>
+</div>
+
+<div class="main">
+<div class="panel" id="panel">
+
+  <!-- ══ STEP 1 ══ -->
+  <div id="s1">
+    <div class="ps">
+      <span class="ps-title">Hospital</span>
+      <div class="hosp-grid">
+        <button class="hpill" data-h="kennedy" onclick="selHosp(this)" type="button">🏥 Kennedy</button>
+        <button class="hpill" data-h="bosa"    onclick="selHosp(this)" type="button">🏥 Bosa</button>
+      </div>
+      <div class="ibox" id="hosp-info" style="display:none;"></div>
+    </div>
+    <div class="ps">
+      <span class="ps-title">Identificación del Grupo</span>
+      <div class="frow"><label>Nombre del grupo</label><input type="text" id="f-grupo" placeholder="Ej: Grupo 1 · Kennedy Ago-Jun 2026"></div>
+      <div class="frow"><label>Período académico</label>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <select id="f-semestre" style="font-weight:700;">
+            <option value="">— Semestre —</option>
+            <option value="I Semestre · Enero – Junio">I Semestre · Enero – Junio</option>
+            <option value="II Semestre · Julio – Diciembre">II Semestre · Julio – Diciembre</option>
+          </select>
+          <select id="f-anio" style="font-weight:700;">
+            <option value="">— Año —</option>
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+            <option value="2028">2028</option>
+            <option value="2029">2029</option>
+            <option value="2030">2030</option>
+            <option value="2031">2031</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="ps">
+      <div style="display:flex;gap:8px;">
+        <button class="btn-p" onclick="goStep(2)" type="button">Siguiente →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ STEP 2 ══ -->
+  <div id="s2" style="display:none;">
+    <div class="ps">
+      <span class="ps-title">Estudiantes del Grupo</span>
+      <div class="ibox" id="s2-info">Cada estudiante tiene sus propias fechas de rotación. El período general del grupo se calcula automáticamente como el rango más amplio.</div>
+      <div id="students-list"></div>
+      <button class="addbtn" onclick="addStudent()" type="button">+ Agregar estudiante</button>
+    </div>
+    <div class="ps" id="periodo-visual" style="display:none;">
+      <span class="ps-title">Período del Grupo</span>
+      <div id="periodo-bars"></div>
+      <div class="gbox" id="grupo-periodo-info"></div>
+    </div>
+    <div class="ps">
+      <div style="display:flex;gap:7px;">
+        <button class="btn-s" onclick="goStep(1)" type="button" style="flex:1;">← Atrás</button>
+        <button class="btn-p" onclick="goStep(3)" type="button" style="flex:2;">Siguiente →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ STEP 3 ══ -->
+  <div id="s3" style="display:none;">
+    <div class="ps">
+      <span class="ps-title">Tipo de Día Activo</span>
+      <div class="type-grid" id="type-grid"></div>
+      <div class="ibox" style="font-size:11px;">
+        <strong>Clic</strong> en un día del calendario = asignar tipo activo<br>
+        <strong>Clic derecho</strong> o <strong>doble clic</strong> = <span style="color:#FCA5A5;">quitar asignación</span><br>
+        Turno Noche 🌙 → el día siguiente se marca automáticamente como 😴 Post-turno<br>
+        Los días de clase se marcan automáticamente en naranja
+      </div>
+    </div>
+    <div class="ps">
+      <span class="ps-title">Calendarios por Estudiante</span>
+      <div id="special-days-ui"></div>
+    </div>
+    <div class="ps">
+      <div style="display:flex;gap:7px;">
+        <button class="btn-s" onclick="goStep(2)" type="button" style="flex:1;">← Atrás</button>
+        <button class="btn-p" onclick="goStep(4)" type="button" style="flex:2;">Siguiente →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ STEP 4 ══ -->
+  <div id="s4" style="display:none;">
+    <div class="ps">
+      <span class="ps-title">Resumen</span>
+      <div id="summary-box" class="gbox"></div>
+    </div>
+    <div class="ps">
+      <span class="ps-title">Opciones de generación</span>
+      <div class="frow"><label>Número de salas para aleatorizar</label>
+        <select id="f-nsalas">
+          <option value="5">5 salas (Kennedy)</option>
+          <option value="6">6 salas (Bosa)</option>
+        </select>
+      </div>
+      <button class="btn-p" onclick="generateSchedule()" type="button">⚡ Generar Distribución</button>
+    </div>
+    <div class="ps" id="dl-panel" style="display:none;">
+      <button class="btn-grn" onclick="downloadHTML()" type="button" style="width:100%;">⬇ Descargar HTML</button>
+    </div>
+    <div class="ps">
+      <button class="btn-s" onclick="goStep(3)" type="button">← Atrás</button>
+    </div>
+  </div>
+
+</div><!-- /panel -->
+
+<div class="pview" id="pview">
+  <div class="prev-ph">
+    <div class="ico">📅</div>
+    <h3>Vista Previa</h3>
+    <p>Complete los pasos en el panel izquierdo. La distribución aparecerá aquí.</p>
+  </div>
+</div>
+</div><!-- /main -->
+
+<script>
+'use strict';
+// ══════════════════════════════════════════════
+// FESTIVOS COLOMBIA 2025-2027
+// ══════════════════════════════════════════════
+const FESTIVOS = new Set([
+  "2025-01-01","2025-01-06","2025-03-24","2025-04-17","2025-04-18","2025-05-01",
+  "2025-06-02","2025-06-23","2025-06-30","2025-08-07","2025-08-18","2025-10-13",
+  "2025-11-03","2025-11-17","2025-12-08","2025-12-25",
+  "2026-01-01","2026-01-12","2026-03-23","2026-04-02","2026-04-03","2026-05-01",
+  "2026-05-18","2026-06-08","2026-06-29","2026-07-20","2026-08-07","2026-08-17",
+  "2026-10-12","2026-11-02","2026-11-16","2026-12-08","2026-12-25",
+  "2027-01-01","2027-01-11","2027-03-22","2027-04-01","2027-04-02","2027-05-01",
+  "2027-05-17","2027-05-31","2027-06-07","2027-06-28","2027-07-20","2027-08-07",
+  "2027-08-16","2027-10-18","2027-11-01","2027-11-15","2027-12-08","2027-12-25",
+]);
+
+function isFestivo(iso) { return FESTIVOS.has(iso); }
+function isWeekend(iso) { const w=new Date(iso+'T12:00').getDay(); return w===0||w===6; }
+function isNonWorking(iso) { return isWeekend(iso)||isFestivo(iso); }
+
+// ══════════════════════════════════════════════
+// UNIVERSIDAD DATA
+// ══════════════════════════════════════════════
+const UNIVS = {
+  kennedy:[
+    {key:'martin', name:'San Martín',  short:'SM',color:'#3B82F6',bg:'#DBEAFE',border:'#1D4ED8',dark:'#1E3A8A',claseDow:[1,6]},
+    {key:'sabana', name:'La Sabana',   short:'SB',color:'#7C3AED',bg:'#EDE9FE',border:'#7C3AED',dark:'#4C1D95',claseDow:[2]},
+    {key:'bosque', name:'El Bosque',   short:'BO',color:'#10B981',bg:'#DCFCE7',border:'#16A34A',dark:'#14532D',claseDow:[2]},
+  ],
+  bosa:[
+    {key:'udca',   name:'UDCA',        short:'UD',color:'#F59E0B',bg:'#FEF3C7',border:'#D97706',dark:'#78350F',claseDow:[4]},
+    {key:'narino', name:'Ant. Nariño', short:'AN',color:'#8B5CF6',bg:'#EDE9FE',border:'#7C3AED',dark:'#4C1D95',claseDow:[4]},
+    {key:'rosario',name:'Rosario',     short:'RO',color:'#EF4444',bg:'#FEF2F2',border:'#DC2626',dark:'#7F1D1D',claseDow:[]},
+    {key:'martin', name:'San Martín',  short:'SM',color:'#3B82F6',bg:'#DBEAFE',border:'#1D4ED8',dark:'#1E3A8A',claseDow:[1,6]},
+    {key:'sabana', name:'La Sabana',   short:'SB',color:'#7C3AED',bg:'#EDE9FE',border:'#7C3AED',dark:'#4C1D95',claseDow:[2]},
+    {key:'bosque', name:'El Bosque',   short:'BO',color:'#10B981',bg:'#DCFCE7',border:'#16A34A',dark:'#14532D',claseDow:[2]},
+  ],
+};
+
+const SALA_PALETTE=[
+  {hdr:'#B45309',lt:'#FEF3C7',dk:'#78350F'},
+  {hdr:'#9F1239',lt:'#FFF1F2',dk:'#881337'},
+  {hdr:'#1D4ED8',lt:'#EFF6FF',dk:'#1E3A8A'},
+  {hdr:'#15803D',lt:'#F0FDF4',dk:'#14532D'},
+  {hdr:'#7E22CE',lt:'#F5F3FF',dk:'#4C1D95'},
+  {hdr:'#B91C1C',lt:'#FEF2F2',dk:'#7F1D1D'},
+  {hdr:'#0369A1',lt:'#E0F2FE',dk:'#0C4A6E'},
+  {hdr:'#047857',lt:'#ECFDF5',dk:'#064E3B'},
+];
+
+const TYPES={
+  night:       {label:'Turno Noche',         emoji:'🌙',bg:'#312E81',lt:'#C4B5FD'},
+  posturno:    {label:'Post-turno',           emoji:'😴',bg:'#4A1D96',lt:'#DDD6FE'},
+  interconsult:{label:'Interconsultas',       emoji:'📋',bg:'#14532D',lt:'#4ADE80'},
+  recovery:    {label:'Gastro AM / Recup PM', emoji:'🔄',bg:'#0C4A6E',lt:'#7DD3FC'},
+  resonancia:  {label:'Resonancia Magnética', emoji:'🧲',bg:'#7C2D12',lt:'#FED7AA'},
+  tintal:      {label:'Hospital Tintal',       emoji:'🏨',bg:'#0F766E',lt:'#99F6E4'},
+  urgencias:   {label:'Urgencias',            emoji:'🚨',bg:'#7F1D1D',lt:'#FCA5A5'},
+  libre:       {label:'Día Libre',            emoji:'🏖️',bg:'#374151',lt:'#9CA3AF'},
+};
+
+const DAYS_ES=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+const DAYS_SHORT=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+const MONTHS_ES=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const MONTHS_SH=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let ST = {
+  hosp: null,
+  grupo: '',
+  periodo: '',
+  students: [],
+  specialDays: {}, // { stuId: { iso: type } }
+};
+let stuN=0, activeType='night', curStep=1;
+let calState={}; // { stuId: {year,month} }
+
+// ══════════════════════════════════════════════
+// STEPPER
+// ══════════════════════════════════════════════
+function goStep(n){
+  if(n>1&&!ST.hosp){alert('Seleccione un hospital.');return;}
+  if(n>2&&ST.students.length===0){alert('Agregue al menos un estudiante.');return;}
+  if(n===3) buildStep3();
+  if(n===4) buildSummary();
+  curStep=n;
+  ['s1','s2','s3','s4'].forEach((id,i)=>{
+    document.getElementById(id).style.display=i+1===n?'block':'none';
+  });
+  document.querySelectorAll('.step').forEach((s,i)=>{
+    s.classList.remove('active','done');
+    if(i+1<n) s.classList.add('done');
+    if(i+1===n) s.classList.add('active');
+  });
+}
+
+// ══════════════════════════════════════════════
+// HOSPITAL
+// ══════════════════════════════════════════════
+function selHosp(btn){
+  document.querySelectorAll('.hpill').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  ST.hosp=btn.dataset.h;
+  const univs=UNIVS[ST.hosp];
+  const ib=document.getElementById('hosp-info');
+  ib.style.display='block';
+  ib.innerHTML=`<strong>${ST.hosp==='kennedy'?'🏥 Kennedy':'🏥 Bosa'}:</strong> ${univs.map(u=>`${u.short}: ${u.name}`).join(' · ')}`;
+  // set default nsalas
+  document.getElementById('f-nsalas').value=ST.hosp==='kennedy'?'5':'6';
+}
+
+// ══════════════════════════════════════════════
+// STUDENTS
+// ══════════════════════════════════════════════
+function addStudent(){
+  stuN++;
+  const id='stu_'+stuN;
+  const univs=UNIVS[ST.hosp||'kennedy'];
+  ST.students.push({id,name:'',univ:univs[0].key,iniDate:'',finDate:''});
+  ST.specialDays[id]={};
+  calState[id]=null;
+  renderStudents();
+  updatePeriodBars();
+}
+
+function removeStudent(id){
+  ST.students=ST.students.filter(s=>s.id!==id);
+  delete ST.specialDays[id];
+  delete calState[id];
+  renderStudents();
+  updatePeriodBars();
+}
+
+function getUniv(key){
+  for(const arr of Object.values(UNIVS)){const f=arr.find(u=>u.key===key);if(f)return f;}
+  return {key,name:key,short:'??',color:'#64748B',bg:'#F1F5F9',border:'#64748B',dark:'#1E293B',claseDow:[]};
+}
+
+function renderStudents(){
+  const el=document.getElementById('students-list');
+  const univs=UNIVS[ST.hosp||'kennedy'];
+  const opts=univs.map(u=>`<option value="${u.key}">${u.short} — ${u.name}</option>`).join('');
+  el.innerHTML=ST.students.map((s,i)=>{
+    const u=getUniv(s.univ);
+    return `<div class="stu-entry">
+      <div class="stu-hdr">
+        <span class="stu-badge" style="background:${u.bg};border:1.5px solid ${u.border};color:${u.dark};">${u.short} · #${i+1}</span>
+        <button class="rmv" onclick="removeStudent('${s.id}')" type="button">✕</button>
+      </div>
+      <div class="frow"><label>Nombre</label>
+        <input type="text" value="${s.name}" placeholder="Nombre completo" oninput="updStu('${s.id}','name',this.value)">
+      </div>
+      <div class="stu-g2">
+        <div class="frow"><label>Universidad</label>
+          <select onchange="updStu('${s.id}','univ',this.value)">${univs.map(u=>`<option value="${u.key}"${s.univ===u.key?' selected':''}>${u.short} — ${u.name}</option>`).join('')}</select>
+        </div>
+        <div></div>
+        <div class="frow"><label>Inicio rotación</label>
+          <input type="date" value="${s.iniDate}" onchange="updStu('${s.id}','iniDate',this.value)">
+        </div>
+        <div class="frow"><label>Fin rotación</label>
+          <input type="date" value="${s.finDate}" onchange="updStu('${s.id}','finDate',this.value)">
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function updStu(id,field,val){
+  const s=ST.students.find(x=>x.id===id);
+  if(s){s[field]=val;}
+  if(field==='univ') renderStudents();
+  if(field==='iniDate'||field==='finDate') updatePeriodBars();
+}
+
+// ── PERIOD BARS ──
+function updatePeriodBars(){
+  const validStudents=ST.students.filter(s=>s.iniDate&&s.finDate);
+  const pv=document.getElementById('periodo-visual');
+  if(validStudents.length===0){pv.style.display='none';return;}
+  pv.style.display='block';
+
+  const allInis=validStudents.map(s=>s.iniDate).sort();
+  const allFins=validStudents.map(s=>s.finDate).sort();
+  const globalIni=allInis[0];
+  const globalFin=allFins[allFins.length-1];
+  const totalDays=daysBetween(globalIni,globalFin)+1;
+
+  const barsHTML=validStudents.map(s=>{
+    const u=getUniv(s.univ);
+    const startOff=daysBetween(globalIni,s.iniDate);
+    const dur=daysBetween(s.iniDate,s.finDate)+1;
+    const pct=(dur/totalDays*100).toFixed(1);
+    const left=(startOff/totalDays*100).toFixed(1);
+    return `<div class="pb-row">
+      <span class="pb-name">${u.short} ${s.name?'· '+s.name.split(' ')[0]:''}</span>
+      <div class="pb-bar-wrap">
+        <div class="pb-bar" style="width:${pct}%;margin-left:${left}%;background:${u.color};">${dur}d</div>
+      </div>
+      <span class="pb-dates">${fmt(s.iniDate)} → ${fmt(s.finDate)}</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('periodo-bars').innerHTML=barsHTML;
+  document.getElementById('grupo-periodo-info').innerHTML=
+    `<strong>Período del grupo:</strong> ${fmt(globalIni)} → ${fmt(globalFin)} (${totalDays} días en total)`;
+}
+
+// ══════════════════════════════════════════════
+// STEP 3 — SPECIAL DAYS
+// ══════════════════════════════════════════════
+function buildStep3(){
+  const tg=document.getElementById('type-grid');
+  const isKennedy=ST.hosp==='kennedy';
+  // Ajustar labels según hospital
+  TYPES.recovery.label = isKennedy ? 'Recuperación' : 'Gastro AM / Recup PM';
+  const visibleTypes=Object.entries(TYPES).filter(([k])=>!(isKennedy&&k==='resonancia') && !(isKennedy&&k==='recovery') && !(!isKennedy&&k==='tintal'));
+  tg.innerHTML=visibleTypes.map(([k,v])=>{
+    let nota='';
+    if(k==='resonancia') nota='<div style="font-size:9px;color:rgba(255,255,255,.65);margin-top:2px;">Solo martes · Bosa</div>';
+    else if(k==='tintal') nota='<div style="font-size:9px;color:rgba(255,255,255,.65);margin-top:2px;">Solo manual · Kennedy</div>';
+    return `<button class="type-btn" data-t="${k}" onclick="setType('${k}')" type="button">
+      ${v.emoji} ${v.label}${nota}</button>`;
+  }).join('');
+  setType('night');
+  buildAllCalendars();
+}
+
+function setType(t){
+  activeType=t;
+  document.querySelectorAll('.type-btn').forEach(b=>{
+    const v=TYPES[b.dataset.t];
+    if(b.dataset.t===t){
+      b.style.background=v.bg;b.style.color=v.lt;b.style.border=`2px solid ${v.lt}`;
+    } else {
+      b.style.background='var(--surf3)';b.style.color='var(--sub)';b.style.border='2px solid var(--brd2)';
+    }
+  });
+}
+
+function buildAllCalendars(){
+  const el=document.getElementById('special-days-ui');
+  el.innerHTML=ST.students.map((stu,i)=>{
+    const u=getUniv(stu.univ);
+    const ini=stu.iniDate;
+    const fin=stu.finDate;
+    if(!calState[stu.id]&&ini){
+      const d=new Date(ini+'T12:00');
+      calState[stu.id]={year:d.getFullYear(),month:d.getMonth()};
+    } else if(!calState[stu.id]){
+      const d=new Date();
+      calState[stu.id]={year:d.getFullYear(),month:d.getMonth()};
+    }
+    return `<div class="stu-cal-block" style="border-left:3px solid ${u.color};">
+      <div class="stu-cal-hdr">
+        <span style="background:${u.bg};border:1.5px solid ${u.border};color:${u.dark};padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;">${u.short}</span>
+        <strong style="font-size:13px;">${stu.name||'Sin nombre'}</strong>
+        <span style="font-size:10px;color:var(--dim);margin-left:auto;font-family:'DM Mono',monospace;">${ini?fmt(ini)+' → '+fmt(fin):''}</span>
+      </div>
+      <div id="cal-${stu.id}"></div>
+      <div class="stu-summary" id="sum-${stu.id}"></div>
+    </div>`;
+  }).join('');
+  ST.students.forEach(stu=>renderCal(stu.id));
+}
+
+function renderCal(stuId){
+  const el=document.getElementById('cal-'+stuId);
+  if(!el) return;
+  const stu=ST.students.find(s=>s.id===stuId);
+  if(!stu) return;
+  const cs=calState[stuId];
+  const {year,month}=cs;
+
+  const fd=new Date(year,month,1);
+  let sdow=fd.getDay(); sdow=sdow===0?6:sdow-1; // Mon=0
+  const dim=new Date(year,month+1,0).getDate();
+  const dipm=new Date(year,month,0).getDate();
+  const today=new Date(); const todayISO=iso(today.getFullYear(),today.getMonth(),today.getDate());
+
+  const stuIni=stu.iniDate;
+  const stuFin=stu.finDate;
+  const sp=ST.specialDays[stuId]||{};
+  const claseDow=getUniv(stu.univ).claseDow||[];
+
+  const dh=['L','M','M','J','V','S','D'].map(h=>`<div class="mc-dh">${h}</div>`).join('');
+  let cells='';
+  for(let i=sdow-1;i>=0;i--) cells+=`<div class="mc-day other">${dipm-i}</div>`;
+
+  for(let d=1;d<=dim;d++){
+    const isoStr=iso(year,month,d);
+    const wd=new Date(isoStr+'T12:00').getDay(); // 0=sun
+    const inRange=stuIni&&stuFin&&isoStr>=stuIni&&isoStr<=stuFin;
+    const fest=isFestivo(isoStr);
+    const wknd=isWeekend(isoStr);
+    const isClase=claseDow.includes(wd);
+    const spType=sp[isoStr];
+
+    const nextWd=(wd+1)%7;
+    const isPreClase=!isClase && claseDow.includes(nextWd);
+
+    let cls='mc-day';
+    if(!inRange) cls+=' other';
+    else if(spType) cls+=` t-${spType}`;
+    else if(fest) cls+=' t-fest-bg';
+    else if(wknd) cls+=' weekend';
+    else if(isClase) cls+=' t-clase';
+    else if(isPreClase) cls+=' t-preclase';
+
+    if(isoStr===todayISO) cls+=' today';
+
+    let title=DAYS_ES[wd]+' '+d;
+    if(fest) title+=' 🇨🇴 Festivo';
+    if(isClase) title+=' — Día académico (sin rotación en hospital)';
+    if(isPreClase) title+=' — Víspera de clase (turno noche no permitido)';
+    if(spType) title+=' — '+TYPES[spType].label;
+
+    cells+=`<div class="${cls}" title="${title}"
+      onclick="dayClick('${stuId}','${isoStr}','${wd}','${isClase}','${isPreClase}')"
+      ondblclick="dayRemove('${stuId}','${isoStr}')"
+      oncontextmenu="dayRemove('${stuId}','${isoStr}');return false;">${d}</div>`;
+  }
+  const tot=sdow+dim; const rem=tot%7===0?0:7-(tot%7);
+  for(let d=1;d<=rem;d++) cells+=`<div class="mc-day other">${d}</div>`;
+
+  el.innerHTML=`<div class="mc-wrap">
+    <div class="mc-nav">
+      <button class="mc-nav-btn" onclick="calNav('${stuId}',-1)" type="button">‹</button>
+      <span class="mc-month-lbl">${MONTHS_ES[month]} ${year}</span>
+      <button class="mc-nav-btn" onclick="calNav('${stuId}',1)" type="button">›</button>
+    </div>
+    <div class="mc-grid">${dh}${cells}</div>
+  </div>`;
+
+  // Summary badges
+  const sumEl=document.getElementById('sum-'+stuId);
+  if(sumEl){
+    const counts={};
+    Object.values(sp).forEach(t=>{counts[t]=(counts[t]||0)+1;});
+    sumEl.innerHTML=Object.entries(counts).map(([t,c])=>{
+      const v=TYPES[t];return v?`<span style="background:${v.bg};color:${v.lt};padding:2px 7px;border-radius:4px;font-size:9.5px;font-weight:700;">${v.emoji}${c}</span>`:'';
+    }).join('');
+  }
+}
+
+function calNav(stuId,dir){
+  const cs=calState[stuId];
+  cs.month+=dir;
+  if(cs.month<0){cs.month=11;cs.year--;}
+  if(cs.month>11){cs.month=0;cs.year++;}
+  renderCal(stuId);
+}
+
+function dayClick(stuId,isoStr,wdStr,isClaseStr,isPreClaseStr){
+  const wd=parseInt(wdStr);
+  const isClase=isClaseStr==='true';
+  const isPreClase=isPreClaseStr==='true';
+  const sp=ST.specialDays[stuId];
+  const fest=isFestivo(isoStr);
+  const wknd=isWeekend(isoStr);
+
+  // Bloqueo: día académico
+  if(isClase){
+    alert('⚠️ Día académico de la universidad.\nNo se puede asignar rotación en hospital.');
+    return;
+  }
+  // Bloqueo: víspera de clase + turno noche
+  if(isPreClase && activeType==='night'){
+    alert('⚠️ No se puede asignar turno noche el día anterior al día académico.\nEl estudiante necesita descansar antes de su jornada académica.');
+    return;
+  }
+
+  if(activeType==='urgencias'&&(wknd||fest)){
+    sp[isoStr]='urgencias';
+  } else if(activeType==='night'){
+    sp[isoStr]='night';
+    const next=nextIso(isoStr);
+    sp[next]='posturno';
+  } else {
+    sp[isoStr]=activeType;
+  }
+  renderCal(stuId);
+}
+
+function dayRemove(stuId,isoStr){
+  const sp=ST.specialDays[stuId];
+  if(sp[isoStr]==='night'){
+    // also remove posturno next day
+    delete sp[nextIso(isoStr)];
+  }
+  delete sp[isoStr];
+  renderCal(stuId);
+}
+
+// ══════════════════════════════════════════════
+// SUMMARY
+// ══════════════════════════════════════════════
+function buildSummary(){
+  ST.grupo=document.getElementById('f-grupo').value;
+  const sem=document.getElementById('f-semestre').value;
+  const anio=document.getElementById('f-anio').value;
+  ST.periodo=(sem&&anio)?`${sem} ${anio}`:(sem||anio||'');
+  const el=document.getElementById('summary-box');
+  const nights=ST.students.map(s=>Object.values(ST.specialDays[s.id]||{}).filter(t=>t==='night').length);
+  const libres=ST.students.map(s=>Object.values(ST.specialDays[s.id]||{}).filter(t=>t==='libre').length);
+  const validStudents=ST.students.filter(s=>s.iniDate&&s.finDate);
+  let globalIni='',globalFin='';
+  if(validStudents.length>0){
+    globalIni=[...validStudents.map(s=>s.iniDate)].sort()[0];
+    globalFin=[...validStudents.map(s=>s.finDate)].sort().reverse()[0];
+  }
+  el.innerHTML=`<strong>Hospital:</strong> ${ST.hosp==='kennedy'?'Kennedy':'Bosa'} · <strong>Grupo:</strong> ${ST.grupo||'(sin nombre)'}<br>
+    <strong>Estudiantes:</strong> ${ST.students.length} · <strong>Período:</strong> ${fmt(globalIni)} → ${fmt(globalFin)}<br>
+    <strong>Turnos noche:</strong> ${nights.map((n,i)=>`${ST.students[i].name?ST.students[i].name.split(' ')[0]:'Est.'+(i+1)}: ${n}`).join(' · ')}<br>
+    <strong>Días libres:</strong> ${libres.reduce((a,b)=>a+b,0)} en total`;
+}
+
+// ══════════════════════════════════════════════
+// GENERATION ALGORITHM
+// ══════════════════════════════════════════════
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+
+function computeGlobalRange(){
+  const valid=ST.students.filter(s=>s.iniDate&&s.finDate);
+  if(!valid.length) return {ini:'',fin:''};
+  return {
+    ini:[...valid.map(s=>s.iniDate)].sort()[0],
+    fin:[...valid.map(s=>s.finDate)].sort().reverse()[0],
+  };
+}
+
+function buildAssignments(nSalas){
+  const {ini,fin}=computeGlobalRange();
+  if(!ini) return {};
+  const days=getDaysRange(ini,fin);
+  const salas=Array.from({length:nSalas},(_,i)=>`s${i+1}`);
+  const recup='recup';
+  const interconsult='interconsult';
+  const resonancia='resonancia';
+  const tintal='tintal';
+  const isKennedy=ST.hosp==='kennedy';
+
+  // Columnas visibles (para el render de la tabla)
+  // Kennedy: Salas 1-5 + Interconsultas + Hospital Tintal (Tintal = manual)
+  // Bosa:    Salas 1-6 + Gastro AM/Recup PM + Resonancia (martes) + Interconsultas
+  const allSlots=isKennedy
+    ? [...salas,interconsult,tintal]
+    : [...salas,recup,resonancia,interconsult];
+
+  // Slots que ROTAN AUTOMÁTICAMENTE cada día (todos con la misma equidad).
+  // Todos los estudiantes pasan por todos estos slots a lo largo de la rotación.
+  // Kennedy: Salas + Interconsultas            (Tintal queda manual, fuera del pool)
+  // Bosa:    Salas + Gastro/Recup + Interconsultas   (Resonancia = solo martes, aparte)
+  const rotSlots=isKennedy
+    ? [...salas,interconsult]
+    : [...salas,recup,interconsult];
+
+  // Exposición por estudiante (para equidad). Incluye resonancia y tintal para stats.
+  const exp={}; // {stuId:{slotKey:count}}
+  const trackKeys=[...new Set([...allSlots,...rotSlots,resonancia,tintal])];
+  ST.students.forEach(s=>{
+    exp[s.id]={};
+    trackKeys.forEach(sl=>exp[s.id][sl]=0);
+  });
+
+  // Carga total del estudiante en el pool rotacional (para priorizar al que menos ha trabajado)
+  const totalLoad=(stuId)=>rotSlots.reduce((a,k)=>a+(exp[stuId][k]||0),0);
+  // ¿el slot es una sala? (para desempatar priorizando salas)
+  const isSala=(sl)=>/^s\d+$/.test(sl);
+
+  const assignments={}; // {date:{slotKey:stuId|null}}
+  let dayIdx=0; // contador de días hábiles, para rotar el orden de reparto
+
+  days.forEach(date=>{
+    const wd=new Date(date+'T12:00').getDay();
+    const nonWork=isNonWorking(date);
+    assignments[date]={};
+    allSlots.forEach(sl=>assignments[date][sl]=null);
+
+    if(nonWork){ assignments[date].__isNonWork=true; return; }
+
+    // Estudiantes disponibles hoy (excluye posturno/libre/tintal, día de clase y turno-noche
+    // víspera de día académico)
+    const avail=ST.students.filter(stu=>{
+      const stuIni=stu.iniDate,stuFin=stu.finDate;
+      if(!stuIni||!stuFin) return false;
+      if(date<stuIni||date>stuFin) return false;
+      const sp=(ST.specialDays[stu.id]||{})[date];
+      if(['posturno','libre','tintal'].includes(sp)) return false; // night sigue en sala 7am-1pm
+      const claseDow=getUniv(stu.univ).claseDow||[];
+      if(claseDow.includes(wd)) return false;
+      if(sp==='night'){
+        const nextWd=(wd+1)%7;
+        if(claseDow.includes(nextWd)) return false;
+      }
+      return true;
+    });
+
+    const usedSlots=new Set();
+    let pool=[...avail];
+
+    // Bloquea a un estudiante en un slot y lo saca del pool
+    const lock=(stu,slot)=>{
+      assignments[date][slot]=stu.id;
+      if(exp[stu.id][slot]!=null) exp[stu.id][slot]++;
+      usedSlots.add(slot);
+      pool=pool.filter(p=>p.id!==stu.id);
+    };
+
+    // ── HOSPITAL TINTAL (Kennedy) — solo manual, fuera del pool ──
+    if(isKennedy){
+      const tintStu=ST.students.find(s=>{
+        if(!s.iniDate||!s.finDate) return false;
+        if(date<s.iniDate||date>s.finDate) return false;
+        return (ST.specialDays[s.id]||{})[date]==='tintal';
+      });
+      if(tintStu){ assignments[date][tintal]=tintStu.id; if(exp[tintStu.id][tintal]!=null) exp[tintStu.id][tintal]++; }
+    }
+
+    // ── 1) PRE-ASIGNACIONES MANUALES (tienen prioridad y bloquean su columna) ──
+    // Interconsultas manual
+    pool.filter(s=>(ST.specialDays[s.id]||{})[date]==='interconsult').forEach(s=>{
+      if(!usedSlots.has(interconsult)) lock(s,interconsult);
+    });
+    // Gastro/Recup manual (solo Bosa)
+    if(!isKennedy){
+      pool.filter(s=>(ST.specialDays[s.id]||{})[date]==='recovery').forEach(s=>{
+        if(!usedSlots.has(recup)) lock(s,recup);
+      });
+    }
+    // Resonancia manual (solo Bosa, martes)
+    if(!isKennedy && wd===2){
+      pool.filter(s=>(ST.specialDays[s.id]||{})[date]==='resonancia').forEach(s=>{
+        if(!assignments[date][resonancia]){ assignments[date][resonancia]=s.id; exp[s.id][resonancia]++; pool=pool.filter(p=>p.id!==s.id); }
+      });
+    }
+
+    // ── 2) RESONANCIA AUTOMÁTICA (Bosa, martes) — MÁXIMO UNA VEZ por estudiante ──
+    // Solo elegibles quienes aún no han ido nunca (exp resonancia === 0).
+    // Si todos los disponibles ya fueron una vez, ese martes queda sin asignar.
+    if(!isKennedy && wd===2 && !assignments[date][resonancia]){
+      const elegibles=pool.filter(s=>(exp[s.id][resonancia]||0)===0);
+      if(elegibles.length>0){
+        const sorted=[...elegibles].sort((a,b)=>totalLoad(a.id)-totalLoad(b.id));
+        const pick=sorted[0];
+        assignments[date][resonancia]=pick.id; exp[pick.id][resonancia]++;
+        pool=pool.filter(p=>p.id!==pick.id);
+      }
+    }
+
+    // ── 3) POOL ROTACIONAL: salas + interconsultas (+ gastro/recup en Bosa) ──
+    // Cada estudiante recibe el slot que MENOS ha visitado → todos rotan por todo.
+    // Se atiende primero a quien menos carga acumulada tiene; ante empate, se rota
+    // el orden día a día para que el "sobrante" no recaiga siempre en el mismo.
+    const rot=pool.length?dayIdx%pool.length:0;
+    const rotatedPool=[...pool.slice(rot),...pool.slice(0,rot)];
+    const ordered=rotatedPool.sort((a,b)=>totalLoad(a.id)-totalLoad(b.id));
+    ordered.forEach(stu=>{
+      const ranked=rotSlots.filter(sl=>!usedSlots.has(sl))
+        .sort((a,b)=>
+          (exp[stu.id][a]-exp[stu.id][b])          // el menos visitado por este estudiante
+          || ((isSala(a)?0:1)-(isSala(b)?0:1))      // empate: preferir sala
+          || (a<b?-1:1)                             // empate final: orden estable
+        );
+      if(ranked.length>0){
+        lock(stu,ranked[0]);
+      }
+      // Si hay más estudiantes que slots, el sobrante queda sin asignar ese día (·)
+    });
+    dayIdx++;
+  });
+
+  return {assignments, salaKeys:allSlots, salaLabels:generateSalaLabels(nSalas)};
+}
+function generateSalaLabels(n){
+  const labels={};
+  for(let i=1;i<=n;i++) labels[`s${i}`]=`Sala ${i}`;
+  labels['recup']=ST.hosp==='kennedy'?'Recuperación':'Gastro AM / Recup PM';
+  labels['interconsult']='Interconsultas';
+  labels['resonancia']='Resonancia Magnética';
+  labels['tintal']='Hospital Tintal';
+  return labels;
+}
+
+// ══════════════════════════════════════════════
+// BUILD OUTPUT HTML
+// ══════════════════════════════════════════════
+function generateSchedule(){
+  const nSalas=parseInt(document.getElementById('f-nsalas').value)||6;
+  const {assignments,salaKeys,salaLabels}=buildAssignments(nSalas);
+  const {ini,fin}=computeGlobalRange();
+  const hospName=ST.hosp==='kennedy'?'Hospital de Kennedy':'Hospital de Bosa';
+  const grupo=document.getElementById('f-grupo').value||'Grupo';
+  const _sem=document.getElementById('f-semestre').value;
+  const _anio=document.getElementById('f-anio').value;
+  const periodo=(_sem&&_anio?`${_sem} ${_anio}`:(_sem||_anio||''))||(fmt(ini)+' – '+fmt(fin));
+  const year=ini?ini.slice(0,4):new Date().getFullYear();
+
+  const univKeys=[...new Set(ST.students.map(s=>s.univ))];
+  const univsInGroup=univKeys.map(k=>getUniv(k));
+
+  // Name colors for students
+  const NAME_COLORS=['#78350F','#881337','#1E3A8A','#14532D','#581C87','#7C2D12','#0C4A6E','#064E3B','#3B0764','#450A0A'];
+
+  function stuColor(stuId){const i=ST.students.findIndex(s=>s.id===stuId);return NAME_COLORS[i%NAME_COLORS.length];}
+  function getStu(id){return ST.students.find(s=>s.id===id);}
+
+  // Week grouping (Mon–Sun starting Monday)
+  function weekKey(isoStr){
+    const d=new Date(isoStr+'T12:00');
+    const wd=d.getDay(); const diff=wd===0?-6:1-wd;
+    const mon=new Date(d);mon.setDate(d.getDate()+diff);
+    return mon.toISOString().slice(0,10);
+  }
+
+  const days=getDaysRange(ini,fin);
+  const weekMap={};
+  days.forEach(d=>{const wk=weekKey(d);if(!weekMap[wk])weekMap[wk]=[];weekMap[wk].push(d);});
+  const weeks=Object.keys(weekMap).sort();
+
+  // Sala header colors
+  const salaHdrColors={};
+  salaKeys.forEach((k,i)=>salaHdrColors[k]=SALA_PALETTE[i%SALA_PALETTE.length]);
+
+  const colCount=2+salaKeys.length;
+  const salaHeadersHTML=salaKeys.map(k=>`<th class="sh" style="background:${salaHdrColors[k].hdr};">${salaLabels[k]}</th>`).join('');
+
+  let weeksHTML='';
+  weeks.forEach(wkStart=>{
+    const wkDays=weekMap[wkStart];
+    const wkEnd=wkDays[wkDays.length-1];
+    weeksHTML+=`<tbody class="week-body">
+    <tr class="week-title-row"><td colspan="${colCount}" class="week-title">📅 Semana ${fmt(wkStart)} &nbsp;→&nbsp; ${fmt(wkEnd)}</td></tr>
+    <tr class="subhead-row"><td class="sh th-meta">Fecha</td><td class="sh th-meta">Día</td>${salaHeadersHTML}</tr>`;
+
+    wkDays.forEach(date=>{
+      const wd=new Date(date+'T12:00').getDay();
+      const dayName=DAYS_ES[wd];
+      const nonWork=isNonWorking(date);
+      const fest=isFestivo(date);
+      const fmted=fmt(date);
+
+      if(nonWork){
+        // Urgencias row
+        const urgStudents=ST.students.filter(s=>(ST.specialDays[s.id]||{})[date]==='urgencias');
+        let urgSlots='';
+        if(urgStudents.length===0){
+          urgSlots=`<span class="urg-slot">Est. ____________________</span><span class="urg-sep">/</span><span class="urg-slot">Est. ____________________</span><span class="urg-note">(sin asignar)</span>`;
+        } else {
+          urgStudents.slice(0,2).forEach((stu,ui)=>{
+            if(ui>0) urgSlots+=`<span class="urg-sep">/</span>`;
+            const u=getUniv(stu.univ);
+            urgSlots+=`<span class="urg-slot" style="border-color:${u.border};background:${u.bg};color:${u.dark};font-weight:700;">${stu.name||'Est.'}</span>`;
+          });
+        }
+        const festTag=fest?`<span class="tag-fest">🇨🇴 Festivo</span>`:'';
+        const wkTag=`<span class="tag-tipo">${dayName}</span>`;
+        weeksHTML+=`<tr class="day-row row-urg">
+          <td class="col-fecha">${fmted}</td>
+          <td class="col-dia">${dayName} ${wkTag}${festTag}</td>
+          <td colspan="${salaKeys.length}" class="cell-urg">
+            <div class="urg-inner"><span class="urg-label">🚨 Urgencias</span>${urgSlots}</div>
+          </td>
+        </tr>`;
+        return;
+      }
+
+      // Normal working day
+      const dayAssign=assignments[date]||{};
+
+      // Collect students with special types today for bottom note row
+      const nightSt=ST.students.filter(s=>(ST.specialDays[s.id]||{})[date]==='night');
+      const postSt=ST.students.filter(s=>(ST.specialDays[s.id]||{})[date]==='posturno');
+      const libreSt=ST.students.filter(s=>(ST.specialDays[s.id]||{})[date]==='libre');
+      const claseSt=ST.students.filter(s=>{
+        const claseDow=getUniv(s.univ).claseDow||[];
+        const stuIni=s.iniDate,stuFin=s.finDate;
+        if(!stuIni||date<stuIni||date>stuFin) return false;
+        return claseDow.includes(wd);
+      });
+
+      let salaCells='';
+      salaKeys.forEach((slKey)=>{
+        const stuId=dayAssign[slKey];
+        if(!stuId){
+          salaCells+=`<td class="cell-off">·</td>`;
+        } else {
+          const stu=getStu(stuId);
+          if(!stu){salaCells+=`<td class="cell-off">·</td>`;return;}
+          const u=getUniv(stu.univ);
+          const spType=(ST.specialDays[stuId]||{})[date];
+          const nameColor=stuColor(stuId);
+          let badge='';
+          if(spType==='interconsult'||slKey==='interconsult') badge=`<div style="font-size:8px;color:#4ADE80;font-weight:700;">📋 IC</div>`;
+          else if(spType==='recovery'||slKey==='recup') badge=`<div style="font-size:8px;color:#7DD3FC;font-weight:700;">🔄 GR</div>`;
+          else if(spType==='resonancia'||slKey==='resonancia') badge=`<div style="font-size:8px;color:#FED7AA;font-weight:700;">🧲 RM</div>`;
+          // Night shift: show 🌙 tag inside cell (student works 7am-1pm then starts night at 7pm)
+          const nightBadge=spType==='night'?`<div style="background:#312E81;color:#C4B5FD;font-size:8px;font-weight:700;border-radius:3px;padding:1px 4px;margin-top:2px;">🌙 Turno tarde</div>`:'';
+          salaCells+=`<td class="cell-on" style="${spType==='night'?'border-bottom:2px solid #4C1D95;':''}">
+            <span class="chip-u" style="background:${u.bg};border-color:${u.border};color:${u.dark};">${u.short}</span>
+            <div class="cell-name" style="color:${nameColor};">${stu.name||'Est.'}</div>
+            ${badge}${nightBadge}
+          </td>`;
+        }
+      });
+
+      // Build status bar for posturno / libre / clase — shown below the main row
+      let noteBar='';
+      const noteItems=[];
+      // Posturno: prominent — explain why student is absent
+      postSt.forEach(s=>{
+        const prevDay=prevIso(date);
+        noteItems.push(`<span style="background:#3B0764;color:#E9D5FF;padding:2px 9px;border-radius:4px;font-weight:700;font-size:10.5px;margin-right:5px;border-left:3px solid #7C3AED;">😴 Post-turno (sin sala): ${s.name||s.id}</span>`);
+      });
+      nightSt.forEach(s=>{
+        noteItems.push(`<span style="background:#EDE9FE;color:#4338CA;padding:2px 9px;border-radius:4px;font-weight:700;font-size:10.5px;margin-right:5px;border-left:3px solid #6366F1;">🌙 Sale a turno 7pm: ${s.name||s.id} — en sala hasta 1pm</span>`);
+      });
+      libreSt.forEach(s=>{
+        noteItems.push(`<span style="background:#F1F5F9;color:#475569;padding:2px 9px;border-radius:4px;font-weight:700;font-size:10.5px;margin-right:5px;">🏖️ Día libre: ${s.name||s.id}</span>`);
+      });
+      claseSt.forEach(s=>{
+        noteItems.push(`<span style="background:#292524;color:#FDE68A;padding:2px 9px;border-radius:4px;font-weight:700;font-size:10.5px;margin-right:5px;">📚 Clase: ${s.name||s.id}</span>`);
+      });
+      if(noteItems.length>0){
+        noteBar=`<tr><td colspan="${colCount}" style="padding:4px 14px 5px;background:#1A1F3A;border-bottom:2px solid #3949AB;">${noteItems.join('')}</td></tr>`;
+      }
+
+      weeksHTML+=`<tr class="day-row">
+        <td class="col-fecha">${fmted}</td>
+        <td class="col-dia">${dayName}</td>
+        ${salaCells}
+      </tr>${noteBar}`;
+    });
+    weeksHTML+='</tbody>';
+  });
+
+  // ── INDIVIDUAL CARDS ──
+  const indCards=ST.students.map((stu,si)=>{
+    const u=getUniv(stu.univ);
+    const stuIni=stu.iniDate;const stuFin=stu.finDate;
+    if(!stuIni||!stuFin) return '';
+    const stuDays=getDaysRange(stuIni,stuFin);
+    const sp=ST.specialDays[stu.id]||{};
+    const claseDow=u.claseDow||[];
+
+    const salaVisits={};salaKeys.forEach(k=>salaVisits[k]=0);
+    let rows='';
+
+    stuDays.forEach(date=>{
+      const wd=new Date(date+'T12:00').getDay();
+      const nonWork=isNonWorking(date);
+      const fest=isFestivo(date);
+      const spType=sp[date];
+      const isClase=claseDow.includes(wd);
+      const dayAssign=assignments[date]||{};
+      const assignedSlot=salaKeys.find(k=>dayAssign[k]===stu.id);
+
+      if(nonWork){
+        if(spType==='urgencias'){
+          rows+=`<tr><td class="ind-fecha">${fmt(date)}</td><td class="ind-dia">${DAYS_SHORT[wd]}</td>
+            <td><span class="badge-ind" style="background:#7F1D1D;color:#FCA5A5;">🚨 Urgencias</span></td>
+            <td style="font-family:monospace;font-size:10px;">—</td></tr>`;
+        }
+        return;
+      }
+
+      let typeTag='',assignLabel='—';
+      if(spType==='night'){
+        // Night shift: student IS in sala 7am-1pm, then preturno 1pm-7pm, then night 7pm-7am
+        if(assignedSlot){
+          const sc=SALA_PALETTE[salaKeys.indexOf(assignedSlot)%SALA_PALETTE.length];
+          assignLabel=`<span style="font-weight:700;color:${sc.hdr};">${salaLabels[assignedSlot]}</span>`;
+          salaVisits[assignedSlot]++;
+        }
+        typeTag=`<span class="badge-ind" style="background:#312E81;color:#C4B5FD;">🌙 Turno Noche</span>`;
+      }
+      else if(spType==='posturno'){
+        typeTag=`<span class="badge-ind" style="background:#4A1D96;color:#DDD6FE;">😴 Post-turno (sin sala)</span>`;
+        assignLabel=`<span style="color:#9CA3AF;font-size:10px;">Ausente — turno anterior</span>`;
+      }
+      else if(spType==='interconsult'){typeTag=`<span class="badge-ind" style="background:#14532D;color:#4ADE80;">📋 Interconsultas</span>`;if(assignedSlot){assignLabel=salaLabels[assignedSlot];salaVisits[assignedSlot]++;}}
+      else if(spType==='recovery'){const recLbl=hospName.includes('Kennedy')?'🔄 Recuperación':'🔄 Gastro AM / Recup PM';typeTag=`<span class="badge-ind" style="background:#0C4A6E;color:#7DD3FC;">${recLbl}</span>`;if(assignedSlot){assignLabel=salaLabels[assignedSlot];salaVisits[assignedSlot]++;}}
+      else if(spType==='resonancia'){typeTag=`<span class="badge-ind" style="background:#7C2D12;color:#FED7AA;">🧲 Resonancia Magnética</span>`;if(assignedSlot){assignLabel=salaLabels[assignedSlot];salaVisits[assignedSlot]++;}}
+      else if(spType==='libre'){typeTag=`<span class="badge-ind" style="background:#374151;color:#9CA3AF;">🏖️ Día Libre</span>`;}
+      else if(spType==='tintal'){typeTag=`<span class="badge-ind" style="background:#0F766E;color:#99F6E4;">🏨 Hospital Tintal</span>`;assignLabel=`<span style="color:#9CA3AF;font-size:10px;">En Hospital Tintal</span>`;}
+      else if(isClase){typeTag=`<span class="badge-ind" style="background:#78350F;color:#FDE68A;">📚 Clase</span>`;}
+      else if(assignedSlot==='interconsult'){typeTag=`<span class="badge-ind" style="background:#14532D;color:#4ADE80;">📋 Interconsultas</span>`;assignLabel=`<span style="font-weight:700;color:#14532D;">Interconsultas</span>`;salaVisits[assignedSlot]++;}
+      else if(assignedSlot==='recup'){const recLbl=hospName.includes('Kennedy')?'🔄 Recuperación':'🔄 Gastro AM / Recup PM';typeTag=`<span class="badge-ind" style="background:#0C4A6E;color:#7DD3FC;">${recLbl}</span>`;assignLabel=`<span style="font-weight:700;color:#0C4A6E;">${salaLabels[assignedSlot]}</span>`;salaVisits[assignedSlot]++;}
+      else if(assignedSlot==='resonancia'){typeTag=`<span class="badge-ind" style="background:#7C2D12;color:#FED7AA;">🧲 Resonancia Magnética</span>`;assignLabel=`<span style="font-weight:700;color:#7C2D12;">Resonancia Magnética</span>`;salaVisits[assignedSlot]++;}
+      else if(assignedSlot){
+        const sc=SALA_PALETTE[salaKeys.indexOf(assignedSlot)%SALA_PALETTE.length];
+        assignLabel=`<span style="font-weight:700;color:${sc.hdr};">${salaLabels[assignedSlot]}</span>`;
+        typeTag=`<span class="badge-ind" style="background:${sc.hdr};color:#fff;">🏥 Sala</span>`;
+        salaVisits[assignedSlot]++;
+      } else {
+        typeTag=`<span style="color:#6B7280;font-size:10.5px;">·</span>`;
+      }
+
+      // Extra schedule note for night shift days
+      let scheduleNote='';
+      if(spType==='night'){
+        scheduleNote=`<tr style="background:#EDE9FE;">
+          <td colspan="4" style="padding:2px 8px;font-size:9.5px;color:#A5B4FC;font-style:italic;">
+            &nbsp;&nbsp;7:00–13:00 sala · 13:00–19:00 preturno · 19:00–7:00 turno noche
+          </td></tr>`;
+      } else if(spType==='posturno'){
+        scheduleNote=`<tr style="background:#F5F3FF;">
+          <td colspan="4" style="padding:2px 8px;font-size:9.5px;color:#C4B5FD;font-style:italic;">
+            &nbsp;&nbsp;Libre todo el día — turno noche previo finalizado a las 7:00
+          </td></tr>`;
+      }
+      rows+=`<tr style="${spType==='night'?'background:#EDE9FE;':spType==='posturno'?'background:#F5F3FF;':''}">
+        <td class="ind-fecha">${fmt(date)}</td>
+        <td class="ind-dia">${DAYS_SHORT[wd]}${fest?'🇨🇴':''}</td>
+        <td>${typeTag}</td>
+        <td>${assignLabel}</td>
+      </tr>${scheduleNote}`;
+    });
+
+    const salaStats=Object.entries(salaVisits).filter(([,c])=>c>0).map(([k,c])=>{
+      const sc=SALA_PALETTE[salaKeys.indexOf(k)%SALA_PALETTE.length];
+      return `<div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #EEE;font-size:11px;">
+        <span style="color:${sc.hdr};font-weight:600;">${salaLabels[k]}</span>
+        <span style="font-family:'DM Mono',monospace;font-weight:700;">${c}d</span>
+      </div>`;
+    }).join('');
+
+    const nights=Object.values(sp).filter(t=>t==='night').length;
+    const libres=Object.values(sp).filter(t=>t==='libre').length;
+    const totalHosp=Object.values(salaVisits).reduce((a,b)=>a+b,0);
+
+    return `<div class="student-card">
+      <div class="student-card-h" style="background:${u.color};">
+        ${stu.name||'Sin nombre'} <small>${u.short} · ${fmt(stuIni)} → ${fmt(stuFin)}</small>
+      </div>
+      <div style="padding:8px 14px;background:#F8F9FA;font-size:11px;display:flex;flex-wrap:wrap;gap:10px;border-bottom:2px solid #E2E8F0;">
+        <span>🏥 <strong>${totalHosp}</strong> días en salas</span>
+        <span>🌙 <strong>${nights}</strong> turno(s) noche</span>
+        <span>🏖️ <strong>${libres}</strong> libre(s)</span>
+        <span>📚 Clase: <strong>${claseDow.map(d=>DAYS_SHORT[d]).join(', ')||'Ninguno'}</strong></span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 200px;">
+        <div style="overflow-x:auto;border-right:1px solid #E2E8F0;">
+          <table class="ind-table">
+            <thead><tr><th>Fecha</th><th>Día</th><th>Tipo</th><th>Asignación</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+        <div style="padding:12px 14px;background:#FAFBFC;">
+          <div style="font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#94A3B8;margin-bottom:7px;">Rotación por Sala</div>
+          ${salaStats||'<div style="color:#999;font-size:11px;">Sin días en salas</div>'}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Pills for header
+  const pillsHTML=univsInGroup.map(u=>`<div class="pill"><span class="pill-dot" style="background:${u.color};"></span>${u.short} — ${u.name}</div>`).join('');
+
+  const html=`<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Rotación de Salas — ${grupo} — ${hospName}</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0D1B2A;--slate:#1E293B;--smoke:#374151;--mist:#94A3B8;--fog:#CBD5E1;--canvas:#F1F5F9;--gold:#FFD740;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;font-size:13.5px;line-height:1.6;color:var(--ink);background:#EEF2F7;}
+.portada{background:linear-gradient(135deg,#050F2C,#0D47A1,#01579B);color:#fff;padding:50px 54px 42px;position:relative;overflow:hidden;}
+.portada::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.05);border-radius:50%;top:-80px;right:-80px;width:320px;height:320px;}
+.portada::after{content:'';position:absolute;bottom:-60px;right:-60px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.03);}
+.portada-inner{position:relative;z-index:1;max-width:1200px;}
+.portada-tag{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+.portada-tag::before{content:'▸';color:var(--gold);}
+.portada h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(30px,5vw,54px);letter-spacing:2px;line-height:.95;margin-bottom:10px;}
+.portada h1 em{font-style:normal;color:var(--gold);}
+.portada-sub{font-family:'DM Sans',sans-serif;font-size:13px;color:rgba(255,255,255,.75);margin-bottom:28px;max-width:700px;font-weight:500;line-height:1.7;}
+.portada-pills{display:flex;flex-wrap:wrap;gap:8px;border-top:1px solid rgba(255,255,255,.15);padding-top:18px;}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:8px;font-size:11.5px;font-weight:700;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:rgba(255,255,255,.9);}
+.pill-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.cont{max-width:1200px;margin:0 auto;padding:28px 18px 80px;}
+.nota{border-radius:10px;padding:12px 16px;margin-bottom:12px;border-left:5px solid;font-size:13px;line-height:1.65;}
+.nota-info{background:#EFF6FF;border-color:#2563EB;color:#1E3A8A;}.nota-info strong{color:#1D4ED8;}
+.nota-warn{background:#FFFBEB;border-color:#D97706;color:#78350F;}.nota-warn strong{color:#92400E;}
+.leyenda{background:#fff;border-radius:12px;border:2px solid #CBD5E1;padding:14px 18px;margin-bottom:18px;box-shadow:0 3px 12px rgba(0,0,0,.07);}
+.ley-titulo{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#374151;margin-bottom:10px;}
+.ley-grid{display:flex;flex-wrap:wrap;gap:14px;}
+.ley-group{flex:1;min-width:180px;}
+.ley-group-title{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#6B7280;font-weight:800;margin-bottom:5px;}
+.ley-items{display:flex;flex-wrap:wrap;gap:4px;}
+.ley-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:5px;font-size:11px;font-weight:700;border-left:4px solid;white-space:nowrap;}
+.seccion{background:#fff;border-radius:14px;border:2px solid #CBD5E1;margin-bottom:20px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.07);}
+.sec-h{padding:13px 22px;display:flex;align-items:center;gap:12px;color:#fff;flex-wrap:wrap;}
+.sec-num{width:26px;height:26px;border-radius:6px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:15px;font-weight:700;flex-shrink:0;}
+.sec-titulo{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1.5px;}
+.sec-sub{font-size:10px;color:rgba(255,255,255,.6);font-weight:700;letter-spacing:1px;margin-left:auto;text-transform:uppercase;}
+.sec-b{overflow-x:auto;}
+.cal-table{width:100%;border-collapse:collapse;font-size:12px;min-width:960px;}
+.week-title-row td{padding:0;}
+.week-title{background:linear-gradient(135deg,#0D47A1,#1565C0);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:8px 16px;}
+.subhead-row .sh{padding:7px 6px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.7px;text-align:center;color:#fff;white-space:nowrap;}
+.subhead-row .sh.th-meta{background:#334155;text-align:left;min-width:85px;}
+.day-row td{border-bottom:1.5px solid #E2E8F0;border-right:1px solid #E2E8F0;vertical-align:middle;padding:6px 4px;}
+.day-row:nth-child(even) td{background:#F8FAFC;}
+.day-row:hover td{background:#EFF6FF;transition:background .15s;}
+.col-fecha{font-family:'DM Mono',monospace;font-size:10.5px;font-weight:600;color:#374151;padding-left:12px !important;white-space:nowrap;}
+.col-dia{font-weight:800;color:#0D1B2A;white-space:nowrap;padding-right:6px !important;font-size:12px;}
+.cell-on{text-align:center;padding:5px 3px !important;min-width:75px;}
+.cell-off{text-align:center;color:#CBD5E1;font-size:16px;font-weight:300;border-right:1px solid #E2E8F0;}
+.chip-u{display:inline-block;padding:2px 6px;border-radius:4px;font-size:8px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;border:1.5px solid;}
+.cell-name{font-weight:800;font-size:11.5px;line-height:1.2;color:#0D1B2A;}
+.row-urg td{background:#FFF1F2 !important;border-bottom:2px solid #FECDD3;}
+.row-urg .col-fecha{color:#9F1239;}.row-urg .col-dia{color:#9F1239;}
+.cell-urg{padding:7px 12px !important;}
+.urg-inner{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.urg-label{display:inline-flex;align-items:center;gap:5px;background:#C62828;color:#fff;padding:3px 10px;border-radius:5px;font-size:10.5px;font-weight:800;white-space:nowrap;flex-shrink:0;}
+.urg-slot{background:#fff;border:2px dashed #FFCDD2;border-radius:5px;padding:3px 10px;font-size:11px;color:#9F1239;font-weight:700;min-width:120px;font-family:'DM Mono',monospace;}
+.urg-sep{color:#FFCDD2;font-weight:800;}
+.urg-note{font-size:10px;color:#E57373;font-style:italic;}
+.tag-tipo{display:inline-block;background:#FFCDD2;color:#9F1239;border:1px solid #EF9A9A;border-radius:4px;font-size:9px;font-weight:800;padding:1px 5px;margin-left:3px;vertical-align:middle;}
+.tag-fest{display:inline-block;background:#FFF9C4;color:#F57F17;border:1px solid #FFF176;border-radius:4px;font-size:9px;font-weight:800;padding:1px 5px;margin-left:3px;vertical-align:middle;}
+.students-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(540px,1fr));gap:16px;padding:18px;}
+.student-card{border-radius:12px;border:2px solid #CBD5E1;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.07);}
+.student-card-h{padding:12px 16px;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1.5px;display:flex;align-items:center;justify-content:space-between;}
+.student-card-h small{font-size:10px;color:rgba(255,255,255,.7);font-weight:400;font-family:'DM Mono',monospace;}
+.ind-table{width:100%;border-collapse:collapse;font-size:11px;}
+.ind-table thead th{background:#F1F5F9;padding:6px 9px;text-align:left;font-size:9.5px;text-transform:uppercase;letter-spacing:.7px;font-weight:800;color:#475569;border-bottom:2px solid #CBD5E1;}
+.ind-table tbody tr:nth-child(even) td{background:#F8FAFC;}
+.ind-table td{padding:5px 9px;border-bottom:1px solid #E2E8F0;vertical-align:middle;}
+.ind-fecha{font-family:'DM Mono',monospace;font-size:10px;color:#475569;}
+.ind-dia{font-weight:700;color:#0D1B2A;}
+.badge-ind{display:inline-block;padding:2px 9px;border-radius:5px;font-size:10px;font-weight:800;}
+.turnos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-bottom:16px;}
+.turno-card{border-radius:10px;padding:14px 16px;border:2px solid;}
+.t-dia{background:#E3F2FD;border-color:#1976D2;}
+.t-noche{background:#1A1F3A;color:#fff;border-color:#3949AB;}
+.t-fds{background:#FFF9C4;border-color:#F9A825;}
+.t-post{background:#E8F5E9;border-color:#2E7D32;}
+.t-pre{background:#FFF3E0;border-color:#E65100;}
+.turno-title{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1px;display:block;margin-bottom:5px;}
+.t-dia .turno-title{color:#0D47A1;}.t-noche .turno-title{color:#90CAF9;}.t-fds .turno-title{color:#F57F17;}.t-post .turno-title{color:#1B5E20;}.t-pre .turno-title{color:#E65100;}
+.turno-hrs{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;display:block;}
+.t-dia .turno-hrs{color:#0D47A1;}.t-noche .turno-hrs{color:#90CAF9;}.t-fds .turno-hrs{color:#E65100;}.t-post .turno-hrs{color:#1B5E20;}.t-pre .turno-hrs{color:#E65100;}
+.turno-desc{font-size:11.5px;line-height:1.55;margin-top:5px;color:inherit;opacity:.85;}
+.protocolo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:16px;}
+.prot-card{border-radius:10px;padding:13px 15px;border:2px solid #CBD5E1;background:#fff;}
+.prot-num{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#0D47A1,#1565C0);color:#fff;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;margin-right:7px;flex-shrink:0;}
+.prot-item{display:flex;align-items:flex-start;font-size:12.5px;line-height:1.5;color:#374151;}
+.n-rojo{background:#FFEBEE;border-left:4px solid #C62828;border-radius:10px;padding:13px 16px;margin-bottom:12px;font-size:13px;line-height:1.65;}
+.n-rojo strong{color:#C62828;}
+.nota-info{background:#EFF6FF;border-left:4px solid #1976D2;border-radius:10px;padding:13px 16px;margin-bottom:12px;font-size:13px;line-height:1.65;color:#1E3A8A;}
+.nota-info strong{color:#1D4ED8;}
+.nota-warn{background:#FFFBEB;border-left:4px solid #E65100;border-radius:10px;padding:13px 16px;margin-bottom:12px;font-size:13px;line-height:1.65;color:#78350F;}
+.nota-warn strong{color:#E65100;}
+.sec-h.comun{background:linear-gradient(135deg,#0D47A1,#1565C0);}
+.footer{background:linear-gradient(135deg,#050F2C,#0D47A1);color:rgba(255,255,255,.7);padding:24px 54px;font-size:12px;line-height:1.8;}
+.footer-g{display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:1200px;margin:0 auto;}
+.footer strong{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1.5px;color:#fff;display:block;margin-bottom:4px;}
+.copyright{background:#050F2C;color:rgba(255,255,255,.3);text-align:center;padding:11px;font-size:10.5px;letter-spacing:.5px;}
+@media(max-width:700px){.portada{padding:28px 16px 22px;}.portada h1{font-size:26px;}.cont{padding:14px 10px 60px;}.footer-g{grid-template-columns:1fr;}.footer{padding:18px;}.students-grid{grid-template-columns:1fr;}}
+@media print{body{background:#fff;}.portada,.sec-h,.week-title{-webkit-print-color-adjust:exact;print-color-adjust:exact;}.row-urg td{background:#FFF1F2!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
+</style></head><body>
+
+<div class="portada"><div class="portada-inner">
+  <div class="portada-tag">${hospName} · Subred Integrada de Servicios de Salud Suroccidente · Bogotá D.C.</div>
+  <h1>Rotación de <em>Salas de Cirugía</em><br>${grupo} — Anestesiología</h1>
+  <p class="portada-sub">Distribución diaria de salas, recuperación e interconsultas. Turnos noche, posturno, días libres y urgencias de fin de semana y festivos. ${periodo}.</p>
+  <div class="portada-pills">
+    ${pillsHTML}
+    <div class="pill">${nSalas} salas + Rec. + IC · ${ST.students.length} estudiantes</div>
+    <div class="pill">${fmt(ini)} → ${fmt(fin)}</div>
+  </div>
+</div></div>
+
+<div class="cont">
+<div class="nota n-rojo">
+  <strong>🚫 Reglas de indumentaria en salas de cirugía — OBLIGATORIO:</strong><br>
+  <ul style="margin:6px 0 0 18px;line-height:1.9;">
+    <li>❌ <strong>No sacos/chaquetas</strong> dentro de las salas de cirugía</li>
+    <li>❌ <strong>No anillos, no relojes, no cadenas, no aretes grandes</strong> (solo aretes pequeños pegados al lóbulo)</li>
+    <li>❌ <strong>No colocar el traje quirúrgico sobre ropa de calle</strong> — cambiarse completamente antes de ingresar</li>
+    <li>❌ <strong>No salir de salas de cirugía con el traje quirúrgico puesto</strong> — cambiarse antes de salir al área pública</li>
+    <li>✅ Cabello recogido completamente · Uñas cortas y sin esmalte · Sin perfume excesivo</li>
+  </ul>
+</div>
+
+<div class="seccion">
+  <div class="sec-h comun"><div class="sec-num">⏰</div><div class="sec-titulo">Horarios de Rotación y Turnos</div></div>
+  <div class="sec-b">
+    <div class="turnos-grid">
+      <div class="turno-card t-dia">
+        <span class="turno-title">ROTACIÓN NORMAL — Entre semana</span>
+        <span class="turno-hrs">07:00 – 16:00 h</span>
+        <div class="turno-desc">Lunes a viernes (excepto días de TURNO). Entrada a salas 7:00 a.m. con protocolo completo. Almuerzo 12:00–14:00 h según el anestesiólogo de la sala.</div>
+      </div>
+      <div class="turno-card t-pre">
+        <span class="turno-title">PRE-TURNO (parte del TURNO entre semana)</span>
+        <span class="turno-hrs">13:00 – 19:00 h</span>
+        <div class="turno-desc">Segunda fase del TURNO entre semana. Continuidad en sala asignada, empalme hacia el turno nocturno de las 19:00 h.</div>
+      </div>
+      <div class="turno-card t-noche">
+        <span class="turno-title">TURNO — Entre semana (3 fases)</span>
+        <span class="turno-hrs">7:00 · 13:00 · 19:00</span>
+        <div class="turno-desc"><strong>Fase diurna:</strong> 7:00–13:00 h en sala · <strong>Pre-turno:</strong> 13:00–19:00 h · <strong>Noche:</strong> 19:00–07:00 h del día siguiente. Post-turno desde las 7:00 a.m. del día siguiente.</div>
+      </div>
+      <div class="turno-card t-fds">
+        <span class="turno-title">TURNO URGENCIAS — Fin de semana</span>
+        <span class="turno-hrs">07:00 – 17:00 h</span>
+        <div class="turno-desc">Sábados, domingos y festivos colombianos. Solo urgencias y emergencias quirúrgicas. Cuando cae en fin de semana/festivo, el TURNO es únicamente nocturno (19:00–07:00 h), sin fase diurna.</div>
+      </div>
+      <div class="turno-card t-noche">
+        <span class="turno-title">TURNO — Fin de semana / Festivo</span>
+        <span class="turno-hrs">19:00 – 07:00 h</span>
+        <div class="turno-desc">Exclusivamente nocturno. Sin fase diurna ni pre-turno. Post-turno al día siguiente desde las 7:00 a.m. Pueden coincidir dos estudiantes en turno nocturno el mismo día.</div>
+      </div>
+      <div class="turno-card t-post">
+        <span class="turno-title">POST-TURNO — Descanso</span>
+        <span class="turno-hrs">07:00 h → libre</span>
+        <div class="turno-desc">El día después del turno nocturno. El estudiante firma presencia a las 7:00 a.m. y queda libre el resto del día para recuperación. No se asigna a sala.</div>
+      </div>
+    </div>
+
+    <p style="font-weight:700;color:var(--azul);font-size:13px;margin:14px 0 10px;text-transform:uppercase;letter-spacing:.4px;">🧼 Protocolo OMS de Lavado de Manos — Obligatorio al ingresar a sala de cirugía</p>
+    <div class="protocolo-grid">
+      <div class="prot-card" style="border-color:#2E86C1;background:#EBF5FB;">
+        <div class="prot-item"><span class="prot-num">1</span><span><strong>Mójese las manos</strong> con agua limpia y corriente. Cierre el grifo.</span></div>
+      </div>
+      <div class="prot-card" style="border-color:#2E86C1;background:#EBF5FB;">
+        <div class="prot-item"><span class="prot-num">2</span><span><strong>Aplique jabón</strong> suficiente para cubrir toda la superficie de las manos.</span></div>
+      </div>
+      <div class="prot-card" style="border-color:#2E86C1;background:#EBF5FB;">
+        <div class="prot-item"><span class="prot-num">3</span><span><strong>Frótese palma con palma</strong>, luego dorso de cada mano con palma opuesta.</span></div>
+      </div>
+      <div class="prot-card" style="border-color:#2E86C1;background:#EBF5FB;">
+        <div class="prot-item"><span class="prot-num">4</span><span><strong>Palmas enfrentadas con dedos entrelazados</strong>, frote entre los dedos por todas las caras.</span></div>
+      </div>
+      <div class="prot-card" style="border-color:#2E86C1;background:#EBF5FB;">
+        <div class="prot-item"><span class="prot-num">5</span><span><strong>Frote el dorso de los dedos</strong> contra la palma opuesta (manos en gancho). Frote el pulgar con la palma contraria.</span></div>
+      </div>
+      <div class="prot-card" style="border-color:#2E86C1;background:#EBF5FB;">
+        <div class="prot-item"><span class="prot-num">6</span><span><strong>Frote la punta de los dedos</strong> en círculo sobre la palma opuesta. Enjuague con agua, seque con toalla de un solo uso. Duración total: <strong>40–60 segundos</strong>.</span></div>
+      </div>
+    </div>
+
+    <p style="font-weight:700;color:var(--azul);font-size:13px;margin:14px 0 10px;text-transform:uppercase;letter-spacing:.4px;">📋 Protocolo de ingreso a sala de cirugía (7:00 a.m.)</p>
+    <div class="protocolo-grid">
+      <div class="prot-card">
+        <div class="prot-item"><span class="prot-num">1</span><span><strong>Lavado de manos</strong> — protocolo OMS de 6 pasos antes de tocar al paciente o implementos</span></div>
+      </div>
+      <div class="prot-card">
+        <div class="prot-item"><span class="prot-num">2</span><span><strong>Revisar historia clínica</strong> — diagnóstico, antecedentes, alergias, medicamentos y plan anestésico</span></div>
+      </div>
+      <div class="prot-card">
+        <div class="prot-item"><span class="prot-num">3</span><span><strong>Anamnesis del paciente</strong> — confirmar identidad, procedimiento, ayuno y consentimiento informado</span></div>
+      </div>
+      <div class="prot-card">
+        <div class="prot-item"><span class="prot-num">4</span><span><strong>Revisar vía aérea</strong> — clasificación Mallampati, apertura bucal, extensión cervical, distancia tiromentoniana</span></div>
+      </div>
+      <div class="prot-card">
+        <div class="prot-item"><span class="prot-num">5</span><span><strong>Verificar implementos:</strong> Máscara laríngea (talla), laringoscopio + hojas (funcionamiento), cánula de Guedel, tubos orotraqueales</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="nota nota-info"><strong>📋 Sistema de asignación:</strong> Las salas se asignan por aleatorización equitativa rotativa — cada estudiante rota por todas las salas. Los días de clase, turno noche y post-turno quedan excluidos. Los festivos colombianos están marcados automáticamente.</div>
+<div class="nota nota-warn"><strong>🚨 Urgencias:</strong> Los fines de semana y festivos colombianos muestran los estudiantes asignados a urgencias. Las celdas sin asignar pueden completarse manualmente.</div>
+
+<div class="leyenda">
+  <div class="ley-titulo">Leyenda</div>
+  <div class="ley-grid">
+    <div class="ley-group">
+      <div class="ley-group-title">Universidades</div>
+      <div class="ley-items">${univsInGroup.map(u=>`<span class="ley-badge" style="background:${u.bg};border-left-color:${u.color};color:${u.dark};">${u.short} — ${u.name}</span>`).join('')}</div>
+    </div>
+    <div class="ley-group">
+      <div class="ley-group-title">Tipos de día</div>
+      <div class="ley-items">
+        ${Object.entries(TYPES).map(([k,v])=>`<span class="ley-badge" style="background:${v.bg}22;border-left-color:${v.bg};color:${v.bg};">${v.emoji} ${v.label}</span>`).join('')}
+        <span class="ley-badge" style="background:#FEF3C7;border-left-color:#D97706;color:#92400E;">📚 Clase</span>
+        <span class="ley-badge" style="background:#FFF1F2;border-left-color:#E11D48;color:#881337;">🇨🇴 Festivo</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="seccion">
+  <div class="sec-h">
+    <div class="sec-num">1</div>
+    <div class="sec-titulo">Distribución General — ${hospName}</div>
+    <div class="sec-sub">${fmt(ini)} → ${fmt(fin)}</div>
+  </div>
+  <div class="sec-b">
+    <table class="cal-table">
+    <colgroup><col style="width:85px;"><col style="width:75px;">${salaKeys.map(()=>'<col>').join('')}</colgroup>
+    ${weeksHTML}
+    </table>
+  </div>
+</div>
+
+<div class="seccion">
+  <div class="sec-h">
+    <div class="sec-num">2</div>
+    <div class="sec-titulo">Rotación Individual por Estudiante</div>
+    <div class="sec-sub">${ST.students.length} estudiantes</div>
+  </div>
+  <div class="students-grid">${indCards}</div>
+</div>
+
+</div>
+
+<div class="footer"><div class="footer-g">
+  <div><strong>Docente Responsable</strong>Dr. Andrés Robayo · Médico Especialista en Anestesiología y Reanimación<br>Docente de Pregrado – Rotaciones de Anestesiología<br>${hospName} · Subred Suroccidente · Bogotá D.C.</div>
+  <div><strong>Grupo ${grupo}</strong>${univsInGroup.map(u=>`${u.short}: ${u.name}`).join(' · ')}<br>Festivos: calendario oficial Colombia · Urgencias según asignación<br>© ${year} Dr. Andrés Robayo – Uso académico interno exclusivo</div>
+</div></div>
+<div class="copyright">Rotación de Salas — Anestesiología · ${hospName} · ${periodo} · Generado automáticamente</div>
+</body></html>`;
+
+  window.__genHTML=html;
+  const pv=document.getElementById('pview');
+  pv.innerHTML=`<div class="prev-tb">
+    <h3>✅ Distribución generada</h3>
+    <button class="btn-grn" onclick="downloadHTML()" type="button">⬇ Descargar HTML</button>
+    <span class="prev-lbl">${grupo} · ${hospName}</span>
+  </div>
+  <iframe id="pif" style="width:100%;height:calc(100% - 55px);border:none;" srcdoc=""></iframe>`;
+  document.getElementById('pif').srcdoc=html;
+  document.getElementById('dl-panel').style.display='block';
+}
+
+function checkConflicts(){
+  // Check for days where 2+ students are assigned to interconsultas
+  const conflicts=[];
+  const {ini,fin}=computeGlobalRange();
+  if(!ini) return [];
+  const days=getDaysRange(ini,fin);
+  days.forEach(date=>{
+    if(isNonWorking(date)) return;
+    const stuInIC=ST.students.filter(s=>(ST.specialDays[s.id]||{})[date]==='interconsult');
+    if(stuInIC.length>=2){
+      conflicts.push({date,students:stuInIC.map(s=>s.name||s.id)});
+    }
+  });
+  return conflicts;
+}
+
+function downloadHTML(){
+  if(!window.__genHTML){alert('Genera primero la distribución.');return;}
+  // ── Conflict check: 2+ students in interconsultas same day ──
+  const conflicts=checkConflicts();
+  if(conflicts.length>0){
+    let msg='⚠ CONFLICTO DETECTADO: Hay días con 2 o más estudiantes asignados a Interconsultas al mismo tiempo:\n\n';
+    conflicts.forEach(c=>{msg+=`  • ${fmt(c.date)}: ${c.students.join(' y ')}\n`;});
+    msg+='\n¿Desea descargar de todas formas? (Corrija las asignaciones antes de usar este documento)';
+    if(!confirm(msg)) return;
+  }
+  const grupo=document.getElementById('f-grupo').value||'grupo';
+  const fn=`rotacion-salas-${grupo.toLowerCase().replace(/\s+/g,'-')}-${ST.hosp||'hospital'}.html`;
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([window.__genHTML],{type:'text/html;charset=utf-8'}));
+  a.download=fn;a.click();
+}
+
+// ══════════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════════
+function iso(y,m,d){return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;}
+function fmt(d){if(!d)return'';const[y,m,dd]=d.split('-');return`${dd}/${m}/${y}`;}
+function nextIso(isoStr){const d=new Date(isoStr+'T12:00');d.setDate(d.getDate()+1);return d.toISOString().slice(0,10);}
+function prevIso(isoStr){const d=new Date(isoStr+'T12:00');d.setDate(d.getDate()-1);return d.toISOString().slice(0,10);}
+function daysBetween(a,b){return Math.round((new Date(b+'T12:00')-new Date(a+'T12:00'))/(1000*86400));}
+function getDaysRange(ini,fin){
+  const days=[];let cur=new Date(ini+'T12:00');const end=new Date(fin+'T12:00');
+  while(cur<=end){days.push(cur.toISOString().slice(0,10));cur.setDate(cur.getDate()+1);}
+  return days;
+}
+
+// TYPES defined above — single declaration
+
+goStep(1);
+</script>
+</body>
+</html>

@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generador de Cronogramas — Dr. Andrés Robayo</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700;800&display=swap');
+:root{
+  --bg:#EEF2F7;--surf:#fff;--surf2:#F1F5F9;--surf3:#E2E8F0;
+  --brd:#CBD5E1;--brd2:#94A3B8;
+  --txt:#0D1B2A;--sub:#374151;--dim:#6B7280;--muted:#94A3B8;
+  --acc:#0D47A1;--acc2:#1565C0;
+  --r:8px;--r2:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;font-size:14px;}
+
+/* ── HEADER ── */
+.app-hdr{
+  background:linear-gradient(135deg,#050F2C,#0D47A1,#01579B);
+  border-bottom:none;padding:18px 28px;
+  display:flex;align-items:center;gap:14px;
+  position:relative;overflow:hidden;
+}
+.app-hdr::after{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.05);pointer-events:none}
+.hdr-icon{width:42px;height:42px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.3);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.hdr-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1.5px;color:#fff;}
+.hdr-sub{font-size:11px;color:rgba(255,255,255,.65);margin-top:2px;font-family:'DM Sans',sans-serif;font-weight:500;}
+
+/* ── LAYOUT ── */
+.layout{display:grid;grid-template-columns:430px 1fr;min-height:calc(100vh - 67px);}
+.sidebar{background:#fff;border-right:2px solid var(--brd);padding:20px;overflow-y:auto;max-height:calc(100vh - 67px);}
+.preview-pane{background:var(--bg);padding:20px;overflow-y:auto;max-height:calc(100vh - 67px);}
+
+/* ── SECTION HEADERS ── */
+.fsec{margin-bottom:20px;}
+.sec-label{
+  font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1.5px;
+  color:#fff;margin-bottom:10px;padding:9px 14px;
+  background:linear-gradient(135deg,#0D47A1,#1565C0);
+  border-radius:10px;display:block;
+  box-shadow:0 2px 8px rgba(13,71,161,.25);
+}
+
+/* ── FORM ── */
+.frow{margin-bottom:10px;}
+.frow>label{display:block;font-size:12px;color:var(--sub);margin-bottom:5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
+input[type=text],input[type=date],select,textarea{
+  width:100%;background:#F8FAFC;border:1.5px solid var(--brd);
+  color:var(--txt);font-family:'DM Sans',sans-serif;font-size:13px;
+  padding:9px 12px;border-radius:var(--r);outline:none;
+  transition:border-color .18s,box-shadow .18s;
+}
+input[type=text]::placeholder,textarea::placeholder{color:var(--muted);}
+input:focus,select:focus,textarea:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(13,71,161,.12);}
+select option{background:#fff;color:var(--txt);}
+textarea{resize:vertical;min-height:56px;line-height:1.5;}
+
+/* ── UNIV PILLS ── */
+.univ-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:6px;}
+.upill{
+  padding:10px 6px;border-radius:10px;border:2px solid var(--brd);
+  background:#F8FAFC;cursor:pointer;text-align:center;
+  font-size:11.5px;font-weight:700;color:var(--sub);
+  transition:all .18s;font-family:'DM Sans',sans-serif;line-height:1.3;
+}
+.upill:hover{border-color:var(--acc);color:var(--txt);background:var(--surf2);}
+.upill .dot{width:9px;height:9px;border-radius:50%;display:block;margin:0 auto 4px;}
+.upill[data-u=sabana].on{background:#E8F8F0;border-color:#00C46A;color:#004D2E;box-shadow:0 2px 8px rgba(0,196,106,.2);}
+.upill[data-u=rosario].on{background:#FDEAEA;border-color:#E03535;color:#6B1212;box-shadow:0 2px 8px rgba(224,53,53,.2);}
+.upill[data-u=bosque].on{background:#E8F9EE;border-color:#22C55E;color:#0F4F27;box-shadow:0 2px 8px rgba(34,197,94,.2);}
+.upill[data-u=udca].on{background:#FEF0E6;border-color:#F07020;color:#7A3A0D;box-shadow:0 2px 8px rgba(240,112,32,.2);}
+.upill[data-u=narino].on{background:#F3EEFF;border-color:#7C3AED;color:#35156E;box-shadow:0 2px 8px rgba(124,58,237,.2);}
+.upill[data-u=martin].on{background:#E8F3FC;border-color:#2E8FD4;color:#104F7A;box-shadow:0 2px 8px rgba(46,143,212,.2);}
+
+/* ── HOSP PILLS ── */
+.hosp-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.hpill{
+  padding:12px;border-radius:10px;border:2px solid var(--brd);
+  background:#F8FAFC;cursor:pointer;text-align:center;
+  font-size:12.5px;font-weight:700;color:var(--sub);
+  transition:all .18s;font-family:'DM Sans',sans-serif;
+}
+.hpill:hover{color:var(--txt);background:var(--surf2);}
+.hpill[data-h=kennedy].on{background:#E3F2FD;border-color:#0D47A1;color:#0D47A1;box-shadow:0 2px 8px rgba(13,71,161,.2);}
+.hpill[data-h=bosa].on{background:#FFEBEE;border-color:#C62828;color:#C62828;box-shadow:0 2px 8px rgba(198,40,40,.2);}
+
+/* ── INFO BOX ── */
+.infobox{background:#EFF6FF;border:1.5px solid #BFDBFE;border-radius:var(--r);padding:11px 13px;font-size:12.5px;color:#1E40AF;line-height:1.6;margin-top:8px;display:none;}
+.infobox strong{color:#1D4ED8;}
+
+/* ── STUDENTS ── */
+.stu-row{display:flex;gap:6px;margin-bottom:6px;}
+.stu-row input{flex:1;}
+.rmv{background:#FEF2F2;border:1.5px solid #FECACA;color:#DC2626;border-radius:7px;padding:6px 10px;font-size:11.5px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .18s;white-space:nowrap;font-weight:700;}
+.rmv:hover{background:#FEE2E2;color:#B91C1C;}
+
+/* ── ADD BTN ── */
+.addbtn{
+  background:#F0F7FF;border:2px dashed #93C5FD;
+  color:#1D4ED8;border-radius:var(--r);padding:9px 14px;
+  font-size:12.5px;cursor:pointer;width:100%;
+  font-family:'DM Sans',sans-serif;transition:all .18s;margin-top:4px;font-weight:700;
+}
+.addbtn:hover{border-color:var(--acc);color:var(--acc);background:#E0EEFF;}
+
+/* ── WEEK BLOCKS ── */
+.wblock{background:#F8FAFC;border:2px solid var(--brd);border-radius:12px;margin-bottom:10px;overflow:hidden;}
+.whdr{padding:11px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-weight:700;font-size:13px;user-select:none;color:var(--txt);background:#F1F5F9;}
+.whdr:hover{background:var(--surf3);}
+.whdr .wn{display:flex;align-items:center;gap:8px;}
+.wbody{padding:14px;display:none;border-top:2px solid var(--brd);}
+.wbody.open{display:block;}
+
+/* ── INNER LABELS ── */
+.inner-label{font-size:10.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#0D47A1;margin-bottom:8px;margin-top:14px;display:block;border-bottom:2px solid #BFDBFE;padding-bottom:5px;}
+.inner-label:first-child{margin-top:0;}
+
+/* ── TALLER CHECKS ── */
+.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:4px;}
+.tchk{display:flex;align-items:flex-start;gap:8px;cursor:pointer;background:#fff;border:1.5px solid var(--brd);border-radius:7px;padding:8px 10px;transition:border-color .18s;line-height:1.3;}
+.tchk:hover{border-color:var(--acc);}
+.tchk input{width:14px;height:14px;accent-color:var(--acc);cursor:pointer;flex-shrink:0;margin-top:1px;}
+.tchk span{font-size:11.5px;color:var(--sub);font-weight:500;}
+
+/* ── ENTRY CARDS ── */
+.entry{background:#fff;border:2px solid var(--brd);border-radius:var(--r);padding:13px;margin-bottom:8px;}
+.entry-exam{border-color:#FCA5A5;background:#FEF2F2;}
+.entry-expo{border-color:#C4B5FD;background:#F5F3FF;}
+.egrid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+.egrid2 .frow{margin:0;}
+
+/* ── TEMA CHECKS ── */
+.tema-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:6px;}
+.tchk-sm{display:flex;align-items:center;gap:6px;cursor:pointer;background:#F8FAFC;border:1.5px solid var(--brd);border-radius:6px;padding:6px 8px;transition:border-color .18s;}
+.tchk-sm:hover{border-color:var(--acc);}
+.tchk-sm input{width:12px;height:12px;accent-color:var(--acc);cursor:pointer;flex-shrink:0;}
+.tchk-sm span{font-size:11px;color:var(--sub);font-weight:500;}
+
+/* ── VALORACION BOX ── */
+.vp-box{background:#F0FDF4;border:2px solid #86EFAC;border-radius:10px;padding:11px 13px;margin-bottom:10px;}
+.vp-title{font-size:12.5px;font-weight:800;color:#166534;margin-bottom:3px;}
+.vp-desc{font-size:11.5px;color:#15803D;line-height:1.5;}
+
+/* ── MINI CALENDAR ── */
+.cal-wrap{background:#F8FAFC;border:1.5px solid var(--brd);border-radius:10px;padding:10px;margin-top:6px;}
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.cal-nav-btn{background:#fff;border:1.5px solid var(--brd);color:var(--sub);cursor:pointer;font-size:14px;padding:3px 8px;border-radius:6px;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.cal-nav-btn:hover{background:var(--acc);color:#fff;border-color:var(--acc);}
+.cal-month-lbl{font-size:12.5px;font-weight:800;color:var(--txt);font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+.cal-dh{font-size:9.5px;font-weight:800;color:var(--muted);text-align:center;padding:3px 0;text-transform:uppercase;}
+.cal-day{font-size:11px;text-align:center;padding:5px 2px;border-radius:6px;cursor:pointer;color:var(--sub);font-weight:600;transition:all .15s;min-height:26px;display:flex;align-items:center;justify-content:center;}
+.cal-day:hover{background:#BFDBFE;color:#1D4ED8;}
+.cal-day.empty,.cal-day.other-month{color:var(--muted);cursor:default;pointer-events:none;}
+.cal-day.today{background:#DBEAFE;color:#1D4ED8;font-weight:800;}
+.cal-day.selected{background:var(--acc);color:#fff;font-weight:800;}
+.cal-sel-info{text-align:center;font-size:11px;margin-top:6px;font-weight:700;}
+.cal-sel-info.has-date{color:#166534;}
+.cal-sel-info.no-date{color:var(--muted);}
+
+/* ── GENERATE BTN ── */
+.genbtn{
+  width:100%;padding:14px;border:none;border-radius:12px;
+  background:linear-gradient(135deg,#0D47A1,#1976D2);
+  color:#fff;font-family:'Bebas Neue',sans-serif;
+  font-size:18px;letter-spacing:1.5px;cursor:pointer;
+  transition:all .2s;margin-top:8px;
+  box-shadow:0 4px 16px rgba(13,71,161,.3);
+}
+.genbtn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(13,71,161,.4);}
+.genbtn:active{transform:translateY(0);}
+
+/* ── PREVIEW ── */
+.prev-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--muted);text-align:center;gap:12px;}
+.prev-ph .ico{font-size:48px;opacity:.3;}
+.prev-ph p{font-size:13px;max-width:260px;line-height:1.6;color:var(--dim);}
+.prev-ph strong{color:var(--acc);}
+.prev-tb{display:flex;gap:8px;margin-bottom:14px;align-items:center;}
+.dlbtn{padding:10px 20px;border:none;border-radius:10px;background:linear-gradient(135deg,#1B5E20,#2E7D32);color:#fff;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;cursor:pointer;transition:all .2s;box-shadow:0 3px 12px rgba(27,94,32,.3);}
+.dlbtn:hover{box-shadow:0 6px 20px rgba(27,94,32,.4);transform:translateY(-1px);}
+.prev-lbl{font-size:11px;color:var(--muted);margin-left:auto;font-weight:700;}
+.prev-frame{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.12);border:2px solid var(--brd);}
+
+@media(max-width:900px){.layout{grid-template-columns:1fr;}.sidebar{max-height:none;}}
+</style>
+</head>
+<body>
+
+<div class="app-hdr">
+  <div class="hdr-icon">📋</div>
+  <div>
+    <div class="hdr-title">Generador de Cronogramas — Rotación de Anestesiología</div>
+    <div class="hdr-sub">Dr. Andrés Robayo · Hospital de Kennedy · Hospital de Bosa · Subred Suroccidente · Bogotá D.C.</div>
+  </div>
+</div>
+
+<div class="layout">
+<div class="sidebar">
+
+  <div class="fsec">
+    <span class="sec-label">1 · Universidad</span>
+    <div class="univ-grid">
+      <button class="upill" data-u="sabana"  onclick="selU(this)"><div class="dot" style="background:#00C46A;"></div>La Sabana</button>
+      <button class="upill" data-u="rosario" onclick="selU(this)"><div class="dot" style="background:#E03535;"></div>Rosario</button>
+      <button class="upill" data-u="bosque"  onclick="selU(this)"><div class="dot" style="background:#22C55E;"></div>El Bosque</button>
+      <button class="upill" data-u="udca"    onclick="selU(this)"><div class="dot" style="background:#F07020;"></div>UDCA</button>
+      <button class="upill" data-u="narino"  onclick="selU(this)"><div class="dot" style="background:#7C3AED;"></div>Ant. Nariño</button>
+      <button class="upill" data-u="martin"  onclick="selU(this)"><div class="dot" style="background:#2E8FD4;"></div>San Martín</button>
+    </div>
+    <div class="infobox" id="uinfo"></div>
+  </div>
+
+  <div class="fsec">
+    <span class="sec-label">2 · Hospital</span>
+    <div class="hosp-grid">
+      <button class="hpill" data-h="kennedy" onclick="selH(this)">🏥 Kennedy</button>
+      <button class="hpill" data-h="bosa"    onclick="selH(this)">🏥 Bosa</button>
+    </div>
+  </div>
+
+  <div class="fsec">
+    <span class="sec-label">3 · Grupo</span>
+    <div class="frow">
+      <label>Nombre o número de grupo</label>
+      <input type="text" id="f-grupo" placeholder="Ej: Grupo 1, Grupo A…">
+    </div>
+  </div>
+
+  <div class="fsec">
+    <span class="sec-label">4 · Estudiantes</span>
+    <div id="stulist"></div>
+    <button class="addbtn" onclick="addStu()" type="button">+ Agregar estudiante</button>
+  </div>
+
+  <div class="fsec">
+    <span class="sec-label">5 · Período de rotación</span>
+    <div class="frow">
+      <label>Fecha de inicio</label>
+      <div id="cal-ini"></div>
+    </div>
+    <div class="frow" style="margin-top:12px;">
+      <label>Fecha de fin</label>
+      <div id="cal-fin"></div>
+    </div>
+  </div>
+
+  <div class="fsec">
+    <span class="sec-label">6 · Semanas y actividades</span>
+    <div class="vp-box">
+      <div class="vp-title">📋 Taller Transversal — Valoración Preanestésica (5%)</div>
+      <div class="vp-desc">Se incluye automáticamente en todos los cronogramas. Entrega máxima: último día de la rotación.</div>
+    </div>
+    <div id="semscon"></div>
+    <button class="addbtn" onclick="addSem([])" type="button">+ Agregar semana adicional</button>
+  </div>
+
+  <div class="fsec">
+    <span class="sec-label">7 · Seminario de Integración Clínica</span>
+    <div class="vp-box" style="background:rgba(91,141,239,.1);border-color:rgba(91,141,239,.35);">
+      <div class="vp-title" style="color:#7EB3FF;">🎓 Seminario de Integración Clínica (30%)</div>
+      <div class="vp-desc" style="color:#B8D0FF;">Seleccione la fecha del seminario. Valor: 30% de la nota final.</div>
+    </div>
+    <div class="frow">
+      <label style="font-size:12.5px;color:#C8CCE8;font-weight:600;">Fecha del seminario</label>
+      <div id="semcal-wrap"></div>
+      <input type="date" id="f-seminario" style="display:none;">
+    </div>
+  </div>
+
+  <button class="genbtn" onclick="gen()" type="button">⚡ Generar Cronograma</button>
+
+</div>
+
+<div class="preview-pane" id="preview">
+  <div class="prev-ph">
+    <div class="ico">📄</div>
+    <p>Complete los datos y haga clic en <strong>Generar Cronograma</strong> para ver la vista previa aquí.</p>
+  </div>
+</div>
+</div>
+
+<script>
+// ── CONSTANTS ──
+const TALLERES=[
+  'Vía Aérea',
+  'Manejo del Ventilador',
+  'Farmacología Clínica',
+  'Anestésicos Locales',
+  'Hipnóticos',
+  'Opioides',
+  'Bloqueantes Neuromusculares',
+  'Náuseas y Vómito Postoperatorio (NVPO)',
+  'Líquidos y Fluidoterapia',
+  'Electrocardiograma',
+  'Gases Arteriales',
+  'Fisiología',
+  'Manejo del Dolor',
+  'Valoración Preanestésica',
+];
+const TEMAS_EXAMEN=[...TALLERES];
+
+// Distribución de talleres por semana por universidad (sin contar Valoración Preanestésica que es transversal)
+const UNIV_SEMANAS={
+  rosario:[
+    ['Vía Aérea','Anestésicos Locales','Manejo del Ventilador'],      // sem 1: los nombres coinciden con la dist
+    ['Hipnóticos','Opioides','Bloqueantes Neuromusculares'],           // sem 2
+  ],
+  bosque:[
+    ['Vía Aérea','Manejo del Ventilador','Farmacología Clínica'],
+    ['Anestésicos Locales','Hipnóticos','Opioides'],
+    ['Bloqueantes Neuromusculares','Náuseas y Vómito Postoperatorio (NVPO)','Líquidos y Fluidoterapia'],
+  ],
+  martin:[
+    ['Vía Aérea','Manejo del Ventilador','Farmacología Clínica'],
+    ['Anestésicos Locales','Hipnóticos','Opioides'],
+    ['Bloqueantes Neuromusculares','Náuseas y Vómito Postoperatorio (NVPO)','Líquidos y Fluidoterapia'],
+  ],
+  narino:[
+    ['Vía Aérea','Manejo del Ventilador','Farmacología Clínica'],
+    ['Anestésicos Locales','Hipnóticos','Opioides'],
+    ['Bloqueantes Neuromusculares','Náuseas y Vómito Postoperatorio (NVPO)','Líquidos y Fluidoterapia'],
+  ],
+  sabana:[
+    ['Vía Aérea','Manejo del Ventilador','Farmacología Clínica'],
+    ['Anestésicos Locales','Hipnóticos','Opioides'],
+    ['Bloqueantes Neuromusculares','Náuseas y Vómito Postoperatorio (NVPO)','Líquidos y Fluidoterapia'],
+    ['Electrocardiograma','Gases Arteriales'],
+  ],
+  udca:[
+    ['Vía Aérea','Manejo del Ventilador','Farmacología Clínica'],
+    ['Anestésicos Locales','Hipnóticos','Opioides'],
+    ['Bloqueantes Neuromusculares','Náuseas y Vómito Postoperatorio (NVPO)','Líquidos y Fluidoterapia'],
+    ['Electrocardiograma','Gases Arteriales'],
+    ['Fisiología','Manejo del Dolor'],
+  ],
+};
+
+// Calcula ponderaciones de talleres semanales (40% total, pesos por semana según carga)
+// Talleres dentro de la misma semana tienen el mismo peso
+// Semanas con menos talleres tienen menos peso proporcional
+function calcTallerPesos(univKey){
+  const sems=UNIV_SEMANAS[univKey];
+  if(!sems)return{};
+  // Peso de cada semana ∝ número de talleres en esa semana
+  const totalTalleres=sems.reduce((s,t)=>s+t.length,0);
+  const result={};
+  sems.forEach(semTalleres=>{
+    const pesoPorSemana=(semTalleres.length/totalTalleres)*40;
+    const pesoPorTaller=pesoPorSemana/semTalleres.length;
+    const pctStr=Number.isInteger(pesoPorTaller)?pesoPorTaller+'%':pesoPorTaller.toFixed(2).replace(/\.?0+$/,'')+'%';
+    semTalleres.forEach(t=>{ result[t]=pctStr; });
+  });
+  return result;
+}
+
+const UNIVS={
+  sabana: {name:'Universidad de La Sabana',   short:'La Sabana',  pri:'#005C35',sec:'#003D24',l:'#00C46A',t:'#E8F8F0',gh:'linear-gradient(160deg,#002618 0%,#005C35 55%,#007A44 100%)',gs:'linear-gradient(90deg,#004D2B,#006B3F)',clase:'Martes',numSems:4,grupos:4,est:4},
+  rosario:{name:'Universidad del Rosario',    short:'Rosario',    pri:'#7A1515',sec:'#4E0D0D',l:'#E03535',t:'#FDEAEA',gh:'linear-gradient(160deg,#300808 0%,#7A1515 55%,#9C1C1C 100%)',gs:'linear-gradient(90deg,#5A0E0E,#8B1A1A)',clase:'No tiene día académico fijo',numSems:2,grupos:5,est:1},
+  bosque: {name:'Universidad El Bosque',      short:'El Bosque',  pri:'#115C2D',sec:'#0A3D1C',l:'#22C55E',t:'#E8F9EE',gh:'linear-gradient(160deg,#071E10 0%,#115C2D 55%,#186B35 100%)',gs:'linear-gradient(90deg,#0A3D1C,#145A32)',clase:'Martes',numSems:3,grupos:5,est:2},
+  udca:   {name:'UDCA',                       short:'UDCA',       pri:'#7A3A0D',sec:'#4E250A',l:'#F07020',t:'#FEF0E6',gh:'linear-gradient(160deg,#200D04 0%,#7A3A0D 55%,#964712 100%)',gs:'linear-gradient(90deg,#5A2D0D,#8B4513)',clase:'Jueves',numSems:5,grupos:4,est:2},
+  narino: {name:'Universidad Antonio Nariño', short:'Ant. Nariño',pri:'#3D1880',sec:'#280D56',l:'#7C3AED',t:'#F3EEFF',gh:'linear-gradient(160deg,#150830 0%,#3D1880 55%,#5023A8 100%)',gs:'linear-gradient(90deg,#2D1057,#4A1E8B)',clase:'Jueves',numSems:3,grupos:5,est:2},
+  martin: {name:'Universidad de San Martín',  short:'San Martín', pri:'#104F7A',sec:'#0A3250',l:'#2E8FD4',t:'#E8F3FC',gh:'linear-gradient(160deg,#061525 0%,#104F7A 55%,#165F92 100%)',gs:'linear-gradient(90deg,#0D3557,#1A5C8B)',clase:'Lunes y Sábado',numSems:3,grupos:5,est:3},
+};
+
+// ── MINI CALENDAR ENGINE ──
+const MESES=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+// Week starts Monday: L M M J V S D
+const DAYS_HDR=['L','M','M','J','V','S','D'];
+
+function isoDate(y,m,d){return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;}
+function fmtDisplay(iso){if(!iso)return'';const[y,m,d]=iso.split('-');return`${d}/${m}/${y}`;}
+
+// calState stored on container div
+function buildCalendar(containerId, storeId, compact){
+  const wrap=document.getElementById(containerId);
+  if(!wrap)return;
+  if(!wrap.__cs) wrap.__cs={vy:new Date().getFullYear(),vm:new Date().getMonth(),sel:null};
+  const cs=wrap.__cs;
+  const today=new Date();
+  const todayISO=isoDate(today.getFullYear(),today.getMonth(),today.getDate());
+
+  // first day of month, Mon-first offset
+  const fd=new Date(cs.vy,cs.vm,1);
+  let sdow=fd.getDay(); sdow=(sdow===0)?6:sdow-1;
+  const dim=new Date(cs.vy,cs.vm+1,0).getDate();
+  const dipm=new Date(cs.vy,cs.vm,0).getDate();
+
+  let cells='';
+  for(let i=sdow-1;i>=0;i--) cells+=`<div class="cal-day other-month">${dipm-i}</div>`;
+  for(let d=1;d<=dim;d++){
+    const iso=isoDate(cs.vy,cs.vm,d);
+    let cls='cal-day';
+    if(iso===todayISO)cls+=' today';
+    if(iso===cs.sel)cls+=' selected';
+    cells+=`<div class="${cls}" onclick="calPick('${containerId}','${storeId}','${iso}')">${d}</div>`;
+  }
+  const tot=sdow+dim; const rem=tot%7===0?0:7-(tot%7);
+  for(let d=1;d<=rem;d++) cells+=`<div class="cal-day other-month">${d}</div>`;
+
+  const dh=DAYS_HDR.map(h=>`<div class="cal-dh">${h}</div>`).join('');
+  const sz=compact?'font-size:10.5px;':'';
+  wrap.innerHTML=`<div class="cal-wrap">
+    <div class="cal-nav">
+      <button class="cal-nav-btn" onclick="calMov('${containerId}','${storeId}',-1)" type="button">&#8249;</button>
+      <span class="cal-month-lbl">${MESES[cs.vm]} ${cs.vy}</span>
+      <button class="cal-nav-btn" onclick="calMov('${containerId}','${storeId}',1)" type="button">&#8250;</button>
+    </div>
+    <div class="cal-grid" style="${sz}">${dh}${cells}</div>
+    <div class="cal-sel-info ${cs.sel?'has-date':'no-date'}">${cs.sel?'✓ '+fmtDisplay(cs.sel):'Seleccione una fecha'}</div>
+  </div>`;
+  // sync hidden input
+  const inp=document.getElementById(storeId);
+  if(inp) inp.value=cs.sel||'';
+}
+
+function calPick(cid,sid,iso){
+  const w=document.getElementById(cid);
+  if(!w)return;
+  if(!w.__cs)w.__cs={vy:new Date().getFullYear(),vm:new Date().getMonth(),sel:null};
+  w.__cs.sel=iso;
+  const[y,m]=iso.split('-');
+  w.__cs.vy=parseInt(y);w.__cs.vm=parseInt(m)-1;
+  buildCalendar(cid,sid,cid.includes('sem')||cid.includes('entr'));
+}
+function calMov(cid,sid,dir){
+  const w=document.getElementById(cid);
+  if(!w)return;
+  if(!w.__cs)w.__cs={vy:new Date().getFullYear(),vm:new Date().getMonth(),sel:null};
+  w.__cs.vm+=dir;
+  if(w.__cs.vm<0){w.__cs.vm=11;w.__cs.vy--;}
+  if(w.__cs.vm>11){w.__cs.vm=0;w.__cs.vy++;}
+  buildCalendar(cid,sid,cid.includes('sem')||cid.includes('entr'));
+}
+function calGet(sid){const e=document.getElementById(sid);return e?e.value:'';}
+
+// ── UNIV / HOSP ──
+let selUniv=null,selHosp=null,semN=0;
+
+function selU(btn){
+  document.querySelectorAll('.upill').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  selUniv=btn.dataset.u;
+  const u=UNIVS[selUniv];
+  const ib=document.getElementById('uinfo');
+  ib.style.display='block';
+  ib.innerHTML=`<strong>${u.name}</strong><br>Típicamente <strong>${u.grupos} grupos</strong> de <strong>${u.est} est.</strong> · Rotación de <strong>${u.numSems} semana(s)</strong><br>Día académico: <strong>${u.clase}</strong>`;
+  // Auto-generar semanas sugeridas para esta universidad
+  cargarSemanasUniv(selUniv);
+}
+
+function cargarSemanasUniv(univKey){
+  // Limpiar semanas actuales
+  const con=document.getElementById('semscon');
+  con.innerHTML='';
+  semN=0;
+  const plan=UNIV_SEMANAS[univKey]||[];
+  if(!plan.length){ addSem([]); return; }
+  plan.forEach(talleresDelPlan=>addSem(talleresDelPlan));
+}
+
+function selH(btn){document.querySelectorAll('.hpill').forEach(b=>b.classList.remove('on'));btn.classList.add('on');selHosp=btn.dataset.h;}
+
+// ── STUDENTS ──
+function addStu(v=''){const id='s'+Date.now().toString(36);const d=document.createElement('div');d.className='stu-row';d.dataset.id=id;d.innerHTML=`<input type="text" placeholder="Nombre completo del estudiante" value="${v}"><button class="rmv" onclick="document.querySelector('[data-id=\\'${id}\\']').remove()" type="button">✕</button>`;document.getElementById('stulist').appendChild(d);}
+
+// ── SEMANAS ──
+// sugeridos: array de nombres de talleres pre-marcados (puede ser vacío)
+function addSem(sugeridos=[]){
+  semN++;const n=semN;
+  const d=document.createElement('div');d.className='wblock';d.dataset.sn=n;
+  const cid_ini=`scal-ini-${n}`,cid_fin=`scal-fin-${n}`;
+  const sid_ini=`si${n}`,sid_fin=`sf${n}`;
+  // Construir checkboxes: los sugeridos van primero y pre-marcados, el resto sin marcar al final
+  const sugeridosSet=new Set(sugeridos);
+  const ordenados=[
+    ...TALLERES.filter(t=>sugeridosSet.has(t)),   // sugeridos primero
+    ...TALLERES.filter(t=>!sugeridosSet.has(t)),  // resto después
+  ];
+  const tallesH=ordenados.map(t=>{
+    const i=TALLERES.indexOf(t);
+    const checked=sugeridosSet.has(t);
+    const badge=checked?` <span style="font-size:9px;background:rgba(91,141,239,.25);color:#7EB3FF;border-radius:3px;padding:1px 5px;vertical-align:middle;margin-left:3px;">sugerido</span>`:'';
+    return `<label class="tchk" style="${checked?'border-color:var(--acc);background:rgba(91,141,239,.08);':''}"><input type="checkbox" data-sn="${n}" data-ti="${i}"${checked?' checked':''}><span>${t}${badge}</span></label>`;
+  }).join('');
+  const haySugeridos=sugeridos.length>0;
+  d.innerHTML=`
+    <div class="whdr" onclick="toggleW(${n})">
+      <div class="wn"><span>📅</span><span>Semana ${n}</span>${haySugeridos?`<span style="font-size:10px;background:rgba(91,141,239,.2);color:#7EB3FF;border-radius:4px;padding:2px 7px;font-weight:600;">${sugeridos.length} taller${sugeridos.length>1?'es':''} sugerido${sugeridos.length>1?'s':''}</span>`:''}</div>
+      <span id="wa${n}" style="color:#A0A8CC;font-size:18px;">&#9656;</span>
+    </div>
+    <div class="wbody" id="wb${n}">
+      <span class="inner-label">Fechas de la semana</span>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div>
+          <div style="font-size:12px;color:#C8CCE8;font-weight:600;margin-bottom:4px;">Inicio</div>
+          <div id="${cid_ini}"></div>
+          <input type="date" id="${sid_ini}" style="display:none;">
+        </div>
+        <div>
+          <div style="font-size:12px;color:#C8CCE8;font-weight:600;margin-bottom:4px;">Fin</div>
+          <div id="${cid_fin}"></div>
+          <input type="date" id="${sid_fin}" style="display:none;">
+        </div>
+      </div>
+      <span class="inner-label" style="margin-top:14px;">Talleres de la semana${haySugeridos?' <span style="font-size:10px;color:#6E7899;font-weight:400;text-transform:none;letter-spacing:0;">— Los marcados son la distribución sugerida; puede quitarlos o agregar otros</span>':''}</span>
+      <div class="tgrid">${tallesH}</div>
+      <span class="inner-label">Examen</span>
+      <div id="exs${n}"></div>
+      <button class="addbtn" onclick="addEx(${n})" type="button" style="margin-bottom:6px;">+ Agregar examen</button>
+      <button class="rmv" onclick="document.querySelector('[data-sn=\\'${n}\\']').remove()" type="button" style="width:100%;text-align:center;margin-top:4px;">✕ Eliminar semana ${n}</button>
+    </div>`;
+  document.getElementById('semscon').appendChild(d);
+  setTimeout(()=>{buildCalendar(cid_ini,sid_ini,true);buildCalendar(cid_fin,sid_fin,true);toggleW(n);},10);
+}
+
+function toggleW(n){const b=document.getElementById('wb'+n);const a=document.getElementById('wa'+n);if(!b)return;b.classList.toggle('open');a.innerHTML=b.classList.contains('open')?'&#9662;':'&#9656;';}
+
+// ── EXAMS ──
+// Talleres EFECTIVAMENTE tomados = los marcados en las semanas reales que existen ahora,
+// no el plan teórico por universidad. Devuelve en orden canónico y sin duplicados.
+function talleresEfectivos(){
+  const set=new Set();
+  document.querySelectorAll('.wblock').forEach(wb=>{
+    const n=wb.dataset.sn;
+    wb.querySelectorAll(`input[type=checkbox][data-sn="${n}"]`).forEach(cb=>{
+      if(cb.checked) set.add(TALLERES[parseInt(cb.dataset.ti)]);
+    });
+  });
+  return TALLERES.filter(t=>set.has(t));
+}
+
+// Genera el HTML de la grilla de temas de un examen, marcando el conjunto indicado
+function temasGridHTML(sugeridosSet){
+  const orden=[
+    ...TEMAS_EXAMEN.filter(t=>sugeridosSet.has(t)),
+    ...TEMAS_EXAMEN.filter(t=>!sugeridosSet.has(t)),
+  ];
+  return orden.map(t=>{
+    const i=TEMAS_EXAMEN.indexOf(t);
+    const checked=sugeridosSet.has(t);
+    const badge=checked?` <span style="font-size:9px;background:rgba(220,38,38,.18);color:#FCA5A5;border-radius:3px;padding:1px 5px;vertical-align:middle;margin-left:3px;">tomado</span>`:'';
+    return `<label class="tchk-sm" style="${checked?'border-color:rgba(220,38,38,.5);background:rgba(220,38,38,.06);':''}"><input type="checkbox" data-te="${i}"${checked?' checked':''}><span>${t}${badge}</span></label>`;
+  }).join('');
+}
+
+// Re-marca los temas de un examen según los talleres efectivamente tomados en las semanas
+function syncTemas(id){
+  const entry=document.querySelector(`.entry-exam[data-id="${id}"]`);
+  if(!entry)return;
+  const grid=entry.querySelector('.tema-grid');
+  if(!grid)return;
+  grid.innerHTML=temasGridHTML(new Set(talleresEfectivos()));
+  const nota=entry.querySelector('.tema-nota');
+  if(nota){
+    const hay=grid.querySelectorAll('input:checked').length;
+    nota.innerHTML=hay>0
+      ?`✦ Marcados = talleres <strong>efectivamente tomados</strong> en las semanas de esta rotación. Ajústelos si es necesario.`
+      :`✦ Aún no hay talleres marcados en las semanas. Marca los talleres arriba y pulsa «Sincronizar», o selecciona manualmente.`;
+  }
+}
+
+function addEx(n){
+  const id='ex'+Date.now().toString(36);
+  const calId='xcal-'+id,dateId='xd-'+id;
+  const d=document.createElement('div');d.className='entry entry-exam';d.dataset.id=id;
+
+  // Temas sugeridos = talleres EFECTIVAMENTE tomados en las semanas reales (no el plan teórico)
+  const efectivos=talleresEfectivos();
+  const sugeridosExamen=new Set(efectivos);
+  const temasH=temasGridHTML(sugeridosExamen);
+
+  const notaTxt=efectivos.length>0
+    ?`✦ Marcados = talleres <strong>efectivamente tomados</strong> en las semanas de esta rotación. Ajústelos si es necesario.`
+    :`✦ Aún no hay talleres marcados en las semanas. Marca los talleres arriba y pulsa «Sincronizar», o selecciona manualmente.`;
+
+  d.innerHTML=`
+    <div class="egrid2" style="margin-bottom:10px;">
+      <div class="frow"><label style="color:#FDA4AF;">Nombre del examen</label><input type="text" value="Examen" readonly style="color:#FCA5A5;font-weight:700;cursor:default;"></div>
+      <div class="frow"><label style="color:#FDA4AF;">Ponderación</label><input type="text" value="30%" readonly style="color:#FCA5A5;font-weight:700;cursor:default;"></div>
+    </div>
+    <div class="frow">
+      <label style="color:#FDA4AF;">Fecha del examen</label>
+      <div id="${calId}"></div>
+      <input type="date" id="${dateId}" style="display:none;">
+    </div>
+    <div class="frow">
+      <label style="color:#FDA4AF;">Temas a evaluar</label>
+      <div class="tema-nota" style="font-size:11px;color:#FDA4AF;margin-bottom:8px;line-height:1.5;">${notaTxt}</div>
+      <button class="addbtn" onclick="syncTemas('${id}')" type="button" style="margin-bottom:8px;background:rgba(220,38,38,.12);border-color:rgba(220,38,38,.4);color:#FCA5A5;">🔄 Sincronizar con talleres tomados</button>
+      <div class="tema-grid">${temasH}</div>
+    </div>
+    <button class="rmv" onclick="document.querySelector('[data-id=\\'${id}\\']').remove()" type="button" style="margin-top:4px;">✕ Quitar examen</button>`;
+  document.getElementById('exs'+n).appendChild(d);
+  setTimeout(()=>buildCalendar(calId,dateId,true),10);
+}
+
+// ── COLLECT ──
+function collect(){
+  const students=[...document.querySelectorAll('.stu-row input')].map(i=>i.value.trim()).filter(Boolean);
+  const semanas=[];
+  document.querySelectorAll('.wblock').forEach(wb=>{
+    const n=wb.dataset.sn;
+    const talleres=[];
+    wb.querySelectorAll(`input[type=checkbox][data-sn="${n}"]`).forEach(cb=>{if(cb.checked)talleres.push(TALLERES[parseInt(cb.dataset.ti)]);});
+    const examenes=[];
+    wb.querySelectorAll('.entry-exam').forEach(ee=>{
+      const ins=ee.querySelectorAll('input[type=text]');
+      const dateIn=ee.querySelector('input[type=date]');
+      const temas=[...ee.querySelectorAll('input[type=checkbox]')].filter(c=>c.checked).map(c=>TEMAS_EXAMEN[parseInt(c.dataset.te)]);
+      examenes.push({nombre:ins[0]?.value||'',ponderacion:ins[1]?.value||'',fecha:dateIn?.value||'',temas});
+    });
+    semanas.push({n:parseInt(n),ini:document.getElementById('si'+n)?.value||'',fin:document.getElementById('sf'+n)?.value||'',talleres,examenes});
+  });
+  return{univ:selUniv,hosp:selHosp,grupo:document.getElementById('f-grupo').value.trim(),students,ini:calGet('f-ini-store'),fin:calGet('f-fin-store'),seminario:calGet('f-seminario'),semanas};
+}
+
+function fmt(d){if(!d)return'';const[y,m,dd]=d.split('-');return`${dd}/${m}/${y}`;}
+function yr(d){return d?d.split('-')[0]:new Date().getFullYear();}
+
+function gen(){
+  const s=collect();
+  const errs=[];
+
+  if(!s.univ)           errs.push('⬛ <strong>Universidad:</strong> Selecciona una universidad.');
+  if(!s.hosp)           errs.push('🏥 <strong>Hospital:</strong> Selecciona Kennedy o Bosa.');
+  if(!s.students.length)errs.push('👤 <strong>Estudiantes:</strong> Agrega al menos un estudiante con nombre.');
+  if(!s.ini)            errs.push('📅 <strong>Fecha de inicio:</strong> Selecciona la fecha de inicio de la rotación.');
+  if(!s.fin)            errs.push('📅 <strong>Fecha de fin:</strong> Selecciona la fecha de fin de la rotación.');
+  if(s.ini&&s.fin&&s.ini>=s.fin) errs.push('📅 <strong>Fechas:</strong> La fecha de fin debe ser posterior a la de inicio.');
+  if(!s.semanas.length) errs.push('📋 <strong>Semanas:</strong> Agrega al menos una semana con sus talleres.');
+
+  const semSinTalleres=s.semanas.filter(sem=>sem.talleres.length===0);
+  if(semSinTalleres.length){
+    const nums=semSinTalleres.map(s=>'Semana '+s.n).join(', ');
+    errs.push(`📗 <strong>Talleres faltantes:</strong> ${nums} no tiene ningún taller seleccionado.`);
+  }
+
+  const pv=document.getElementById('preview');
+
+  if(errs.length){
+    pv.innerHTML=`
+      <div style="max-width:560px;margin:30px auto;">
+        <div style="background:#FEF2F2;border:2px solid #FECACA;border-radius:12px;overflow:hidden;">
+          <div style="background:linear-gradient(135deg,#C62828,#E53935);padding:13px 18px;display:flex;align-items:center;gap:10px;">
+            <span style="font-size:20px;">⚠️</span>
+            <span style="font-size:14px;font-weight:700;color:#fff;">Faltan datos para generar el cronograma</span>
+          </div>
+          <div style="padding:18px 20px;">
+            <p style="font-size:12.5px;color:#7F1D1D;margin-bottom:14px;line-height:1.6;">Completa los siguientes campos antes de continuar:</p>
+            <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;">
+              ${errs.map(e=>`<li style="background:#fff;border:1.5px solid #FECACA;border-radius:8px;padding:10px 14px;font-size:12.5px;color:#991B1B;line-height:1.5;">${e}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      </div>`;
+    // Scroll to preview
+    pv.scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
+
+  // Todo OK — intentar generar con try/catch
+  try{
+    const html=buildHTML(s);
+    window.__html=html;
+    pv.innerHTML=`<div class="prev-tb"><strong style="font-size:13px;color:#0D1B2A;">Vista previa</strong><button class="dlbtn" onclick="dl()" type="button">⬇ Descargar HTML</button><span class="prev-lbl">${UNIVS[s.univ].name} · ${s.hosp==='kennedy'?'Kennedy':'Bosa'} · ${s.grupo||'Grupo'}</span></div><div class="prev-frame"><iframe id="pif" style="width:100%;height:720px;border:none;" srcdoc=""></iframe></div>`;
+    document.getElementById('pif').srcdoc=html;
+  }catch(err){
+    pv.innerHTML=`
+      <div style="max-width:560px;margin:30px auto;">
+        <div style="background:#F5F3FF;border:2px solid #C4B5FD;border-radius:12px;overflow:hidden;">
+          <div style="background:linear-gradient(135deg,#4A148C,#7B1FA2);padding:13px 18px;display:flex;align-items:center;gap:10px;">
+            <span style="font-size:20px;">🔧</span>
+            <span style="font-size:14px;font-weight:700;color:#fff;">Error al generar el cronograma</span>
+          </div>
+          <div style="padding:18px 20px;">
+            <p style="font-size:12.5px;color:#4C1D95;margin-bottom:10px;">Ocurrió un error inesperado. Detalle técnico:</p>
+            <code style="background:#EDE9FE;display:block;padding:10px 12px;border-radius:6px;font-size:11px;color:#4C1D95;line-height:1.6;word-break:break-all;">${err.message||String(err)}</code>
+          </div>
+        </div>
+      </div>`;
+    pv.scrollIntoView({behavior:'smooth',block:'start'});
+    console.error('buildHTML error:',err);
+  }
+}
+
+function dl(){
+  if(!window.__html){alert('Primero genera el cronograma');return;}
+  const s=collect();
+  const u=UNIVS[s.univ||'sabana'];
+  const fn=`cronograma-${u.short.toLowerCase().replace(/\s+/g,'-')}-${s.hosp||'hospital'}-${(s.grupo||'grupo').toLowerCase().replace(/\s+/g,'-')}.html`;
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([window.__html],{type:'text/html;charset=utf-8'}));
+  a.download=fn;a.click();
+}
+
+// ── BUILD HTML ──
+function buildHTML(s){
+  const u=UNIVS[s.univ];
+  const hospName=s.hosp==='kennedy'?'Hospital de Kennedy':'Hospital de Bosa';
+  const periodo=s.ini&&s.fin?`${fmt(s.ini)} – ${fmt(s.fin)}`:'Por definir';
+  const year=yr(s.ini);
+  const studStr=s.students.join(' · ');
+  const nSems=s.semanas.length;
+  const ultimoDia=s.fin?fmt(s.fin):'último día de la rotación';
+  const claseInfo=u.clase!=='No tiene día académico fijo'
+    ?`<strong>Día(s) académico(s) sin rotación en hospital:</strong> ${u.clase}.`
+    :`<strong>Días académicos:</strong> La Universidad del Rosario no tiene día académico fijo — rotación completa según calendario.`;
+
+  // Pesos de talleres según universidad
+  const tallerPesos=s.univ?calcTallerPesos(s.univ):{};
+  function getTallerPct(nombre){
+    // Busca coincidencia exacta o parcial
+    if(tallerPesos[nombre])return tallerPesos[nombre];
+    // Busca si el nombre del taller contiene alguna clave
+    for(const k of Object.keys(tallerPesos)){if(nombre.includes(k)||k.includes(nombre))return tallerPesos[k];}
+    // Fallback: 40 / total talleres seleccionados
+    const total=s.semanas.reduce((acc,sem)=>acc+sem.talleres.length,0)||1;
+    return (40/total).toFixed(2).replace(/\.?0+$/,'')+'%';
+  }
+
+  // ── Cálculo de ponderaciones ──
+  // Estructura fija: Talleres (incluyendo VP) = 40% · Examen = 30% · Seminario = 30% → TOTAL 100%
+  //
+  // Regla de distribución del 40%:
+  //   • VP es un taller más en la semana 1 (mismo peso que los demás de esa semana).
+  //   • El peso de cada semana es proporcional a su número de talleres (incluyendo VP en sem 1).
+  //   • Todos los talleres de una misma semana tienen el mismo peso.
+  //   • La suma exacta de todos los pesos de taller = 40%.
+
+  // Construir estructura de semanas con VP incorporada en semana 1
+  const semsConVP=s.semanas.map((sem,idx)=>{
+    if(idx===0) return {...sem, talleres:[...sem.talleres,'Valoración Preanestésica']};
+    return sem;
+  });
+
+  // Total de talleres contando VP
+  const totalTalleresConVP=semsConVP.reduce((acc,sem)=>acc+sem.talleres.length,0)||1;
+
+  // Peso exacto por taller según carga de su semana:
+  // peso_taller_en_semX = (talleres_semX / totalTalleresConVP) * 40 / talleres_semX
+  //                     = 40 / totalTalleresConVP  (igual para todos → mismo peso proporcional)
+  // PERO si la carga semanal varía, el peso por semana varía:
+  // peso_semX = (talleres_semX / totalTalleresConVP) * 40
+  // peso_taller_en_semX = peso_semX / talleres_semX = 40 / totalTalleresConVP
+  // → en realidad todos los talleres tienen el mismo peso individual cuando se distribuye linealmente.
+  // Para respetar "semanas con más talleres pesan más en total pero cada taller vale igual":
+  // usamos peso uniforme por taller = 40 / totalTalleresConVP, y la suma da exactamente 40%.
+
+  const pesoPorTaller=40/totalTalleresConVP;
+
+  // Formatear porcentaje: sin decimales si es entero, máx 2 decimales si no
+  function fmtPct(n){
+    const r=Math.round(n*100)/100;
+    return Number.isInteger(r)?r+'%':r.toFixed(2).replace(/\.?0+$/,'')+'%';
+  }
+
+  const vpPct=fmtPct(pesoPorTaller);
+
+  // semsHTML — filas de la tabla de cada semana
+  let semsHTML='';
+  s.semanas.forEach(sem=>{
+    const fr=sem.ini&&sem.fin?`${fmt(sem.ini)} → ${fmt(sem.fin)}`:sem.ini?`Desde ${fmt(sem.ini)}`:'';
+    let rows='';
+    const pct=fmtPct(pesoPorTaller);
+    sem.talleres.forEach((t,ti)=>{
+      const letra=sem.talleres.length>1?` ${String.fromCharCode(65+ti)}`:'';
+      rows+=`<tr><td>Durante la semana${fr?' ('+fr+')':''}</td><td><span class="badge badge-taller">📗 Taller${letra}</span></td><td><strong>${t}</strong> — Desarrollar el taller teórico-práctico, descargar el PDF y subir a Google Classroom antes del cierre de la semana.</td><td><span class="badge badge-pct">${pct}</span></td></tr>`;
+    });
+    sem.examenes.forEach(ex=>{
+      if(!ex.nombre)return;
+      rows+=`<tr><td>${ex.fecha?fmt(ex.fecha):'Por confirmar'}</td><td><span class="badge badge-examen">📝 EXAMEN FINAL</span></td><td><strong>Ver contenidos más abajo.</strong> Se realiza a lo largo del día. Calculadora obligatoria. Sin celulares ni tablets.</td><td><span class="badge badge-pct">30%</span></td></tr>`;
+    });
+    if(sem.talleres.length>0&&sem.fin) rows+=`<tr><td>Dom ${fmt(sem.fin)} · 23:59</td><td><span class="badge badge-entrega">⚑ Entrega</span></td><td>Fecha límite de entrega: ${sem.talleres.join(' · ')}</td><td>—</td></tr>`;
+    if(!rows)rows=`<tr><td colspan="4" style="text-align:center;color:#999;padding:14px;">Sin actividades registradas.</td></tr>`;
+    const semColors=['sem-h-1','sem-h-2','sem-h-3','sem-h-4','sem-h-5'];
+    const semColor=semColors[(sem.n-1)%semColors.length]||'sem-h-def';
+    semsHTML+=`<div class="semana"><div class="sem-h ${semColor}"><span class="sem-titulo">📅 Semana ${sem.n}</span>${fr?`<span class="sem-fecha">${fr}</span>`:''}</div><div class="sem-b"><table class="act-table"><thead><tr><th>Fecha</th><th>Actividad</th><th>Descripción</th><th>Valor</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
+  });
+
+  // VP row (taller transversal)
+  const vpRow=`<div class="semana"><div class="sem-h sem-h-adicional"><span class="sem-titulo">📋 Taller Transversal — Toda la rotación</span></div><div class="sem-b"><table class="act-table"><thead><tr><th>Entrega</th><th>Actividad</th><th>Descripción</th><th>Valor</th></tr></thead><tbody><tr><td>${ultimoDia}</td><td><span class="badge badge-adicional">Taller Continuo</span></td><td><strong>Valoración Preanestésica</strong> — Desarrollar el taller teórico-práctico a lo largo de toda la rotación, registrando las valoraciones realizadas en los turnos. Descargar el PDF y subir a Google Classroom. Entrega obligatoria: <strong>${ultimoDia}</strong>.</td><td><span class="badge badge-pct">${vpPct}</span></td></tr></tbody></table></div></div>`;
+
+  // Seminario row
+  const seminarioFecha=s.seminario?fmt(s.seminario):'Por confirmar';
+  const semRow=`<div class="semana"><div class="sem-h sem-h-seminario"><span class="sem-titulo">🎓 Seminario de Integración Clínica</span><span class="sem-fecha">${seminarioFecha}</span></div><div class="sem-b"><table class="act-table"><thead><tr><th>Fecha</th><th>Actividad</th><th>Descripción</th><th>Valor</th></tr></thead><tbody><tr><td>${seminarioFecha}</td><td><span class="badge badge-seminario">🎓 Seminario</span></td><td><strong>Seminario de Integración Clínica</strong> — Integración de los contenidos teórico-prácticos de la rotación de Anestesiología.</td><td><span class="badge badge-pct">30%</span></td></tr></tbody></table></div></div>`;
+
+  // ── Tarjetas de ponderación ──
+  let pondCards='';
+
+  s.semanas.forEach(sem=>{
+    const pct=fmtPct(pesoPorTaller);
+    sem.talleres.forEach((t,ti)=>{
+      const letra=sem.talleres.length>1?` ${String.fromCharCode(65+ti)}`:'';
+      pondCards+=`<div class="pcard"><div class="p-pct">${pct}</div><div class="p-lbl">Taller Sem.${sem.n}${letra}</div><div class="p-det">${t.substring(0,28)}${t.length>28?'…':''}</div></div>`;
+    });
+    sem.examenes.forEach(ex=>{
+      if(!ex.nombre)return;
+      pondCards+=`<div class="pcard p-ex"><div class="p-pct">30%</div><div class="p-lbl">Examen</div><div class="p-det">${ex.nombre.substring(0,24)}${ex.fecha?' · '+fmt(ex.fecha):''}</div></div>`;
+    });
+  });
+
+  pondCards+=`<div class="pcard p-vp"><div class="p-pct">${vpPct}</div><div class="p-lbl">Transversal</div><div class="p-det">Valoración Preanestésica</div></div>`;
+  pondCards+=`<div class="pcard p-se"><div class="p-pct">30%</div><div class="p-lbl">Seminario</div><div class="p-det">${seminarioFecha}</div></div>`;
+
+  const totalStr='100%';
+
+  let examDet='';
+  let allExams=[];s.semanas.forEach(sem=>sem.examenes.forEach(ex=>{if(ex.nombre)allExams.push(ex);}));
+  if(allExams.length){
+    examDet=`<p class="sub-sec-title">Contenidos del Examen Final</p><div class="exam-grid">`;
+    allExams.forEach(ex=>{const li=ex.temas.length?ex.temas.map(t=>`<li>${t}</li>`).join(''):`<li>Todos los temas de la rotación</li>`;examDet+=`<div class="exam-box"><div class="exam-title">📝 Examen Final${ex.fecha?' — '+fmt(ex.fecha):''}</div><ul class="exam-items">${li}</ul></div>`;});
+    examDet+=`</div>`;
+  }
+
+  return `<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>${u.name} — Anestesiología · ${hospName}</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap');
+:root{
+  --pri:${u.pri};--sec:${u.sec};--l:${u.l};--t:${u.t};
+  --txt:#0F172A;--sub:#475569;--dim:#64748B;--brd:#E2E8F0;--bg:#F8FAFC;
+  --k:#4F46E5;--b:#E11D48;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;font-size:13px;line-height:1.5;color:var(--txt);background:var(--bg);}
+h1,h2,h3,.h{font-family:'Outfit',sans-serif;font-weight:800;letter-spacing:-.2px;}
+.cont{max-width:1120px;margin:0 auto;padding:16px;}
+
+/* HERO compacto */
+.hero{background:linear-gradient(135deg,${u.pri},${u.sec});color:#fff;padding:20px 26px;border-radius:18px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;margin-bottom:14px;box-shadow:0 8px 24px rgba(0,0,0,.12);}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.28);border-radius:100px;padding:3px 12px;font-size:9.5px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;margin-bottom:8px;}
+.hero h1{font-size:26px;line-height:1.05;margin-bottom:4px;}
+.hero h1 em{font-style:normal;color:${u.l};}
+.hero .p-sub{font-size:12px;opacity:.85;font-weight:500;}
+.hero-meta{display:flex;flex-direction:column;gap:5px;min-width:200px;text-align:right;font-size:11.5px;line-height:1.35;}
+.hero-meta b{font-family:'Outfit',sans-serif;font-weight:800;font-size:14px;color:${u.l};display:block;}
+.hosp-chip{display:inline-flex;align-items:center;gap:6px;background:${s.hosp==='kennedy'?'var(--k)':'var(--b)'};color:#fff;padding:4px 12px;border-radius:100px;font-size:11px;font-weight:800;letter-spacing:.5px;}
+
+/* CHIPS de info (reemplaza las 5 alertas gigantes) */
+.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px;margin-bottom:14px;}
+.chip{background:#fff;border:1px solid var(--brd);border-left:4px solid;border-radius:10px;padding:9px 12px;font-size:11.5px;line-height:1.45;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.chip strong{font-family:'Outfit',sans-serif;font-weight:800;display:block;font-size:11px;letter-spacing:.3px;margin-bottom:1px;color:var(--txt);}
+.chip.c-w{border-left-color:#F59E0B;background:#FFFBEB;}
+.chip.c-g{border-left-color:#16A34A;background:#F0FDF4;}
+.chip.c-r{border-left-color:#DC2626;background:#FEF2F2;}
+.chip.c-b{border-left-color:#2563EB;background:#EFF6FF;}
+.chip.c-u{border-left-color:${u.l};background:${u.t};}
+
+/* PONDERACIÓN compacta */
+.pond{background:#fff;border:1px solid var(--brd);border-radius:14px;padding:14px;margin-bottom:14px;}
+.pond-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.pond-hdr .h{font-size:15px;color:${u.pri};}
+.pond-total{background:${u.pri};color:#fff;padding:5px 14px;border-radius:100px;font-family:'Outfit',sans-serif;font-weight:900;font-size:13px;letter-spacing:1px;}
+.pond-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;}
+.pcard{border:1px solid var(--brd);border-radius:10px;padding:8px 10px;background:#fff;text-align:center;position:relative;overflow:hidden;}
+.pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:${u.pri};}
+.pcard.p-vp::before{background:#0D9488;} .pcard.p-vp{background:#F0FDFA;}
+.pcard.p-ex::before{background:#DC2626;} .pcard.p-ex{background:#FEF2F2;}
+.pcard.p-se::before{background:#0D47A1;} .pcard.p-se{background:#EFF6FF;}
+.p-pct{font-family:'Outfit',sans-serif;font-weight:900;font-size:22px;color:${u.pri};line-height:1;margin-top:5px;}
+.pcard.p-vp .p-pct{color:#0D9488;} .pcard.p-ex .p-pct{color:#DC2626;} .pcard.p-se .p-pct{color:#0D47A1;}
+.p-lbl{font-size:9.5px;font-weight:800;text-transform:uppercase;color:var(--sub);letter-spacing:.6px;margin-top:3px;}
+.p-det{font-size:9.5px;color:var(--dim);margin-top:2px;line-height:1.3;}
+
+/* CRONOGRAMA compacto — grid de semanas */
+.sec-title{display:flex;align-items:center;gap:10px;font-family:'Outfit',sans-serif;font-weight:800;font-size:15px;color:var(--txt);margin:16px 0 10px;}
+.sec-title::after{content:'';flex:1;height:2px;background:linear-gradient(90deg,${u.l}80,transparent);border-radius:1px;}
+.sec-title .cnt{background:${u.pri};color:#fff;font-size:10px;padding:2px 9px;border-radius:100px;font-weight:800;letter-spacing:.5px;}
+.est-strip{background:${u.t};border:1px solid ${u.l}40;border-radius:10px;padding:8px 14px;margin-bottom:12px;font-size:12px;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;}
+.est-strip b{font-family:'Outfit',sans-serif;font-weight:800;color:${u.pri};font-size:11px;letter-spacing:.5px;text-transform:uppercase;}
+
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-bottom:10px;}
+.scard{background:#fff;border:1px solid var(--brd);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.scard .sh{padding:8px 12px;color:#fff;font-family:'Outfit',sans-serif;font-weight:800;display:flex;align-items:center;justify-content:space-between;font-size:12.5px;letter-spacing:.3px;}
+.scard .sh .sf{font-family:'Inter',sans-serif;font-weight:600;font-size:10.5px;opacity:.9;background:rgba(0,0,0,.18);padding:1px 8px;border-radius:100px;}
+.scard .sb{padding:10px 12px;font-size:12px;flex:1;}
+.sb ul{list-style:none;padding:0;}
+.sb li{padding:5px 0;border-bottom:1px dashed #E2E8F0;line-height:1.4;}
+.sb li:last-child{border:none;}
+.sb .tt{font-weight:700;color:var(--txt);}
+.sb .pct{display:inline-block;background:${u.pri};color:#fff;font-family:'Outfit',sans-serif;font-weight:800;font-size:10px;padding:1px 6px;border-radius:100px;margin-left:5px;letter-spacing:.4px;}
+.sb .lbl{display:inline-block;font-size:9.5px;font-weight:800;text-transform:uppercase;padding:1px 7px;border-radius:100px;letter-spacing:.5px;margin-right:5px;vertical-align:1px;}
+.lbl-t{background:${u.t};color:${u.pri};border:1px solid ${u.l}40;}
+.lbl-e{background:#FEF2F2;color:#DC2626;border:1px solid #FCA5A5;}
+.lbl-d{background:#F0FDF4;color:#166534;border:1px solid #86EFAC;}
+.sb .fecha{color:var(--dim);font-size:10.5px;font-weight:600;}
+/* Colores rotativos por semana */
+.sh-1{background:linear-gradient(135deg,#4F46E5,#3730A3);}
+.sh-2{background:linear-gradient(135deg,#0D9488,#0F766E);}
+.sh-3{background:linear-gradient(135deg,#F59E0B,#B45309);}
+.sh-4{background:linear-gradient(135deg,#8B5CF6,#6D28D9);}
+.sh-5{background:linear-gradient(135deg,#E11D48,#9F1239);}
+.sh-vp{background:linear-gradient(135deg,#0F766E,#134E4A);}
+.sh-se{background:linear-gradient(135deg,#0D47A1,#1E3A8A);}
+
+/* EXAMEN */
+.exam-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:10px;}
+.exam-box{background:#FEF2F2;border:1px solid #FECACA;border-left:4px solid #DC2626;border-radius:10px;padding:10px 12px;}
+.exam-title{font-family:'Outfit',sans-serif;font-weight:800;font-size:12px;color:#991B1B;margin-bottom:6px;letter-spacing:.3px;}
+.exam-items{list-style:none;padding:0;}
+.exam-items li{font-size:11px;color:#7F1D1D;padding:2px 0;padding-left:12px;position:relative;line-height:1.4;}
+.exam-items li::before{content:"▸";color:#DC2626;position:absolute;left:0;}
+
+/* FOOTER */
+.foot{margin-top:16px;padding:12px 16px;background:#0F172A;color:rgba(255,255,255,.7);border-radius:12px;font-size:10.5px;line-height:1.5;display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.foot b{font-family:'Outfit',sans-serif;color:#fff;font-weight:800;display:block;font-size:11px;letter-spacing:.4px;margin-bottom:2px;}
+@media(max-width:640px){.hero{grid-template-columns:1fr;}.hero-meta{text-align:left;}.foot{grid-template-columns:1fr;}}
+@media print{body{background:#fff;}.scard,.pond{break-inside:avoid;}.hero,.sh,.sh-1,.sh-2,.sh-3,.sh-4,.sh-5,.sh-vp,.sh-se,.pcard::before,.foot{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
+</style></head><body>
+<div class="cont">
+<div class="hero">
+  <div>
+    <span class="tag">${hospName} · ${u.name} · ${year}</span>
+    <h1>Cronograma <em>Actividades Académicas</em></h1>
+    <p class="p-sub">Talleres teórico-prácticos, examen final y seminario de integración clínica.</p>
+  </div>
+  <div class="hero-meta">
+    <span class="hosp-chip">🏥 ${s.hosp==='kennedy'?'Kennedy':'Bosa'}</span>
+    <div><b>${nSems} semana(s)</b>${periodo}</div>
+    ${s.grupo?`<div><b>${s.grupo}</b>${s.students.length} estudiante(s)</div>`:`<div><b>Estudiantes</b>${s.students.length}</div>`}
+    <div style="font-size:10.5px;opacity:.85;">Dr. Andrés Robayo C.</div>
+  </div>
+</div>
+
+<div class="chips">
+  <div class="chip c-w"><strong>⏰ Entregas</strong>Talleres cada domingo 23:59 h · Google Classroom.</div>
+  <div class="chip c-g"><strong>📋 Valoración Preanestésica</strong>Taller transversal · entrega ${ultimoDia}.</div>
+  <div class="chip c-r"><strong>📝 Examen</strong>Todo el día · calculadora · sin celulares/tablets.</div>
+  <div class="chip c-b"><strong>📚 Material</strong>Google Classroom.</div>
+  <div class="chip c-u"><strong>📅 Días académicos ${u.name}</strong>${u.clase}</div>
+  <div class="chip c-w"><strong>📋 Nota diaria</strong>Último día (${ultimoDia}): Dr. Robayo o Dr. Geovanny Rodríguez.</div>
+</div>
+
+<div class="pond">
+  <div class="pond-hdr"><span class="h">Ponderación de la nota final</span><span class="pond-total">TOTAL 100%</span></div>
+  <div class="pond-grid">${pondCards}</div>
+</div>
+
+<div class="sec-title">${u.name} — Cronograma detallado <span class="cnt">${nSems} sem · ${periodo}</span></div>
+<div class="est-strip"><b>Estudiantes</b><span>${s.students.join(' · ')}</span></div>
+
+<div class="sgrid">
+  ${s.semanas.map(sem=>{
+    const fr=sem.ini&&sem.fin?`${fmt(sem.ini)} → ${fmt(sem.fin)}`:sem.ini?`Desde ${fmt(sem.ini)}`:'';
+    const shClass='sh-'+(((sem.n-1)%5)+1);
+    const pct=fmtPct(pesoPorTaller);
+    let items='';
+    sem.talleres.forEach((t,ti)=>{
+      const letra=sem.talleres.length>1?` ${String.fromCharCode(65+ti)}`:'';
+      items+=`<li><span class="lbl lbl-t">📗 Taller${letra}</span><span class="tt">${t}</span><span class="pct">${pct}</span></li>`;
+    });
+    sem.examenes.forEach(ex=>{if(!ex.nombre)return;
+      items+=`<li><span class="lbl lbl-e">📝 Examen</span><span class="tt">${ex.nombre}</span>${ex.fecha?` <span class="fecha">· ${fmt(ex.fecha)}</span>`:''}<span class="pct" style="background:#DC2626;">30%</span></li>`;
+    });
+    if(sem.talleres.length>0&&sem.fin) items+=`<li><span class="lbl lbl-d">⚑ Entrega</span><span class="fecha">Dom ${fmt(sem.fin)} · 23:59</span></li>`;
+    if(!items) items=`<li style="text-align:center;color:var(--dim);">Sin actividades.</li>`;
+    return `<div class="scard"><div class="sh ${shClass}"><span>📅 Semana ${sem.n}</span>${fr?`<span class="sf">${fr}</span>`:''}</div><div class="sb"><ul>${items}</ul></div></div>`;
+  }).join('')}
+  <div class="scard"><div class="sh sh-vp"><span>📋 Taller Transversal</span><span class="sf">${ultimoDia}</span></div><div class="sb"><ul><li><span class="lbl" style="background:#F0FDFA;color:#0F766E;border:1px solid #99F6E4;">Continuo</span><span class="tt">Valoración Preanestésica</span><span class="pct" style="background:#0D9488;">${vpPct}</span><div class="fecha" style="margin-top:3px;">Registra las valoraciones durante los turnos. Entrega: ${ultimoDia}.</div></li></ul></div></div>
+  <div class="scard"><div class="sh sh-se"><span>🎓 Seminario Integración</span><span class="sf">${seminarioFecha}</span></div><div class="sb"><ul><li><span class="lbl" style="background:#EFF6FF;color:#0D47A1;border:1px solid #93C5FD;">Presencial/Virtual</span><span class="tt">Seminario de Integración Clínica</span><span class="pct" style="background:#0D47A1;">30%</span><div class="fecha" style="margin-top:3px;">Integración de los contenidos teórico-prácticos.</div></li></ul></div></div>
+</div>
+
+${allExams.length?`<div class="sec-title">Contenidos del Examen Final</div><div class="exam-grid">${allExams.map(ex=>{const li=ex.temas.length?ex.temas.map(t=>`<li>${t}</li>`).join(''):`<li>Todos los temas de la rotación</li>`;return `<div class="exam-box"><div class="exam-title">📝 ${ex.nombre||'Examen'}${ex.fecha?' — '+fmt(ex.fecha):''}</div><ul class="exam-items">${li}</ul></div>`;}).join('')}</div>`:''}
+
+<div class="foot">
+  <div><b>Docente Responsable</b>Dr. Andrés Robayo C. · Anestesiología y Reanimación · Coordinador Académico · Subred Suroccidente</div>
+  <div><b>Material y Entregas</b>Google Classroom · Domingos 23:59 h · Nota diaria: Dr. Robayo o Dr. Geovanny Rodríguez.<br>© ${year} · Uso académico interno.</div>
+</div>
+</div>
+</body></html>`;}
+
+// ── INIT ──
+// Create period calendars
+document.getElementById('cal-ini').innerHTML='<div id="cali-wrap"></div><input type="date" id="f-ini-store" style="display:none;">';
+document.getElementById('cal-fin').innerHTML='<div id="calf-wrap"></div><input type="date" id="f-fin-store" style="display:none;">';
+setTimeout(()=>{buildCalendar('cali-wrap','f-ini-store',false);buildCalendar('calf-wrap','f-fin-store',false);buildCalendar('semcal-wrap','f-seminario',false);},20);
+addStu();
+</script>
+</body>
+</html>
