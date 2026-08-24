@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Técnicas de Conteo — Probabilidad</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Hanken Grotesk', sans-serif;
+    background: #F5F5F0;
+    color: #000;
+    padding: 30px 20px;
+    line-height: 1.5;
+    font-size: 16px;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px;
+    letter-spacing: 2px;
+    color: #0D47A1;
+    margin-bottom: 6px;
+  }
+  .sub {
+    font-size: 15px;
+    color: #000;
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+
+  .decision-tree {
+    background: white;
+    border: 3px solid #0D47A1;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+  }
+  .decision-tree h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 1px;
+    color: #0D47A1;
+    margin-bottom: 12px;
+  }
+  .decision-tree ol {
+    padding-left: 22px;
+  }
+  .decision-tree li {
+    margin-bottom: 6px;
+    font-size: 15px;
+  }
+  .decision-tree strong { color: #B91C1C; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 850px) { .grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    border-top: 6px solid;
+  }
+  .card.perm { border-top-color: #B91C1C; }
+  .card.perm-rep { border-top-color: #F59E0B; }
+  .card.comb { border-top-color: #059669; }
+  .card.comb-rep { border-top-color: #7C3AED; }
+
+  .card-header {
+    padding: 14px 18px;
+    color: white;
+  }
+  .perm .card-header { background: #B91C1C; }
+  .perm-rep .card-header { background: #F59E0B; }
+  .comb .card-header { background: #059669; }
+  .comb-rep .card-header { background: #7C3AED; }
+
+  .card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    color: white;
+    margin-bottom: 2px;
+  }
+  .card-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.95);
+    font-weight: 500;
+  }
+  .card-body { padding: 16px 18px; }
+
+  .row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+    align-items: flex-start;
+  }
+  .row-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.8px;
+    color: #000;
+    min-width: 80px;
+    padding-top: 4px;
+  }
+  .row-value { flex: 1; color: #000; font-size: 15px; }
+
+  .formula {
+    background: #F5F5F0;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 17px;
+    font-weight: 500;
+    text-align: center;
+    color: #000;
+    border-left: 4px solid #0D47A1;
+  }
+
+  .example {
+    background: #FEF3C7;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #000;
+    border-left: 4px solid #F59E0B;
+  }
+  .example strong { color: #B91C1C; font-family: 'DM Mono', monospace; }
+
+  .keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .kw {
+    background: #E0E7FF;
+    color: #1E1B4B;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .cheat {
+    margin-top: 20px;
+    background: #0D47A1;
+    color: white;
+    padding: 18px 22px;
+    border-radius: 12px;
+  }
+  .cheat h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    color: white;
+  }
+  .cheat p { color: white; font-size: 15px; margin-bottom: 6px; }
+  .cheat code {
+    background: rgba(255,255,255,0.15);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+  }
+
+  /* ═══ MÉTODOS NUMÉRICOS ═══ */
+  .divider {
+    height: 4px;
+    background: linear-gradient(90deg, #0D47A1, #059669, #F59E0B, #B91C1C);
+    border-radius: 2px;
+    margin: 40px 0 24px;
+  }
+  h1.mn-title {
+    color: #059669;
+    margin-bottom: 6px;
+  }
+
+  .mn-card {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+    border-left: 8px solid;
+  }
+  .mn-card.err { border-left-color: #DC2626; }
+  .mn-card.roots { border-left-color: #0D47A1; }
+  .mn-card.ls { border-left-color: #059669; }
+  .mn-card.kernel { border-left-color: #7C3AED; }
+
+  .mn-header {
+    padding: 16px 22px;
+    color: white;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .err .mn-header { background: #DC2626; }
+  .roots .mn-header { background: #0D47A1; }
+  .ls .mn-header { background: #059669; }
+  .kernel .mn-header { background: #7C3AED; }
+
+  .mn-title-txt {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 1.2px;
+    color: white;
+  }
+  .mn-obj {
+    font-size: 13px;
+    color: rgba(255,255,255,0.95);
+    font-weight: 500;
+    max-width: 500px;
+    text-align: right;
+  }
+
+  .mn-body {
+    padding: 20px 22px;
+  }
+
+  .mn-subsection {
+    margin-bottom: 16px;
+  }
+  .mn-subsection:last-child { margin-bottom: 0; }
+
+  .mn-subtitle {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 0.8px;
+    color: #000;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #E5E7EB;
+  }
+  .err .mn-subtitle { border-bottom-color: #FCA5A5; }
+  .roots .mn-subtitle { border-bottom-color: #93C5FD; }
+  .ls .mn-subtitle { border-bottom-color: #6EE7B7; }
+  .kernel .mn-subtitle { border-bottom-color: #C4B5FD; }
+
+  .mn-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+  @media (max-width: 750px) { .mn-two-col { grid-template-columns: 1fr; } }
+
+  .mn-formula {
+    background: #F5F5F0;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: center;
+    color: #000;
+    line-height: 1.7;
+  }
+  .mn-formula .lbl {
+    display: block;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #000;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 4px;
+  }
+
+  .mn-example {
+    background: #FEF3C7;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #000;
+    border-left: 4px solid #F59E0B;
+    line-height: 1.6;
+  }
+  .mn-example strong { color: #B91C1C; }
+  .mn-example .calc {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    margin-top: 4px;
+    color: #000;
+  }
+
+  .mn-note {
+    background: #E0E7FF;
+    color: #1E1B4B;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-top: 10px;
+    border-left: 4px solid #0D47A1;
+  }
+  .mn-note strong { color: #0D47A1; }
+
+  .mn-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+    font-size: 14px;
+  }
+  .mn-table th, .mn-table td {
+    padding: 8px 10px;
+    border: 1px solid #E5E7EB;
+    text-align: left;
+    color: #000;
+  }
+  .mn-table th {
+    background: #F5F5F0;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+  .mn-table code {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    background: #F5F5F0;
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>TÉCNICAS DE CONTEO EN PROBABILIDAD</h1>
+  <p class="sub">Cuándo usar cada fórmula, con ejemplos claros.</p>
+
+  <!-- Árbol de decisión -->
+  <div class="decision-tree">
+    <h2>¿QUÉ USAR? — 2 preguntas</h2>
+    <ol>
+      <li>¿<strong>Importa el orden</strong> de los elementos? → SÍ = <strong>permutación</strong> · NO = <strong>combinación</strong></li>
+      <li>¿Se puede <strong>repetir</strong> un elemento? → SÍ = con repetición · NO = sin repetición</li>
+    </ol>
+  </div>
+
+  <!-- Grid de 4 técnicas -->
+  <div class="grid">
+
+    <!-- PERMUTACIÓN SIN REPETICIÓN -->
+    <div class="card perm">
+      <div class="card-header">
+        <div class="card-title">1 · PERMUTACIÓN SIN REPETICIÓN</div>
+        <div class="card-sub">Orden SÍ importa · NO se repite</div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="row-label">Fórmula</div>
+          <div class="row-value">
+            <div class="formula">P(n,r) = n! / (n−r)!</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-label">Ejemplo</div>
+          <div class="row-value">
+            <div class="example">
+              De 10 corredores, ¿cuántas formas hay de asignar oro, plata y bronce?<br>
+              <strong>P(10,3) = 10! / 7! = 10·9·8 = 720</strong>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-label">Se usa</div>
+          <div class="row-value">
+            <div class="keywords">
+              <span class="kw">podios</span>
+              <span class="kw">ordenar</span>
+              <span class="kw">rankings</span>
+              <span class="kw">contraseñas sin repetir</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PERMUTACIÓN CON REPETICIÓN -->
+    <div class="card perm-rep">
+      <div class="card-header">
+        <div class="card-title">2 · PERMUTACIÓN CON REPETICIÓN</div>
+        <div class="card-sub">Orden SÍ importa · SÍ se repite</div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="row-label">Fórmula</div>
+          <div class="row-value">
+            <div class="formula">P<sub>R</sub>(n,r) = n<sup>r</sup></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-label">Ejemplo</div>
+          <div class="row-value">
+            <div class="example">
+              PIN de 4 dígitos (0–9), se pueden repetir:<br>
+              <strong>10<sup>4</sup> = 10 000 combinaciones posibles</strong>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-label">Se usa</div>
+          <div class="row-value">
+            <div class="keywords">
+              <span class="kw">claves</span>
+              <span class="kw">placas de auto</span>
+              <span class="kw">códigos</span>
+              <span class="kw">lanzar dados</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMBINACIÓN SIN REPETICIÓN -->
+    <div class="card comb">
+      <div class="card-header">
+        <div class="card-title">3 · COMBINACIÓN SIN REPETICIÓN</div>
+        <div class="card-sub">Orden NO importa · NO se repite</div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="row-label">Fórmula</div>
+          <div class="row-value">
+            <div class="formula">C(n,r) = n! / [r!·(n−r)!]</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-label">Ejemplo</div>
+          <div class="row-value">
+            <div class="example">
+              De 20 estudiantes, ¿cuántos comités de 3 se pueden formar?<br>
+              <strong>C(20,3) = 20! / (3!·17!) = 1 140</strong>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-label">Se usa</div>
+          <div class="row-value">
+            <div class="keywords">
+              <span class="kw">comités</span>
+              <span class="kw">lotería</span>
+              <span class="kw">muestras</span>
+              <span class="kw">equipos</span>
+              <span class="kw">manos de cartas</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMBINACIÓN CON REPETICIÓN -->
+    <div class="card comb-rep">
+      <div class="card-header">
+        <div class="card-title">4 · COMBINACIÓN CON REPETICIÓN</div>
+        <div class="card-sub">Orden NO importa · SÍ se repite</div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="row-label">Fórmula</div>
+          <div class="row-value">
+            <div class="formula">C<sub>R</sub>(n,r) = C(n+r−1, r)</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-label">Ejemplo</div>
+          <div class="row-value">
+            <div class="example">
+              Con 5 sabores de helado, ¿cuántos conos de 3 bolas se pueden armar (permitiendo repetir sabor)?<br>
+              <strong>C<sub>R</sub>(5,3) = C(7,3) = 35</strong>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row-label">Se usa</div>
+          <div class="row-value">
+            <div class="keywords">
+              <span class="kw">helados</span>
+              <span class="kw">selección con reemplazo</span>
+              <span class="kw">inventarios</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Cheatsheet -->
+  <div class="cheat">
+    <h3>REGLAS RÁPIDAS</h3>
+    <p>· <strong>Principio multiplicativo:</strong> si un evento tiene <code>a</code> formas y otro <code>b</code> formas → <code>a·b</code> resultados totales.</p>
+    <p>· <strong>Factorial:</strong> <code>n! = n·(n−1)·(n−2)···1</code> · Por definición <code>0! = 1</code>.</p>
+    <p>· <strong>"AB ≠ BA"</strong> → permutación · <strong>"AB = BA"</strong> → combinación.</p>
+    <p>· <strong>Palabras con letras repetidas:</strong> P = n! / (n₁!·n₂!···). Ej: "CASA" = 4!/2! = 12.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       MÉTODOS NUMÉRICOS
+  ═══════════════════════════════════════════════ -->
+  <div class="divider"></div>
+
+  <h1 class="mn-title">MÉTODOS NUMÉRICOS</h1>
+  <p class="sub">Error numérico · Raíces · Mínimos cuadrados · Funciones kernel</p>
+
+  <!-- ─── ERROR NUMÉRICO ─── -->
+  <div class="mn-card err">
+    <div class="mn-header">
+      <div class="mn-title-txt">1 · ERROR NUMÉRICO</div>
+      <div class="mn-obj">Cuantificar la diferencia entre el valor real y el que la computadora calcula.</div>
+    </div>
+    <div class="mn-body">
+
+      <div class="mn-subsection">
+        <div class="mn-subtitle">Tipos de error</div>
+        <table class="mn-table">
+          <tr><th>Tipo</th><th>Origen</th><th>Ejemplo</th></tr>
+          <tr><td><strong>Truncamiento</strong></td><td>Se corta una serie infinita</td><td>Usar sólo los 3 primeros términos de sen(x) = x − x³/6 + x⁵/120 − …</td></tr>
+          <tr><td><strong>Redondeo</strong></td><td>Aritmética finita del computador</td><td>1/3 ≈ 0.3333 (se pierden infinitos dígitos)</td></tr>
+          <tr><td><strong>Inherente</strong></td><td>Datos de entrada con incertidumbre</td><td>Medir una masa con balanza de ±0.01 g</td></tr>
+          <tr><td><strong>De propagación</strong></td><td>Un error se amplifica en operaciones sucesivas</td><td>Restar dos números casi iguales</td></tr>
+        </table>
+      </div>
+
+      <div class="mn-subsection">
+        <div class="mn-subtitle">Fórmulas clave</div>
+        <div class="mn-two-col">
+          <div class="mn-formula">
+            <span class="lbl">Error absoluto</span>
+            E<sub>a</sub> = | x<sub>real</sub> − x<sub>aprox</sub> |
+          </div>
+          <div class="mn-formula">
+            <span class="lbl">Error relativo</span>
+            E<sub>r</sub> = E<sub>a</sub> / | x<sub>real</sub> |  &nbsp; (×100% = %)
+          </div>
+        </div>
+        <div class="mn-formula">
+          <span class="lbl">Cifras significativas correctas</span>
+          Si E<sub>r</sub> ≤ 0.5 × 10<sup>−n</sup> &nbsp; → &nbsp; hay al menos <em>n</em> cifras significativas
+        </div>
+      </div>
+
+      <div class="mn-subsection">
+        <div class="mn-subtitle">Ejemplo</div>
+        <div class="mn-example">
+          Se sabe que π = 3.14159265… y se aproxima como 3.1416.
+          <span class="calc">E<sub>a</sub> = |3.14159265 − 3.1416| = 7.3 × 10⁻⁵</span>
+          <span class="calc">E<sub>r</sub> = 7.3 × 10⁻⁵ / 3.14159 ≈ 2.3 × 10⁻⁵ = 0.0023 %</span>
+          <strong>→ Aproximación con 4 cifras significativas correctas.</strong>
+        </div>
+      </div>
+
+      <div class="mn-note">
+        <strong>Cuándo importa:</strong> en cálculos iterativos (raíces, EDO), donde el error se acumula y puede volver inútil el resultado. Se usa el error relativo como criterio de parada: <em>si E<sub>r</sub> &lt; tolerancia → detener.</em>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── RAÍCES ─── -->
+  <div class="mn-card roots">
+    <div class="mn-header">
+      <div class="mn-title-txt">2 · RAÍCES DE ECUACIONES</div>
+      <div class="mn-obj">Encontrar x tal que f(x) = 0 cuando no hay solución analítica.</div>
+    </div>
+    <div class="mn-body">
+
+      <div class="mn-subsection">
+        <div class="mn-subtitle">Métodos principales</div>
+        <table class="mn-table">
+          <tr><th>Método</th><th>Fórmula / regla</th><th>Requisitos</th><th>Convergencia</th></tr>
+          <tr>
+            <td><strong>Bisección</strong></td>
+            <td><code>x<sub>r</sub> = (a+b)/2</code></td>
+            <td>f(a)·f(b) &lt; 0</td>
+            <td>Lenta pero segura (lineal)</td>
+          </tr>
+          <tr>
+            <td><strong>Falsa posición</strong></td>
+            <td><code>x<sub>r</sub> = b − f(b)(a−b)/[f(a)−f(b)]</code></td>
+            <td>f(a)·f(b) &lt; 0</td>
+            <td>Más rápida que bisección</td>
+          </tr>
+          <tr>
+            <td><strong>Newton-Raphson</strong></td>
+            <td><code>x<sub>n+1</sub> = x<sub>n</sub> − f(x<sub>n</sub>)/f′(x<sub>n</sub>)</code></td>
+            <td>f′(x) ≠ 0, buen valor inicial</td>
+            <td>Cuadrática (rapidísima)</td>
+          </tr>
+          <tr>
+            <td><strong>Secante</strong></td>
+            <td><code>x<sub>n+1</sub> = x<sub>n</sub> − f(x<sub>n</sub>)(x<sub>n</sub>−x<sub>n−1</sub>)/[f(x<sub>n</sub>)−f(x<sub>n−1</sub>)]</code></td>
+            <td>Dos valores iniciales</td>
+            <td>Superlineal (~1.618)</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="mn-subsection">
+        <div class="mn-subtitle">Ejemplo — Newton-Raphson</div>
+        <div class="mn-example">
+          Hallar la raíz de <strong>f(x) = x² − 2</strong> (o sea √2), partiendo de x₀ = 1.5.
+          <span class="calc">f′(x) = 2x</span>
+          <span class="calc">x₁ = 1.5 − (1.5² − 2) / (2·1.5) = 1.5 − 0.25/3 = 1.4167</span>
+          <span class="calc">x₂ = 1.4167 − (0.00695) / (2.8333) = 1.41422</span>
+          <span class="calc">x₃ = 1.41421356… &nbsp; ← ya coincide con √2 en 8 dígitos</span>
+          <strong>→ 3 iteraciones para 8 cifras exactas (convergencia cuadrática).</strong>
+        </div>
+      </div>
+
+      <div class="mn-note">
+        <strong>Criterio de parada:</strong> se detiene el método cuando |x<sub>n+1</sub> − x<sub>n</sub>| / |x<sub>n+1</sub>| &lt; ε (tolerancia, típ. 10⁻⁶), o cuando se alcanza el número máximo de iteraciones.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── MÍNIMOS CUADRADOS ─── -->
+  <div class="mn-card ls">
+    <div class="mn-header">
+      <div class="mn-title-txt">3 · MÍNIMOS CUADRADOS</div>
+      <div class="mn-obj">Encontrar la mejor curva que se ajusta a un conjunto de datos con dispersión.</div>
+    </div>
+    <div class="mn-body">
+
+      <div class="mn-subsection">
+        <div class="mn-subtitle">Idea central</div>
+        <p style="font-size:14px; margin-bottom:10px;">Se busca minimizar la <strong>suma de los cuadrados de los residuos</strong> (distancias verticales entre datos observados y curva ajustada):</p>
+        <div class="mn-formula">
+          S = Σ (y<sub>i</sub> − ŷ<sub>i</sub>)² &nbsp; → &nbsp; mínimo
+        </div>
+      </div>
+
+      <div class="mn-subsection">
+        <div class="mn-subtitle">Regresión lineal simple &nbsp; y = a + b·x</div>
+        <div class="mn-two-col">
+          <div class="mn-formula">
+            <span class="lbl">Pendiente</span>
+            b = [n·Σx<sub>i</sub>y<sub>i</sub> − Σx<sub>i</sub>·Σy<sub>i</sub>] / [n·Σx<sub>i</sub>² − (Σx<sub>i</sub>)²]
+          </div>
+          <div class="mn-formula">
+            <span class="lbl">Intercepto</span>
+            a = ȳ − b·x̄
+          </div>
+        </div>
+        <div class="mn-formula">
+          <span class="lbl">Coeficiente de determinación</span>
+          R² = 1 − SS<sub>res</sub>/SS<sub>tot</sub> &nbsp;→&nbsp; (0 = mal ajuste, 1 = perfecto)
+        </div>
+      </div>
+
+      <div class="mn-subsection">
+        <div class="mn-subtitle">Ejemplo</div>
+        <div class="mn-example">
+          Datos: x = [1, 2, 3, 4, 5], y = [2, 4, 5, 4, 5].
+          <span class="calc">n = 5 · Σx = 15 · Σy = 20 · Σxy = 66 · Σx² = 55</span>
+          <span class="calc">b = (5·66 − 15·20) / (5·55 − 15²) = 30 / 50 = <strong>0.6</strong></span>
+          <span class="calc">a = 20/5 − 0.6·(15/5) = 4 − 1.8 = <strong>2.2</strong></span>
+          <strong>→ Recta ajustada: y = 2.2 + 0.6·x</strong>
+        </div>
+      </div>
+
+      <div class="mn-note">
+        <strong>Extensiones:</strong> ajuste polinómico (y = a₀ + a₁x + a₂x² + …), regresión múltiple (varios predictores) y no-lineal (linealizando por transformaciones logarítmicas o exponenciales).
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── FUNCIONES KERNEL ─── -->
+  <div class="mn-card kernel">
+    <div class="mn-header">
+      <div class="mn-title-txt">4 · FUNCIONES KERNEL</div>
+      <div class="mn-obj">Medir similitud entre puntos SIN transformarlos explícitamente a un espacio de mayor dimensión.</div>
+    </div>
+    <div class="mn-body">
+
+      <div class="mn-subsection">
+        <div class="mn-subtitle">Definición formal</div>
+        <div class="mn-formula">
+          K(x, y) = ⟨φ(x), φ(y)⟩
+        </div>
+        <p style="font-size:14px; margin-top:8px;">Un <strong>kernel</strong> es una función que devuelve el producto interno de dos puntos <em>ya transformados</em> a un espacio de mayor dimensión, sin necesidad de calcular la transformación φ explícitamente. Esto se llama <strong>truco del kernel (kernel trick)</strong>.</p>
+      </div>
+
+      <div class="mn-subsection">
+        <div class="mn-subtitle">Kernels más usados</div>
+        <table class="mn-table">
+          <tr><th>Kernel</th><th>Fórmula</th><th>Cuándo se usa</th></tr>
+          <tr>
+            <td><strong>Lineal</strong></td>
+            <td><code>K(x,y) = x · y</code></td>
+            <td>Datos linealmente separables (texto, alta dimensión)</td>
+          </tr>
+          <tr>
+            <td><strong>Polinómico</strong></td>
+            <td><code>K(x,y) = (x·y + c)<sup>d</sup></code></td>
+            <td>Datos con interacciones no lineales de grado <em>d</em></td>
+          </tr>
+          <tr>
+            <td><strong>RBF / Gaussiano</strong></td>
+            <td><code>K(x,y) = exp(−‖x−y‖² / 2σ²)</code></td>
+            <td>Datos con estructura local, no lineales, alta flexibilidad</td>
+          </tr>
+          <tr>
+            <td><strong>Sigmoide</strong></td>
+            <td><code>K(x,y) = tanh(α·x·y + c)</code></td>
+            <td>Análogo a red neuronal de una capa</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="mn-subsection">
+        <div class="mn-subtitle">Ejemplo — kernel RBF</div>
+        <div class="mn-example">
+          Sean x = (1, 2) y y = (3, 4), con σ = 1.
+          <span class="calc">‖x − y‖² = (1−3)² + (2−4)² = 4 + 4 = 8</span>
+          <span class="calc">K(x, y) = exp(−8 / 2) = exp(−4) ≈ <strong>0.0183</strong></span>
+          <strong>→ Los puntos son "poco similares" (valor cercano a 0).</strong>
+          Si estuvieran muy cerca, K se acercaría a 1.
+        </div>
+      </div>
+
+      <div class="mn-subsection">
+        <div class="mn-subtitle">¿Dónde se aplican?</div>
+        <table class="mn-table">
+          <tr>
+            <td><strong>SVM</strong> (máquinas de soporte vectorial)</td>
+            <td>Clasificar datos no lineales trazando un hiperplano en el espacio kernel.</td>
+          </tr>
+          <tr>
+            <td><strong>Regresión kernel</strong> (Nadaraya-Watson)</td>
+            <td>Estimar y suavizar funciones sin asumir forma paramétrica.</td>
+          </tr>
+          <tr>
+            <td><strong>KDE</strong> (kernel density estimation)</td>
+            <td>Estimar la densidad de una variable aleatoria de forma no paramétrica.</td>
+          </tr>
+          <tr>
+            <td><strong>PCA kernel</strong></td>
+            <td>Reducción de dimensionalidad no lineal.</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="mn-note">
+        <strong>Condición de Mercer:</strong> para que una función sea un kernel válido, su matriz de Gram (K<sub>ij</sub> = K(x<sub>i</sub>, x<sub>j</sub>)) debe ser <em>simétrica y semidefinida positiva</em>. Esto garantiza que existe un espacio φ correspondiente.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Cheatsheet métodos numéricos -->
+  <div class="cheat" style="background:#059669;">
+    <h3>RESUMEN — ¿QUÉ USO Y CUÁNDO?</h3>
+    <p>· <strong>Error</strong>: siempre reportarlo (absoluto para magnitud, relativo para calidad); tolerancia decide cuándo parar un iterativo.</p>
+    <p>· <strong>Raíces</strong>: <code>bisección</code> si necesito seguridad; <code>Newton</code> si tengo f′(x) y buen x₀; <code>secante</code> si no tengo derivada.</p>
+    <p>· <strong>Mínimos cuadrados</strong>: para ajustar modelo a datos; R² dice qué tan bien se ajusta.</p>
+    <p>· <strong>Kernel</strong>: cuando los datos NO son lineales pero quiero aplicar métodos lineales — RBF es la primera opción por defecto.</p>
+  </div>
+
+</div>
+</body>
+</html>

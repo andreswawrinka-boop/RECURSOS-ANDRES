@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anestesia Neonatal · Guía Pre-Intra-Postoperatoria</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul:        #1e40af;
+    --azul-suave:  #dbeafe;
+    --azul-med:    #93c5fd;
+    --azul-dark:   #1e3a8a;
+    --rojo:        #b91c1c;
+    --rojo-suave:  #fee2e2;
+    --rojo-med:    #fca5a5;
+    --verde:       #15803d;
+    --verde-suave: #dcfce7;
+    --verde-med:   #86efac;
+    --ambar:       #92400e;
+    --ambar-suave: #fef3c7;
+    --ambar-med:   #fcd34d;
+    --teal:        #0f766e;
+    --teal-suave:  #ccfbf1;
+    --purp:        #6d28d9;
+    --purp-suave:  #ede9fe;
+    --rose:        #9f1239;
+    --rose-suave:  #ffe4e6;
+    --slate:       #0f172a;
+    --cyan:        #0e7490;
+    --cyan-suave:  #cffafe;
+    --naranja:     #9a3412;
+    --naranja-suave:#ffedd5;
+    --gris-f:      #f8fafc;
+    --gris-1:      #f1f5f9;
+    --gris-2:      #e2e8f0;
+    --gris-6:      #475569;
+    --gris-8:      #1e293b;
+    --border:      1px solid #e2e8f0;
+    --shadow:      0 1px 3px rgba(0,0,0,.08);
+    --radius:      10px;
+    --radius-sm:   6px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f0f4f8;
+    color: var(--gris-8);
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 0 0 60px;
+  }
+
+  /* HEADER */
+  .site-header {
+    background: linear-gradient(135deg, #071428 0%, #0c2a6b 45%, #1a4fba 80%, #0e7490 100%);
+    color: white; padding: 48px 40px 40px;
+    position: relative; overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Ccircle cx='40' cy='40' r='30' stroke='%23ffffff' stroke-opacity='0.04' stroke-width='1'/%3E%3Ccircle cx='40' cy='40' r='18' stroke='%23ffffff' stroke-opacity='0.03' stroke-width='1'/%3E%3Ccircle cx='40' cy='40' r='6' stroke='%23ffffff' stroke-opacity='0.05' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 100px 100px;
+  }
+  .site-header .tag { display: inline-block; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); border-radius: 20px; padding: 4px 14px; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 16px; }
+  .site-header h1 { font-family: 'Playfair Display', serif; font-size: 38px; line-height: 1.2; margin-bottom: 10px; }
+  .site-header .subtitle { font-size: 15px; opacity: .82; font-weight: 300; max-width: 760px; }
+  .header-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
+  .header-chip { background: rgba(255,255,255,.13); border: 1px solid rgba(255,255,255,.22); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 500; }
+
+  /* LAYOUT */
+  .main { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+
+  /* SECTION */
+  .section-label { display: flex; align-items: center; gap: 10px; margin: 40px 0 16px; }
+  .section-label .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .section-label h2 { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gris-6); white-space: nowrap; }
+  .section-label .line { flex: 1; height: 1px; background: var(--gris-2); }
+
+  /* CARD */
+  .card { background: white; border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 16px; overflow: hidden; }
+  .card-header { padding: 16px 20px; border-bottom: var(--border); display: flex; align-items: center; gap: 12px; }
+  .card-header .icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .card-header h3 { font-size: 15px; font-weight: 600; }
+  .card-header .sub { font-size: 12px; color: var(--gris-6); margin-top: 1px; }
+  .card-body { padding: 20px; }
+
+  /* GRIDS */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media(max-width:780px){ .grid-2,.grid-3{ grid-template-columns:1fr; } }
+
+  /* BADGE */
+  .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .badge-rojo    { background: var(--rojo-suave);    color: var(--rojo); }
+  .badge-verde   { background: var(--verde-suave);   color: var(--verde); }
+  .badge-ambar   { background: var(--ambar-suave);   color: var(--ambar); }
+  .badge-azul    { background: var(--azul-suave);    color: var(--azul); }
+  .badge-teal    { background: var(--teal-suave);    color: var(--teal); }
+  .badge-purp    { background: var(--purp-suave);    color: var(--purp); }
+  .badge-cyan    { background: var(--cyan-suave);    color: var(--cyan); }
+  .badge-naranja { background: var(--naranja-suave); color: var(--naranja); }
+  .badge-rose    { background: var(--rose-suave);    color: var(--rose); }
+
+  /* ALERT */
+  .alert { border-radius: var(--radius-sm); padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+  .alert-ico { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .alert-rojo    { background: var(--rojo-suave);    border-left: 3px solid var(--rojo); }
+  .alert-verde   { background: var(--verde-suave);   border-left: 3px solid var(--verde); }
+  .alert-ambar   { background: var(--ambar-suave);   border-left: 3px solid var(--ambar); }
+  .alert-azul    { background: var(--azul-suave);    border-left: 3px solid var(--azul); }
+  .alert-teal    { background: var(--teal-suave);    border-left: 3px solid var(--teal); }
+  .alert-purp    { background: var(--purp-suave);    border-left: 3px solid var(--purp); }
+  .alert-cyan    { background: var(--cyan-suave);    border-left: 3px solid var(--cyan); }
+  .alert-naranja { background: var(--naranja-suave); border-left: 3px solid var(--naranja); }
+  .alert-rose    { background: var(--rose-suave);    border-left: 3px solid var(--rose); }
+  .alert b { display: block; font-weight: 600; margin-bottom: 3px; font-size: 13px; }
+
+  /* TABLA */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--gris-1); color: var(--gris-6); font-weight: 600; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--gris-2); }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--gris-2); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--gris-f); }
+
+  /* STEPS */
+  .steps { display: flex; flex-direction: column; }
+  .step { display: flex; gap: 16px; padding: 13px 0; border-bottom: 1px dashed var(--gris-2); }
+  .step:last-child { border-bottom: none; }
+  .step-num { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; color: white; margin-top: 2px; }
+  .step-content strong { font-size: 14px; display: block; margin-bottom: 3px; }
+  .step-content p, .step-content ul { font-size: 13px; color: var(--gris-6); }
+  .step-content ul { padding-left: 16px; margin-top: 4px; }
+  .step-content li { margin-bottom: 2px; }
+
+  /* PROTO FLOW */
+  .proto-flow { display: flex; align-items: stretch; border-radius: var(--radius-sm); overflow: hidden; border: var(--border); margin-bottom: 10px; }
+  .proto-cond { padding: 11px 13px; min-width: 150px; font-size: 12px; font-weight: 600; display: flex; align-items: center; border-right: var(--border); line-height: 1.4; }
+  .proto-action { padding: 11px 13px; flex: 1; font-size: 13px; }
+  .proto-action ul { padding-left: 15px; margin-top: 3px; }
+  .proto-action li { margin-bottom: 2px; }
+
+  /* PILL NAV */
+  .pill-nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; }
+  .pill-nav a { padding: 7px 18px; border-radius: 20px; font-size: 13px; font-weight: 500; background: white; border: var(--border); color: var(--gris-6); text-decoration: none; transition: all .15s; }
+  .pill-nav a:hover { background: var(--cyan-suave); color: var(--cyan); border-color: #67e8f9; }
+  .pill-nav a.active { background: var(--cyan); color: white; border-color: var(--cyan); }
+
+  /* PARAM GRID */
+  .param-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: 10px; }
+  .param-box { border: var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+  .param-box .pb-head { padding: 8px 12px; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border-bottom: var(--border); }
+  .param-box .pb-val { font-size: 22px; font-weight: 700; line-height: 1.1; padding: 9px 12px 3px; }
+  .param-box .pb-unit { font-size: 12px; font-weight: 400; }
+  .param-box .pb-sub { font-size: 11px; color: var(--gris-6); padding: 0 12px 9px; line-height: 1.4; }
+
+  /* NEONATO SIZE CHART */
+  .neo-cols { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; border: var(--border); border-radius: var(--radius); overflow: hidden; }
+  .neo-col { border-right: var(--border); }
+  .neo-col:last-child { border-right: none; }
+  .neo-head { padding: 12px 10px; font-size: 11px; font-weight: 700; text-align: center; text-transform: uppercase; letter-spacing: .06em; border-bottom: var(--border); }
+  .neo-body { padding: 12px 10px; font-size: 12px; }
+  .neo-body ul { padding-left: 12px; }
+  .neo-body li { margin-bottom: 4px; }
+
+  /* TIMELINE */
+  .timeline-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; border: var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 16px; }
+  .tl-col { border-right: var(--border); }
+  .tl-col:last-child { border-right: none; }
+  .tl-head { padding: 13px 14px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; border-bottom: var(--border); display: flex; align-items: center; gap: 6px; }
+  .tl-head .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .tl-body { padding: 13px 14px; font-size: 12px; }
+  .tl-item { margin-bottom: 9px; padding-bottom: 9px; border-bottom: 1px dashed var(--gris-2); }
+  .tl-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .tl-item .pi-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; opacity: .6; margin-bottom: 2px; }
+
+  /* DRUG CARD */
+  .drug-card { border-left: 3px solid; border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 10px; }
+  .drug-card .dc-name { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  .drug-card .dc-body { font-size: 13px; color: var(--gris-6); }
+  .drug-card .dc-body ul { padding-left: 16px; margin-top: 4px; }
+  .drug-card .dc-body li { margin-bottom: 2px; }
+
+  /* MISC */
+  ul.list-clean { list-style: none; padding: 0; }
+  ul.list-clean li::before { content: '→ '; color: var(--cyan); font-weight: 600; }
+  ul.list-clean li { margin-bottom: 5px; font-size: 13px; }
+  hr.divider { border: none; border-top: 1px dashed var(--gris-2); margin: 13px 0; }
+  .text-sm { font-size: 12px; color: var(--gris-6); }
+  .mt-4 { margin-top: 16px; }
+  .mb-0 { margin-bottom: 0 !important; }
+  .bold { font-weight: 600; }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .chip { padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 500; background: var(--gris-1); border: var(--border); color: var(--gris-6); }
+
+  /* COMPL ITEM */
+  .comp-item { display: flex; align-items: flex-start; gap: 14px; padding: 13px 0; border-bottom: 1px dashed var(--gris-2); }
+  .comp-item:last-child { border-bottom: none; }
+  .comp-emo { font-size: 22px; flex-shrink: 0; width: 32px; text-align: center; }
+  .comp-body { flex: 1; }
+  .comp-body .cb-title { font-weight: 600; font-size: 14px; margin-bottom: 3px; }
+  .comp-body p { font-size: 13px; color: var(--gris-6); }
+
+  /* FOOTER */
+  .site-footer { text-align: center; padding: 32px 24px; font-size: 12px; color: var(--gris-6); border-top: var(--border); background: white; margin-top: 40px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="tag">👶 Anestesia Pediátrica · Subespecialidad Neonatal</div>
+  <h1>Manejo Anestésico del Neonato</h1>
+  <p class="subtitle">Guía pre, intra y postoperatoria para el anestesiólogo pediatra.<br>Basada en la evidencia más actual 2024 — SPA · ESPA · AAP · AHA Neonatal.</p>
+  <div class="header-chips">
+    <span class="header-chip">⚖️ Dosis siempre por peso — NUNCA extrapolar adulto</span>
+    <span class="header-chip">🌡️ Normotermia activa obligatoria</span>
+    <span class="header-chip">🫁 SpO₂ 91–95% en prematuro</span>
+    <span class="header-chip">⚠️ Apnea post-anestesia: vigilar 12h si &lt;60 sem PCA</span>
+    <span class="header-chip">🧠 Neurotoxicidad anestésica: minimizar exposición</span>
+  </div>
+</header>
+
+<div class="main">
+  <nav class="pill-nav" style="margin-top:24px;">
+    <a href="#fisiologia" class="active">Fisiología</a>
+    <a href="#clasificacion">Clasificación</a>
+    <a href="#preop">Preoperatorio</a>
+    <a href="#via-aerea">Vía aérea</a>
+    <a href="#farmacos">Fármacos</a>
+    <a href="#intraop">Intraoperatorio</a>
+    <a href="#fluidos">Fluidos</a>
+    <a href="#analgesia">Analgesia</a>
+    <a href="#postop">Postoperatorio</a>
+    <a href="#patologias">Patologías frecuentes</a>
+    <a href="#cheatsheet">Cheat Sheet</a>
+  </nav>
+
+  <!-- ══ 1: FISIOLOGÍA NEONATAL ══ -->
+  <div class="section-label" id="fisiologia">
+    <div class="dot" style="background:var(--cyan)"></div>
+    <h2>1 · Fisiología Neonatal Crítica para el Anestesiólogo</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--cyan-suave)">🫀</div>
+        <div><h3>Sistema cardiovascular neonatal</h3><div class="sub">Transición de la circulación fetal — la más crítica</div></div>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-rojo">
+          <div class="alert-ico">🚨</div>
+          <div><b>Circulación de transición — período de mayor vulnerabilidad:</b> Las primeras 24–72h de vida el neonato puede revertir a circulación fetal (hipertensión pulmonar persistente) ante hipoxia, acidosis, hipotermia o estrés quirúrgico. El anestesiólogo debe conocerlo y prevenirlo activamente.</div>
+        </div>
+        <table>
+          <thead><tr><th>Parámetro</th><th>Neonato a término</th><th>Prematuro</th><th>Significado clínico</th></tr></thead>
+          <tbody>
+            <tr><td><b>FC normal</b></td><td>120–160 lpm</td><td>140–170 lpm</td><td>FC &lt;100 = bradicardia → tratar. FC &gt;180 = taquicardia → evaluar causa</td></tr>
+            <tr><td><b>PA sistólica</b></td><td>60–90 mmHg</td><td>45–65 mmHg</td><td>PA &lt; 2/3 del peso en kg (mmHg) = hipotensión. Ej: 1 kg → PAS &lt;40 = hipotensión</td></tr>
+            <tr><td><b>Gasto cardíaco</b></td><td>200 mL/kg/min</td><td>200–250 mL/kg/min</td><td>GC dependiente de FC (no de volumen sistólico). Bradicardia → caída catastrófica del GC</td></tr>
+            <tr><td><b>VD dominante</b></td><td>Ventrículo derecho dominante hasta 3–6 meses</td><td>Más pronunciado</td><td>Pobre tolerancia al aumento de poscarga pulmonar</td></tr>
+            <tr><td><b>Reserva contráctil</b></td><td>Limitada</td><td>Muy limitada</td><td>Miocardio menos distensible → Frank-Starling menos eficiente</td></tr>
+            <tr><td><b>Hemoglobina fetal (HbF)</b></td><td>60–80%</td><td>80–95%</td><td>Mayor afinidad por O₂ → curva desviada izquierda → menor entrega tisular de O₂</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--cyan-suave)">🫁</div>
+        <div><h3>Sistema respiratorio neonatal</h3><div class="sub">Las diferencias más críticas vs el adulto</div></div>
+      </div>
+      <div class="card-body">
+        <table>
+          <thead><tr><th>Característica</th><th>Neonato</th><th>Relevancia anestésica</th></tr></thead>
+          <tbody>
+            <tr><td><b>Respiración obligatoriamente nasal</b></td><td>Sí — hasta 3–6 meses</td><td>Obstrucción nasal → apnea. Mantener fosas nasales permeables</td></tr>
+            <tr><td><b>Laringe alta y anterior</b></td><td>C3–C4 (adulto: C4–C5)</td><td>Epiglotis grande, folácea, más difícil de controlar con pala recta</td></tr>
+            <tr><td><b>Punto más estrecho</b></td><td>Cricoides (subglótico)</td><td>NO usar tubo con cuff de alta presión. Cuff de baja presión si se usa.</td></tr>
+            <tr><td><b>CRF muy baja</b></td><td>30 mL/kg</td><td>Desaturación rápida en apnea. Reserva de O₂ mínima. Preoxigenar siempre.</td></tr>
+            <tr><td><b>Consumo O₂ elevado</b></td><td>6–8 mL/kg/min (adulto: 3)</td><td>2× el consumo → doble velocidad de desaturación</td></tr>
+            <tr><td><b>FR normal</b></td><td>40–60 rpm</td><td>FR &lt;30 = bradipnea → intervenir. Ventilación controlada por FR, no solo VT</td></tr>
+            <tr><td><b>Compliance pulmonar</b></td><td>Reducida</td><td>Mayor riesgo de barotrauma. VT 4–6 mL/kg. PIP máx 20–25 cmH₂O</td></tr>
+            <tr><td><b>Apnea postoperatoria</b></td><td>Riesgo hasta 60 sem PCA</td><td>Monitor SpO₂ + apnea por 12h en &lt;60 sem PCA</td></tr>
+          </tbody>
+        </table>
+        <div class="alert alert-ambar mt-4">
+          <div class="alert-ico">⚠️</div>
+          <div><b>Oxígeno en el prematuro:</b> SpO₂ meta 91–95% (NO 100%). La hiperoxia en prematuros causa retinopatía (ROP), displasia broncopulmonar (DBP) y hemorragia interventricular. Usar FiO₂ mínima efectiva. Oxímetro de pulso obligatorio ANTES de la inducción.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--cyan-suave)">🌡️</div>
+        <div><h3>Termorregulación — El talón de Aquiles del neonato</h3><div class="sub">La hipotermia es la complicación más frecuente y más prevenible</div></div>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-rojo">
+          <div class="alert-ico">🌡️</div>
+          <div><b>El neonato es PÉCILOTERMO funcional:</b> Pierde calor 4× más rápido que el adulto. No tiene escalofrío eficaz. Depende de la termogénesis sin escalofríos (grasa parda) que se inhibe con anestesia. Temperatura &lt;36°C → consecuencias graves.</div>
+        </div>
+        <table>
+          <thead><tr><th>Consecuencia de hipotermia</th><th>Mecanismo</th></tr></thead>
+          <tbody>
+            <tr><td>Acidosis metabólica</td><td>↑ consumo O₂ para generar calor → metabolismo anaerobio</td></tr>
+            <tr><td>Depresión miocárdica</td><td>↓ conducción, bradicardia, ↓ contractilidad</td></tr>
+            <tr><td>Alteración hemostasia</td><td>Disfunción plaquetaria + inhibición de factores de coagulación</td></tr>
+            <tr><td>Depresión respiratoria</td><td>Apnea prolongada postoperatoria</td></tr>
+            <tr><td>Hipertensión pulmonar</td><td>Vasoconstricción pulmonar → retorno a circulación fetal</td></tr>
+            <tr><td>↑ Sangrado quirúrgico</td><td>Hipofunción plaquetaria y coagulopatía dilucional</td></tr>
+          </tbody>
+        </table>
+        <div class="alert alert-verde mt-4">
+          <div class="alert-ico">✅</div>
+          <div><b>Meta: T° rectal 36.5–37.5°C durante TODA la cirugía.</b> Manta térmica activa + calentador radiante + soluciones IV a 37°C + gases anestésicos calentados y humidificados + sala QX a 25–28°C en neonato.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--cyan-suave)">⚗️</div>
+        <div><h3>Farmacocinética neonatal — Por qué las dosis son distintas</h3><div class="sub">Diferencias maduracionales que determinan el efecto de cada fármaco</div></div>
+      </div>
+      <div class="card-body">
+        <table>
+          <thead><tr><th>Parámetro PK</th><th>Neonato vs adulto</th><th>Impacto clínico</th></tr></thead>
+          <tbody>
+            <tr><td><b>Agua corporal total</b></td><td>80–85% (adulto 60%)</td><td>↑ Vd hidrófilos → mayor dosis inicial pero mayor acumulación</td></tr>
+            <tr><td><b>Grasa corporal</b></td><td>12–15% (adulto 20%)</td><td>↓ Vd lipófilos → menor acumulación de opioides lipófilos</td></tr>
+            <tr><td><b>Unión a proteínas</b></td><td>Albúmina y α₁GA muy bajas</td><td>↑ Fracción libre → mayor efecto y toxicidad a igual dosis total. ¡Riesgo toxicidad AL!</td></tr>
+            <tr><td><b>Metabolismo hepático CYP3A4</b></td><td>30–50% del adulto</td><td>Vida media de opioides, benzodiacepinas y barbitúricos 2–3× más larga</td></tr>
+            <tr><td><b>TFG renal</b></td><td>30–40 mL/min/1.73m² (madura 6–12 m)</td><td>Metabolitos activos (morfina-6-glucurónido) se acumulan → sedación prolongada</td></tr>
+            <tr><td><b>BHE</b></td><td>Más permeable</td><td>Mayor penetración de morfina, midazolam → efecto CNS amplificado</td></tr>
+          </tbody>
+        </table>
+        <div class="alert alert-purp mt-4">
+          <div class="alert-ico">🔬</div>
+          <div><b>Neurotoxicidad anestésica — Estado del arte 2024:</b> Estudios en animales muestran apoptosis neuronal con agentes GABAérgicos (&gt;3h, múltiples exposiciones en período crítico). Estudios clínicos (PANDA, GAS, MASK): exposición única &lt;1h no muestra daño neurocognitivo. Exposiciones repetidas o prolongadas en &lt;3 años: precaución. Usar la menor dosis y tiempo posible.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 2: CLASIFICACIÓN ══ -->
+  <div class="section-label" id="clasificacion">
+    <div class="dot" style="background:var(--purp)"></div>
+    <h2>2 · Clasificación del Neonato — Grupos de Riesgo</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--purp-suave)">📋</div>
+      <div><h3>Clasificación por edad gestacional y peso</h3><div class="sub">Determinante del riesgo anestésico y protocolo a seguir</div></div>
+    </div>
+    <div class="card-body">
+      <div class="neo-cols">
+        <div class="neo-col">
+          <div class="neo-head" style="background:var(--rojo-suave);color:var(--rojo);">Extremadamente<br>prematuro<br>&lt; 28 sem</div>
+          <div class="neo-body">
+            <p style="font-weight:700;margin-bottom:6px;font-size:13px;">Peso &lt;1.000 g</p>
+            <ul>
+              <li>Pulmones inmaduros — surfactante ausente o mínimo</li>
+              <li>Barrera hematoencefálica muy permeable</li>
+              <li>Alta mortalidad quirúrgica (20–40%)</li>
+              <li>SpO₂ meta 91–95% — hiperoxia catastrófica</li>
+              <li>Hipotermia en &lt;5 min sin medidas activas</li>
+              <li>Vía venosa umbilical / PICC si disponible</li>
+              <li>Manejo en UCIN — solo cirugía de urgencia vital</li>
+            </ul>
+          </div>
+        </div>
+        <div class="neo-col">
+          <div class="neo-head" style="background:var(--ambar-suave);color:var(--ambar);">Muy prematuro<br>28–31+6 sem</div>
+          <div class="neo-body">
+            <p style="font-weight:700;margin-bottom:6px;font-size:13px;">Peso 1.000–1.500 g</p>
+            <ul>
+              <li>Surfactante parcial — DBP frecuente</li>
+              <li>Hemorragia intraventricular riesgo elevado</li>
+              <li>Apnea postoperatoria hasta 55–60 sem PCA</li>
+              <li>Anestesia espinal única: alternativa para cirugías infraumbilicales</li>
+              <li>Evitar opioides si es posible</li>
+              <li>Glucemia estricta (hipoglucemia en &lt;30 min sin glucosa)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="neo-col">
+          <div class="neo-head" style="background:var(--azul-suave);color:var(--azul);">Prematuro<br>moderado/tardío<br>32–36+6 sem</div>
+          <div class="neo-body">
+            <p style="font-weight:700;margin-bottom:6px;font-size:13px;">Peso 1.500–2.500 g</p>
+            <ul>
+              <li>Riesgo de apnea postop hasta 50–55 sem PCA</li>
+              <li>Pulmones en maduración — puede necesitar surfactante</li>
+              <li>Manejo de vía aérea más predecible</li>
+              <li>Considerar anestesia regional si posible</li>
+              <li>Vigilar glucemia cada 30–60 min</li>
+              <li>Monitoreo SpO₂ postop ≥12h</li>
+            </ul>
+          </div>
+        </div>
+        <div class="neo-col">
+          <div class="neo-head" style="background:var(--verde-suave);color:var(--verde);">Neonato a término<br>≥ 37 semanas</div>
+          <div class="neo-body">
+            <p style="font-weight:700;margin-bottom:6px;font-size:13px;">Peso &gt; 2.500 g</p>
+            <ul>
+              <li>Órganos funcionalmente más maduros</li>
+              <li>Apnea postop hasta 44–46 sem PCA si ex-prematuro</li>
+              <li>Riesgo de HPPRN si hipoxia/acidosis/hipotermia</li>
+              <li>Manejo anestésico más próximo al estándar pediátrico</li>
+              <li>SpO₂ meta: 95–100%</li>
+              <li>Vigilar glucemia c/1–2h intraop</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-azul mt-4">
+        <div class="alert-ico">📐</div>
+        <div><b>Edad postconcepcional (PCA) = Edad gestacional al nacer + edad cronológica.</b> Ejemplo: prematuro de 30 sem que tiene 6 semanas de vida → PCA = 36 semanas. La PCA determina el riesgo de apnea postoperatoria. Umbral de ingreso hospitalario: PCA &lt;60 semanas en cirugía con AG.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 3: PREOPERATORIO ══ -->
+  <div class="section-label" id="preop">
+    <div class="dot" style="background:var(--azul)"></div>
+    <h2>3 · Evaluación y Preparación Preoperatoria</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--azul-suave)">🔬</div>
+        <div><h3>Evaluación preoperatoria neonatal</h3><div class="sub">Historia, laboratorio y estudios obligatorios</div></div>
+      </div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" style="background:var(--azul)">1</div>
+            <div class="step-content">
+              <strong>Historia perinatal completa</strong>
+              <p>EG al nacer, PCA actual, peso, tipo de parto, APGAR (1 y 5 min), reanimación en sala, patología de base, cirugías previas, medicación actual. Preguntar específicamente por: surfactante, ventilación mecánica previa, DAP tratado.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--azul)">2</div>
+            <div class="step-content">
+              <strong>Laboratorio preoperatorio</strong>
+              <p>Hemograma + plaquetas · Hematocrito (meta prequirúrgico ≥30% en término, ≥35% en prematuro con cardiopatía). Glucemia (hipoglucemia en neonato ≥ &lt;47 mg/dL). Electrolitos: Na⁺, K⁺, Ca²⁺ iónico (hipocalcemia frecuente). GAS si patología cardiorrespiratoria. Bilirrubina si ictericia. Coagulación en cirugía mayor.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--azul)">3</div>
+            <div class="step-content">
+              <strong>Ecocardiograma (si está disponible)</strong>
+              <p>Descartar cardiopatía congénita. Evaluar DAP (ductus arterioso persistente). Función ventricular. HPPRN. Fundamental antes de cualquier cirugía mayor en neonato de &lt;7 días.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--azul)">4</div>
+            <div class="step-content">
+              <strong>Radiografía de tórax</strong>
+              <p>Patrón pulmonar, cardiomegalia, posición de catéteres. En patología abdominal: buscar neumoperitoneo, calcificaciones.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--azul)">5</div>
+            <div class="step-content">
+              <strong>Ayuno neonatal — Guías actualizadas ASA 2023</strong>
+              <p>Leche materna: 4h · Fórmula: 6h · Líquidos claros (dextrosa): 2h. En urgencia: considerar siempre estómago lleno — RSI. En neonato estable: NO sobrepasar las horas de ayuno (hipoglucemia grave). Iniciar dextrosa IV si ayuno &gt;4h en neonato.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--azul)">6</div>
+            <div class="step-content">
+              <strong>Consentimiento informado a padres</strong>
+              <p>Explicar riesgos específicos: apnea postoperatoria, hipotermia, hipoglucemia, necesidad de UCIN postoperatoria, neurotoxicidad anestésica (riesgo real vs beneficio de la cirugía).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--azul-suave)">🏥</div>
+        <div><h3>Preparación de la sala operatoria</h3><div class="sub">Lista de verificación antes de cualquier neonato</div></div>
+      </div>
+      <div class="card-body">
+        <p class="bold" style="margin-bottom:10px;color:var(--azul)">Temperatura de sala: 25–28°C antes de ingreso del neonato</p>
+        <table>
+          <thead><tr><th>Categoría</th><th>Elemento</th><th>Verificación</th></tr></thead>
+          <tbody>
+            <tr>
+              <td rowspan="4"><b>Monitoreo</b></td>
+              <td>SpO₂ preductal (mano derecha) + postductal (pie izquierdo)</td>
+              <td><span class="badge badge-rojo">Obligatorio</span></td>
+            </tr>
+            <tr><td>ECG 3 derivaciones, PA no invasiva (manguito neonatal)</td><td><span class="badge badge-rojo">Obligatorio</span></td></tr>
+            <tr><td>Capnografía (adaptador neonatal de bajo espacio muerto)</td><td><span class="badge badge-rojo">Obligatorio</span></td></tr>
+            <tr><td>Temperatura rectal + sonda esofágica</td><td><span class="badge badge-rojo">Obligatorio</span></td></tr>
+            <tr>
+              <td rowspan="3"><b>Vía aérea</b></td>
+              <td>Laringoscopio recto Miller #0 (#00 en &lt;1 kg) + copia</td>
+              <td><span class="badge badge-ambar">Preparar</span></td>
+            </tr>
+            <tr><td>TET sin cuff 2.5, 3.0, 3.5 (tener los tres listos)</td><td><span class="badge badge-ambar">Preparar</span></td></tr>
+            <tr><td>Videolaringoscopio neonatal (C-MAC #0) de respaldo</td><td><span class="badge badge-ambar">Preparar</span></td></tr>
+            <tr>
+              <td rowspan="3"><b>Calefacción</b></td>
+              <td>Manta térmica activa en posición</td>
+              <td><span class="badge badge-rojo">Obligatorio</span></td>
+            </tr>
+            <tr><td>Calentador de soluciones IV a 37°C</td><td><span class="badge badge-rojo">Obligatorio</span></td></tr>
+            <tr><td>Gases anestésicos calentados y humidificados</td><td><span class="badge badge-rojo">Obligatorio</span></td></tr>
+            <tr>
+              <td rowspan="2"><b>Emergencias</b></td>
+              <td>Adrenalina 10 µg/mL lista (1:100.000 para bolo IV)</td>
+              <td><span class="badge badge-rojo">Obligatorio</span></td>
+            </tr>
+            <tr><td>Atropina 20 µg/mL lista</td><td><span class="badge badge-rojo">Obligatorio</span></td></tr>
+            <tr>
+              <td><b>Acceso vascular</b></td>
+              <td>2 vías IV funcionantes antes de inducción. Catéter umbilical si &lt;7 días</td>
+              <td><span class="badge badge-rojo">Obligatorio</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 4: VÍA AÉREA NEONATAL ══ -->
+  <div class="section-label" id="via-aerea">
+    <div class="dot" style="background:var(--rose)"></div>
+    <h2>4 · Vía Aérea Neonatal — Intubación y Manejo</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--rose-suave)">🫁</div>
+      <div><h3>Anatomía y selección de dispositivos</h3><div class="sub">Especificaciones por peso y edad gestacional</div></div>
+    </div>
+    <div class="card-body">
+      <table>
+        <thead>
+          <tr><th>Peso</th><th>EG aproximada</th><th>TET (DI mm)</th><th>Profundidad (cm en labio)</th><th>Laringoscopio</th><th>Succión (Fr)</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>&lt;1 kg</b></td>
+            <td>&lt;28 sem</td>
+            <td><span class="badge badge-rojo">2.5 mm sin cuff</span></td>
+            <td>6–7 cm</td>
+            <td>Miller #00 ó #0</td>
+            <td>Fr 6</td>
+          </tr>
+          <tr>
+            <td><b>1–2 kg</b></td>
+            <td>28–34 sem</td>
+            <td><span class="badge badge-ambar">3.0 mm sin cuff</span></td>
+            <td>7–8 cm</td>
+            <td>Miller #0</td>
+            <td>Fr 6–8</td>
+          </tr>
+          <tr>
+            <td><b>2–3 kg</b></td>
+            <td>34–38 sem</td>
+            <td><span class="badge badge-azul">3.0–3.5 mm ± cuff</span></td>
+            <td>8–9 cm</td>
+            <td>Miller #0 ó #1</td>
+            <td>Fr 8</td>
+          </tr>
+          <tr>
+            <td><b>&gt;3 kg (a término)</b></td>
+            <td>≥38 sem</td>
+            <td><span class="badge badge-verde">3.5 mm ± cuff</span></td>
+            <td>9–10 cm</td>
+            <td>Miller #1</td>
+            <td>Fr 8–10</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-ambar mt-4">
+        <div class="alert-ico">📏</div>
+        <div><b>Fórmulas de respaldo:</b> DI (mm) = Peso (kg) + 6 ÷ 4 [poco confiable en neonatos — usar tabla]. Profundidad (cm) = Peso (kg) + 6 ó DI × 3. <b>SIEMPRE confirmar con capnografía y auscultación simétrica. La pulsioximetría sola NO basta.</b></div>
+      </div>
+
+      <hr class="divider">
+      <p class="bold" style="margin-bottom:10px;">Protocolo de intubación neonatal — Secuencia</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num" style="background:var(--rose)">1</div>
+          <div class="step-content">
+            <strong>Preoxigenación 3–5 min con FiO₂ apropiada</strong>
+            <p>A término: FiO₂ 1.0. Prematuro: FiO₂ 0.3–0.4 (evitar hiperoxia). Mascarilla facial de tamaño neonatal, sello completo. Capnografía desde el inicio.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--rose)">2</div>
+          <div class="step-content">
+            <strong>Posición de olfateo modificada</strong>
+            <p>Cabeza en posición neutra (no en hiperextensión como en adulto). Rodillo bajo los hombros (NO bajo la cabeza) para elevar el tórax. La occiput prominente del neonato ya coloca la cabeza en posición correcta.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--rose)">3</div>
+          <div class="step-content">
+            <strong>Laringoscopia con Miller — Técnica</strong>
+            <p>Pala recta (Miller) #0 o #1 es la de elección — permite controlar la epiglotis flácida directamente. La pala de Macintosh es difícil en neonatos. Tiempo máximo de intubación: 30 seg. Si no logra en 30 seg → ventilar con mascarilla y reintentar.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--rose)">4</div>
+          <div class="step-content">
+            <strong>Confirmación de posición</strong>
+            <p>EtCO₂ en curva (no solo número). Auscultación bilateral simétrica. SpO₂ ascendente. Expansión torácica simétrica. RX tórax postop si hay duda: punta del TET en T2 (1–2 cm sobre la carina). En neonato la carina es muy alta → riesgo de intubación selectiva.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--rose)">5</div>
+          <div class="step-content">
+            <strong>Fijación segura del TET</strong>
+            <p>Dos puntos de fijación con cinta adhesiva específica para neonatos. Marcar la profundidad en el labio. Proteger los ojos del neonato (cierre los párpados con cinta o pomada oftálmica). Cuidar que la cabeza no se flexione ni extienda al mover al paciente.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-rojo mt-4">
+        <div class="alert-ico">🚨</div>
+        <div><b>Vía aérea difícil neonatal — Algoritmo DAS pediátrico:</b> Máximo 2 intentos de laringoscopia directa. Si falla → videolaringoscopio neonatal (C-MAC #0, Airtraq neonatal). Si falla → mascarilla laríngea #1 como puente. LMA-Supreme #1 en &gt;2 kg. Cricotirotomía neonatal: aguja 18G en urgencia CICO. Equipo de traqueotomía quirúrgica disponible en toda sala donde opere un neonato.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 5: FÁRMACOS ══ -->
+  <div class="section-label" id="farmacos">
+    <div class="dot" style="background:var(--purp)"></div>
+    <h2>5 · Farmacología Anestésica en el Neonato</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--purp-suave)">💊</div>
+      <div><h3>Fármacos de inducción y mantenimiento</h3><div class="sub">Dosis neonatales — Siempre titular, siempre monitorear</div></div>
+    </div>
+    <div class="card-body">
+      <table>
+        <thead>
+          <tr><th>Fármaco</th><th>Dosis neonatal</th><th>Particularidades</th><th>Contraindicaciones / Precauciones</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Ketamina IV</b><br><span class="text-sm">Hipnótico de elección en inestabilidad</span></td>
+            <td>Inducción: 1–2 mg/kg IV<br>Mantenimiento: 0.5–1 mg/kg/h</td>
+            <td>Mantiene tono simpático → preserva FC y PA. Broncodilatador. Preserva reflejos de VA en dosis bajas. Anestésico de elección en neonato hemodinámicamente comprometido.</td>
+            <td>Precaución en HPPRN (↑PVR). HIC. Evitar en cardiopatía con estenosis fija o shunt D→I.</td>
+          </tr>
+          <tr>
+            <td><b>Propofol IV</b></td>
+            <td>Inducción: 2–3 mg/kg IV (lento)<br>Mantenimiento: 4–8 mg/kg/h</td>
+            <td>Útil en neonato a término hemodinámicamente estable. Inicio rápido. Duración corta. Antiemético.</td>
+            <td>Hipotensión → usar con extrema precaución. Síndrome de infusión de propofol (PRIS) con &gt;4h o dosis &gt;5 mg/kg/h. No usar en prematuro de &lt;32 sem sin soporte vasopresor listo.</td>
+          </tr>
+          <tr>
+            <td><b>Sevoflurano inhalatorio</b></td>
+            <td>Inducción: 4–6% (con O₂/aire)<br>Mantenimiento: 1.5–2.5%</td>
+            <td>CAM neonatal es MENOR que en lactante (neonato 3.3%, lactante 3 meses 3.7%). CAM disminuye con edad gestacional. Bien tolerado hemodinámicamente en dosis bajas.</td>
+            <td>No usar como único agente en cirugía mayor (riesgo de despertar intraoperatorio). Evitar &gt;2h en &lt;3 años por preocupación de neurotoxicidad (controversia). FiO₂ cuidadosa en prematuro.</td>
+          </tr>
+          <tr>
+            <td><b>Fentanilo IV</b></td>
+            <td>Analgesia: 1–3 µg/kg bolo<br>Infusión: 1–4 µg/kg/h</td>
+            <td>Opioide de elección intraoperatorio. Inicio rápido (2–3 min). Sin liberación de histamina. Proporciona estabilidad hemodinámica en neonato de alto riesgo (cardiopatía).</td>
+            <td>Rigidez torácica con dosis altas o rápidas → relajante muscular listo. Apnea postop prolongada → monitoreo SpO₂ mínimo 12h.</td>
+          </tr>
+          <tr>
+            <td><b>Morfina IV</b></td>
+            <td>0.025–0.05 mg/kg IV<br>Infusión: 0.005–0.02 mg/kg/h</td>
+            <td>Analgesia postoperatoria en neonato ventilado o con monitoreo. M6G se acumula en falla renal → ajustar dosis. Vida media 2–3× más larga que en adulto.</td>
+            <td>Nunca en neonato sin monitoreo respiratorio continuo. Dosis reducidas en prematuro. Liberación de histamina (broncoespasmo posible).</td>
+          </tr>
+          <tr>
+            <td><b>Succinilcolina</b></td>
+            <td>RSI: 2–3 mg/kg IV (mayor dosis que adulto por mayor Vd)</td>
+            <td>Sigue siendo útil en RSI neonatal por rapidez de acción. Neonatos tienen mayor volumen de distribución → mayor dosis en mg/kg.</td>
+            <td>Hiperkalemia si hay lesión de denervación, quemadura, miopatía. Advertencia FDA: riesgo de rabdomiólisis en miopatías no diagnosticadas. Tener atropina lista (bradicardia).</td>
+          </tr>
+          <tr>
+            <td><b>Rocuronio</b></td>
+            <td>Intubación: 0.6–1.2 mg/kg IV<br>RSI: 1.2 mg/kg</td>
+            <td>De elección cuando se dispone de sugammadex. Metabolismo hepático → duración prolongada en neonato (50% más larga que en adulto). Monitoreo neuromuscular obligatorio.</td>
+            <td>Sugammadex disponible en sala si se usa en RSI. Dosis sugammadex neonato: 16 mg/kg para reversión inmediata.</td>
+          </tr>
+          <tr>
+            <td><b>Atropina</b></td>
+            <td>20 µg/kg IV (mín 100 µg, máx 500 µg)</td>
+            <td>De primera elección para bradicardia por hipoxia, manipulación vagal o succinilcolina. El neonato es especialmente susceptible a bradicardia vagal.</td>
+            <td>La bradicardia neonatal es SIEMPRE hipóxica hasta que se demuestre lo contrario. Primero ventilar, luego atropina si persiste.</td>
+          </tr>
+          <tr>
+            <td><b>Adrenalina</b></td>
+            <td>PCR: 10 µg/kg IV o intraóseo<br>Bolo hemodinámico: 1–5 µg/kg</td>
+            <td>De elección en bradicardia con pulso ausente o hipotensión refractaria. Preparar SIEMPRE dilución 10 µg/mL (1:100.000) antes de inducir en neonato de riesgo.</td>
+            <td>Taquiarritmias. Extravasación → necrosis tisular grave → vía central o intraóseo preferido.</td>
+          </tr>
+          <tr>
+            <td><b>Paracetamol IV</b></td>
+            <td>Neonato prematuro: 7.5 mg/kg c/8h<br>A término: 10 mg/kg c/6–8h</td>
+            <td>Pilar analgésico sin riesgo respiratorio. Reducir dosis en prematuros (metabolismo hepático inmaduro). Dosis máxima: 30 mg/kg/día en prematuro, 40 mg/kg/día en término.</td>
+            <td>Hepatotoxicidad con sobredosis. No exceder dosis máximas. Ajustar en colestasis.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ 6: INTRAOPERATORIO ══ -->
+  <div class="section-label" id="intraop">
+    <div class="dot" style="background:var(--verde)"></div>
+    <h2>6 · Manejo Intraoperatorio</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--verde-suave)">⚙️</div>
+      <div><h3>Parámetros ventilatorios en el neonato</h3><div class="sub">Ventilación protectora adaptada al pulmón neonatal — Evidencia 2024</div></div>
+    </div>
+    <div class="card-body">
+      <div class="param-grid">
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--verde-suave);color:var(--verde);">Volumen Tidal (VT)</div>
+          <div class="pb-val" style="color:var(--verde);">4–6 <span class="pb-unit">mL/kg</span></div>
+          <div class="pb-sub">Peso real. &lt;4 mL/kg en DBP/pulmón rígido. Medir VT espiratorio.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--azul-suave);color:var(--azul);">PIP máxima</div>
+          <div class="pb-val" style="color:var(--azul);">&lt;20–25 <span class="pb-unit">cmH₂O</span></div>
+          <div class="pb-sub">En prematuro: &lt;18 cmH₂O. Mayor PIP → volutrauma/barotrauma.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--teal-suave);color:var(--teal);">PEEP</div>
+          <div class="pb-val" style="color:var(--teal);">3–5 <span class="pb-unit">cmH₂O</span></div>
+          <div class="pb-sub">Mantiene CRF. En DBP / pulmón rígido: hasta 6–8. No &gt;8 en neonato.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--purp-suave);color:var(--purp);">FR</div>
+          <div class="pb-val" style="color:var(--purp);">40–60 <span class="pb-unit">rpm</span></div>
+          <div class="pb-sub">Ajustar para EtCO₂ 40–50 mmHg. En HPPRN: hiperventilación leve (PCO₂ 35–40).</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--ambar-suave);color:var(--ambar);">I:E</div>
+          <div class="pb-val" style="color:var(--ambar);">1:1.5 <span class="pb-unit">a 1:2</span></div>
+          <div class="pb-sub">Tiempo inspiratorio 0.3–0.5 seg. En broncoespasmo: 1:2.5 a 1:3.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--rojo-suave);color:var(--rojo);">FiO₂</div>
+          <div class="pb-val" style="color:var(--rojo);">Mín <span class="pb-unit">efectiva</span></div>
+          <div class="pb-sub">A término: SpO₂ 95–100%. Prematuro: SpO₂ 91–95%. FiO₂ &gt;0.4 → riesgo ROP y DBP.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--naranja-suave);color:var(--naranja);">EtCO₂</div>
+          <div class="pb-val" style="color:var(--naranja);">40–50 <span class="pb-unit">mmHg</span></div>
+          <div class="pb-sub">Hipercapnia: ↑ PVR → HPPRN. Hipocapnia: ↓ flujo cerebral → lesión neurológica.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--gris-1);color:var(--gris-6);">Modo preferido</div>
+          <div class="pb-val" style="font-size:16px;">PCV</div>
+          <div class="pb-sub">Presión controlada. Menor riesgo de volutrauma. Volumen garantizado en máquinas modernas.</div>
+        </div>
+      </div>
+
+      <div class="alert alert-ambar mt-4">
+        <div class="alert-ico">⚠️</div>
+        <div><b>Espacio muerto del circuito:</b> En neonatos de &lt;3 kg, el espacio muerto del circuito anestésico puede ser &gt;30% del VT → hipercapnia. Usar circuitos pediátricos con pieza en T y mínimo espacio muerto. Idealmente circuito de Jackson-Rees o sistema de Bain en &lt;10 kg.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--verde-suave)">🫀</div>
+        <div><h3>Monitoreo hemodinámico y metas</h3><div class="sub">Valores de referencia intraoperatorios</div></div>
+      </div>
+      <div class="card-body">
+        <table>
+          <thead><tr><th>Parámetro</th><th>Meta neonatal</th><th>Acción si fuera de rango</th></tr></thead>
+          <tbody>
+            <tr><td><b>FC</b></td><td>110–160 lpm</td><td>&lt;100: atropina + verificar oxigenación. &lt;60: RCP</td></tr>
+            <tr><td><b>PA sistólica</b></td><td>≥ 2/3 del peso en kg (mmHg)</td><td>Hipotensión: volumen 10 mL/kg + dopamina 5–10 µg/kg/min</td></tr>
+            <tr><td><b>PA media</b></td><td>≥ peso en kg en mmHg</td><td>1 kg → PAM ≥ 25–30 mmHg</td></tr>
+            <tr><td><b>SpO₂ preductal</b></td><td>A término 95–100%<br>Prematuro 91–95%</td><td>SpO₂ &lt;85%: intervención inmediata</td></tr>
+            <tr><td><b>EtCO₂</b></td><td>40–50 mmHg</td><td>&lt;35: ↓ FR. &gt;55: ↑ FR o VT</td></tr>
+            <tr><td><b>Temperatura</b></td><td>36.5–37.5°C</td><td>&lt;36: calefacción activa urgente</td></tr>
+            <tr><td><b>Glucemia</b></td><td>47–180 mg/dL</td><td>&lt;47: dextrosa 10% 2 mL/kg IV bolo</td></tr>
+            <tr><td><b>Hematocrito</b></td><td>≥ 30% (término)<br>≥ 35% (prematuro con cardiopatía)</td><td>Transfundir si &lt;25% o inestabilidad hemodinámica</td></tr>
+          </tbody>
+        </table>
+        <div class="alert alert-rojo mt-4">
+          <div class="alert-ico">🚨</div>
+          <div><b>Bradicardia neonatal = HIPOXIA hasta que se demuestre lo contrario.</b> Primero ventilar con O₂ al 100%. Si no responde en 30 seg → atropina 20 µg/kg. Si FC &lt;60 → iniciar compresiones torácicas + adrenalina 10 µg/kg.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--verde-suave)">⚡</div>
+        <div><h3>Hipertensión pulmonar persistente del recién nacido (HPPRN)</h3><div class="sub">Reconocer y tratar durante la anestesia</div></div>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-rojo">
+          <div class="alert-ico">🚨</div>
+          <div><b>HPPRN intraoperatoria:</b> Diferencia SpO₂ preductal (mano derecha) − postductal (pie izquierdo) &gt;10% → shunt D→I por foramen oval o ductus → circulación fetal. Mortalidad &gt;20% sin tratamiento.</div>
+        </div>
+        <p class="bold" style="margin-bottom:8px;">Desencadenantes durante anestesia → PREVENIR</p>
+        <div class="chip-row" style="margin-bottom:12px;">
+          <span class="chip" style="background:var(--rojo-suave);color:var(--rojo);border-color:var(--rojo-med);">Hipoxia</span>
+          <span class="chip" style="background:var(--rojo-suave);color:var(--rojo);border-color:var(--rojo-med);">Acidosis (pH &lt;7.25)</span>
+          <span class="chip" style="background:var(--rojo-suave);color:var(--rojo);border-color:var(--rojo-med);">Hipotermia</span>
+          <span class="chip" style="background:var(--rojo-suave);color:var(--rojo);border-color:var(--rojo-med);">Hipercapnia</span>
+          <span class="chip" style="background:var(--rojo-suave);color:var(--rojo);border-color:var(--rojo-med);">Dolor / estrés</span>
+          <span class="chip" style="background:var(--rojo-suave);color:var(--rojo);border-color:var(--rojo-med);">Vasoconstrictores α puros</span>
+        </div>
+        <p class="bold" style="margin-bottom:8px;">Tratamiento escalonado</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" style="background:var(--rojo)">1</div>
+            <div class="step-content">
+              <strong>FiO₂ 1.0 + hiperventilación leve</strong>
+              <p>PaCO₂ 35–40 mmHg. O₂ es el vasodilatador pulmonar más potente disponible en quirófano.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--rojo)">2</div>
+            <div class="step-content">
+              <strong>Óxido nítrico inhalado (iNO) 10–20 ppm</strong>
+              <p>Vasodilatador pulmonar selectivo. De primera línea si disponible en sala. Solicitar de urgencia.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--rojo)">3</div>
+            <div class="step-content">
+              <strong>Soporte hemodinámico + alcalinización</strong>
+              <p>Dopamina 5–10 µg/kg/min. Dobutamina si falla VD. Bicarbonato si pH &lt;7.25. Meta pH 7.35–7.45.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--rojo)">4</div>
+            <div class="step-content">
+              <strong>Milrinona 0.25–0.75 µg/kg/min</strong>
+              <p>Inodilatador — mejora función VD y reduce RVP. Evitar hipotensión sistémica (compensar con volumen).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 7: FLUIDOS ══ -->
+  <div class="section-label" id="fluidos">
+    <div class="dot" style="background:var(--teal)"></div>
+    <h2>7 · Fluidoterapia y Transfusión en el Neonato</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--teal-suave)">💧</div>
+      <div><h3>Protocolo de fluidos intraoperatorios</h3><div class="sub">Régimen de mantenimiento + reposición de déficit + pérdidas</div></div>
+    </div>
+    <div class="card-body">
+      <div class="grid-2">
+        <div>
+          <p class="bold" style="margin-bottom:10px;">Fluido de mantenimiento — Fórmula neonatal</p>
+          <div class="proto-flow">
+            <div class="proto-cond" style="background:var(--teal-suave);color:var(--teal);">Mantenimiento base</div>
+            <div class="proto-action">
+              <b>Dextrosa 10% en NaCl 0.9%</b> a 3–4 mL/kg/h<br>
+              <span class="text-sm">El neonato SIEMPRE necesita glucosa en el intraoperatorio. Sin glucosa → hipoglucemia en &lt;30 min.</span>
+            </div>
+          </div>
+          <div class="proto-flow">
+            <div class="proto-cond" style="background:var(--verde-suave);color:var(--verde);">Reposición del déficit de ayuno</div>
+            <div class="proto-action">
+              <b>SSN 0.9% o Ringer Lactato</b><br>
+              Déficit (mL) = horas de ayuno × tasa de mantenimiento. Dar 50% en la primera hora, 25% en la segunda y tercera.
+            </div>
+          </div>
+          <div class="proto-flow">
+            <div class="proto-cond" style="background:var(--ambar-suave);color:var(--ambar);">Pérdidas intraoperatorias</div>
+            <div class="proto-action">
+              Cirugía menor: 3–4 mL/kg/h extra de SSN.<br>
+              Cirugía mayor con tercer espacio: 6–10 mL/kg/h de Ringer Lactato.<br>
+              <b>NO DAD al reemplazar pérdidas</b> (hiperglucemia + edema cerebral).
+            </div>
+          </div>
+          <div class="proto-flow">
+            <div class="proto-cond" style="background:var(--rojo-suave);color:var(--rojo);">Sangrado</div>
+            <div class="proto-action">
+              Cristaloide o coloide 3:1. Transfundir si Hto &lt;25% o hemorragia &gt;10% de la VST.<br>
+              <b>VST neonato a término:</b> 85–90 mL/kg.
+            </div>
+          </div>
+        </div>
+        <div>
+          <p class="bold" style="margin-bottom:10px;color:var(--rojo)">⚠️ Errores frecuentes en fluidos neonatales</p>
+          <div class="alert alert-rojo">
+            <div class="alert-ico">🚨</div>
+            <div><b>NO usar grandes volúmenes de SSN isotónica como mantenimiento</b> — no aporta glucosa → hipoglucemia. No usar sin dextrosa en neonato.</div>
+          </div>
+          <div class="alert alert-ambar">
+            <div class="alert-ico">⚠️</div>
+            <div><b>Vigilar hiperglucemia</b> si se usa DAD 5–10% como mantenimiento + estrés quirúrgico → glucemia cada 30–60 min. Meta: 47–180 mg/dL.</div>
+          </div>
+          <div class="alert alert-azul">
+            <div class="alert-ico">💡</div>
+            <div><b>Volumen de sangrado máximo permitido antes de transfundir (MABV):</b><br>
+            MABV = Peso × VST × (Hto actual − Hto mínimo tolerable) ÷ Hto actual<br>
+            Ejemplo: 3 kg × 85 mL/kg × (0.45−0.25) ÷ 0.45 = 113 mL</div>
+          </div>
+          <div class="alert alert-teal">
+            <div class="alert-ico">🩸</div>
+            <div><b>Transfusión en neonato:</b> CGR 10–20 mL/kg en 2–4h. PFC 10–15 mL/kg si coagulopatía. Plaquetas 10–15 mL/kg si &lt;50.000/µL con sangrado activo. Crioprecipitado 5–10 mL/kg si fibrinógeno &lt;150 mg/dL.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 8: ANALGESIA ══ -->
+  <div class="section-label" id="analgesia">
+    <div class="dot" style="background:var(--naranja)"></div>
+    <h2>8 · Analgesia Neonatal Perioperatoria</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--naranja-suave)">💊</div>
+      <div><h3>Estrategia analgésica multimodal en el neonato</h3><div class="sub">Analgesia regional — primera línea para minimizar opioides sistémicos</div></div>
+    </div>
+    <div class="card-body">
+      <div class="alert alert-purp">
+        <div class="alert-ico">🎯</div>
+        <div><b>Principio fundamental:</b> Cada opioide sistémico que se evita en el neonato es una apnea, una bradipnea o un episodio de desaturación postoperatoria que se previene. La anestesia regional debe ser la primera elección en toda cirugía neonatal donde sea técnicamente posible.</div>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Técnica / Fármaco</th><th>Indicación</th><th>Dosis neonatal</th><th>Evidencia / Comentario</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Anestesia espinal (raquídea)</b></td>
+            <td>Cirugía infraumbilical en prematuro (&lt;60 sem PCA) para EVITAR AG y apnea postop</td>
+            <td>Bupivacaína hiperbárica 0.5%: 0.5–1 mg/kg intratecal</td>
+            <td><span class="badge badge-verde">Nivel A 2023</span> Reduce apnea postop vs AG en ex-prematuro. Duración 60–90 min.</td>
+          </tr>
+          <tr>
+            <td><b>Bloqueo caudal</b></td>
+            <td>Cirugía perineal, ano, urológica, escrotal, herniorrafia inguinal</td>
+            <td>Bupivacaína 0.25% 1 mL/kg (máx 20 mL)<br>o Ropivacaína 0.2% 1 mL/kg</td>
+            <td><span class="badge badge-verde">Primera línea</span> La técnica regional más usada en neonato. Bajo riesgo. Ecografía en prematuro.</td>
+          </tr>
+          <tr>
+            <td><b>Bloqueo ilioinguinal</b></td>
+            <td>Herniorrafia inguinal, orquidopexia</td>
+            <td>Bupivacaína 0.25% 0.1 mL/kg por lado (máx 3 mL)</td>
+            <td><span class="badge badge-azul">Ecografía obligatoria</span> Alternativa al caudal. Menor bloqueo motor.</td>
+          </tr>
+          <tr>
+            <td><b>TAP block</b></td>
+            <td>Cirugía abdominal, gastrosquisis, ileostomía</td>
+            <td>Bupivacaína 0.25% 0.2–0.3 mL/kg por lado</td>
+            <td><span class="badge badge-azul">Evidencia moderada</span> Ecografía obligatoria. Reducción de morfina postop demostrada.</td>
+          </tr>
+          <tr>
+            <td><b>Bloqueo peneano dorsal</b></td>
+            <td>Circuncisión neonatal, hipospadias</td>
+            <td>Bupivacaína 0.25% SIN adrenalina 0.1 mL/kg por lado</td>
+            <td><span class="badge badge-verde">Muy eficaz</span> NUNCA con adrenalina. Técnica sencilla y segura.</td>
+          </tr>
+          <tr>
+            <td><b>Paracetamol IV</b></td>
+            <td>Todo procedimiento — base analgésica</td>
+            <td>Prematuro: 7.5 mg/kg c/8h<br>Término: 10 mg/kg c/6–8h</td>
+            <td><span class="badge badge-verde">Siempre</span> Sin riesgo respiratorio. Máx 30 mg/kg/día (prematuro).</td>
+          </tr>
+          <tr>
+            <td><b>Sacarosa 24%</b></td>
+            <td>Procedimientos menores (venopunción, sondaje, extracción de vía)</td>
+            <td>0.1–0.5 mL VO 2 min antes del procedimiento + chupete</td>
+            <td><span class="badge badge-verde">Cochrane 2023 — Alta evidencia</span> Reduce respuesta nociceptiva. No usar en intubados con inestabilidad.</td>
+          </tr>
+          <tr>
+            <td><b>Morfina IV</b></td>
+            <td>Dolor postoperatorio moderado-severo en neonato ventilado o con monitoreo</td>
+            <td>0.025–0.05 mg/kg IV c/4–6h<br>o infusión 0.005–0.01 mg/kg/h</td>
+            <td><span class="badge badge-ambar">Solo con monitoreo SpO₂ 24h</span> M6G se acumula. Prematuro: dosis al límite inferior.</td>
+          </tr>
+          <tr>
+            <td><b>Fentanilo IV infusión</b></td>
+            <td>Neonato ventilado en UCIN — postop mayor</td>
+            <td>1–3 µg/kg/h infusión continua</td>
+            <td><span class="badge badge-azul">Solo en ventilado</span> Mejor perfil que morfina en fallo renal. Titular cuidadosamente.</td>
+          </tr>
+          <tr>
+            <td><b>AINE (Ibuprofeno IV)</b></td>
+            <td>Solo en ≥3 meses o peso &gt;5 kg en indicaciones específicas</td>
+            <td>5–10 mg/kg IV c/6–8h</td>
+            <td><span class="badge badge-rojo">No usar en neonato &lt;3 meses salvo cierre de DAP</span> Riesgo renal y cierre de ductus.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="alert alert-rojo mt-4">
+        <div class="alert-ico">🚨</div>
+        <div><b>Dosis tóxica de anestésicos locales en neonato — MÁXIMO CUIDADO:</b><br>
+        Bupivacaína: máx 2 mg/kg (sin adrenalina) — LA MITAD de la dosis pediátrica estándar por baja unión a proteínas.<br>
+        Ropivacaína: máx 2.5 mg/kg.<br>
+        Lidocaína: máx 3 mg/kg sin adrenalina.<br>
+        <b>Intralipid 20% siempre disponible: 1.5 mL/kg IV en bolo. El neonato es 3–4× más sensible a LAST que el adulto.</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 9: POSTOPERATORIO ══ -->
+  <div class="section-label" id="postop">
+    <div class="dot" style="background:var(--azul)"></div>
+    <h2>9 · Manejo Postoperatorio del Neonato</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--azul-suave)">🏥</div>
+      <div><h3>Protocolo de recuperación y UCIN postoperatoria</h3><div class="sub">De la sala de operaciones a la UCIN</div></div>
+    </div>
+    <div class="card-body">
+      <div class="timeline-3">
+        <div class="tl-col">
+          <div class="tl-head" style="background:var(--rojo-suave);color:var(--rojo);">
+            <div class="dot" style="background:var(--rojo);"></div>Sala de despertar / Traslado (0–30 min)
+          </div>
+          <div class="tl-body">
+            <div class="tl-item">
+              <div class="pi-tag">Extubación</div>
+              <p>Extubación DESPIERTO en neonato (a diferencia del adulto). Esperar reflejo de deglución activo, movimiento de extremidades y respuesta a estímulos. FC y SpO₂ estables &gt;5 min.</p>
+            </div>
+            <div class="tl-item">
+              <div class="pi-tag">Temperatura al salir</div>
+              <p>T° rectal ≥ 36.5°C. Si &lt;36°C → calentar antes de trasladar. Incubadora de transporte para &lt;34 sem PCA.</p>
+            </div>
+            <div class="tl-item">
+              <div class="pi-tag">Glucemia</div>
+              <p>Medir al salir de sala. Si &lt;47 mg/dL → DAD 10% 2 mL/kg IV bolo antes del traslado.</p>
+            </div>
+            <div class="tl-item">
+              <div class="pi-tag">Traslado</div>
+              <p>Monitoreo SpO₂ durante el traslado. Personal de anestesia o enfermería especializada acompaña hasta UCIN.</p>
+            </div>
+          </div>
+        </div>
+        <div class="tl-col">
+          <div class="tl-head" style="background:var(--ambar-suave);color:var(--ambar);">
+            <div class="dot" style="background:var(--ambar);"></div>UCIN — Primeras 12h
+          </div>
+          <div class="tl-body">
+            <div class="tl-item">
+              <div class="pi-tag">Monitoreo continuo obligatorio</div>
+              <p>SpO₂, FC, PA no invasiva c/1–2h, temperatura rectal c/2h, EtCO₂ si ventilado.</p>
+            </div>
+            <div class="tl-item">
+              <div class="pi-tag">Vigilancia de apnea</div>
+              <p>Monitor de apnea (&gt;15 seg o acompañada de bradicardia) en TODOS los neonatos &lt;60 sem PCA durante 12h mínimo. Estándar de cuidado — no negociable.</p>
+            </div>
+            <div class="tl-item">
+              <div class="pi-tag">Glucemia c/30–60 min × 4h</div>
+              <p>Luego c/2h hasta tolerancia oral. Infusión de DAD 10% a 3–4 mL/kg/h si no tolera vía oral.</p>
+            </div>
+            <div class="tl-item">
+              <div class="pi-tag">Analgesia postop</div>
+              <p>Paracetamol IV programado. Regional si se realizó. Morfina solo si dolor severo con monitoreo.</p>
+            </div>
+            <div class="tl-item">
+              <div class="pi-tag">Balance hídrico estricto</div>
+              <p>Diuresis ≥ 1 mL/kg/h. Balance c/6h. Restricción si edema o falla renal.</p>
+            </div>
+          </div>
+        </div>
+        <div class="tl-col">
+          <div class="tl-head" style="background:var(--verde-suave);color:var(--verde);">
+            <div class="dot" style="background:var(--verde);"></div>UCIN — 12–72h
+          </div>
+          <div class="tl-body">
+            <div class="tl-item">
+              <div class="pi-tag">Alimentación enteral</div>
+              <p>Iniciar nutrición enteral mínima (trófica) tan pronto sea posible. La nutrición parenteral total tiene riesgos (infección, colestasis). Meta: nutrición enteral en &lt;48h en neonato estable.</p>
+            </div>
+            <div class="tl-item">
+              <div class="pi-tag">Evaluación neurológica</div>
+              <p>Ecografía transfontanelar en prematuro a las 24h postop. Buscar hemorragia intraventricular. EEG si crisis clínicas o sutiles.</p>
+            </div>
+            <div class="tl-item">
+              <div class="pi-tag">Reducción de opioides</div>
+              <p>Reducir 10–20% c/24h si dolor controlado. Objetivo: 0 opioides sistémicos en &lt;72h de ser posible. Vigilar síndrome de abstinencia.</p>
+            </div>
+            <div class="tl-item">
+              <div class="pi-tag">Alta de UCIN</div>
+              <p>Tolerancia enteral completa, estabilidad hemodinámica y respiratoria, temperatura estable en cuna abierta, sin apneas en 5 días.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-rojo">
+        <div class="alert-ico">🚨</div>
+        <div><b>Señales de alarma postoperatoria — Actuar inmediatamente:</b><br>
+        SpO₂ &lt;85% sostenida · Apnea &gt;20 seg o con bradicardia · FC &lt;80 o &gt;200 lpm · PAS &lt;35–40 mmHg · T° &lt;35.5°C · Glucemia &lt;40 mg/dL · Ausencia de diuresis &gt;2h · Distensión abdominal aguda · Palidez extrema o cianosis central</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 10: PATOLOGÍAS FRECUENTES ══ -->
+  <div class="section-label" id="patologias">
+    <div class="dot" style="background:var(--rose)"></div>
+    <h2>10 · Patologías Neonatales Frecuentes — Consideraciones Anestésicas</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--rose-suave)">⚕️</div>
+      <div><h3>Las 8 grandes patologías quirúrgicas neonatales</h3><div class="sub">Pérfil anestésico, riesgos y consideraciones específicas</div></div>
+    </div>
+    <div class="card-body">
+      <div class="comp-item">
+        <div class="comp-emo">🫁</div>
+        <div class="comp-body">
+          <div class="cb-title">Hernia diafragmática congénita (HDC)</div>
+          <p><b>Riesgo cardinal:</b> HPPRN severa + hipoplasia pulmonar bilateral. <b>Anestesia:</b> NO usar óxido nitroso (distensión de asas intestinales). Intubación inmediata tras nacimiento — NUNCA ventilar con mascarilla. FiO₂ mínima efectiva. PIP &lt;25 cmH₂O. Hipercapnia permisiva (PaCO₂ hasta 60 mmHg) preferible a barotrauma. iNO y ECMO si fallo refractario. Mortalidad 20–40%.</p>
+        </div>
+        <span class="badge badge-rojo" style="align-self:flex-start;margin-top:4px;">Alta complejidad</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-emo">🦠</div>
+        <div class="comp-body">
+          <div class="cb-title">Enterocolitis necrotizante (ECN) — Cirugía</div>
+          <p><b>El neonato más enfermo:</b> Sepsis, acidosis, coagulopatía. <b>Anestesia:</b> Ketamina de elección (preserva PA). Expansión de volumen previa. Corrección de acidosis con bicarbonato. Transfusión si Hto &lt;30%. Anestesia en UCIN a pie de incubadora si demasiado inestable para traslado (laparotomía a cuna o drenaje peritoneal). Alta mortalidad quirúrgica (20–40%).</p>
+        </div>
+        <span class="badge badge-rojo" style="align-self:flex-start;margin-top:4px;">Emergencia</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-emo">🧊</div>
+        <div class="comp-body">
+          <div class="cb-title">Gastrosquisis / Onfalocele</div>
+          <p><b>Pérdidas:</b> Calor (evisceración expuesta), fluidos (evaporación masiva del intestino), proteínas. <b>Anestesia:</b> RSI obligatoria (estómago lleno + compresión intestinal). Volumen agresivo (hasta 20–30 mL/kg/h en gastrosquisis grande). TAP block bilateral. Temperatura sala 28°C. Órganos en bolsa húmeda y cálida hasta reducción. Cierre en etapas si la reducción primaria aumenta PIA &gt;20 mmHg (síndrome compartimental abdominal).</p>
+        </div>
+        <span class="badge badge-ambar" style="align-self:flex-start;margin-top:4px;">Urgencia</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-emo">🍼</div>
+        <div class="comp-body">
+          <div class="cb-title">Atresia esofágica con fístula traqueoesofágica (AE-FTE)</div>
+          <p><b>Riesgo principal:</b> Neumonía por aspiración + ventilación gástrica por la fístula. <b>Anestesia:</b> Posición semisentada preop. Intubación con TET justo sobre la carina (distal a la fístula) bajo control de EtCO₂. Evitar presiones altas (gas entra al estómago). Ventilación espontánea si estable. NO usar mascarilla — distensión gástrica masiva.</p>
+        </div>
+        <span class="badge badge-ambar" style="align-self:flex-start;margin-top:4px;">Técnica específica</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-emo">🧠</div>
+        <div class="comp-body">
+          <div class="cb-title">Mielomeningocele (espina bífida abierta)</div>
+          <p><b>Riesgo:</b> Malformación de Chiari II (compresión del tronco), hidrocefalia, látex. <b>Anestesia:</b> Posición prona para cirugía. Protocolo libre de látex (guantes, materiales). Sin relajantes musculares (neurofisiología intraoperatoria). Hipotensión cuidadosa (PPC). Temperatura sala 28°C. Evaluar función motora postop por neurología.</p>
+        </div>
+        <span class="badge badge-azul" style="align-self:flex-start;margin-top:4px;">Protocolo látex</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-emo">🩺</div>
+        <div class="comp-body">
+          <div class="cb-title">Estenosis pilórica hipertrófica</div>
+          <p><b>Alteración metabólica:</b> Alcalosis metabólica hipoclorémica, hipopotasémica. NUNCA operar con Na &lt;135, K &lt;3.0, HCO₃ &gt;30 mEq/L o pH &gt;7.5. Corregir primero con suero salino 0.9% + KCl. <b>Anestesia:</b> RSI obligatoria (estómago lleno). Extubación despierto. Alta probabilidad de vómito al extubarse.</p>
+        </div>
+        <span class="badge badge-ambar" style="align-self:flex-start;margin-top:4px;">Corregir electrolitos antes</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-emo">🫀</div>
+        <div class="comp-body">
+          <div class="cb-title">Cardiopatía congénita — Cirugía no cardíaca</div>
+          <p><b>Riesgo:</b> Variable según el defecto. CIA/CIV sin hipertensión pulmonar: bajo riesgo. Ductus dependiente o Eisenmenger: riesgo vital. <b>Anestesia:</b> Ecocardiografía preop obligatoria. Vigilar shunt y HPPRN. Evitar N₂O. Ketamina de elección si función ventricular reducida. Equipo de cirugía cardíaca en alerta en casos complejos. iNO disponible.</p>
+        </div>
+        <span class="badge badge-rojo" style="align-self:flex-start;margin-top:4px;">Riesgo variable</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-emo">🔬</div>
+        <div class="comp-body">
+          <div class="cb-title">Herniorrafia inguinal en ex-prematuro</div>
+          <p><b>La cirugía neonatal ambulatoria de MAYOR riesgo:</b> Apnea postoperatoria hasta 12–24h post-AG. <b>Anestesia de elección:</b> Espinal raquídea sola (bupivacaína hiperbárica 0.5% 0.5 mg/kg) en &lt;60 sem PCA — evita apnea postop. Si fracasa o se combina con AG → ingreso obligatorio 12–24h con monitor de apnea. Bloqueo ilioinguinal complementario. Nunca alta el mismo día si recibió AG y PCA &lt;60 sem.</p>
+        </div>
+        <span class="badge badge-verde" style="align-self:flex-start;margin-top:4px;">Espinal de elección</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CHEAT SHEET ══ -->
+  <div class="section-label" id="cheatsheet">
+    <div class="dot" style="background:var(--gris-6)"></div>
+    <h2>11 · Cheat Sheet — Referencia Rápida de Bolsillo</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--gris-1)">📋</div>
+      <div><h3>Acciones rápidas — Anestesiología neonatal</h3><div class="sub">Situaciones críticas y respuesta inmediata</div></div>
+    </div>
+    <div class="card-body">
+      <table>
+        <thead>
+          <tr><th>Situación</th><th>Acción inmediata</th><th>Fármaco / Dosis / Meta</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><b>Bradicardia &lt;100 lpm</b></td><td>Ventilar O₂ 100% primero. Si persiste: atropina</td><td>Atropina 20 µg/kg IV. Min 100 µg. Si &lt;60: RCP</td></tr>
+          <tr><td><b>Bradicardia &lt;60 lpm</b></td><td>Iniciar RCP. O₂ 100%. Adrenalina</td><td>Adrenalina 10 µg/kg IV/IO (1:100.000). Compresiones 3:1</td></tr>
+          <tr><td><b>Hipotensión (PAS &lt; 2/3 del peso)</b></td><td>Volumen 10 mL/kg SSN → vasopresores</td><td>Dopamina 5–10 µg/kg/min o adrenalina 0.05–0.3 µg/kg/min</td></tr>
+          <tr><td><b>Hipoglucemia (&lt;47 mg/dL)</b></td><td>DAD 10% bolo IV inmediato</td><td>DAD 10% 2 mL/kg IV bolo → infusión 4–6 mg/kg/min</td></tr>
+          <tr><td><b>Hipotermia (&lt;36°C)</b></td><td>Calefacción activa inmediata</td><td>Sala 28°C + manta + soluciones 37°C + cubrir con film plástico en prematuros</td></tr>
+          <tr><td><b>SpO₂ &lt;85% en prematuro</b></td><td>Verificar TET + aumentar FiO₂ mínima → reposicionar</td><td>Meta 91–95%. FiO₂ 0.4–0.6 máx salvo urgencia</td></tr>
+          <tr><td><b>HPPRN intraoperatoria</b></td><td>FiO₂ 1.0 + hiperventilación leve → iNO</td><td>iNO 10–20 ppm. Milrinona 0.25–0.75 µg/kg/min si falla VD</td></tr>
+          <tr><td><b>Toxicidad AL (LAST)</b></td><td>Intralipid 20% inmediato + soporte</td><td>1.5 mL/kg bolo IV → 0.25 mL/kg/min infusión. Propofol NO sustituye</td></tr>
+          <tr><td><b>Vía aérea difícil neonatal</b></td><td>Máx 2 intentos → videolaringoscopio → LMA #1</td><td>C-MAC #0. LMA Supreme #1 en &gt;2 kg. Cricotomía 18G si CICO</td></tr>
+          <tr><td><b>Apnea postoperatoria</b></td><td>Estimulación táctil → O₂ → CPAP nasal</td><td>Cafeína 20 mg/kg IV bolo (dosis de carga) → 5 mg/kg/día. Ingreso 12–24h.</td></tr>
+          <tr><td><b>Sangrado intraoperatorio</b></td><td>Calcular MABV. Cristaloide 3:1. Transfundir si Hto &lt;25%</td><td>CGR 10–20 mL/kg. VST neonato término = 85–90 mL/kg</td></tr>
+          <tr><td><b>Herniorrafia ex-prematuro &lt;60 sem PCA</b></td><td>Anestesia espinal de primera elección</td><td>Bupivacaína hiperbárica 0.5% 0.5–1 mg/kg intratecal. Duración 60–90 min</td></tr>
+          <tr><td><b>Bloqueo caudal neonato</b></td><td>Máx 2 mg/kg de bupivacaína</td><td>Bupivacaína 0.25% 1 mL/kg. Ecografía en &lt;32 sem</td></tr>
+          <tr><td><b>ECN — neonato inestable para traslado</b></td><td>Anestesia a pie de incubadora en UCIN</td><td>Ketamina 1–2 mg/kg + fentanilo 1–2 µg/kg. Drenaje peritoneal bajo AL local</td></tr>
+          <tr><td><b>Estenosis pilórica — cuándo operar</b></td><td>Solo si Na ≥135, K ≥3.0, HCO₃ &lt;30, pH &lt;7.5</td><td>Corrección con SSN 0.9% + KCl. Es una urgencia electiva, NO inmediata</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Valores de referencia -->
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--cyan-suave)">📐</div>
+      <div><h3>Valores de referencia neonatales — De un vistazo</h3></div>
+    </div>
+    <div class="card-body">
+      <div class="param-grid">
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--rojo-suave);color:var(--rojo);">FC neonatal</div>
+          <div class="pb-val" style="color:var(--rojo);">120–160 <span class="pb-unit">lpm</span></div>
+          <div class="pb-sub">&lt;100 = bradicardia. &lt;60 = RCP.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--azul-suave);color:var(--azul);">PAS mínima</div>
+          <div class="pb-val" style="color:var(--azul);">2/3 × <span class="pb-unit">peso (kg)</span></div>
+          <div class="pb-sub">Ej: 1 kg → PAS ≥40 mmHg.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--verde-suave);color:var(--verde);">SpO₂ a término</div>
+          <div class="pb-val" style="color:var(--verde);">95–100 <span class="pb-unit">%</span></div>
+          <div class="pb-sub">Prematuro: 91–95%. Preductal + postductal.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--ambar-suave);color:var(--ambar);">Glucemia</div>
+          <div class="pb-val" style="color:var(--ambar);">47–180 <span class="pb-unit">mg/dL</span></div>
+          <div class="pb-sub">&lt;47 = hipoglucemia. Medir c/30–60 min intraop.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--teal-suave);color:var(--teal);">Temperatura</div>
+          <div class="pb-val" style="color:var(--teal);">36.5–37.5 <span class="pb-unit">°C</span></div>
+          <div class="pb-sub">&lt;36: hipotermia → consecuencias graves.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--purp-suave);color:var(--purp);">EtCO₂</div>
+          <div class="pb-val" style="color:var(--purp);">40–50 <span class="pb-unit">mmHg</span></div>
+          <div class="pb-sub">&lt;35: hipocapnia → lesión cerebral. &gt;55: ajustar FR.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--naranja-suave);color:var(--naranja);">VT</div>
+          <div class="pb-val" style="color:var(--naranja);">4–6 <span class="pb-unit">mL/kg</span></div>
+          <div class="pb-sub">PIP &lt;20–25 cmH₂O. PEEP 3–5 cmH₂O.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--gris-1);color:var(--gris-6);">VST neonato</div>
+          <div class="pb-val">85–90 <span class="pb-unit">mL/kg</span></div>
+          <div class="pb-sub">Transfundir si pérdida &gt;10% VST o Hto &lt;25%.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>Guía de Anestesia Neonatal · Pre-Intra-Postoperatorio · Anestesiología Pediátrica Subespecializada</p>
+  <p style="margin-top:4px;opacity:.6;">Basada en guías SPA 2024, ESPA 2023, AAP 2023, AHA Neonatal Resuscitation 2023, Cochrane Pediatric Anesthesia 2024. Solo para referencia clínica y uso educativo.</p>
+</footer>
+
+</body>
+</html>

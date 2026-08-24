@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ventilación Unipulmonar · Cirugía de Tórax · Anestesiología</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul:        #1e40af;
+    --azul-suave:  #dbeafe;
+    --azul-med:    #93c5fd;
+    --azul-dark:   #1e3a8a;
+    --rojo:        #b91c1c;
+    --rojo-suave:  #fee2e2;
+    --rojo-med:    #fca5a5;
+    --verde:       #15803d;
+    --verde-suave: #dcfce7;
+    --verde-med:   #86efac;
+    --ambar:       #92400e;
+    --ambar-suave: #fef3c7;
+    --ambar-med:   #fcd34d;
+    --slate:       #0f172a;
+    --teal:        #0f766e;
+    --teal-suave:  #ccfbf1;
+    --purp:        #6d28d9;
+    --purp-suave:  #ede9fe;
+    --gris-f:      #f8fafc;
+    --gris-1:      #f1f5f9;
+    --gris-2:      #e2e8f0;
+    --gris-3:      #cbd5e1;
+    --gris-6:      #475569;
+    --gris-8:      #1e293b;
+    --border:      1px solid #e2e8f0;
+    --shadow:      0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+    --shadow-md:   0 4px 16px rgba(0,0,0,.07);
+    --radius:      10px;
+    --radius-sm:   6px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f0f4f8;
+    color: var(--gris-8);
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 0 0 60px;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: linear-gradient(135deg, #0c1a40 0%, #1e3a8a 55%, #1d4ed8 100%);
+    color: white;
+    padding: 48px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .site-header .tag {
+    display: inline-block;
+    background: rgba(255,255,255,.16);
+    border: 1px solid rgba(255,255,255,.28);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .site-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px; line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .site-header .subtitle { font-size: 15px; opacity: .8; font-weight: 300; max-width: 700px; }
+  .header-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
+  .header-chip {
+    background: rgba(255,255,255,.14);
+    border: 1px solid rgba(255,255,255,.24);
+    border-radius: 20px; padding: 5px 14px;
+    font-size: 12px; font-weight: 500;
+  }
+
+  /* ── LAYOUT ── */
+  .main { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+
+  /* ── SECTION LABEL ── */
+  .section-label { display: flex; align-items: center; gap: 10px; margin: 40px 0 16px; }
+  .section-label .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .section-label h2 { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gris-6); }
+  .section-label .line { flex: 1; height: 1px; background: var(--gris-2); }
+
+  /* ── CARD ── */
+  .card { background: white; border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 16px; overflow: hidden; }
+  .card-header { padding: 16px 20px; border-bottom: var(--border); display: flex; align-items: center; gap: 12px; }
+  .card-header .icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .card-header h3 { font-size: 15px; font-weight: 600; }
+  .card-header .sub { font-size: 12px; color: var(--gris-6); margin-top: 1px; }
+  .card-body { padding: 20px; }
+
+  /* ── GRIDS ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media(max-width:760px){ .grid-2,.grid-3{ grid-template-columns:1fr; } }
+
+  /* ── BADGE ── */
+  .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; letter-spacing: .04em; }
+  .badge-rojo  { background: var(--rojo-suave);  color: var(--rojo); }
+  .badge-verde { background: var(--verde-suave); color: var(--verde); }
+  .badge-ambar { background: var(--ambar-suave); color: var(--ambar); }
+  .badge-azul  { background: var(--azul-suave);  color: var(--azul); }
+  .badge-teal  { background: var(--teal-suave);  color: var(--teal); }
+  .badge-purp  { background: var(--purp-suave);  color: var(--purp); }
+
+  /* ── ALERT ── */
+  .alert { border-radius: var(--radius-sm); padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+  .alert-ico { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .alert-rojo  { background: var(--rojo-suave);  border-left: 3px solid var(--rojo); }
+  .alert-verde { background: var(--verde-suave); border-left: 3px solid var(--verde); }
+  .alert-ambar { background: var(--ambar-suave); border-left: 3px solid var(--ambar); }
+  .alert-azul  { background: var(--azul-suave);  border-left: 3px solid var(--azul); }
+  .alert-teal  { background: var(--teal-suave);  border-left: 3px solid var(--teal); }
+  .alert-purp  { background: var(--purp-suave);  border-left: 3px solid var(--purp); }
+  .alert b { display: block; font-weight: 600; margin-bottom: 3px; font-size: 13px; }
+
+  /* ── TABLA ── */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--gris-1); color: var(--gris-6); font-weight: 600; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--gris-2); }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--gris-2); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--gris-f); }
+
+  /* ── STEPS ── */
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px dashed var(--gris-2); }
+  .step:last-child { border-bottom: none; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; color: white; }
+  .step-content { flex: 1; }
+  .step-content strong { font-size: 14px; display: block; margin-bottom: 4px; }
+  .step-content p, .step-content ul { font-size: 13px; color: var(--gris-6); }
+  .step-content ul { padding-left: 16px; margin-top: 4px; }
+  .step-content li { margin-bottom: 2px; }
+
+  /* ── PROTO FLOW ── */
+  .proto-flow { display: flex; align-items: stretch; gap: 0; border-radius: var(--radius-sm); overflow: hidden; border: var(--border); margin-bottom: 10px; }
+  .proto-cond { padding: 12px 14px; min-width: 150px; font-size: 12px; font-weight: 600; display: flex; align-items: center; border-right: var(--border); line-height: 1.4; }
+  .proto-action { padding: 12px 14px; flex: 1; font-size: 13px; }
+  .proto-action ul { padding-left: 16px; margin-top: 4px; }
+  .proto-action li { margin-bottom: 3px; }
+
+  /* ── PILL NAV ── */
+  .pill-nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; }
+  .pill-nav a { padding: 7px 18px; border-radius: 20px; font-size: 13px; font-weight: 500; background: white; border: var(--border); color: var(--gris-6); text-decoration: none; transition: all .15s; }
+  .pill-nav a:hover { background: var(--azul-suave); color: var(--azul); border-color: var(--azul-med); }
+  .pill-nav a.active { background: var(--azul); color: white; border-color: var(--azul); }
+
+  /* ── TIMELINE COLS ── */
+  .timeline { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; border-radius: var(--radius); overflow: hidden; border: var(--border); margin-bottom: 16px; }
+  .tl-col { border-right: var(--border); }
+  .tl-col:last-child { border-right: none; }
+  .tl-head { padding: 14px 16px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; border-bottom: var(--border); display: flex; align-items: center; gap: 8px; }
+  .tl-head .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .tl-body { padding: 14px 16px; }
+  .tl-item { margin-bottom: 10px; }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-item .t-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; opacity: .6; margin-bottom: 2px; }
+  .tl-item p { font-size: 13px; }
+
+  /* ── PARAMETER BOX ── */
+  .param-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px,1fr)); gap: 10px; }
+  .param-box { border: var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+  .param-box .pb-head { padding: 8px 12px; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border-bottom: var(--border); }
+  .param-box .pb-val { font-size: 26px; font-weight: 700; line-height: 1.1; padding: 10px 12px 4px; }
+  .param-box .pb-unit { font-size: 12px; font-weight: 400; }
+  .param-box .pb-sub { font-size: 11px; color: var(--gris-6); padding: 0 12px 10px; }
+
+  /* ── DECISION BOX ── */
+  .decision-block {
+    border: 2px solid var(--gris-2);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .decision-block .db-head {
+    padding: 12px 18px;
+    font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid var(--gris-2);
+  }
+  .decision-block .db-body { padding: 14px 18px; }
+
+  /* ── MISC ── */
+  ul.list-clean { list-style: none; padding: 0; }
+  ul.list-clean li::before { content: '→ '; color: var(--azul); font-weight: 600; }
+  ul.list-clean li { margin-bottom: 5px; font-size: 13px; }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .chip { padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 500; background: var(--gris-1); border: var(--border); color: var(--gris-6); }
+  hr.divider { border: none; border-top: 1px dashed var(--gris-2); margin: 14px 0; }
+  .text-sm { font-size: 12px; color: var(--gris-6); }
+  .mt-4 { margin-top: 16px; }
+  .mb-0 { margin-bottom: 0; }
+  .bold { font-weight: 600; }
+  .two-col-list { columns: 2; column-gap: 20px; }
+  .two-col-list li { break-inside: avoid; margin-bottom: 4px; font-size: 13px; }
+
+  /* ── DEVICE DIAGRAM ── */
+  .device-compare { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .device-card { border: var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+  .device-card .dc-head { padding: 12px 14px; font-size: 13px; font-weight: 700; border-bottom: var(--border); display:flex; align-items:center; gap:8px; }
+  .device-card .dc-body { padding: 12px 14px; font-size: 12px; }
+  .device-card .dc-body ul { padding-left: 14px; }
+  .device-card .dc-body li { margin-bottom: 3px; }
+
+  /* ── COMPLICATION ROW ── */
+  .comp-row { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 1px dashed var(--gris-2); }
+  .comp-row:last-child { border-bottom: none; }
+  .comp-icon { font-size: 22px; flex-shrink: 0; width: 36px; text-align: center; }
+  .comp-content { flex: 1; }
+  .comp-content .c-title { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+  .comp-content p { font-size: 13px; color: var(--gris-6); }
+  .comp-sev { align-self: flex-start; margin-top: 2px; }
+
+  /* ── FOOTER ── */
+  .site-footer { text-align: center; padding: 32px 24px; font-size: 12px; color: var(--gris-6); border-top: var(--border); background: white; margin-top: 40px; }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header">
+  <div class="tag">🫁 Anestesiología Torácica · Especialista</div>
+  <h1>Ventilación Unipulmonar<br>en Cirugía de Tórax</h1>
+  <p class="subtitle">Manejo pre, intra y postoperatorio basado en evidencia 2024.<br>Estrategia ventilatoria protectora, aislamiento pulmonar y manejo de hipoxemia.</p>
+  <div class="header-chips">
+    <span class="header-chip">💨 VT: 4–6 mL/kg PBI</span>
+    <span class="header-chip">📐 PEEP: 5–8 cmH₂O</span>
+    <span class="header-chip">🎯 SpO₂ ≥ 90% / PaO₂ ≥ 60 mmHg</span>
+    <span class="header-chip">⚠️ Pplat &lt; 25 cmH₂O · ΔP &lt; 14 cmH₂O</span>
+    <span class="header-chip">🔵 FiO₂ mínima efectiva</span>
+  </div>
+</header>
+
+<div class="main">
+
+  <!-- Pill nav -->
+  <nav class="pill-nav" style="margin-top:24px;">
+    <a href="#fundamentos" class="active">Fundamentos</a>
+    <a href="#evaluacion">Evaluación preop</a>
+    <a href="#dispositivos">Dispositivos</a>
+    <a href="#induccion">Inducción</a>
+    <a href="#ventilacion">Ventilación OLV</a>
+    <a href="#hipoxemia">Hipoxemia</a>
+    <a href="#postop">Postoperatorio</a>
+    <a href="#complicaciones">Complicaciones</a>
+    <a href="#cheatsheet">Cheat Sheet</a>
+  </nav>
+
+  <!-- ══ 1: FUNDAMENTOS ══ -->
+  <div class="section-label" id="fundamentos">
+    <div class="dot" style="background:var(--azul)"></div>
+    <h2>1 · Fundamentos Fisiológicos</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--azul-suave)">🫁</div>
+        <div><h3>¿Por qué ventilación unipulmonar?</h3><div class="sub">Indicaciones y principios</div></div>
+      </div>
+      <div class="card-body">
+        <p class="bold" style="margin-bottom:8px;">Indicaciones absolutas</p>
+        <ul class="list-clean">
+          <li>Aislamiento pulmonar para evitar contaminación (absceso, hemoptisis masiva)</li>
+          <li>Fístula broncopleural o broncocutánea</li>
+          <li>Quiste hidatídico gigante</li>
+          <li>Lavado broncoalveolar unilateral (proteinosis)</li>
+          <li>Lesiones traqueobronquiales con ruptura</li>
+        </ul>
+        <hr class="divider">
+        <p class="bold" style="margin-bottom:8px;">Indicaciones relativas (cirugía asistida)</p>
+        <ul class="list-clean">
+          <li>Lobectomía, neumonectomía, segmentectomía</li>
+          <li>VATS (cirugía torácica videoasistida)</li>
+          <li>Esofagectomía transtorácica</li>
+          <li>Resección de masas mediastínicas</li>
+          <li>Cirugía espinal torácica por abordaje anterior</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--rojo-suave)">⚗️</div>
+        <div><h3>Fisiología durante OLV</h3><div class="sub">Cambios hemodinámicos y ventilatorios clave</div></div>
+      </div>
+      <div class="card-body">
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--rojo-suave);color:var(--rojo)">Pulmón no<br>dependiente (colapsado)</div>
+          <div class="proto-action">
+            <b>Shunt intrapulmonar derecho → izquierdo</b><br>
+            Sangre no oxigenada fluye por capilares del pulmón colapsado. Principal causa de hipoxemia en OLV. Normalmente 20–40% del GC.
+          </div>
+        </div>
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--ambar-suave);color:var(--ambar)">VHQ (vasoconstricción<br>hipóxica pulmonar)</div>
+          <div class="proto-action">
+            Mecanismo protector esencial. Desvía flujo del pulmón colapsado al dependiente.<br>
+            <b>Inhibida por:</b> halogenados (dosis-dependiente), vasodilatadores, alcalosis, hiperoxia extrema.
+          </div>
+        </div>
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--verde-suave);color:var(--verde)">Pulmón dependiente<br>(ventilado)</div>
+          <div class="proto-action">
+            Recibe todo el VT. Riesgo de sobredistensión, atelectrauma y VILI.<br>
+            <b>Decúbito lateral</b> mejora relación V/Q: gravedad aumenta perfusión al pulmón dependiente.
+          </div>
+        </div>
+        <div class="alert alert-azul mt-4">
+          <div class="alert-ico">💡</div>
+          <div><b>El decúbito lateral ayuda:</b> el pulmón operado (arriba) recibe menos flujo por gravedad y tiene menos shunt. El pulmón ventilado (abajo) recibe mayor perfusión y mejor intercambio gaseoso.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 2: EVALUACIÓN PREOPERATORIA ══ -->
+  <div class="section-label" id="evaluacion">
+    <div class="dot" style="background:#7c3aed"></div>
+    <h2>2 · Evaluación Preoperatoria</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--purp-suave)">🔬</div>
+      <div><h3>Evaluación funcional respiratoria</h3><div class="sub">Predicción de riesgo y tolerancia a la resección — guías ERS/ESTS 2022</div></div>
+    </div>
+    <div class="card-body">
+      <table>
+        <thead>
+          <tr><th>Parámetro</th><th>Valor</th><th>Riesgo bajo</th><th>Riesgo alto</th><th>Contraindicación relativa</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>FEV₁ preoperatorio</b></td>
+            <td>Espirometría</td>
+            <td><span class="badge badge-verde">&gt;80%</span></td>
+            <td><span class="badge badge-ambar">60–80%</span></td>
+            <td><span class="badge badge-rojo">&lt;30% o &lt;0.8 L</span></td>
+          </tr>
+          <tr>
+            <td><b>FEV₁ postop predicho (ppoFEV₁)</b></td>
+            <td>Gammagrafía o fórmula segmentaria</td>
+            <td><span class="badge badge-verde">&gt;60%</span></td>
+            <td><span class="badge badge-ambar">30–60%</span></td>
+            <td><span class="badge badge-rojo">&lt;30%</span></td>
+          </tr>
+          <tr>
+            <td><b>DLCO (capacidad difusión CO)</b></td>
+            <td>Plestimografía</td>
+            <td><span class="badge badge-verde">&gt;60%</span></td>
+            <td><span class="badge badge-ambar">30–60%</span></td>
+            <td><span class="badge badge-rojo">&lt;30%</span></td>
+          </tr>
+          <tr>
+            <td><b>ppoDLCO postop predicho</b></td>
+            <td>Calculado por segmentos</td>
+            <td><span class="badge badge-verde">&gt;60%</span></td>
+            <td><span class="badge badge-ambar">30–60%</span></td>
+            <td><span class="badge badge-rojo">&lt;30%</span></td>
+          </tr>
+          <tr>
+            <td><b>VO₂ máx (consumo O₂ pico)</b></td>
+            <td>Prueba de esfuerzo cardiopulmonar</td>
+            <td><span class="badge badge-verde">&gt;20 mL/kg/min</span></td>
+            <td><span class="badge badge-ambar">10–20</span></td>
+            <td><span class="badge badge-rojo">&lt;10 mL/kg/min</span></td>
+          </tr>
+          <tr>
+            <td><b>Shuttle Walk Test</b></td>
+            <td>Prueba funcional de campo</td>
+            <td><span class="badge badge-verde">&gt;400 m</span></td>
+            <td><span class="badge badge-ambar">250–400 m</span></td>
+            <td><span class="badge badge-rojo">&lt;250 m</span></td>
+          </tr>
+          <tr>
+            <td><b>PaO₂ basal</b></td>
+            <td>GAS arterial en reposo</td>
+            <td><span class="badge badge-verde">&gt;75 mmHg</span></td>
+            <td><span class="badge badge-ambar">60–75</span></td>
+            <td><span class="badge badge-rojo">&lt;60 mmHg</span></td>
+          </tr>
+          <tr>
+            <td><b>PaCO₂ basal</b></td>
+            <td>GAS arterial</td>
+            <td><span class="badge badge-verde">&lt;45 mmHg</span></td>
+            <td><span class="badge badge-ambar">45–50</span></td>
+            <td><span class="badge badge-rojo">&gt;50 mmHg</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="alert alert-purp mt-4">
+        <div class="alert-ico">📐</div>
+        <div>
+          <b>Fórmula ppoFEV₁ (sin gammagrafía):</b><br>
+          ppoFEV₁ = FEV₁ preop × (1 − n° segmentos a resecar / 19 segmentos totales)<br>
+          <span class="text-sm">Lobectomía inferior derecha = 5 segmentos → ppoFEV₁ = FEV₁ × (1 − 5/19) = FEV₁ × 0.74</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--purp-suave)">🫀</div>
+        <div><h3>Evaluación cardiovascular</h3><div class="sub">Riesgo cardíaco en cirugía torácica mayor</div></div>
+      </div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" style="background:var(--purp)">1</div>
+            <div class="step-content">
+              <strong>RCRI (Revised Cardiac Risk Index)</strong>
+              <p>Score ≥3 → riesgo cardiovascular mayor perioperatorio. Considerar ecocardiograma, prueba de esfuerzo o cateterismo según hallazgos.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--purp)">2</div>
+            <div class="step-content">
+              <strong>Función ventricular derecha (VD)</strong>
+              <p>Clave en cirugía torácica. HTAP preexistente → neumonectomía de altísimo riesgo. Eco con estrés o catéter de AP si sospecha de HTAP.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--purp)">3</div>
+            <div class="step-content">
+              <strong>Test de oclusión de la AP (neumonectomía)</strong>
+              <p>Ocluir arteria pulmonar del lado a resecar con catéter balón. PAPm &gt;35 mmHg o PVR &gt;600 → contraindicación relativa de neumonectomía.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--purp)">4</div>
+            <div class="step-content">
+              <strong>Arritmias perioperatorias</strong>
+              <p>FA postoperatoria en 10–40% de neumonectomías. Amiodarona profiláctica (200mg/d) reduce incidencia. Control de frecuencia preop si FA crónica.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--purp-suave)">📋</div>
+        <div><h3>Algoritmo de decisión ERS/ESTS</h3><div class="sub">Tres pasos para resecabilidad pulmonar</div></div>
+      </div>
+      <div class="card-body">
+        <div class="decision-block">
+          <div class="db-head" style="background:var(--verde-suave);">
+            <span class="badge badge-verde">Paso 1</span>
+            <span>Riesgo estándar — No más estudios</span>
+          </div>
+          <div class="db-body">
+            <p class="text-sm">FEV₁ y DLCO preop <b>ambos &gt;80%</b> → proceder sin evaluación funcional adicional</p>
+          </div>
+        </div>
+        <div class="decision-block">
+          <div class="db-head" style="background:var(--ambar-suave);">
+            <span class="badge badge-ambar">Paso 2</span>
+            <span>Calcular ppoDLCO y ppoFEV₁</span>
+          </div>
+          <div class="db-body">
+            <p class="text-sm">Si alguno de los dos &lt;80% → calcular valores postop predichos.<br>
+            Si ppoDLCO <b>Y</b> ppoFEV₁ &gt;60% → riesgo bajo, proceder.<br>
+            Si alguno 30–60% → ir a Paso 3.</p>
+          </div>
+        </div>
+        <div class="decision-block">
+          <div class="db-head" style="background:var(--rojo-suave);">
+            <span class="badge badge-rojo">Paso 3</span>
+            <span>Prueba de esfuerzo cardiopulmonar (CPET)</span>
+          </div>
+          <div class="db-body">
+            <p class="text-sm">VO₂ máx <b>&gt;20 mL/kg/min</b> → bajo riesgo, proceder.<br>
+            VO₂ máx <b>10–20</b> → riesgo intermedio, consenso multidisciplinario.<br>
+            VO₂ máx <b>&lt;10</b> → alto riesgo, contraindicación relativa.</p>
+          </div>
+        </div>
+        <div class="alert alert-teal">
+          <div class="alert-ico">💡</div>
+          <div><b>Prehabilitation 2024:</b> Si ppoDLCO o ppoFEV₁ 30–60%, considerar 4–8 semanas de rehabilitación pulmonar supervisada antes de cirugía para optimizar reserva funcional.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 3: DISPOSITIVOS ══ -->
+  <div class="section-label" id="dispositivos">
+    <div class="dot" style="background:var(--teal)"></div>
+    <h2>3 · Dispositivos de Aislamiento Pulmonar</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--teal-suave)">🔧</div>
+      <div><h3>Comparación de dispositivos</h3><div class="sub">Tubo de doble lumen vs bloqueador bronquial</div></div>
+    </div>
+    <div class="card-body">
+      <div class="device-compare">
+        <div class="device-card">
+          <div class="dc-head" style="background:var(--azul-suave);color:var(--azul);">
+            🔵 Tubo doble lumen izquierdo (TDL-I)
+          </div>
+          <div class="dc-body">
+            <p style="font-weight:600;margin-bottom:6px;">Primera elección en la mayoría de cirugías</p>
+            <ul>
+              <li>Aislamiento rápido y confiable</li>
+              <li>Permite aspiración independiente de cada pulmón</li>
+              <li>Posibilidad de CPAP al pulmón colapsado</li>
+              <li>Reposicionamiento fácil si falla</li>
+            </ul>
+            <hr style="margin:10px 0;border-color:#e2e8f0;">
+            <p style="font-weight:600;color:var(--rojo);margin-bottom:4px;">Desventajas</p>
+            <ul>
+              <li>Mayor tamaño → lesión laríngea/traqueal</li>
+              <li>Difícil en anatomía difícil de VAS</li>
+              <li>Requiere cambio si ventilación postop mecánica prolongada</li>
+            </ul>
+            <div style="margin-top:10px;">
+              <span class="badge badge-azul">Lobectomía</span>
+              <span class="badge badge-azul">Neumonectomía</span>
+              <span class="badge badge-azul">VATS</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="device-card">
+          <div class="dc-head" style="background:var(--verde-suave);color:var(--verde);">
+            🟢 Tubo doble lumen derecho (TDL-D)
+          </div>
+          <div class="dc-body">
+            <p style="font-weight:600;margin-bottom:6px;">Usar cuando se opera el bronquio izquierdo</p>
+            <ul>
+              <li>Neumectomía izquierda (no se puede TDL-I)</li>
+              <li>Lesiones en carina izquierda</li>
+              <li>Trasplante pulmonar izquierdo</li>
+            </ul>
+            <hr style="margin:10px 0;border-color:#e2e8f0;">
+            <p style="font-weight:600;color:var(--rojo);margin-bottom:4px;">Precauciones</p>
+            <ul>
+              <li>Bronquio derecho más corto → mal posicionamiento frecuente</li>
+              <li>Verificar que luz del lóbulo superior derecho no quede obstruida</li>
+              <li>Requiere fibroscopía rutinaria de confirmación</li>
+            </ul>
+            <div style="margin-top:10px;">
+              <span class="badge badge-verde">Neumonectomía izq.</span>
+              <span class="badge badge-verde">Trasplante pulmonar</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="device-card">
+          <div class="dc-head" style="background:var(--ambar-suave);color:var(--ambar);">
+            🟡 Bloqueador bronquial (BB)
+          </div>
+          <div class="dc-body">
+            <p style="font-weight:600;margin-bottom:6px;">Alternativa en situaciones específicas</p>
+            <ul>
+              <li>Intubación difícil prevista (se usa a través de TET estándar)</li>
+              <li>Paciente con traqueostomía</li>
+              <li>Anatomía traqueal anormal</li>
+              <li>Cuando se planea ventilación mecánica postop</li>
+              <li>Bloqueo lobar selectivo (preservar lóbulo sano)</li>
+            </ul>
+            <hr style="margin:10px 0;border-color:#e2e8f0;">
+            <p style="font-weight:600;color:var(--rojo);margin-bottom:4px;">Desventajas</p>
+            <ul>
+              <li>Colapso pulmonar más lento</li>
+              <li>No permite aspiración bidireccional independiente</li>
+              <li>Puede desplazarse con movimientos o posición</li>
+            </ul>
+            <div style="margin-top:10px;">
+              <span class="badge badge-ambar">Vía aérea difícil</span>
+              <span class="badge badge-ambar">Pediátrico</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-teal mt-4">
+        <div class="alert-ico">📏</div>
+        <div>
+          <b>Selección de talla del TDL (guías 2023):</b> Hombre alto &gt;170 cm → 41 Fr. Hombre promedio → 39 Fr. Mujer alta &gt;160 cm → 37 Fr. Mujer pequeña → 35 Fr.<br>
+          <span class="text-sm">Alternativa: TC medición del diámetro del bronquio principal izquierdo. TDL debe ser 1–2 mm menor que el diámetro del bronquio.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--teal-suave)">🔭</div>
+      <div><h3>Confirmación por fibrobroncoscopía (FBC)</h3><div class="sub">Protocolo obligatorio — estándar de cuidado</div></div>
+    </div>
+    <div class="card-body">
+      <div class="grid-2">
+        <div>
+          <p class="bold" style="margin-bottom:10px;">Protocolo de verificación TDL izquierdo</p>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num" style="background:var(--teal)">1</div>
+              <div class="step-content">
+                <strong>FBC por lumen bronquial (azul)</strong>
+                <p>Visualizar carina bronquial izquierda. El borde proximal del manguito bronquial debe verse apenas por debajo de la carina principal.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="background:var(--teal)">2</div>
+              <div class="step-content">
+                <strong>FBC por lumen traqueal (claro)</strong>
+                <p>Ver la carina principal. Confirmar que el manguito bronquial inflado NO hernia hacia la tráquea. Ver orificio del bronquio derecho libre.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="background:var(--teal)">3</div>
+              <div class="step-content">
+                <strong>Verificar en decúbito lateral</strong>
+                <p>El tubo puede desplazarse al girar al paciente. Siempre reconfirmar posición tras el posicionamiento.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="alert alert-rojo">
+            <div class="alert-ico">🚨</div>
+            <div><b>Signos de mal posicionamiento:</b>
+              <ul style="padding-left:16px;margin-top:4px;font-size:13px;">
+                <li>Pérdida de aire por el campo quirúrgico (fuga)</li>
+                <li>Saturación que no mejora al iniciar OLV</li>
+                <li>Presiones altas con VT bajo</li>
+                <li>El pulmón operado no colapsa adecuadamente</li>
+                <li>Capnografía bifásica o con muesca</li>
+              </ul>
+            </div>
+          </div>
+          <div class="alert alert-ambar">
+            <div class="alert-ico">⚠️</div>
+            <div><b>Frecuencia de mal posicionamiento:</b> 20–48% de los casos sin FBC. Con FBC de confirmación se reduce a &lt;4%. La FBC NO es opcional.</div>
+          </div>
+          <div class="alert alert-azul">
+            <div class="alert-ico">💡</div>
+            <div><b>Insuflación del manguito bronquial:</b> Mínimo volumen para sellar. Generalmente 1–3 mL. NO sobreinsuflir → lesión bronquial.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 4: INDUCCIÓN ══ -->
+  <div class="section-label" id="induccion">
+    <div class="dot" style="background:#0891b2"></div>
+    <h2>4 · Inducción y Posicionamiento</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:#cffafe)">💉</div>
+        <div><h3>Protocolo de inducción</h3><div class="sub">Selección de fármacos y secuencia</div></div>
+      </div>
+      <div class="card-body">
+        <table>
+          <thead><tr><th>Componente</th><th>Fármaco preferido</th><th>Consideraciones</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><b>Hipnótico</b></td>
+              <td>Propofol 1.5–2.5 mg/kg<br><span class="text-sm">o Etomidato si inestabilidad</span></td>
+              <td>Etomidato preserva función VD. Propofol TIVA reduce NVPO y broncoespasmo.</td>
+            </tr>
+            <tr>
+              <td><b>Analgésico</b></td>
+              <td>Fentanilo 2–3 µg/kg<br><span class="text-sm">o Remifentanilo TIVA</span></td>
+              <td>Remifentanilo en TIVA permite mejor analgesia intraop y despertar rápido. Anticipar hiperalgesia.</td>
+            </tr>
+            <tr>
+              <td><b>Relajante muscular</b></td>
+              <td>Rocuronio 0.6–1.2 mg/kg<br><span class="text-sm">o Cisatracurio (renal)</span></td>
+              <td>Bloqueo profundo para intubación con TDL (calibre mayor). Sugammadex para reversión si urgencia.</td>
+            </tr>
+            <tr>
+              <td><b>Mantenimiento</b></td>
+              <td>TIVA (Propofol + Remifentanilo)<br><span class="text-sm">o Sevoflurano ≤1 MAC</span></td>
+              <td>Sevoflurano &gt;1 MAC inhibe VHQ. TIVA preferida en EPOC severo, hiperreactividad bronquial. Evidencia de menor mortalidad con TIVA en torácica.</td>
+            </tr>
+            <tr>
+              <td><b>NVPO</b></td>
+              <td>Ondansetrón 4mg + Dexametasona 4mg</td>
+              <td>Dexametasona también reduce inflamación pulmonar. Alto riesgo de NVPO en torácica.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="alert alert-purp mt-4">
+          <div class="alert-ico">🧪</div>
+          <div><b>TIVA vs halogenados en torácica (metaanálisis 2023):</b> TIVA asociada a menor mortalidad a 1 año en cirugía oncológica pulmonar. Propofol preserva mejor la VHQ a concentraciones clínicas.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:#cffafe">🛏️</div>
+        <div><h3>Posicionamiento y monitoreo</h3><div class="sub">Decúbito lateral y accesos vasculares</div></div>
+      </div>
+      <div class="card-body">
+        <p class="bold" style="margin-bottom:10px;">Monitoreo mínimo recomendado</p>
+        <div class="chip-row" style="margin-bottom:14px;">
+          <span class="chip">📊 ECG 5 derivaciones</span>
+          <span class="chip">💉 Línea arterial radial</span>
+          <span class="chip">🌡️ Temperatura esofágica</span>
+          <span class="chip">🔵 BIS / índice hipnótico</span>
+          <span class="chip">💪 TOF (relajación neuromuscular)</span>
+          <span class="chip">🩸 Acceso venoso central (neumonectomía)</span>
+          <span class="chip">📈 SpO₂ en ambas extremidades sup (si sospecha compromiso vascular)</span>
+          <span class="chip">💨 Capnografía + espirometría en loop</span>
+        </div>
+        <hr class="divider">
+        <p class="bold" style="margin-bottom:10px;">Posición decúbito lateral — Puntos críticos</p>
+        <ul class="list-clean">
+          <li>Axila: rollo axilar bajo el tórax (NO en axila — lesión plexo braquial)</li>
+          <li>Cabeza alineada con columna vertebral</li>
+          <li>Brazo inferior en abducción &lt;90°, con apoyo</li>
+          <li>Pierna inferior semiflexionada, superior extendida con almohada</li>
+          <li>Ojos protegidos, sin presión corneal</li>
+          <li>Verificar posición TDL tras reposicionamiento (FBC)</li>
+          <li>Comprobar tensión arterial en ambos brazos (posición puede comprimir subclavia)</li>
+        </ul>
+        <div class="alert alert-ambar mt-4">
+          <div class="alert-ico">⚠️</div>
+          <div><b>Línea arterial:</b> Preferir el lado superior en decúbito lateral para evitar compresión. Si cirugía involucra la arteria pulmonar, catéter de AP puede ser necesario.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Analgesia regional -->
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--purp-suave)">💉</div>
+      <div><h3>Analgesia regional torácica — 2024</h3><div class="sub">Componente central del protocolo ERAS en cirugía torácica</div></div>
+    </div>
+    <div class="card-body">
+      <table>
+        <thead><tr><th>Técnica</th><th>Nivel / Abordaje</th><th>Indicación preferente</th><th>Evidencia</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>Epidural torácica (TEA)</b></td>
+            <td>T4–T8, catéter continuo</td>
+            <td>Toracotomía abierta. Gold standard histórico.</td>
+            <td><span class="badge badge-verde">Alta (Cochrane)</span></td>
+          </tr>
+          <tr>
+            <td><b>ESPB (Erector Spinae Plane Block)</b></td>
+            <td>T5 o T7, guía ecográfica</td>
+            <td>VATS, toracotomía, alternativa a TEA. Menos efectos hemodinámicos.</td>
+            <td><span class="badge badge-azul">Moderada-Alta 2023</span></td>
+          </tr>
+          <tr>
+            <td><b>PECS II / Serratus Plane Block</b></td>
+            <td>Línea medioaxilar, ecoguiado</td>
+            <td>VATS anterior, drenajes pleurales, analgesia de rescate.</td>
+            <td><span class="badge badge-azul">Moderada</span></td>
+          </tr>
+          <tr>
+            <td><b>Paravertebral torácico (PVB)</b></td>
+            <td>T3–T6, múltiples niveles o catéter</td>
+            <td>Alternativa a TEA con menos hipotensión. VATS y toracotomía.</td>
+            <td><span class="badge badge-verde">Alta</span></td>
+          </tr>
+          <tr>
+            <td><b>Intercostal (nervio intercostal)</b></td>
+            <td>T3–T8, intraoperatorio</td>
+            <td>Complemento analgésico en VATS. Cirujano lo aplica directamente.</td>
+            <td><span class="badge badge-azul">Moderada</span></td>
+          </tr>
+          <tr>
+            <td><b>Intratecal (morfina)</b></td>
+            <td>T4–L2, dosis única</td>
+            <td>Analgesia postop 12–24h. Morphina 0.3–0.5 mg IT.</td>
+            <td><span class="badge badge-ambar">Baja-Moderada</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="alert alert-teal mt-4">
+        <div class="alert-ico">🎯</div>
+        <div><b>Tendencia actual 2024:</b> El ESPB ha desplazado parcialmente al PVB como segunda línea tras TEA, por su mayor facilidad técnica y perfil de seguridad. En VATS ± cirugía robótica, ESPB bilateral o ESPB + bloqueo intercostal es el esquema predominante en centros de alto volumen.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 5: VENTILACIÓN OLV ══ -->
+  <div class="section-label" id="ventilacion">
+    <div class="dot" style="background:var(--verde)"></div>
+    <h2>5 · Estrategia Ventilatoria Protectora en OLV</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--verde-suave)">⚙️</div>
+      <div><h3>Parámetros ventilatorios recomendados — OLV</h3><div class="sub">Ventilación protectora de pulmón único — Consenso ESAIC/ERS 2024</div></div>
+    </div>
+    <div class="card-body">
+      <div class="param-grid">
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--verde-suave);color:var(--verde)">Volumen Tidal (VT)</div>
+          <div class="pb-val" style="color:var(--verde)">4–6 <span class="pb-unit">mL/kg PBI</span></div>
+          <div class="pb-sub">Peso corporal ideal. No peso real. VT &gt;8 mL/kg → VILI.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--azul-suave);color:var(--azul)">PEEP</div>
+          <div class="pb-val" style="color:var(--azul)">5–8 <span class="pb-unit">cmH₂O</span></div>
+          <div class="pb-sub">Individualizar. PEEP titulado por compliance dinámica o EIT.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--ambar-suave);color:var(--ambar)">Presión Plateau (Pplat)</div>
+          <div class="pb-val" style="color:var(--ambar)">&lt;25 <span class="pb-unit">cmH₂O</span></div>
+          <div class="pb-sub">Límite estricto. Si excede → reducir VT o PEEP.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--rojo-suave);color:var(--rojo)">Presión de Conducción (ΔP)</div>
+          <div class="pb-val" style="color:var(--rojo)">&lt;14 <span class="pb-unit">cmH₂O</span></div>
+          <div class="pb-sub">ΔP = Pplat − PEEP. Mejor predictor de VILI que VT o Pplat solos.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--purp-suave);color:var(--purp)">FR (frecuencia)</div>
+          <div class="pb-val" style="color:var(--purp)">12–16 <span class="pb-unit">rpm</span></div>
+          <div class="pb-sub">Ajustar para mantener PaCO₂ 40–50 mmHg. Hipercapnia permisiva aceptada.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--teal-suave);color:var(--teal)">FiO₂</div>
+          <div class="pb-val" style="color:var(--teal)">0.5–0.8</div>
+          <div class="pb-sub">Mínima para SpO₂ ≥90%. Iniciar 1.0 solo si hipoxemia refractaria.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--gris-1);color:var(--gris-6)">Relación I:E</div>
+          <div class="pb-val">1:2</div>
+          <div class="pb-sub">En EPOC o broncoespasmo: 1:2.5 a 1:3 para evitar auto-PEEP.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--gris-1);color:var(--gris-6)">Modo ventilatorio</div>
+          <div class="pb-val" style="font-size:16px;">PCV o VCV</div>
+          <div class="pb-sub">PCV: mejor distribución, menor Ppico. VCV: VT garantizado. Ambos aceptables.</div>
+        </div>
+      </div>
+
+      <div class="alert alert-rojo mt-4">
+        <div class="alert-ico">🚨</div>
+        <div>
+          <b>Presión de conducción (ΔP) — El parámetro más importante 2024:</b><br>
+          ΔP = Pplat − PEEP. Valores &gt;14 cmH₂O se asocian a mayor mortalidad y lesión pulmonar postoperatoria (LPO/ARDS). Calcular en cada paciente. Si ΔP alto → reducir VT primero, luego ajustar PEEP.
+        </div>
+      </div>
+
+      <div class="alert alert-ambar">
+        <div class="alert-ico">⚠️</div>
+        <div>
+          <b>Hipercapnia permisiva:</b> PaCO₂ hasta 55–60 mmHg es aceptable en ventilación protectora. Contraindicada en: HTAP grave, cor pulmonale descompensado, HIC, acidosis metabólica severa preexistente.
+        </div>
+      </div>
+
+      <div class="alert alert-teal">
+        <div class="alert-ico">🔄</div>
+        <div>
+          <b>Maniobras de reclutamiento:</b> Presión sostenida 30–40 cmH₂O × 30–40 seg al iniciar OLV o post-evento de desreclutamiento (desconexión accidental). NO usar de rutina sin hipoxemia o atelectasia demostrada. Siempre vigilar hemodinámica durante la maniobra.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transición a OLV -->
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--verde-suave)">🔄</div>
+      <div><h3>Secuencia de inicio de OLV</h3><div class="sub">Paso a paso desde ventilación bipulmonar</div></div>
+    </div>
+    <div class="card-body">
+      <div class="steps">
+        <div class="step">
+          <div class="step-num" style="background:var(--verde)">1</div>
+          <div class="step-content">
+            <strong>Preinsuflación (prevención hipoxemia)</strong>
+            <p>Antes de iniciar OLV: FiO₂ 1.0 × 3–5 min. Opcional pero recomendado en pacientes con riesgo alto de hipoxemia (SpO₂ basal &lt;95%, EPOC, obesidad). Crea reserva de O₂.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--verde)">2</div>
+          <div class="step-content">
+            <strong>Confirmar posición TDL con FBC en decúbito lateral</strong>
+            <p>Antes de pedir al cirujano el colapso. Verificar ambos lúmenes permeables, carina visible, sin herniación del manguito.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--verde)">3</div>
+          <div class="step-content">
+            <strong>Clampear el lumen del pulmón no dependiente</strong>
+            <p>Desconectar de la Y y clampear. El pulmón operado colapsa por reabsorción de O₂ y deja de contribuir al intercambio. Tiempo de colapso: 5–15 min.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--verde)">4</div>
+          <div class="step-content">
+            <strong>Ajustar parámetros ventilatorios protectores</strong>
+            <p>VT 4–6 mL/kg PBI, PEEP 5–8, FR para mantener PaCO₂ aceptable. Reducir FiO₂ gradualmente al mínimo tolerable.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--verde)">5</div>
+          <div class="step-content">
+            <strong>Gasometría arterial basal a los 10–15 min de OLV</strong>
+            <p>Establecer valores basales de PaO₂, PaCO₂, pH. Guiar ajustes subsecuentes. Confirmar presión de conducción ΔP.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--verde)">6</div>
+          <div class="step-content">
+            <strong>Vigilancia continua</strong>
+            <p>SpO₂, capnografía, curvas de flujo-volumen y presión-volumen en tiempo real. Detectar auto-PEEP, broncoespasmo, desplazamiento del TDL.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 6: HIPOXEMIA ══ -->
+  <div class="section-label" id="hipoxemia">
+    <div class="dot" style="background:var(--rojo)"></div>
+    <h2>6 · Manejo de Hipoxemia Durante OLV</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="alert alert-rojo" style="border-radius:var(--radius);border:1px solid var(--rojo-med);margin-bottom:16px;">
+    <div class="alert-ico">🚨</div>
+    <div>
+      <b>Definición de hipoxemia en OLV: SpO₂ &lt; 90% o PaO₂ &lt; 60 mmHg</b> — Incidencia 5–10% en posición decúbito lateral. Actuar de forma sistemática y escalonada. No saltar pasos.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--rojo-suave)">📊</div>
+      <div><h3>Algoritmo escalonado de hipoxemia — OLV</h3><div class="sub">De menor a mayor intervención</div></div>
+    </div>
+    <div class="card-body">
+      <!-- Paso 1 -->
+      <div style="border:2px solid var(--azul-med);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:12px;">
+        <div style="background:var(--azul-suave);padding:12px 16px;display:flex;align-items:center;gap:12px;">
+          <span class="badge badge-azul" style="font-size:12px;padding:5px 14px;">Paso 1 — Primero siempre</span>
+          <span class="bold">Verificar posición del TDL</span>
+        </div>
+        <div style="padding:14px 16px;font-size:13px;">
+          <p>El desplazamiento del TDL es la causa más frecuente de hipoxemia. Hacer FBC INMEDIATAMENTE antes de cualquier otra intervención. Reposicionar si es necesario.</p>
+        </div>
+      </div>
+
+      <!-- Paso 2 -->
+      <div style="border:2px solid var(--verde-med);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:12px;">
+        <div style="background:var(--verde-suave);padding:12px 16px;display:flex;align-items:center;gap:12px;">
+          <span class="badge badge-verde" style="font-size:12px;padding:5px 14px;">Paso 2</span>
+          <span class="bold">Aumentar FiO₂ a 1.0</span>
+        </div>
+        <div style="padding:14px 16px;font-size:13px;">
+          <p>Rápido y simple. Aumenta gradiente alveolo-capilar de O₂ en el pulmón ventilado. Puede corregir hipoxemia leve-moderada. Si no mejora en 2 min → siguiente paso.</p>
+        </div>
+      </div>
+
+      <!-- Paso 3 -->
+      <div style="border:2px solid var(--ambar-med);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:12px;">
+        <div style="background:var(--ambar-suave);padding:12px 16px;display:flex;align-items:center;gap:12px;">
+          <span class="badge badge-ambar" style="font-size:12px;padding:5px 14px;">Paso 3</span>
+          <span class="bold">CPAP al pulmón no dependiente (colapsado)</span>
+        </div>
+        <div style="padding:14px 16px;font-size:13px;">
+          <div class="grid-2">
+            <div>
+              <p><b>CPAP 1–5 cmH₂O</b> con FiO₂ 1.0 al lumen bronquial del pulmón colapsado.</p>
+              <p style="margin-top:8px;">Mecanismo: mantiene la vía aérea abierta → reduce shunt → mejora oxigenación sin interferir significativamente con el campo quirúrgico si el pulmón ya estaba bien colapsado.</p>
+            </div>
+            <div>
+              <div class="alert alert-ambar mb-0">
+                <div class="alert-ico">⚠️</div>
+                <div>CPAP &gt;5 cmH₂O puede interferir con la visión quirúrgica. Comunicar al cirujano antes de iniciar. Generalmente bien tolerado en VATS.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paso 4 -->
+      <div style="border:2px solid var(--rojo-med);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:12px;">
+        <div style="background:var(--rojo-suave);padding:12px 16px;display:flex;align-items:center;gap:12px;">
+          <span class="badge badge-rojo" style="font-size:12px;padding:5px 14px;">Paso 4</span>
+          <span class="bold">PEEP al pulmón dependiente (ventilado) — Titulación</span>
+        </div>
+        <div style="padding:14px 16px;font-size:13px;">
+          <p>Si PEEP actual &lt;5 cmH₂O → subir a 5–8 cmH₂O. Previene atelectasias en el pulmón ventilado y mejora la V/Q. Vigilar que ΔP no supere 14 cmH₂O. Si PEEP ya estaba a 5–8 y no hay respuesta → no incrementar más (puede disminuir retorno venoso).</p>
+        </div>
+      </div>
+
+      <!-- Paso 5 -->
+      <div style="border:2px solid var(--rojo-med);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:12px;">
+        <div style="background:#fee2e2;padding:12px 16px;display:flex;align-items:center;gap:12px;">
+          <span class="badge badge-rojo" style="font-size:12px;padding:5px 14px;">Paso 5</span>
+          <span class="bold">Maniobra de reclutamiento + reajuste PEEP</span>
+        </div>
+        <div style="padding:14px 16px;font-size:13px;">
+          <p>Si sospecha de atelectrauma o desreclutamiento en el pulmón dependiente: presión sostenida 30 cmH₂O × 30 seg, luego PEEP 8 cmH₂O y bajar VT si ΔP &gt;14. Vigilar PAS durante la maniobra.</p>
+        </div>
+      </div>
+
+      <!-- Paso 6 -->
+      <div style="border:2px solid #7f1d1d;border-radius:var(--radius-sm);overflow:hidden;">
+        <div style="background:#7f1d1d;padding:12px 16px;display:flex;align-items:center;gap:12px;">
+          <span style="background:#fecaca;color:#7f1d1d;padding:5px 14px;border-radius:12px;font-weight:700;font-size:12px;">Paso 6 — Último recurso</span>
+          <span class="bold" style="color:white;">Ventilación bifásica periódica / Retomar biventilación</span>
+        </div>
+        <div style="padding:14px 16px;font-size:13px;">
+          <ul class="list-clean mb-0">
+            <li>Insuflar pulmón colapsado cada 5–10 min con 2–3 respiraciones → mejora temporal de SpO₂</li>
+            <li>Si hipoxemia persistente &gt;30 min sin respuesta → retomar ventilación bipulmonar</li>
+            <li>Comunicar al cirujano → adaptar estrategia quirúrgica (pausa, cambio de abordaje)</li>
+            <li>Considerar causas corregibles: broncoespasmo, neumotórax a tensión del lado ventilado, taponamiento</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="alert alert-purp mt-4">
+        <div class="alert-ico">💊</div>
+        <div>
+          <b>Farmacología de la hipoxemia refractaria:</b><br>
+          • Almitrina 0.5 µg/kg/min IV (potencia la VHQ — disponibilidad limitada)<br>
+          • Óxido nítrico inhalado 5–40 ppm (vasodilatador pulmonar selectivo en pulmón ventilado)<br>
+          • NO: vasoconstrictores sistémicos (reducen VHQ al elevar PAP pulmón sano)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 7: POSTOPERATORIO ══ -->
+  <div class="section-label" id="postop">
+    <div class="dot" style="background:var(--teal)"></div>
+    <h2>7 · Manejo Postoperatorio</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--teal-suave)">🔁</div>
+      <div><h3>Transición y reventilación al terminar la cirugía</h3><div class="sub">Protocolo de extubación y recuperación</div></div>
+    </div>
+    <div class="card-body">
+      <div class="timeline">
+        <div class="tl-col">
+          <div class="tl-head" style="background:var(--azul-suave);color:var(--azul)">
+            <div class="dot" style="background:var(--azul)"></div>
+            Cierre / Reventilación
+          </div>
+          <div class="tl-body">
+            <div class="tl-item">
+              <div class="t-tag">Reinflado del pulmón</div>
+              <p>Al cierre: ventilar ambos pulmones. Presión suave 20–30 cmH₂O × 30 seg para reexpander. Comunicar al cirujano.</p>
+            </div>
+            <div class="tl-item">
+              <div class="t-tag">Aspiración</div>
+              <p>Aspirar secreciones de ambos lúmenes del TDL antes de cambiar a TET simple si es necesario.</p>
+            </div>
+            <div class="tl-item">
+              <div class="t-tag">FiO₂</div>
+              <p>Reducir gradualmente a &lt;0.5 para evitar atelectasias por reabsorción y toxicidad por O₂.</p>
+            </div>
+          </div>
+        </div>
+        <div class="tl-col">
+          <div class="tl-head" style="background:var(--verde-suave);color:var(--verde)">
+            <div class="dot" style="background:var(--verde)"></div>
+            UCPA (0–2h)
+          </div>
+          <div class="tl-body">
+            <div class="tl-item">
+              <div class="t-tag">Extubación</div>
+              <p>Extubación precoz en sala de operaciones. Meta: despertar y extubación en &lt;30 min del cierre. Evitar VM prolongada.</p>
+            </div>
+            <div class="tl-item">
+              <div class="t-tag">Criterios</div>
+              <p>Consciente, obedece órdenes, SpO₂ ≥95% con FiO₂ 0.3–0.4, FR &lt;20, TOF ≥0.9, fuerza adecuada.</p>
+            </div>
+            <div class="tl-item">
+              <div class="t-tag">Analgesia</div>
+              <p>Continuar epidural o bloqueo regional. Paracetamol IV + AINE si no contraindicado. Opioides como rescate.</p>
+            </div>
+          </div>
+        </div>
+        <div class="tl-col">
+          <div class="tl-head" style="background:var(--ambar-suave);color:var(--ambar)">
+            <div class="dot" style="background:var(--ambar)"></div>
+            Sala / 24–48h
+          </div>
+          <div class="tl-body">
+            <div class="tl-item">
+              <div class="t-tag">Fisioterapia</div>
+              <p>Iniciar respiración profunda, espirometría incentiva y movilización activa en las primeras 6–12h.</p>
+            </div>
+            <div class="tl-item">
+              <div class="t-tag">Drenaje pleural</div>
+              <p>Vigilar débito, fugas aéreas y expansión pulmonar. Protocolo digital de drenaje (Thopaz) reduce estancia.</p>
+            </div>
+            <div class="tl-item">
+              <div class="t-tag">Movilización</div>
+              <p>Deambulación el mismo día o al día siguiente. Protocolo ERAS reduce complicaciones 30%.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--teal-suave)">💨</div>
+        <div><h3>VNI / HFNO postoperatoria</h3><div class="sub">Soporte respiratorio no invasivo</div></div>
+      </div>
+      <div class="card-body">
+        <table>
+          <thead><tr><th>Dispositivo</th><th>Indicación</th><th>Parámetros iniciales</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><b>HFNO</b><br>(cánula nasal de alto flujo)</td>
+              <td>Primera línea post-extubación si SpO₂ &lt;94% con O₂ convencional. Profilaxis en pacientes de alto riesgo (neumectomía, EPOC, obesos).</td>
+              <td>Flujo: 40–60 L/min. FiO₂ titulada. Temperatura: 37°C.</td>
+            </tr>
+            <tr>
+              <td><b>VNI (BiPAP)</b></td>
+              <td>Fallo hipercápnico postop. EPOC con hipercapnia. Atelectasia masiva refractaria a fisioterapia. Fracaso de HFNO.</td>
+              <td>IPAP 10–14 / EPAP 4–6 cmH₂O. Titular SpO₂ ≥94%.</td>
+            </tr>
+            <tr>
+              <td><b>CPAP nasal</b></td>
+              <td>Atelectasias postop. Hipoxemia leve-moderada sin hipercapnia. Complemento de HFNO nocturno.</td>
+              <td>CPAP 5–8 cmH₂O. Intermitente si hay intolerancia.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="alert alert-rojo mt-4">
+          <div class="alert-ico">🚨</div>
+          <div><b>VNI contraindicada en fístula broncopleural activa</b> — puede agravar fuga aérea. También en neumectomía reciente: riesgo de mediastinalización.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--teal-suave)">📋</div>
+        <div><h3>Protocolo ERAS en cirugía torácica</h3><div class="sub">Enhanced Recovery After Surgery 2023</div></div>
+      </div>
+      <div class="card-body">
+        <p class="bold" style="margin-bottom:10px;">Elementos esenciales</p>
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--purp-suave);color:var(--purp)">Preoperatorio</div>
+          <div class="proto-action">
+            <ul>
+              <li>Evaluación y optimización nutricional</li>
+              <li>Cese de tabaquismo ≥4 semanas antes</li>
+              <li>Rehabilitación preoperatoria (prehab) en alto riesgo</li>
+              <li>Información y expectativas al paciente</li>
+            </ul>
+          </div>
+        </div>
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--azul-suave);color:var(--azul)">Intraoperatorio</div>
+          <div class="proto-action">
+            <ul>
+              <li>Ventilación protectora (VT bajo, PEEP, baja FiO₂)</li>
+              <li>Analgesia regional (ESPB, PVB, TEA)</li>
+              <li>Analgesia multimodal (paracetamol, AINE, dexametasona)</li>
+              <li>Restricción hídrica (GDT — goal-directed therapy)</li>
+              <li>Normotermia activa</li>
+              <li>TIVA si disponible (menos NVPO, mejor VHQ)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--verde-suave);color:var(--verde)">Postoperatorio</div>
+          <div class="proto-action">
+            <ul>
+              <li>Extubación en quirófano</li>
+              <li>Movilización temprana ≤6h</li>
+              <li>Fisioterapia respiratoria desde el día 0</li>
+              <li>HFNO profiláctica en alto riesgo</li>
+              <li>Nutrición oral temprana (4–6h)</li>
+              <li>Protocolo digital de drenaje pleural</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 8: COMPLICACIONES ══ -->
+  <div class="section-label" id="complicaciones">
+    <div class="dot" style="background:var(--rojo)"></div>
+    <h2>8 · Complicaciones y Manejo</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--rojo-suave)">⚠️</div>
+      <div><h3>Complicaciones perioperatorias mayores</h3><div class="sub">Diagnóstico y manejo inmediato</div></div>
+    </div>
+    <div class="card-body">
+      <div class="comp-row">
+        <div class="comp-icon">🫁</div>
+        <div class="comp-content">
+          <div class="c-title">Lesión pulmonar aguda postneumonectomía (ALI/ARDS)</div>
+          <p>Incidencia 3–7% neumonectomía, 1–2% lobectomía. Infiltrado bilateral, PaO₂/FiO₂ &lt;300, sin ICC. Fisiopatología: sobredistensión del pulmón remanente por OLV, inflamación, isquemia-reperfusión. Tratamiento: ventilación ultraprotectora, restricción hídrica estricta, posición prono si P/F &lt;150, considerar ECMO si refractario.</p>
+        </div>
+        <div class="comp-sev"><span class="badge badge-rojo">Mortalidad 40–50%</span></div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-icon">💓</div>
+        <div class="comp-content">
+          <div class="c-title">Fibrilación auricular postoperatoria (FAPO)</div>
+          <p>Complicación más frecuente tras cirugía torácica mayor (10–40%). Pico: 2–3 días postop. Factores de riesgo: neumonectomía, edad &gt;60, extensión de resección. Manejo: amiodarona IV 150–300 mg bolo + 900 mg en 24h; betabloqueantes; cardioversión eléctrica si inestabilidad hemodinámica; anticoagulación si &gt;48h.</p>
+        </div>
+        <div class="comp-sev"><span class="badge badge-ambar">Frecuente</span></div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-icon">🌬️</div>
+        <div class="comp-content">
+          <div class="c-title">Fístula broncopleural (FBP)</div>
+          <p>Dehiscencia del muñón bronquial. Más frecuente en neumonectomía derecha, postradioterapia, diabetes, malnutrición. Presentación: fuga aérea persistente, neumotórax, mediastinitis. Sospecha: descenso del nivel líquido en RX en neumonectomía. Manejo: drenaje pleural, cirugía de revisión, colgajos musculares.</p>
+        </div>
+        <div class="comp-sev"><span class="badge badge-rojo">Grave</span></div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-icon">🩸</div>
+        <div class="comp-content">
+          <div class="c-title">Hemorragia intratorácica</div>
+          <p>Riesgo aumentado en reoperaciones y adherencias pleurales. Signos: taquicardia, hipotensión, anemia aguda, débito sanguinolento por drenaje &gt;200 mL/h × 2h. Manejo: transfusión, corrección de coagulopatía, reintervención quirúrgica urgente si no se estabiliza.</p>
+        </div>
+        <div class="comp-sev"><span class="badge badge-rojo">Urgencia</span></div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-icon">🔵</div>
+        <div class="comp-content">
+          <div class="c-title">Hernia cardíaca postoperatoria</div>
+          <p>Rara pero catastrófica. Tras neumonectomía con apertura del pericardio. Corazón hernia hacia el espacio pleural vacío. Presentación: súbita desaturación, hipotensión, PVJ ingurgitada, sin pulso. TC de urgencia. Tratamiento quirúrgico inmediato. No posicionar en decúbito lateral hacia el lado operado.</p>
+        </div>
+        <div class="comp-sev"><span class="badge badge-rojo">Catastrófica</span></div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-icon">🔴</div>
+        <div class="comp-content">
+          <div class="c-title">Torsión del lóbulo remanente</div>
+          <p>Tras lobectomía superior, el lóbulo medio o inferior puede rotar sobre su pedículo vascular. Presentación: atelectasia masiva aguda, hipoxemia refractaria, infarto pulmonar. TC con contraste. Reintervención urgente para destorsionar o resecar.</p>
+        </div>
+        <div class="comp-sev"><span class="badge badge-rojo">Urgencia</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CHEAT SHEET ══ -->
+  <div class="section-label" id="cheatsheet">
+    <div class="dot" style="background:var(--gris-6)"></div>
+    <h2>9 · Cheat Sheet — Resumen Ejecutivo</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--azul-suave)">📋</div>
+      <div><h3>Acciones rápidas del anestesiólogo de tórax</h3><div class="sub">De bolsillo</div></div>
+    </div>
+    <div class="card-body">
+      <table>
+        <thead>
+          <tr><th>Situación</th><th>Acción inmediata</th><th>Meta / Parámetro</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Inicio de OLV</b></td>
+            <td>FiO₂ 1.0 × 3 min → FBC → clampeo → ajustar VT 4–6 mL/kg PBI + PEEP 5–8</td>
+            <td>ΔP &lt;14, Pplat &lt;25</td>
+          </tr>
+          <tr>
+            <td><b>SpO₂ cae &lt;90%</b></td>
+            <td>FBC para posición TDL → FiO₂ 1.0 → CPAP 2–5 al pulmón colapsado → ajustar PEEP → reclutamiento</td>
+            <td>SpO₂ ≥90% / PaO₂ ≥60</td>
+          </tr>
+          <tr>
+            <td><b>ΔP &gt;14 cmH₂O</b></td>
+            <td>Reducir VT 1 mL/kg → si persiste, ajustar PEEP → descartar broncoespasmo / auto-PEEP</td>
+            <td>ΔP &lt;14 siempre</td>
+          </tr>
+          <tr>
+            <td><b>Pplat &gt;25 cmH₂O</b></td>
+            <td>Reducir VT → aumentar FR compensatoriamente → aceptar hipercapnia permisiva</td>
+            <td>PaCO₂ hasta 55–60 aceptable</td>
+          </tr>
+          <tr>
+            <td><b>Broncoespasmo intraop</b></td>
+            <td>Profundizar anestesia (propofol, ketamina) → salbutamol inhalado por TET → ipratropio → magnesio 1.5 g IV</td>
+            <td>FR &lt;18, sin auto-PEEP</td>
+          </tr>
+          <tr>
+            <td><b>Hipotensión en OLV</b></td>
+            <td>Verificar auto-PEEP (desconectar y escuchar exhalación prolongada) → norepinefrina → volumen si hipovolemia</td>
+            <td>PAM ≥65 mmHg</td>
+          </tr>
+          <tr>
+            <td><b>TDL mal posicionado</b></td>
+            <td>FBC diagnóstica → reposicionar bajo visión fibroscópica directa</td>
+            <td>Manguito visible bajo carina</td>
+          </tr>
+          <tr>
+            <td><b>Criterios para extubación</b></td>
+            <td>Consciente + TOF ≥0.9 + SpO₂ ≥95% FiO₂ 0.3 + FR &lt;20 + capaz de elevar cabeza 5 seg</td>
+            <td>Extubación en QX preferida</td>
+          </tr>
+          <tr>
+            <td><b>Hipoxemia post-extubación</b></td>
+            <td>HFNO 40–60 L/min FiO₂ titulada → VNI si hipercapnia → reintubación si deterioro</td>
+            <td>SpO₂ ≥94%</td>
+          </tr>
+          <tr>
+            <td><b>FA postoperatoria</b></td>
+            <td>Amiodarona 150 mg IV × 10 min → 900 mg en 24h. Betabloqueante si FC &gt;120 y estable.</td>
+            <td>FC &lt;110, ritmo sinusal</td>
+          </tr>
+          <tr>
+            <td><b>Sospecha ARDS postneumonectomía</b></td>
+            <td>P/F &lt;300 + infiltrado bilateral → restricción hídrica estricta → VT 4 mL/kg → prono si P/F &lt;150</td>
+            <td>P/F objetivo &gt;200</td>
+          </tr>
+          <tr>
+            <td><b>GLP-1 / hernia cardíaca</b></td>
+            <td>NO posicionar en DL al lado operado tras neumonectomía con apertura de pericardio. TC urgente si súbito colapso.</td>
+            <td>Cirugía emergente</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Peso corporal ideal -->
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--gris-1)">📐</div>
+      <div><h3>Fórmulas de referencia rápida</h3><div class="sub">Cálculos frecuentes en anestesia torácica</div></div>
+    </div>
+    <div class="card-body">
+      <div class="grid-2">
+        <div>
+          <div class="alert alert-azul mb-0">
+            <div class="alert-ico">📐</div>
+            <div>
+              <b>Peso corporal ideal (PBI)</b><br>
+              ♂ Hombre: PBI = 50 + 0.91 × (talla cm − 152.4)<br>
+              ♀ Mujer: PBI = 45.5 + 0.91 × (talla cm − 152.4)<br>
+              <span class="text-sm">Usar PBI, NUNCA peso real para calcular VT.</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="alert alert-verde mb-0">
+            <div class="alert-ico">📐</div>
+            <div>
+              <b>Presión de conducción (ΔP)</b><br>
+              ΔP = Pplat − PEEP<br>
+              <b>ppoFEV₁</b> = FEV₁ preop × (1 − n° seg. resecados / 19)<br>
+              <b>VT máximo</b> en OLV = 6 mL/kg PBI
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<footer class="site-footer">
+  <p>Guía de Ventilación Unipulmonar · Cirugía de Tórax · Anestesiología · Nivel Especialista</p>
+  <p style="margin-top:4px;opacity:.6;">Basada en guías ERS/ESTS 2022, ESAIC 2024, ERAS Society Thoracic 2023. Solo para referencia clínica y uso educativo.</p>
+</footer>
+
+</body>
+</html>

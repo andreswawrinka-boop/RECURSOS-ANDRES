@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="es" data-palette="indigo" data-design="A">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diseño Experimental en Bioestadística · Dr. Andrés Robayo</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0f2744;--navy-mid:#1a3a5c;
+  --teal:#0d7a6e;--teal-light:#e6f4f2;
+  --amber:#b85c00;--amber-light:#fdf3e7;
+  --red:#991b1b;--red-light:#fef2f2;
+  --purple:#5b21b6;--purple-light:#ede9fe;
+  --green:#166534;--green-light:#dcfce7;
+  --indigo:#1e3a8a;--indigo-light:#dbeafe;
+  --gray-50:#f8f9fa;--gray-100:#f1f3f5;
+  --gray-400:#868e96;--gray-600:#495057;
+  --border:#dee2e6;
+  --serif:'Source Serif 4',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --mono:'DM Mono',monospace;
+}
+[data-palette="oceano"]{--navy:#0f2744;--navy-mid:#1a3a5c;--teal:#0d7a6e;--teal-light:#e6f4f2;--amber:#b85c00;--amber-light:#fdf3e7;}
+[data-palette="bosque"]{--navy:#1a3d2b;--navy-mid:#2d5a3d;--teal:#3a7d44;--teal-light:#e8f5e9;--amber:#8d6e1a;--amber-light:#fffde7;}
+[data-palette="atardecer"]{--navy:#4a1942;--navy-mid:#6b2d5e;--teal:#c0392b;--teal-light:#fde8e8;--amber:#e67e22;--amber-light:#fff3e0;}
+[data-palette="pizarra"]{--navy:#2d3748;--navy-mid:#4a5568;--teal:#4a90a4;--teal-light:#e6f3f8;--amber:#c09040;--amber-light:#fdf8ee;}
+[data-palette="cereza"]{--navy:#5c1a2e;--navy-mid:#7d2a42;--teal:#c0394f;--teal-light:#fde8ee;--amber:#d4822a;--amber-light:#fff3e6;}
+[data-palette="indigo"]{--navy:#1e2460;--navy-mid:#2d3580;--teal:#4a67d4;--teal-light:#eaedfa;--amber:#a05c00;--amber-light:#fff8e6;}
+[data-design="B"] .cover{background:linear-gradient(135deg,#eef2ff 0%,#eaedfa 55%,#fdf3e7 100%) !important;border-bottom:4px solid var(--teal);}
+[data-design="B"] .cover h1,[data-design="B"] .cover h1 em{color:var(--navy) !important;}
+[data-design="B"] .cover-tag{color:var(--teal) !important;opacity:1;}
+[data-design="B"] .cover-subtitle,[data-design="B"] .cover-meta-value{color:var(--gray-600) !important;}
+[data-design="B"] .cover-meta-label{color:var(--gray-400) !important;}
+[data-design="B"] .cover-rule{background:var(--teal) !important;}
+[data-design="B"] .cover::before,[data-design="B"] .cover::after{display:none;}
+[data-design="B"] .section-header{border-bottom:3px solid var(--teal);}
+[data-design="B"] .section-number{background:var(--navy);color:white;}
+[data-design="B"] .section-title{color:var(--teal);}
+[data-design="B"] .tab-btn.active{background:var(--teal);}
+[data-design="B"] thead th{background:var(--teal);}
+[data-design="B"] body{background:#fafbfc;}
+[data-design="B"] .page{box-shadow:0 0 40px rgba(0,0,0,.06);}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--serif);font-size:10.5pt;color:#212529;background:white;line-height:1.75;}
+.page{max-width:860px;margin:0 auto;width:100%;}
+.tab-nav{display:flex;gap:0;border-bottom:2px solid var(--navy);position:sticky;top:0;z-index:100;background:white;}
+.tab-btn{font-family:var(--sans);font-size:8.5pt;font-weight:600;padding:11px 20px;border:none;background:var(--gray-100);color:var(--gray-600);cursor:pointer;letter-spacing:.06em;text-transform:uppercase;border-right:1px solid var(--border);transition:all .2s;}
+.tab-btn:hover{background:var(--teal-light);color:var(--teal);}
+.tab-btn.active{background:var(--navy);color:white;}
+.tab-content{display:none;width:100%;}
+.tab-content.active{display:block;width:100%;}
+.palette-btn{position:fixed;top:14px;right:18px;z-index:9999;background:var(--navy);color:white;border:none;border-radius:50%;width:40px;height:40px;font-size:18px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.25);transition:transform .2s;}
+.palette-btn:hover{transform:scale(1.1);}
+.palette-panel{position:fixed;top:62px;right:18px;z-index:9998;background:white;border:1px solid var(--border);border-radius:10px;padding:14px;box-shadow:0 8px 32px rgba(0,0,0,.15);display:none;flex-direction:column;gap:8px;}
+.palette-panel.open{display:flex;}
+.palette-panel-title{font-family:var(--sans);font-size:8pt;color:var(--gray-400);letter-spacing:.1em;text-transform:uppercase;}
+.palette-options{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.palette-opt{font-family:var(--sans);font-size:8.5pt;font-weight:500;padding:7px 12px;border-radius:6px;cursor:pointer;border:2px solid transparent;transition:all .15s;color:white;}
+.palette-opt:hover,.palette-opt.sel{border-color:#fff;box-shadow:0 0 0 2px var(--teal);}
+.po-oceano{background:#0f2744;}.po-bosque{background:#1a3d2b;}
+.po-atardecer{background:#4a1942;}.po-pizarra{background:#2d3748;}
+.po-cereza{background:#5c1a2e;}.po-indigo{background:#1e2460;}
+.design-switcher{position:fixed;top:60px;right:66px;z-index:9999;display:flex;flex-direction:column;gap:4px;}
+.ds-label{font-family:var(--sans);font-size:7pt;color:var(--gray-400);text-transform:uppercase;letter-spacing:.1em;text-align:center;}
+.ds-btns{display:flex;gap:4px;}
+.ds-btn{font-family:var(--sans);font-size:8pt;font-weight:600;padding:5px 9px;border:2px solid var(--border);border-radius:5px;cursor:pointer;background:white;color:var(--navy);transition:all .2s;}
+.ds-btn.active,.ds-btn:hover{background:var(--navy);color:white;border-color:var(--navy);}
+.cover{background:var(--navy);color:white;padding:50px 56px 42px;position:relative;overflow:hidden;}
+.cover::before{content:"";position:absolute;top:-80px;right:-80px;width:380px;height:380px;border-radius:50%;background:rgba(255,255,255,.03);}
+.cover::after{content:"";position:absolute;bottom:-50px;left:240px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.025);}
+.cover-tag{font-family:var(--sans);font-size:8pt;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:20px;}
+.cover h1{font-family:var(--serif);font-size:27pt;font-weight:300;line-height:1.15;color:white;margin-bottom:12px;max-width:600px;}
+.cover h1 em{font-style:italic;font-weight:600;color:#7aa7ff;}
+.cover-subtitle{font-family:var(--sans);font-size:9.5pt;color:rgba(255,255,255,.6);margin-bottom:36px;font-weight:300;line-height:1.5;max-width:640px;}
+.cover-meta{display:flex;gap:28px;padding-top:26px;border-top:1px solid rgba(255,255,255,.14);flex-wrap:wrap;}
+.cover-meta-label{font-family:var(--sans);font-size:7pt;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);display:block;margin-bottom:2px;}
+.cover-meta-value{font-family:var(--sans);font-size:9pt;color:rgba(255,255,255,.88);}
+.cover-rule{width:52px;height:3px;background:#7aa7ff;margin-bottom:22px;border-radius:2px;}
+.content{padding:36px 56px;width:100%;box-sizing:border-box;}
+.section{margin-bottom:34px;}
+.section-header{display:flex;align-items:baseline;gap:12px;margin-bottom:13px;padding-bottom:8px;border-bottom:2px solid var(--navy);}
+.section-number{font-family:var(--mono);font-size:7.5pt;font-weight:500;color:var(--teal);background:var(--teal-light);padding:2px 8px;border-radius:3px;flex-shrink:0;}
+.section-title{font-family:var(--serif);font-size:14pt;font-weight:600;color:var(--navy);line-height:1.2;}
+h3{font-family:var(--sans);font-size:9pt;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--navy-mid);margin:15px 0 8px;}
+h3::before{content:"▸ ";color:var(--teal);}
+p{font-size:10.5pt;line-height:1.75;color:var(--gray-600);margin-bottom:8px;}
+.lead{font-size:11pt;color:#343a40;}
+.definition{background:var(--navy);padding:13px 17px;border-radius:6px;margin:10px 0;}
+.definition-label{font-family:var(--sans);font-size:7pt;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#7aa7ff;margin-bottom:4px;}
+.definition p{color:rgba(255,255,255,.88);font-size:10pt;margin:0;line-height:1.62;}
+.callout{padding:10px 14px;border-radius:5px;margin:9px 0;border-left:4px solid;}
+.callout-title{font-family:var(--sans);font-size:7.5pt;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+.callout p{margin:0;font-size:9.5pt;line-height:1.62;}
+.callout.clinical{background:var(--teal-light);border-color:var(--teal);}
+.callout.clinical .callout-title{color:var(--teal);}
+.callout.clinical p{color:#173a52;}
+.callout.warning{background:var(--amber-light);border-color:var(--amber);}
+.callout.warning .callout-title{color:var(--amber);}
+.callout.warning p{color:#5c3000;}
+.callout.danger{background:var(--red-light);border-color:var(--red);}
+.callout.danger .callout-title{color:var(--red);}
+.callout.danger p{color:#5c1a1a;}
+.callout.evidence{background:var(--purple-light);border-color:var(--purple);}
+.callout.evidence .callout-title{color:var(--purple);}
+.callout.evidence p{color:#3b1a7a;}
+.callout.success{background:var(--green-light);border-color:var(--green);}
+.callout.success .callout-title{color:var(--green);}
+.callout.success p{color:#14532d;}
+.table-wrap{margin:10px 0;border-radius:6px;overflow:hidden;border:1px solid var(--border);}
+.table-caption{font-family:var(--sans);font-size:7pt;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gray-400);padding:5px 11px;background:var(--gray-50);border-bottom:1px solid var(--border);}
+table{width:100%;border-collapse:collapse;font-family:var(--sans);font-size:9pt;}
+thead th{background:var(--navy);color:white;font-weight:500;font-size:8pt;padding:7px 10px;text-align:left;}
+tbody tr{border-bottom:1px solid var(--border);}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:nth-child(even){background:var(--gray-50);}
+tbody td{padding:6px 10px;color:var(--gray-600);vertical-align:top;line-height:1.5;font-size:9pt;}
+td.hl{font-weight:600;color:var(--navy);}
+td.ok{font-weight:600;color:var(--teal);}
+td.warn{font-weight:600;color:var(--red);}
+td.amber{font-weight:600;color:var(--amber);}
+code.inl{font-family:var(--mono);font-size:9pt;background:var(--gray-100);color:var(--navy-mid);padding:1px 5px;border-radius:4px;}
+/* ── Bloque de código R (elemento distintivo) ── */
+.code-block{background:#0d1117;border:1px solid #21262d;border-radius:8px;margin:11px 0;overflow:hidden;}
+.code-head{display:flex;align-items:center;justify-content:space-between;padding:7px 13px;background:#161b22;border-bottom:1px solid #21262d;}
+.code-lang{font-family:var(--mono);font-size:7.5pt;letter-spacing:.14em;text-transform:uppercase;color:#7aa7ff;font-weight:500;display:flex;align-items:center;gap:7px;}
+.code-lang::before{content:"";width:9px;height:9px;border-radius:2px;background:#4a67d4;display:inline-block;}
+.code-file{font-family:var(--mono);font-size:7.5pt;color:#6e7681;}
+.code-block pre{margin:0;padding:13px 15px;overflow-x:auto;}
+.code-block code{font-family:var(--mono);font-size:8.8pt;line-height:1.7;color:#e6edf3;white-space:pre;display:block;}
+.cm{color:#8b949e;font-style:italic;}
+.cs{color:#a5d6ff;}
+.cf{color:#d2a8ff;}
+.cr{color:#7ee787;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin:10px 0;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px;margin:10px 0;}
+.col-card{background:var(--gray-50);border:1px solid var(--border);border-radius:6px;padding:11px 13px;}
+.col-card-title{font-family:var(--sans);font-size:8.5pt;font-weight:600;color:var(--navy);margin-bottom:5px;padding-bottom:4px;border-bottom:2px solid var(--teal);}
+.col-card p,.col-card li{font-size:9.5pt;color:var(--gray-600);line-height:1.6;margin:0 0 3px 0;}
+.mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:10px 0;}
+.mini-card{border-radius:7px;padding:10px 12px;border:1px solid var(--border);background:var(--gray-50);}
+.mini-card strong{display:block;font-family:var(--sans);font-size:9pt;color:var(--navy);margin-bottom:4px;}
+.mini-card p{font-size:8.5pt;color:var(--gray-600);line-height:1.5;margin:0;}
+ul.content-list{list-style:none;padding:0;margin:6px 0;}
+ul.content-list li{padding-left:16px;position:relative;font-size:10pt;color:var(--gray-600);line-height:1.6;margin-bottom:4px;}
+ul.content-list li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--teal);}
+ul.content-list li.warn-item::before{background:var(--red);}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:8px 0;}
+ol.steps li{position:relative;padding-left:34px;margin-bottom:9px;font-size:10pt;color:var(--gray-600);line-height:1.6;min-height:24px;}
+ol.steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;width:22px;height:22px;background:var(--navy);color:white;border-radius:50%;font-family:var(--mono);font-size:9pt;font-weight:600;display:flex;align-items:center;justify-content:center;}
+.svg-wrap{margin:14px 0;background:var(--gray-50);border:1px solid var(--border);border-radius:8px;padding:15px;}
+.svg-caption{font-family:var(--sans);font-size:7pt;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gray-400);margin-bottom:11px;}
+.divider{border:none;border-top:1px solid var(--border);margin:22px 0;}
+.rq-tag{font-family:var(--mono);font-size:8pt;color:var(--navy-mid);background:var(--teal-light);padding:2px 7px;border-radius:4px;white-space:nowrap;}
+.footer{padding:22px 56px 40px;border-top:1px solid var(--border);font-family:var(--sans);font-size:8pt;color:var(--gray-400);line-height:1.6;}
+.footer strong{color:var(--navy-mid);}
+@media(max-width:680px){
+  .content,.cover{padding-left:22px;padding-right:22px;}
+  .two-col,.three-col,.mini-grid{grid-template-columns:1fr;}
+  .cover h1{font-size:21pt;}
+  .footer{padding-left:22px;padding-right:22px;}
+}
+@media print{
+  .tab-nav,.palette-btn,.palette-panel,.design-switcher{display:none !important;}
+  .tab-content{display:block !important;}
+  .code-block{break-inside:avoid;}
+}
+</style>
+</head>
+<body>
+
+<button class="palette-btn" onclick="togglePalette()" title="Cambiar paleta">🎨</button>
+<div class="palette-panel" id="palettePanel">
+  <span class="palette-panel-title">Paleta</span>
+  <div class="palette-options">
+    <div class="palette-opt po-indigo sel" onclick="setPalette('indigo',this)">Índigo</div>
+    <div class="palette-opt po-oceano" onclick="setPalette('oceano',this)">Océano</div>
+    <div class="palette-opt po-bosque" onclick="setPalette('bosque',this)">Bosque</div>
+    <div class="palette-opt po-pizarra" onclick="setPalette('pizarra',this)">Pizarra</div>
+    <div class="palette-opt po-atardecer" onclick="setPalette('atardecer',this)">Atardecer</div>
+    <div class="palette-opt po-cereza" onclick="setPalette('cereza',this)">Cereza</div>
+  </div>
+</div>
+<div class="design-switcher">
+  <span class="ds-label">Diseño</span>
+  <div class="ds-btns">
+    <button class="ds-btn active" id="dsA" onclick="setDesign('A',this)">A</button>
+    <button class="ds-btn" id="dsB" onclick="setDesign('B',this)">B</button>
+  </div>
+</div>
+
+<div class="page">
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('guia',this)">📊 Guía completa</button>
+  <button class="tab-btn" onclick="showTab('chuleta',this)">⚡ Chuleta R</button>
+</div>
+
+<!-- ══════════════════════ GUÍA ══════════════════════ -->
+<div class="tab-content active" id="guia-tab">
+<div class="cover">
+  <div class="cover-tag">Metodología de la investigación · Bioestadística aplicada</div>
+  <div class="cover-rule"></div>
+  <h1>Diseño <em>Experimental</em></h1>
+  <div class="cover-subtitle">Principios de Fisher · Tamaño de muestra y potencia · DCA · Bloques al azar · Cuadrado latino · Factoriales · Parcelas divididas · Medidas repetidas · Verificación de supuestos · Ejecución completa en R</div>
+  <div class="cover-meta">
+    <div><span class="cover-meta-label">Autor</span><span class="cover-meta-value">Dr. Andrés Robayo C.</span></div>
+    <div><span class="cover-meta-label">Enfoque</span><span class="cover-meta-value">Bioestadística · Investigación clínica y biológica</span></div>
+    <div><span class="cover-meta-label">Software</span><span class="cover-meta-value">R · agricolae · pwr · emmeans · lme4</span></div>
+    <div><span class="cover-meta-label">Nivel</span><span class="cover-meta-value">Pregrado avanzado / Posgrado</span></div>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- S1 -->
+<div class="section">
+  <div class="section-header"><span class="section-number">SECCIÓN 1</span><span class="section-title">Fundamentos — ¿Qué es un diseño experimental y para qué sirve?</span></div>
+
+  <p class="lead">El <strong>diseño experimental</strong> es el plan formal que define cómo se asignan los tratamientos a las unidades de estudio, cómo se controla la variabilidad y cómo se recogen los datos, <em>antes</em> de ejecutar el experimento. Su objetivo es responder una pregunta causal con el mínimo error posible y con la máxima capacidad de atribuir las diferencias observadas al tratamiento y no al azar o a factores de confusión.</p>
+
+  <div class="definition"><div class="definition-label">Idea central</div><p>Un buen diseño no se "arregla" después con estadística. La calidad de las conclusiones está limitada por la calidad del diseño: <strong>garbage in, garbage out</strong>. El análisis correcto se deriva del diseño; por eso se planifica primero el diseño y solo entonces se elige la prueba.</p></div>
+
+  <h3>1.1 Experimento vs. estudio observacional</h3>
+  <p>En un <strong>experimento</strong> el investigador <em>manipula</em> el factor de interés y <em>asigna</em> los niveles a las unidades (idealmente al azar). En un estudio <strong>observacional</strong> solo se mide lo que ocurre naturalmente. Solo el experimento controlado y aleatorizado permite inferencia causal fuerte, porque la aleatorización equilibra en promedio los factores de confusión conocidos y desconocidos.</p>
+
+  <h3>1.2 Anatomía de un experimento — vocabulario que debe dominarse</h3>
+  <div class="table-wrap"><div class="table-caption">Términos fundamentales del diseño experimental</div>
+  <table><thead><tr><th>Término</th><th>Definición</th><th>Ejemplo biomédico</th></tr></thead>
+  <tbody>
+    <tr><td class="hl">Factor</td><td>Variable que se manipula o clasifica</td><td>Fármaco administrado</td></tr>
+    <tr><td class="hl">Nivel</td><td>Cada valor o categoría del factor</td><td>Placebo, dosis baja, dosis alta</td></tr>
+    <tr><td class="hl">Tratamiento</td><td>Combinación específica de niveles aplicada a una unidad</td><td>"Dosis alta + ayuno"</td></tr>
+    <tr><td class="hl">Unidad experimental</td><td>Ente más pequeño al que se asigna un tratamiento de forma independiente</td><td>El paciente, el animal, la placa de cultivo</td></tr>
+    <tr><td class="hl">Unidad observacional</td><td>Ente sobre el que se mide la respuesta (puede diferir de la experimental)</td><td>Cada medición repetida en un mismo paciente</td></tr>
+    <tr><td class="hl">Variable respuesta</td><td>Desenlace medido (dependiente)</td><td>Presión arterial, supervivencia, densidad óptica</td></tr>
+    <tr><td class="hl">Covariable</td><td>Variable continua medida que influye en la respuesta</td><td>Edad, peso basal</td></tr>
+    <tr><td class="hl">Bloque</td><td>Agrupación de unidades homogéneas para controlar variabilidad conocida</td><td>Camada, día de laboratorio, hospital</td></tr>
+    <tr><td class="hl">Error experimental</td><td>Variabilidad entre unidades tratadas igual; el "ruido" contra el que se compara</td><td>Variación residual del modelo</td></tr>
+  </tbody></table></div>
+
+  <div class="callout warning"><div class="callout-title">Error clásico: pseudo-replicación</div><p>Medir 10 veces al mismo paciente <strong>no</strong> son 10 réplicas: es 1 unidad experimental con 10 unidades observacionales. Tratarlas como independientes infla los grados de libertad y produce p-valores falsamente pequeños. La réplica verdadera exige aplicar el tratamiento de forma independiente a unidades independientes.</p></div>
+</div>
+
+<hr class="divider">
+
+<!-- S2 -->
+<div class="section">
+  <div class="section-header"><span class="section-number">SECCIÓN 2</span><span class="section-title">Los tres principios de Fisher</span></div>
+  <p>Ronald A. Fisher estableció los tres pilares que hacen válido un experimento. Todo diseño posterior es una combinación o extensión de estos principios.</p>
+
+  <div class="three-col">
+    <div class="col-card"><div class="col-card-title">1 · Aleatorización</div><p>Asignar tratamientos al azar a las unidades. Neutraliza el sesgo de selección y equilibra confusores conocidos y <strong>desconocidos</strong>. Es la base de la validez de las pruebas de significancia.</p></div>
+    <div class="col-card"><div class="col-card-title">2 · Replicación</div><p>Repetir cada tratamiento en varias unidades independientes. Permite <strong>estimar el error experimental</strong> y aumenta la precisión y la potencia. Sin réplica no hay estimación de variabilidad.</p></div>
+    <div class="col-card"><div class="col-card-title">3 · Control local (bloqueo)</div><p>Agrupar unidades homogéneas en bloques y aleatorizar dentro de cada uno. <strong>Retira variabilidad conocida</strong> del error, aumentando la sensibilidad para detectar el efecto del tratamiento.</p></div>
+  </div>
+
+  <div class="callout clinical"><div class="callout-title">Cómo se relacionan</div><p>La <strong>aleatorización</strong> da validez (insesgadez), la <strong>replicación</strong> da estimación del error y precisión, y el <strong>bloqueo</strong> da potencia al reducir el error residual. A esto se suma la necesidad de un <strong>grupo control/comparación</strong> adecuado: sin comparación no hay efecto medible.</p></div>
+
+  <h3>2.1 Aleatorización en R</h3>
+  <div class="code-block"><div class="code-head"><span class="code-lang">R</span><span class="code-file">aleatorizacion.R</span></div><pre><code class="r"># Asignar 20 unidades a 4 tratamientos (5 réplicas cada uno)
+set.seed(2024)                       # reproducibilidad
+trt  &lt;- rep(c("Control","DosisA","DosisB","DosisC"), each = 5)
+plan &lt;- data.frame(unidad = 1:20,
+                   tratamiento = sample(trt))   # sample() aleatoriza el orden
+head(plan)
+
+# Asignación balanceada por bloques (p. ej. por sexo) con dplyr
+library(dplyr)
+datos &lt;- datos %&gt;% group_by(sexo) %&gt;%
+  mutate(trt = sample(rep(c("A","B"), length.out = n())))</code></pre></div>
+</div>
+
+<hr class="divider">
+
+<!-- S3 -->
+<div class="section">
+  <div class="section-header"><span class="section-number">SECCIÓN 3</span><span class="section-title">Tamaño de muestra y potencia estadística</span></div>
+  <p>Definir <strong>cuántas unidades</strong> necesita el experimento es parte del diseño, no un detalle posterior. Un estudio con muestra insuficiente (baja potencia) desperdicia recursos y no detecta efectos reales; uno sobredimensionado es ineticéticamente derrochador. El cálculo relaciona cuatro cantidades: nivel de significancia (α), potencia (1−β), tamaño del efecto y n.</p>
+
+  <div class="definition"><div class="definition-label">Potencia (1 − β)</div><p>Probabilidad de detectar un efecto que realmente existe. Convención mínima: <strong>0.80</strong> (β = 0.20). Depende del tamaño del efecto que se quiere detectar, la variabilidad, α y n. El tamaño del efecto debe justificarse por relevancia clínica/biológica, no por lo que "dé significativo".</p></div>
+
+  <h3>3.1 Cálculo en R — comparación de dos medias y ANOVA</h3>
+  <div class="code-block"><div class="code-head"><span class="code-lang">R</span><span class="code-file">tamano_muestra.R</span></div><pre><code class="r"># --- Dos grupos (t de Student): detectar diferencia de 5 unidades, DE=8 ---
+power.t.test(delta = 5, sd = 8, sig.level = 0.05, power = 0.80)
+# -&gt; devuelve n POR GRUPO
+
+# --- ANOVA de una vía (k grupos) con el paquete pwr ---
+library(pwr)
+# f = tamaño del efecto de Cohen (0.10 pequeño, 0.25 medio, 0.40 grande)
+pwr.anova.test(k = 4, f = 0.40, sig.level = 0.05, power = 0.80)
+
+# --- Proporciones (dos grupos): 40% vs 60% ---
+power.prop.test(p1 = 0.40, p2 = 0.60, sig.level = 0.05, power = 0.80)
+
+# Curva de potencia: n necesario para varios tamaños de efecto
+library(pwr)
+sapply(c(0.15, 0.25, 0.40),
+       function(f) ceiling(pwr.anova.test(k = 4, f = f, power = 0.80)$n))</code></pre></div>
+
+  <div class="callout evidence"><div class="callout-title">Regla práctica</div><p>Calcule siempre n <strong>antes</strong> de recolectar. Reporte en el protocolo: α, potencia buscada, tamaño de efecto mínimo relevante, su justificación, la fórmula/función usada y la n resultante (más un margen por pérdidas: <span style="white-space:nowrap;">n<sub>final</sub> = n / (1 − tasa de abandono)</span>).</p></div>
+</div>
+
+<hr class="divider">
+
+<!-- S4 -->
+<div class="section">
+  <div class="section-header"><span class="section-number">SECCIÓN 4</span><span class="section-title">Diseño completamente aleatorizado (DCA / CRD)</span></div>
+  <p>Es el diseño más simple: los tratamientos se asignan <strong>por completo al azar</strong> a todas las unidades, sin bloqueo. Modelo de una vía: <code class="inl">yᵢⱼ = μ + τᵢ + εᵢⱼ</code>.</p>
+
+  <div class="two-col">
+    <div class="col-card"><div class="col-card-title">Cuándo usarlo</div><p>Cuando las unidades experimentales son <strong>homogéneas</strong> (poca variabilidad conocida a controlar): cultivos celulares en la misma incubadora, animales de la misma camada y edad, condiciones de laboratorio uniformes.</p></div>
+    <div class="col-card"><div class="col-card-title">Ventajas / límites</div><p><strong>+</strong> Simple, flexible (permite n desigual), máximo de grados de libertad para el error. <strong>−</strong> Ineficiente si hay heterogeneidad no controlada: esa variabilidad va al error y baja la potencia.</p></div>
+  </div>
+
+  <h3>4.1 Cómo establecerlo y analizarlo en R</h3>
+  <div class="code-block"><div class="code-head"><span class="code-lang">R</span><span class="code-file">dca.R</span></div><pre><code class="r">library(agricolae)
+# --- Generar el plan aleatorizado: 4 tratamientos, 5 réplicas ---
+trt &lt;- c("Control","DosisA","DosisB","DosisC")
+dis &lt;- design.crd(trt, r = 5, seed = 123)
+dis$book                     # plano de asignación aleatorio
+
+# --- Análisis: ANOVA de una vía ---
+mod &lt;- aov(respuesta ~ tratamiento, data = datos)
+summary(mod)                 # tabla ANOVA: F y p-valor global
+
+# --- Comparaciones múltiples post-hoc (si F es significativa) ---
+TukeyHSD(mod)                # Tukey HSD: todas las parejas
+
+library(emmeans)
+emmeans(mod, pairwise ~ tratamiento, adjust = "tukey")  # medias ajustadas + contrastes</code></pre></div>
+
+  <div class="callout clinical"><div class="callout-title">Interpretación</div><p>La tabla ANOVA prueba la hipótesis global <em>H₀: todas las medias son iguales</em>. Un F significativo (p &lt; 0.05) indica que <strong>al menos una</strong> media difiere; los post-hoc (Tukey) identifican <em>cuáles</em> parejas difieren controlando el error tipo I por comparaciones múltiples.</p></div>
+</div>
+
+<hr class="divider">
+
+<!-- S5 -->
+<div class="section">
+  <div class="section-header"><span class="section-number">SECCIÓN 5</span><span class="section-title">Diseño en bloques completos al azar (DBCA / RCBD)</span></div>
+  <p>Introduce un <strong>factor de bloqueo</strong>: se agrupan las unidades en bloques homogéneos y dentro de cada bloque se aleatorizan todos los tratamientos (bloque "completo" = contiene todos los tratamientos una vez). Modelo: <code class="inl">yᵢⱼ = μ + τᵢ + βⱼ + εᵢⱼ</code>.</p>
+
+  <div class="two-col">
+    <div class="col-card"><div class="col-card-title">Cuándo usarlo</div><p>Cuando existe <strong>una</strong> fuente conocida de variabilidad ajena al tratamiento: día de experimento, lote de reactivo, camada, hospital, técnico. El bloqueo retira esa variación del error residual.</p></div>
+    <div class="col-card"><div class="col-card-title">Regla de oro</div><p><em>"Bloquea lo que puedas, aleatoriza lo que no puedas bloquear."</em> Si el bloque explica variabilidad real, la potencia sube frente al DCA. Si no explica nada, se pierden grados de libertad sin beneficio.</p></div>
+  </div>
+
+  <h3>5.1 En R</h3>
+  <div class="code-block"><div class="code-head"><span class="code-lang">R</span><span class="code-file">dbca.R</span></div><pre><code class="r">library(agricolae)
+# --- Generar el diseño: 4 tratamientos en 4 bloques ---
+trt &lt;- c("A","B","C","D")
+dis &lt;- design.rcbd(trt, r = 4, seed = 45)   # r = número de bloques
+dis$book                                     # plano de campo por bloque
+
+# --- Análisis: el bloque entra como término aditivo ---
+mod &lt;- aov(respuesta ~ bloque + tratamiento, data = datos)
+summary(mod)                # revisar F del tratamiento (el bloque solo controla)
+
+# Post-hoc del tratamiento
+library(emmeans)
+emmeans(mod, pairwise ~ tratamiento, adjust = "tukey")</code></pre></div>
+
+  <div class="callout warning"><div class="callout-title">Ojo con el orden y los supuestos</div><p>En el DBCA clásico se asume que <strong>no hay interacción bloque × tratamiento</strong> (el efecto del tratamiento es el mismo en todos los bloques). El bloque es un factor de <em>nuisance</em>: se incluye para controlar, no se interpreta como hallazgo.</p></div>
+</div>
+
+<hr class="divider">
+
+<!-- S6 -->
+<div class="section">
+  <div class="section-header"><span class="section-number">SECCIÓN 6</span><span class="section-title">Cuadrado latino y cuadrado grecolatino</span></div>
+  <p>Cuando existen <strong>dos</strong> fuentes de variabilidad cruzadas que se quieren controlar simultáneamente, el cuadrado latino bloquea en <strong>dos direcciones</strong> (filas y columnas) con el mismo número de niveles que tratamientos. Modelo: <code class="inl">yᵢⱼₖ = μ + τᵢ + ρⱼ (fila) + γₖ (columna) + εᵢⱼₖ</code>.</p>
+
+  <div class="two-col">
+    <div class="col-card"><div class="col-card-title">Cuándo usarlo</div><p>Dos confusores ortogonales: p. ej. <strong>orden de administración</strong> (columna) y <strong>sujeto</strong> (fila) en un ensayo crossover; o posición en la incubadora × día. Requiere que <em>nº tratamientos = nº filas = nº columnas</em>.</p></div>
+    <div class="col-card"><div class="col-card-title">Grecolatino</div><p>Extiende a <strong>tres</strong> factores de bloqueo superpuestos (filas, columnas y un tercer factor griego). Muy eficiente pero rígido: exige aún más estructura y asume ausencia de interacciones.</p></div>
+  </div>
+
+  <h3>6.1 En R</h3>
+  <div class="code-block"><div class="code-head"><span class="code-lang">R</span><span class="code-file">cuadrado_latino.R</span></div><pre><code class="r">library(agricolae)
+# --- Diseño 4x4: 4 tratamientos, doble bloqueo (fila y columna) ---
+trt &lt;- c("A","B","C","D")
+dis &lt;- design.lsd(trt, seed = 7)
+dis$book                     # cada tratamiento aparece 1 vez por fila y por columna
+
+# --- Análisis ---
+mod &lt;- aov(respuesta ~ fila + columna + tratamiento, data = datos)
+summary(mod)
+
+# Grecolatino (dos bloqueos + factor extra):
+dis2 &lt;- design.graeco(trt1 = c("A","B","C","D"),
+                      trt2 = c("w","x","y","z"), seed = 7)</code></pre></div>
+</div>
+
+<hr class="divider">
+
+<!-- S7 -->
+<div class="section">
+  <div class="section-header"><span class="section-number">SECCIÓN 7</span><span class="section-title">Diseños factoriales — estudiar varios factores a la vez</span></div>
+  <p>Un diseño <strong>factorial</strong> estudia dos o más factores simultáneamente, evaluando <em>todas las combinaciones</em> de niveles. Su gran ventaja es que permite estimar la <strong>interacción</strong>: si el efecto de un factor depende del nivel del otro. Modelo 2 factores: <code class="inl">yᵢⱼₖ = μ + αᵢ + βⱼ + (αβ)ᵢⱼ + εᵢⱼₖ</code>.</p>
+
+  <div class="definition"><div class="definition-label">Por qué factorial y no "un factor a la vez"</div><p>Variar un factor a la vez (OFAT) es ineficiente y <strong>ciego a las interacciones</strong>. El factorial usa cada observación para estimar varios efectos, gana potencia y revela sinergias/antagonismos — clave en farmacología (interacción fármaco × dieta, dosis × tiempo).</p></div>
+
+  <div class="mini-grid">
+    <div class="mini-card"><strong>2 × 2</strong><p>El más simple: 2 factores, 2 niveles c/u. 4 combinaciones. Ideal para tamizaje inicial.</p></div>
+    <div class="mini-card"><strong>2ᵏ</strong><p>k factores a 2 niveles. Screening eficiente de muchos factores; base del diseño de experimentos industrial y de optimización.</p></div>
+    <div class="mini-card"><strong>a × b × c</strong><p>Factoriales completos con más niveles. Crecen rápido: 3 factores de 3 niveles = 27 celdas.</p></div>
+  </div>
+
+  <h3>7.1 En R — factorial y análisis de la interacción</h3>
+  <div class="code-block"><div class="code-head"><span class="code-lang">R</span><span class="code-file">factorial.R</span></div><pre><code class="r"># factorA (fármaco: 0/1) y factorB (dieta: normal/ayuno)
+# El operador * incluye efectos principales E INTERACCIÓN
+mod &lt;- aov(respuesta ~ factorA * factorB, data = datos)
+summary(mod)                 # revisar la fila factorA:factorB (interacción)
+
+# Equivalente explícito:
+# aov(respuesta ~ factorA + factorB + factorA:factorB, data = datos)
+
+# --- Visualizar la interacción ---
+interaction.plot(datos$factorA, datos$factorB, datos$respuesta,
+                 col = c("#1e2460","#4a67d4"), lwd = 2,
+                 xlab = "Fármaco", ylab = "Respuesta media", trace.label = "Dieta")
+
+# --- Efectos simples cuando hay interacción significativa ---
+library(emmeans)
+emmeans(mod, pairwise ~ factorA | factorB)   # efecto de A dentro de cada nivel de B</code></pre></div>
+
+  <div class="callout danger"><div class="callout-title">Regla de interpretación jerárquica</div><p>Si la <strong>interacción es significativa</strong>, <em>no</em> interprete los efectos principales de forma aislada: analice los <strong>efectos simples</strong> (el efecto de un factor dentro de cada nivel del otro). Solo si la interacción es no significativa tienen sentido los efectos principales por separado.</p></div>
+</div>
+
+<hr class="divider">
+
+<!-- S8 -->
+<div class="section">
+  <div class="section-header"><span class="section-number">SECCIÓN 8</span><span class="section-title">Parcelas divididas y diseños anidados (efectos aleatorios)</span></div>
+  <p>Cuando un factor se aplica a unidades grandes (parcela mayor) y otro a subunidades dentro de ellas (parcela menor), o cuando hay estructura jerárquica (celdas dentro de placas dentro de días), aparecen <strong>múltiples niveles de error</strong>. Ignorarlos es pseudo-replicación. La solución son los <strong>modelos mixtos</strong>, con efectos fijos (tratamientos) y aleatorios (bloques/agrupaciones).</p>
+
+  <div class="two-col">
+    <div class="col-card"><div class="col-card-title">Parcela dividida (split-plot)</div><p>Un factor difícil de aleatorizar (p. ej. temperatura de la incubadora) se asigna a la unidad grande; otro fácil (p. ej. fármaco) a las subunidades. Cada factor se contrasta contra su <strong>propio término de error</strong>.</p></div>
+    <div class="col-card"><div class="col-card-title">Anidado (jerárquico)</div><p>Los niveles de un factor están <strong>contenidos</strong> dentro de otro y no se cruzan: técnicos dentro de laboratorios, ratones dentro de camadas. Se modelan como efectos aleatorios anidados.</p></div>
+  </div>
+
+  <h3>8.1 En R con lme4 / lmerTest</h3>
+  <div class="code-block"><div class="code-head"><span class="code-lang">R</span><span class="code-file">split_plot_mixto.R</span></div><pre><code class="r">library(lme4)
+library(lmerTest)            # añade p-valores a los efectos fijos
+
+# --- Split-plot: riego (parcela grande) y variedad (subparcela) ---
+# (1 | bloque/riego) = error de parcela grande anidado en bloque
+mod &lt;- lmer(rendimiento ~ riego * variedad + (1 | bloque/riego), data = datos)
+anova(mod)                   # efectos fijos con gl adecuados
+ranef(mod)                   # efectos aleatorios estimados
+
+# --- Anidado: mediciones en ratones dentro de camadas ---
+mod2 &lt;- lmer(respuesta ~ tratamiento + (1 | camada/raton), data = datos)
+summary(mod2)</code></pre></div>
+
+  <div class="callout evidence"><div class="callout-title">Clave conceptual</div><p>La sintaxis <code class="inl">(1 | grupo)</code> declara un <strong>intercepto aleatorio</strong> por grupo: reconoce que las observaciones dentro del mismo grupo están correlacionadas. Esto respeta la unidad experimental real y evita p-valores falsamente pequeños.</p></div>
+</div>
+
+<hr class="divider">
+
+<!-- S9 -->
+<div class="section">
+  <div class="section-header"><span class="section-number">SECCIÓN 9</span><span class="section-title">Medidas repetidas, crossover y datos longitudinales</span></div>
+  <p>Cuando la <strong>misma unidad se mide varias veces</strong> (a lo largo del tiempo, o bajo distintos tratamientos como en crossover), las observaciones no son independientes. Se debe modelar la correlación intra-sujeto. Hoy el estándar son los <strong>modelos mixtos</strong>, más flexibles que el ANOVA de medidas repetidas clásico (tolera datos faltantes y tiempos desiguales).</p>
+
+  <div class="two-col">
+    <div class="col-card"><div class="col-card-title">Medidas repetidas / longitudinal</div><p>Cada sujeto aporta una serie temporal. Interesa la <strong>trayectoria</strong> y la interacción <em>tiempo × grupo</em>. El sujeto entra como efecto aleatorio.</p></div>
+    <div class="col-card"><div class="col-card-title">Crossover</div><p>Cada sujeto recibe todos los tratamientos en secuencias aleatorizadas; es su propio control. Requiere controlar <strong>periodo</strong> y vigilar el <strong>efecto de arrastre (carryover)</strong> con periodos de lavado.</p></div>
+  </div>
+
+  <h3>9.1 En R</h3>
+  <div class="code-block"><div class="code-head"><span class="code-lang">R</span><span class="code-file">medidas_repetidas.R</span></div><pre><code class="r">library(lmerTest)
+# --- Longitudinal: respuesta a lo largo del tiempo en 2 grupos ---
+mod &lt;- lmer(respuesta ~ tiempo * grupo + (1 | sujeto), data = datos)
+anova(mod)                   # ¿la trayectoria difiere entre grupos? (tiempo:grupo)
+
+# Intercepto y pendiente aleatorios (cada sujeto con su propia trayectoria):
+mod2 &lt;- lmer(respuesta ~ tiempo * grupo + (tiempo | sujeto), data = datos)
+
+# --- Crossover 2x2 con efecto de periodo ---
+mod3 &lt;- lmer(respuesta ~ tratamiento + periodo + (1 | sujeto), data = datos)
+
+# --- Comparación de medias marginales por tiempo ---
+library(emmeans)
+emmeans(mod, pairwise ~ grupo | tiempo)</code></pre></div>
+</div>
+
+<hr class="divider">
+
+<!-- S10 -->
+<div class="section">
+  <div class="section-header"><span class="section-number">SECCIÓN 10</span><span class="section-title">Verificación de supuestos y diagnóstico del modelo</span></div>
+  <p>El ANOVA y los modelos lineales exigen supuestos sobre los <strong>residuales</strong>. Verificarlos es obligatorio antes de confiar en los p-valores. El diagnóstico se hace sobre los residuales del modelo ajustado, no sobre los datos crudos.</p>
+
+  <div class="table-wrap"><div class="table-caption">Supuestos, pruebas y qué hacer si fallan</div>
+  <table><thead><tr><th>Supuesto</th><th>Cómo verificar (R)</th><th>Si falla</th></tr></thead>
+  <tbody>
+    <tr><td class="hl">Normalidad de residuales</td><td><code class="inl">shapiro.test(residuals(mod))</code> · Q–Q plot</td><td>Transformar (log, raíz) o usar prueba no paramétrica / GLM</td></tr>
+    <tr><td class="hl">Homocedasticidad<br>(varianzas iguales)</td><td><code class="inl">leveneTest()</code> (car) · <code class="inl">bartlett.test()</code> · residuales vs. ajustados</td><td>Transformar; modelo con varianzas heterogéneas (<code class="inl">nlme::gls</code>); Welch</td></tr>
+    <tr><td class="hl">Independencia</td><td>Diseño + gráfico de residuales; <code class="inl">durbinWatsonTest()</code></td><td>Modelar la correlación (mixto, autocorrelación temporal)</td></tr>
+    <tr><td class="hl">Linealidad / aditividad</td><td>Residuales vs. ajustados sin patrón</td><td>Añadir términos, transformar, modelo no lineal</td></tr>
+  </tbody></table></div>
+
+  <h3>10.1 Diagnóstico y alternativas no paramétricas en R</h3>
+  <div class="code-block"><div class="code-head"><span class="code-lang">R</span><span class="code-file">diagnostico.R</span></div><pre><code class="r"># --- Diagnóstico gráfico (4 paneles: residuales, Q-Q, escala, leverage) ---
+par(mfrow = c(2, 2)); plot(mod); par(mfrow = c(1, 1))
+
+# --- Pruebas formales ---
+shapiro.test(residuals(mod))              # normalidad
+library(car); leveneTest(respuesta ~ tratamiento, data = datos)  # homocedasticidad
+
+# --- Si fallan los supuestos: análogos no paramétricos ---
+kruskal.test(respuesta ~ tratamiento, data = datos)   # análogo al DCA
+friedman.test(respuesta ~ tratamiento | bloque, data = datos)  # análogo al DBCA
+
+# --- ANOVA de Welch (no asume varianzas iguales) ---
+oneway.test(respuesta ~ tratamiento, data = datos, var.equal = FALSE)</code></pre></div>
+
+  <div class="callout clinical"><div class="callout-title">Criterio práctico</div><p>Con muestras grandes el ANOVA es robusto a desviaciones moderadas de la normalidad (teorema del límite central). La <strong>homocedasticidad</strong> y la <strong>independencia</strong> suelen ser más críticas. Priorice los gráficos de residuales sobre las pruebas formales, que con n grande detectan desviaciones triviales.</p></div>
+</div>
+
+<hr class="divider">
+
+<!-- S11 -->
+<div class="section">
+  <div class="section-header"><span class="section-number">SECCIÓN 11</span><span class="section-title">Cómo elegir el diseño — árbol de decisión</span></div>
+  <p>La elección del diseño se deriva de cuántos factores estudia, qué fuentes de variabilidad conoce y si mide las unidades una o varias veces. Este flujo resume la decisión.</p>
+
+  <div class="svg-wrap">
+    <div class="svg-caption">Figura 1 — Árbol de decisión para seleccionar el diseño experimental</div>
+    <svg viewBox="0 0 760 470" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:var(--sans);">
+      <defs>
+        <marker id="arw" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#4a67d4"/></marker>
+      </defs>
+      <!-- start -->
+      <rect x="290" y="10" width="180" height="42" rx="8" fill="#1e2460"/>
+      <text x="380" y="30" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">¿Cuántos factores</text>
+      <text x="380" y="45" text-anchor="middle" fill="#fff" font-size="11" font-weight="600">de interés?</text>
+      <!-- level 1 branches -->
+      <line x1="380" y1="52" x2="190" y2="82" stroke="#4a67d4" stroke-width="2" marker-end="url(#arw)"/>
+      <line x1="380" y1="52" x2="570" y2="82" stroke="#4a67d4" stroke-width="2" marker-end="url(#arw)"/>
+      <text x="255" y="72" fill="#495057" font-size="9" font-weight="600">1 factor</text>
+      <text x="480" y="72" fill="#495057" font-size="9" font-weight="600">2 o más → FACTORIAL</text>
+      <!-- one factor -->
+      <rect x="70" y="86" width="240" height="40" rx="8" fill="#2d3580"/>
+      <text x="190" y="104" text-anchor="middle" fill="#fff" font-size="10" font-weight="600">¿Fuentes de variabilidad</text>
+      <text x="190" y="118" text-anchor="middle" fill="#fff" font-size="10" font-weight="600">a controlar (bloques)?</text>
+      <!-- factorial box -->
+      <rect x="470" y="86" width="230" height="40" rx="8" fill="#4a67d4"/>
+      <text x="585" y="104" text-anchor="middle" fill="#fff" font-size="10" font-weight="600">Factorial completo · a × b</text>
+      <text x="585" y="118" text-anchor="middle" fill="#fff" font-size="9">estima efectos + interacción</text>
+      <!-- branches from one-factor -->
+      <line x1="130" y1="126" x2="90" y2="156" stroke="#4a67d4" stroke-width="2" marker-end="url(#arw)"/>
+      <line x1="190" y1="126" x2="230" y2="156" stroke="#4a67d4" stroke-width="2" marker-end="url(#arw)"/>
+      <line x1="585" y1="126" x2="585" y2="300" stroke="#4a67d4" stroke-width="2" marker-end="url(#arw)"/>
+      <text x="70" y="150" fill="#495057" font-size="8.5" font-weight="600">Ninguna</text>
+      <text x="235" y="150" fill="#495057" font-size="8.5" font-weight="600">Una o más</text>
+      <!-- DCA -->
+      <rect x="20" y="160" width="150" height="52" rx="8" fill="#fff" stroke="#4a67d4" stroke-width="1.5"/>
+      <text x="95" y="182" text-anchor="middle" fill="#1e2460" font-size="10.5" font-weight="700">DCA / CRD</text>
+      <text x="95" y="198" text-anchor="middle" fill="#495057" font-size="8">unidades homogéneas</text>
+      <!-- blocks question -->
+      <rect x="190" y="160" width="200" height="40" rx="8" fill="#2d3580"/>
+      <text x="290" y="178" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600">¿Cuántas direcciones</text>
+      <text x="290" y="192" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600">de bloqueo?</text>
+      <line x1="240" y1="200" x2="200" y2="234" stroke="#4a67d4" stroke-width="2" marker-end="url(#arw)"/>
+      <line x1="330" y1="200" x2="380" y2="234" stroke="#4a67d4" stroke-width="2" marker-end="url(#arw)"/>
+      <text x="150" y="224" fill="#495057" font-size="8.5" font-weight="600">Una</text>
+      <text x="360" y="224" fill="#495057" font-size="8.5" font-weight="600">Dos / tres</text>
+      <!-- RCBD -->
+      <rect x="110" y="238" width="160" height="52" rx="8" fill="#fff" stroke="#4a67d4" stroke-width="1.5"/>
+      <text x="190" y="260" text-anchor="middle" fill="#1e2460" font-size="10.5" font-weight="700">DBCA / RCBD</text>
+      <text x="190" y="276" text-anchor="middle" fill="#495057" font-size="8">bloques completos al azar</text>
+      <!-- Latin -->
+      <rect x="300" y="238" width="170" height="52" rx="8" fill="#fff" stroke="#4a67d4" stroke-width="1.5"/>
+      <text x="385" y="260" text-anchor="middle" fill="#1e2460" font-size="10.5" font-weight="700">Cuadrado latino</text>
+      <text x="385" y="276" text-anchor="middle" fill="#495057" font-size="8">/ grecolatino (3 bloqueos)</text>
+      <!-- repeated measures band -->
+      <rect x="20" y="330" width="720" height="120" rx="10" fill="#eaedfa" stroke="#4a67d4" stroke-width="1"/>
+      <text x="40" y="354" fill="#1e2460" font-size="10.5" font-weight="700">¿Se mide la misma unidad varias veces, o hay estructura jerárquica / parcelas?</text>
+      <text x="40" y="374" fill="#495057" font-size="9">Sí → añade efectos aleatorios sobre cualquiera de los diseños anteriores:</text>
+      <rect x="40" y="386" width="215" height="46" rx="7" fill="#fff" stroke="#4a67d4" stroke-width="1.2"/>
+      <text x="147" y="406" text-anchor="middle" fill="#1e2460" font-size="9.5" font-weight="700">Parcelas divididas</text>
+      <text x="147" y="421" text-anchor="middle" fill="#495057" font-size="8">split-plot / anidado · lmer</text>
+      <rect x="270" y="386" width="215" height="46" rx="7" fill="#fff" stroke="#4a67d4" stroke-width="1.2"/>
+      <text x="377" y="406" text-anchor="middle" fill="#1e2460" font-size="9.5" font-weight="700">Medidas repetidas</text>
+      <text x="377" y="421" text-anchor="middle" fill="#495057" font-size="8">longitudinal · (1 | sujeto)</text>
+      <rect x="500" y="386" width="215" height="46" rx="7" fill="#fff" stroke="#4a67d4" stroke-width="1.2"/>
+      <text x="607" y="406" text-anchor="middle" fill="#1e2460" font-size="9.5" font-weight="700">Crossover</text>
+      <text x="607" y="421" text-anchor="middle" fill="#495057" font-size="8">controla periodo + lavado</text>
+    </svg>
+  </div>
+
+  <h3>11.1 Tabla de decisión rápida</h3>
+  <div class="table-wrap"><div class="table-caption">Diseño según objetivo, estructura y análisis en R</div>
+  <table><thead><tr><th>Situación</th><th>Diseño</th><th>Modelo / función R</th></tr></thead>
+  <tbody>
+    <tr><td>1 factor, unidades homogéneas</td><td class="hl">DCA (CRD)</td><td><code class="inl">aov(y ~ trt)</code></td></tr>
+    <tr><td>1 factor + 1 fuente de variabilidad</td><td class="hl">DBCA (RCBD)</td><td><code class="inl">aov(y ~ bloque + trt)</code></td></tr>
+    <tr><td>1 factor + 2 fuentes cruzadas</td><td class="hl">Cuadrado latino</td><td><code class="inl">aov(y ~ fila + col + trt)</code></td></tr>
+    <tr><td>2+ factores, interesa la interacción</td><td class="hl">Factorial</td><td><code class="inl">aov(y ~ A * B)</code></td></tr>
+    <tr><td>Factores en distinta escala / jerarquía</td><td class="hl">Parcelas divididas / anidado</td><td><code class="inl">lmer(y ~ A*B + (1|bloque/A))</code></td></tr>
+    <tr><td>Misma unidad medida en el tiempo</td><td class="hl">Medidas repetidas</td><td><code class="inl">lmer(y ~ tiempo*grupo + (1|sujeto))</code></td></tr>
+    <tr><td>Cada sujeto recibe todos los tratamientos</td><td class="hl">Crossover</td><td><code class="inl">lmer(y ~ trt + periodo + (1|sujeto))</code></td></tr>
+    <tr><td>Supuestos violados, 1 factor</td><td class="warn">No paramétrico</td><td><code class="inl">kruskal.test(y ~ trt)</code></td></tr>
+    <tr><td>Supuestos violados, con bloques</td><td class="warn">No paramétrico</td><td><code class="inl">friedman.test(y ~ trt | bloque)</code></td></tr>
+  </tbody></table></div>
+
+  <div class="callout success"><div class="callout-title">Checklist antes de correr el experimento</div><p>① Pregunta y desenlace definidos · ② factores, niveles y unidad experimental identificados · ③ fuentes de variabilidad → decidir bloqueo · ④ aleatorización especificada y semilla fijada · ⑤ n calculado por potencia · ⑥ modelo de análisis pre-registrado · ⑦ plan de verificación de supuestos y alternativas. <strong>El análisis ya está decidido antes del primer dato.</strong></p></div>
+</div>
+
+</div><!-- /content -->
+<div class="footer">
+  <strong>Diseño Experimental en Bioestadística</strong> · Guía de estudio · Dr. Andrés Robayo C.<br>
+  Ejecución en R con los paquetes <strong>agricolae</strong> (generación de diseños), <strong>pwr</strong> (potencia), <strong>car</strong> (diagnóstico), <strong>emmeans</strong> (comparaciones) y <strong>lme4 / lmerTest</strong> (modelos mixtos). El código es ilustrativo: adáptelo a los nombres de columnas de sus datos.
+</div>
+</div><!-- /guia-tab -->
+
+<!-- ══════════════════════ CHULETA R ══════════════════════ -->
+<div class="tab-content" id="chuleta-tab">
+<div class="content">
+  <div class="section">
+    <div class="section-header"><span class="section-number">REFERENCIA</span><span class="section-title">Chuleta de R para diseño experimental</span></div>
+    <p>Resumen accionable: paquete, función y para qué sirve. Copie y adapte.</p>
+
+    <h3>Instalación de paquetes</h3>
+    <div class="code-block"><div class="code-head"><span class="code-lang">R</span><span class="code-file">setup.R</span></div><pre><code class="r">install.packages(c("agricolae","pwr","car","emmeans","lme4","lmerTest","dplyr"))</code></pre></div>
+
+    <h3>Generar diseños (paquete agricolae)</h3>
+    <div class="table-wrap"><div class="table-caption">Funciones de generación de diseños</div>
+    <table><thead><tr><th>Función</th><th>Diseño que genera</th></tr></thead>
+    <tbody>
+      <tr><td><span class="rq-tag">design.crd()</span></td><td>Completamente aleatorizado (DCA)</td></tr>
+      <tr><td><span class="rq-tag">design.rcbd()</span></td><td>Bloques completos al azar (DBCA)</td></tr>
+      <tr><td><span class="rq-tag">design.lsd()</span></td><td>Cuadrado latino</td></tr>
+      <tr><td><span class="rq-tag">design.graeco()</span></td><td>Cuadrado grecolatino</td></tr>
+      <tr><td><span class="rq-tag">design.ab()</span></td><td>Factorial (a × b) sobre CRD o RCBD</td></tr>
+      <tr><td><span class="rq-tag">design.split()</span></td><td>Parcelas divididas (split-plot)</td></tr>
+    </tbody></table></div>
+
+    <h3>Analizar</h3>
+    <div class="table-wrap"><div class="table-caption">Funciones de análisis y diagnóstico</div>
+    <table><thead><tr><th>Función</th><th>Uso</th></tr></thead>
+    <tbody>
+      <tr><td><span class="rq-tag">aov()</span></td><td>ANOVA de efectos fijos (DCA, DBCA, latino, factorial)</td></tr>
+      <tr><td><span class="rq-tag">lmer()</span></td><td>Modelos mixtos (split-plot, anidado, medidas repetidas, crossover)</td></tr>
+      <tr><td><span class="rq-tag">summary() / anova()</span></td><td>Tabla ANOVA con F y p-valores</td></tr>
+      <tr><td><span class="rq-tag">TukeyHSD()</span></td><td>Comparaciones múltiples post-hoc (con aov)</td></tr>
+      <tr><td><span class="rq-tag">emmeans()</span></td><td>Medias marginales y contrastes ajustados (todos los modelos)</td></tr>
+      <tr><td><span class="rq-tag">interaction.plot()</span></td><td>Visualizar interacciones en factoriales</td></tr>
+    </tbody></table></div>
+
+    <h3>Potencia y diagnóstico</h3>
+    <div class="table-wrap"><div class="table-caption">Tamaño de muestra y verificación de supuestos</div>
+    <table><thead><tr><th>Función</th><th>Uso</th></tr></thead>
+    <tbody>
+      <tr><td><span class="rq-tag">power.t.test()</span></td><td>n para comparar dos medias</td></tr>
+      <tr><td><span class="rq-tag">pwr.anova.test()</span></td><td>n para ANOVA de k grupos</td></tr>
+      <tr><td><span class="rq-tag">power.prop.test()</span></td><td>n para comparar proporciones</td></tr>
+      <tr><td><span class="rq-tag">shapiro.test()</span></td><td>Normalidad de residuales</td></tr>
+      <tr><td><span class="rq-tag">leveneTest()</span></td><td>Homocedasticidad (paquete car)</td></tr>
+      <tr><td><span class="rq-tag">plot(modelo)</span></td><td>4 gráficos diagnósticos de residuales</td></tr>
+      <tr><td><span class="rq-tag">kruskal.test()</span></td><td>Alternativa no paramétrica al DCA</td></tr>
+      <tr><td><span class="rq-tag">friedman.test()</span></td><td>Alternativa no paramétrica al DBCA</td></tr>
+    </tbody></table></div>
+
+    <div class="callout evidence"><div class="callout-title">Operadores de fórmula en R</div><p><code class="inl">+</code> efectos aditivos · <code class="inl">*</code> efectos principales + interacción · <code class="inl">:</code> solo interacción · <code class="inl">/</code> anidamiento · <code class="inl">(1 | g)</code> intercepto aleatorio por grupo <em>g</em>.</p></div>
+  </div>
+</div>
+</div><!-- /chuleta-tab -->
+
+</div><!-- /page -->
+
+<script>
+function showTab(id,btn){
+  document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  document.getElementById(id+'-tab').classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo(0,0);
+}
+function togglePalette(){document.getElementById('palettePanel').classList.toggle('open');}
+function setPalette(name,el){
+  document.documentElement.setAttribute('data-palette',name);
+  document.querySelectorAll('.palette-opt').forEach(function(o){o.classList.remove('sel');});
+  el.classList.add('sel');
+}
+function setDesign(d,el){
+  document.documentElement.setAttribute('data-design',d);
+  document.getElementById('dsA').classList.remove('active');
+  document.getElementById('dsB').classList.remove('active');
+  el.classList.add('active');
+}
+/* Resaltado ligero de R: comentarios y strings, respetando comillas */
+document.querySelectorAll('code.r').forEach(function(block){
+  var lines = block.innerHTML.split('\n');
+  var out = lines.map(function(line){
+    var inStr=false, cut=-1;
+    for(var i=0;i<line.length;i++){
+      var ch=line[i];
+      if(ch==='"'){inStr=!inStr;}
+      else if(ch==='#' && !inStr){cut=i;break;}
+    }
+    var code=line, comment='';
+    if(cut>=0){code=line.slice(0,cut);comment=line.slice(cut);}
+    code=code.replace(/("[^"]*")/g,'<span class="cs">$1</span>');
+    if(comment){comment='<span class="cm">'+comment+'</span>';}
+    return code+comment;
+  });
+  block.innerHTML = out.join('\n');
+});
+</script>
+</body>
+</html>

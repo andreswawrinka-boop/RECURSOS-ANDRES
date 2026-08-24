@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analgesia Pediátrica Perioperatoria · Anestesiología</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul:        #1e40af;
+    --azul-suave:  #dbeafe;
+    --azul-med:    #93c5fd;
+    --rojo:        #b91c1c;
+    --rojo-suave:  #fee2e2;
+    --rojo-med:    #fca5a5;
+    --verde:       #15803d;
+    --verde-suave: #dcfce7;
+    --verde-med:   #86efac;
+    --ambar:       #92400e;
+    --ambar-suave: #fef3c7;
+    --ambar-med:   #fcd34d;
+    --teal:        #0f766e;
+    --teal-suave:  #ccfbf1;
+    --purp:        #6d28d9;
+    --purp-suave:  #ede9fe;
+    --rose:        #9f1239;
+    --rose-suave:  #ffe4e6;
+    --pink:        #be185d;
+    --pink-suave:  #fce7f3;
+    --naranja:     #9a3412;
+    --naranja-suave:#ffedd5;
+    --gris-f:      #f8fafc;
+    --gris-1:      #f1f5f9;
+    --gris-2:      #e2e8f0;
+    --gris-6:      #475569;
+    --gris-8:      #1e293b;
+    --border:      1px solid #e2e8f0;
+    --shadow:      0 1px 3px rgba(0,0,0,.08);
+    --radius:      10px;
+    --radius-sm:   6px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f0f4f8;
+    color: var(--gris-8);
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 0 0 60px;
+  }
+
+  /* HEADER */
+  .site-header {
+    background: linear-gradient(135deg, #1a0533 0%, #5b21b6 55%, #7c3aed 100%);
+    color: white; padding: 48px 40px 40px;
+    position: relative; overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Ccircle cx='30' cy='30' r='20' stroke='%23ffffff' stroke-opacity='0.04' stroke-width='1'/%3E%3Ccircle cx='30' cy='30' r='10' stroke='%23ffffff' stroke-opacity='0.03' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 80px 80px;
+  }
+  .site-header .tag {
+    display: inline-block;
+    background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25);
+    border-radius: 20px; padding: 4px 14px;
+    font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .site-header h1 { font-family: 'Playfair Display', serif; font-size: 36px; line-height: 1.2; margin-bottom: 10px; }
+  .site-header .subtitle { font-size: 15px; opacity: .8; font-weight: 300; max-width: 720px; }
+  .header-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
+  .header-chip { background: rgba(255,255,255,.13); border: 1px solid rgba(255,255,255,.22); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 500; }
+
+  /* LAYOUT */
+  .main { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+
+  /* SECTION */
+  .section-label { display: flex; align-items: center; gap: 10px; margin: 40px 0 16px; }
+  .section-label .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .section-label h2 { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gris-6); white-space: nowrap; }
+  .section-label .line { flex: 1; height: 1px; background: var(--gris-2); }
+
+  /* CARD */
+  .card { background: white; border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 16px; overflow: hidden; }
+  .card-header { padding: 16px 20px; border-bottom: var(--border); display: flex; align-items: center; gap: 12px; }
+  .card-header .icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .card-header h3 { font-size: 15px; font-weight: 600; }
+  .card-header .sub { font-size: 12px; color: var(--gris-6); margin-top: 1px; }
+  .card-body { padding: 20px; }
+
+  /* GRIDS */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media(max-width:780px){ .grid-2,.grid-3{ grid-template-columns:1fr; } }
+
+  /* BADGE */
+  .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .badge-rojo    { background: var(--rojo-suave);    color: var(--rojo); }
+  .badge-verde   { background: var(--verde-suave);   color: var(--verde); }
+  .badge-ambar   { background: var(--ambar-suave);   color: var(--ambar); }
+  .badge-azul    { background: var(--azul-suave);    color: var(--azul); }
+  .badge-teal    { background: var(--teal-suave);    color: var(--teal); }
+  .badge-purp    { background: var(--purp-suave);    color: var(--purp); }
+  .badge-pink    { background: var(--pink-suave);    color: var(--pink); }
+  .badge-naranja { background: var(--naranja-suave); color: var(--naranja); }
+
+  /* ALERT */
+  .alert { border-radius: var(--radius-sm); padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+  .alert-ico { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .alert-rojo    { background: var(--rojo-suave);    border-left: 3px solid var(--rojo); }
+  .alert-verde   { background: var(--verde-suave);   border-left: 3px solid var(--verde); }
+  .alert-ambar   { background: var(--ambar-suave);   border-left: 3px solid var(--ambar); }
+  .alert-azul    { background: var(--azul-suave);    border-left: 3px solid var(--azul); }
+  .alert-teal    { background: var(--teal-suave);    border-left: 3px solid var(--teal); }
+  .alert-purp    { background: var(--purp-suave);    border-left: 3px solid var(--purp); }
+  .alert-pink    { background: var(--pink-suave);    border-left: 3px solid var(--pink); }
+  .alert-naranja { background: var(--naranja-suave); border-left: 3px solid var(--naranja); }
+  .alert b { display: block; font-weight: 600; margin-bottom: 3px; font-size: 13px; }
+
+  /* TABLA */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--gris-1); color: var(--gris-6); font-weight: 600; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--gris-2); }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--gris-2); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--gris-f); }
+
+  /* STEPS */
+  .steps { display: flex; flex-direction: column; }
+  .step { display: flex; gap: 16px; padding: 13px 0; border-bottom: 1px dashed var(--gris-2); }
+  .step:last-child { border-bottom: none; }
+  .step-num { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; color: white; margin-top: 2px; }
+  .step-content strong { font-size: 14px; display: block; margin-bottom: 3px; }
+  .step-content p, .step-content ul { font-size: 13px; color: var(--gris-6); }
+  .step-content ul { padding-left: 16px; margin-top: 4px; }
+  .step-content li { margin-bottom: 2px; }
+
+  /* PROTO FLOW */
+  .proto-flow { display: flex; align-items: stretch; border-radius: var(--radius-sm); overflow: hidden; border: var(--border); margin-bottom: 10px; }
+  .proto-cond { padding: 11px 13px; min-width: 145px; font-size: 12px; font-weight: 600; display: flex; align-items: center; border-right: var(--border); line-height: 1.4; }
+  .proto-action { padding: 11px 13px; flex: 1; font-size: 13px; }
+  .proto-action ul { padding-left: 15px; margin-top: 3px; }
+  .proto-action li { margin-bottom: 2px; }
+
+  /* PILL NAV */
+  .pill-nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; }
+  .pill-nav a { padding: 7px 18px; border-radius: 20px; font-size: 13px; font-weight: 500; background: white; border: var(--border); color: var(--gris-6); text-decoration: none; transition: all .15s; }
+  .pill-nav a:hover { background: var(--purp-suave); color: var(--purp); border-color: #c4b5fd; }
+  .pill-nav a.active { background: var(--purp); color: white; border-color: var(--purp); }
+
+  /* PARAM BOX */
+  .param-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: 10px; }
+  .param-box { border: var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+  .param-box .pb-head { padding: 8px 12px; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border-bottom: var(--border); }
+  .param-box .pb-val { font-size: 22px; font-weight: 700; line-height: 1.1; padding: 9px 12px 3px; }
+  .param-box .pb-unit { font-size: 12px; font-weight: 400; }
+  .param-box .pb-sub { font-size: 11px; color: var(--gris-6); padding: 0 12px 9px; line-height: 1.4; }
+
+  /* ESCALA DOLOR */
+  .escala-row { display: flex; align-items: center; gap: 12px; padding: 9px 0; border-bottom: 1px dashed var(--gris-2); }
+  .escala-row:last-child { border-bottom: none; }
+  .escala-emo { font-size: 24px; flex-shrink: 0; width: 36px; text-align: center; }
+  .escala-num { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; flex-shrink: 0; }
+  .escala-desc { flex: 1; font-size: 13px; }
+  .escala-action { font-size: 12px; font-weight: 600; }
+
+  /* DRUG HIGHLIGHT */
+  .drug-hl { border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 12px; border-left: 3px solid; }
+  .drug-hl .dh-name { font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+  .drug-hl .dh-body { font-size: 13px; color: var(--gris-6); }
+  .drug-hl .dh-body ul { padding-left: 16px; margin-top: 4px; }
+  .drug-hl .dh-body li { margin-bottom: 3px; }
+
+  /* AGE COLS */
+  .age-cols { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; border: var(--border); border-radius: var(--radius); overflow: hidden; }
+  .age-col { border-right: var(--border); }
+  .age-col:last-child { border-right: none; }
+  .age-head { padding: 12px 10px; font-size: 11px; font-weight: 700; text-align: center; text-transform: uppercase; letter-spacing: .06em; border-bottom: var(--border); }
+  .age-body { padding: 12px 10px; font-size: 12px; color: var(--gris-6); }
+  .age-body ul { padding-left: 12px; }
+  .age-body li { margin-bottom: 4px; }
+
+  /* TIMELINE POSTOP */
+  .postop-timeline { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0; border: var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 16px; }
+  .pt-col { border-right: var(--border); }
+  .pt-col:last-child { border-right: none; }
+  .pt-head { padding: 13px 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; border-bottom: var(--border); display: flex; align-items: center; gap: 6px; }
+  .pt-head .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .pt-body { padding: 13px 12px; font-size: 12px; }
+  .pt-item { margin-bottom: 9px; padding-bottom: 9px; border-bottom: 1px dashed var(--gris-2); }
+  .pt-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .pt-item .pi-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; opacity: .6; margin-bottom: 2px; }
+
+  /* MISC */
+  ul.list-clean { list-style: none; padding: 0; }
+  ul.list-clean li::before { content: '→ '; color: var(--purp); font-weight: 600; }
+  ul.list-clean li { margin-bottom: 5px; font-size: 13px; }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .chip { padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 500; background: var(--gris-1); border: var(--border); color: var(--gris-6); }
+  hr.divider { border: none; border-top: 1px dashed var(--gris-2); margin: 13px 0; }
+  .text-sm { font-size: 12px; color: var(--gris-6); }
+  .mt-4 { margin-top: 16px; }
+  .mb-0 { margin-bottom: 0 !important; }
+  .bold { font-weight: 600; }
+
+  /* FOOTER */
+  .site-footer { text-align: center; padding: 32px 24px; font-size: 12px; color: var(--gris-6); border-top: var(--border); background: white; margin-top: 40px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="tag">🧒 Anestesia Pediátrica · Especialista</div>
+  <h1>Analgesia Intra y Postoperatoria<br>en Pediatría</h1>
+  <p class="subtitle">Evaluación del dolor · Analgesia multimodal · Técnicas regionales · Manejo por grupos de edad.<br>Basado en evidencia 2024 — ESPA · APAGBI · SPA · AAPM.</p>
+  <div class="header-chips">
+    <span class="header-chip">🎯 Analgesia multimodal siempre</span>
+    <span class="header-chip">⚖️ Dosis por kg PBI — NUNCA adaptar dosis de adulto</span>
+    <span class="header-chip">🌍 Evaluar dolor según edad y desarrollo</span>
+    <span class="header-chip">💉 Anestesia regional — primera línea en cirugía mayor</span>
+    <span class="header-chip">🚫 Codeína: contraindicada en &lt;12 años</span>
+  </div>
+</header>
+
+<div class="main">
+  <nav class="pill-nav" style="margin-top:24px;">
+    <a href="#fisiopatologia" class="active">Fisiopatología</a>
+    <a href="#escalas">Escalas de dolor</a>
+    <a href="#multimodal">Analgesia multimodal</a>
+    <a href="#farmacos">Fármacos</a>
+    <a href="#regional">Anestesia regional</a>
+    <a href="#intraop">Intraoperatorio</a>
+    <a href="#postop">Postoperatorio</a>
+    <a href="#especiales">Situaciones especiales</a>
+    <a href="#cheatsheet">Cheat Sheet</a>
+  </nav>
+
+  <!-- ══ 1: FISIOPATOLOGÍA ══ -->
+  <div class="section-label" id="fisiopatologia">
+    <div class="dot" style="background:var(--purp)"></div>
+    <h2>1 · Fisiología del Dolor Pediátrico — Diferencias Clave</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--purp-suave)">🧠</div>
+        <div><h3>El neonato y lactante SÍ sienten dolor</h3><div class="sub">Concepto refutado — vías nociceptivas presentes desde semana 24–26</div></div>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-purp">
+          <div class="alert-ico">💡</div>
+          <div><b>Mito refutado:</b> Durante décadas se creyó que el neonato no sentía dolor. Hoy sabemos que las vías nociceptivas están funcionales desde la semana 24–26 de gestación. El neonato prematuro tiene MAYOR sensibilidad al dolor que el adulto por inmadurez de vías inhibitorias descendentes.</div>
+        </div>
+        <p class="bold" style="margin-bottom:8px;">Diferencias fisiológicas por grupo etario</p>
+        <table>
+          <thead><tr><th>Característica</th><th>Neonato / Lactante</th><th>Preescolar</th><th>Escolar / Adolescente</th></tr></thead>
+          <tbody>
+            <tr><td>Vías ascendentes dolor</td><td><span class="badge badge-rojo">Maduras desde sem 24</span></td><td><span class="badge badge-ambar">En desarrollo</span></td><td><span class="badge badge-verde">Similares al adulto</span></td></tr>
+            <tr><td>Vías inhibitorias (GABA)</td><td><span class="badge badge-rojo">Inmaduras → hipersensibilidad</span></td><td><span class="badge badge-ambar">Parcialmente maduras</span></td><td><span class="badge badge-verde">Maduras</span></td></tr>
+            <tr><td>Memoria del dolor</td><td><span class="badge badge-rojo">Sí — altera respuesta futura</span></td><td><span class="badge badge-ambar">Sí</span></td><td><span class="badge badge-verde">Igual al adulto</span></td></tr>
+            <tr><td>Respuesta neuroendocrina</td><td><span class="badge badge-rojo">Cortisol ↑↑↑ mayor que adulto</span></td><td><span class="badge badge-ambar">Elevada</span></td><td><span class="badge badge-verde">Similar adulto</span></td></tr>
+            <tr><td>Farmacocinética opioides</td><td><span class="badge badge-rojo">Muy variable — sensibilidad ↑</span></td><td><span class="badge badge-ambar">Más predecible</span></td><td><span class="badge badge-verde">Cercana al adulto</span></td></tr>
+            <tr><td>Capacidad de comunicar dolor</td><td><span class="badge badge-rojo">Solo conductual</span></td><td><span class="badge badge-ambar">Limitada</span></td><td><span class="badge badge-verde">Auto-reporte posible</span></td></tr>
+          </tbody>
+        </table>
+        <div class="alert alert-rojo mt-4">
+          <div class="alert-ico">⚠️</div>
+          <div><b>Consecuencias del dolor no tratado en el neonato:</b> Sensibilización central a largo plazo, respuesta aumentada al dolor en la infancia y adultez, alteración del desarrollo neurológico, mayor respuesta de estrés ante procedimientos futuros. El tratamiento del dolor neonatal es OBLIGACIÓN ÉTICA.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--purp-suave)">⚗️</div>
+        <div><h3>Farmacocinética pediátrica — Por qué NO adaptar dosis adulto</h3><div class="sub">Cambios maduracionales críticos</div></div>
+      </div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" style="background:var(--purp)">1</div>
+            <div class="step-content">
+              <strong>Volumen de distribución (Vd) aumentado</strong>
+              <p>Mayor proporción de agua corporal total en neonatos (80%) vs adultos (60%). Los fármacos hidrófilos (morfina, paracetamol) tienen mayor Vd → mayor dosis de carga necesaria en mg/kg. Pero mayor acumulación en dosis repetidas.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--purp)">2</div>
+            <div class="step-content">
+              <strong>Metabolismo hepático inmaduro (CYP)</strong>
+              <p>CYP3A4 (metabolismo de opioides, BZD) al 30–50% del adulto en neonatos. Alcanza valores adultos a los 6–12 meses. Vida media de fármacos: 2–3× más larga en neonato → riesgo acumulación y depresión respiratoria.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--purp)">3</div>
+            <div class="step-content">
+              <strong>Unión a proteínas plasmáticas reducida</strong>
+              <p>Albúmina y α1-glicoproteína ácida bajas en neonato → mayor fracción libre de fármacos → mayor efecto a igual dosis. Especialmente relevante para anestésicos locales (toxicidad).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--purp)">4</div>
+            <div class="step-content">
+              <strong>Función renal inmadura</strong>
+              <p>TFG neonatal 30–40% del adulto. Madurez renal a los 6–12 meses. Metabolitos activos de morfina (M6G) se acumulan → sedación prolongada. Usar dosis menores e intervalos más largos en neonatos.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--purp)">5</div>
+            <div class="step-content">
+              <strong>Sensibilidad a opioides aumentada en neonato</strong>
+              <p>Barrera hematoencefálica más permeable → mayor penetración de morfina al SNC. Receptores opioides hiperexpresados relativamente. Dosis de morfina neonato: 50–70% de la dosis pediátrica estándar.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 2: ESCALAS DE DOLOR ══ -->
+  <div class="section-label" id="escalas">
+    <div class="dot" style="background:var(--pink)"></div>
+    <h2>2 · Evaluación del Dolor Pediátrico — Escalas por Edad</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--pink-suave)">📊</div>
+      <div><h3>Selección de escala según edad y capacidad cognitiva</h3><div class="sub">Guías ESPA/APAGBI 2023 — Evaluación obligatoria cada 4h en postoperatorio</div></div>
+    </div>
+    <div class="card-body">
+      <div class="age-cols">
+        <div class="age-col">
+          <div class="age-head" style="background:var(--rojo-suave);color:var(--rojo);">Neonato<br>0–28 días</div>
+          <div class="age-body">
+            <p style="font-weight:700;margin-bottom:6px;font-size:13px;">NIPS / PIPP-R</p>
+            <ul>
+              <li><b>NIPS</b> (Neonatal Infant Pain Scale): expresión facial, llanto, respiración, brazos, piernas, estado de alerta. Score 0–7. &gt;3 = dolor.</li>
+              <li><b>PIPP-R</b> para prematuros: incluye edad gestacional, saturación, FC como indicadores adicionales.</li>
+              <li>Evaluar SIEMPRE indicadores fisiológicos (taquicardia, desaturación) junto a conductuales.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="age-col">
+          <div class="age-head" style="background:var(--ambar-suave);color:var(--ambar);">Lactante<br>1 mes–3 años</div>
+          <div class="age-body">
+            <p style="font-weight:700;margin-bottom:6px;font-size:13px;">FLACC</p>
+            <ul>
+              <li><b>F</b>ace (cara), <b>L</b>egs (piernas), <b>A</b>ctivity (actividad), <b>C</b>ry (llanto), <b>C</b>onsolability (consolabilidad).</li>
+              <li>Cada ítem 0–2. Total 0–10.</li>
+              <li>&gt;4 = dolor moderado → intervenir.</li>
+              <li>También válida en discapacidad intelectual a cualquier edad.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="age-col">
+          <div class="age-head" style="background:var(--azul-suave);color:var(--azul);">Preescolar<br>3–6 años</div>
+          <div class="age-body">
+            <p style="font-weight:700;margin-bottom:6px;font-size:13px;">Faces Pain Scale (FPS-R)</p>
+            <ul>
+              <li>6 caras que van de "sin dolor" a "máximo dolor".</li>
+              <li>Score 0–10 (0, 2, 4, 6, 8, 10).</li>
+              <li>Validada en niños desde 4 años con buena comprensión.</li>
+              <li>El niño señala la cara que representa su dolor.</li>
+              <li>También: Escala de Oucher (fotos).</li>
+            </ul>
+          </div>
+        </div>
+        <div class="age-col">
+          <div class="age-head" style="background:var(--verde-suave);color:var(--verde);">Escolar<br>6–12 años</div>
+          <div class="age-body">
+            <p style="font-weight:700;margin-bottom:6px;font-size:13px;">NRS / FPS-R</p>
+            <ul>
+              <li><b>NRS 0–10</b>: "¿Del 0 al 10, cuánto duele?" La mayoría lo entiende a partir de los 6–7 años.</li>
+              <li><b>FPS-R</b> como alternativa si NRS no se comprende.</li>
+              <li>0–3: leve; 4–6: moderado; 7–10: severo.</li>
+              <li>Añadir evaluación de función (¿puede caminar?, ¿duerme?).</li>
+            </ul>
+          </div>
+        </div>
+        <div class="age-col">
+          <div class="age-head" style="background:var(--purp-suave);color:var(--purp);">Adolescente<br>&gt;12 años</div>
+          <div class="age-body">
+            <p style="font-weight:700;margin-bottom:6px;font-size:13px;">NRS / EVA</p>
+            <ul>
+              <li><b>NRS 0–10</b> igual que adulto.</li>
+              <li><b>EVA</b> (visual analógica): línea 10 cm.</li>
+              <li>Evaluar componente psicológico: ansiedad, catastrofización, depresión → influyen enormemente en la percepción.</li>
+              <li>Brief Pain Inventory (BPI) en dolor crónico o oncológico.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+      <p class="bold" style="margin-bottom:12px;">Escala FLACC — Detalle de puntuación</p>
+      <div class="escala-row">
+        <div class="escala-num" style="background:var(--verde-suave);color:var(--verde);">0–3</div>
+        <div class="escala-emo">😊</div>
+        <div class="escala-desc"><b>Dolor leve:</b> niño tranquilo, cara relajada, piernas relajadas, no llora o queja mínima, fácilmente consolable.</div>
+        <span class="escala-action badge badge-verde">No farmacológico</span>
+      </div>
+      <div class="escala-row">
+        <div class="escala-num" style="background:var(--ambar-suave);color:var(--ambar);">4–6</div>
+        <div class="escala-emo">😟</div>
+        <div class="escala-desc"><b>Dolor moderado:</b> ceño fruncido, piernas inquietas, actividad reducida, llanto intermitente, difícil consolar con abrazos.</div>
+        <span class="escala-action badge badge-ambar">No opioides ± opioide débil</span>
+      </div>
+      <div class="escala-row">
+        <div class="escala-num" style="background:var(--rojo-suave);color:var(--rojo);">7–10</div>
+        <div class="escala-emo">😭</div>
+        <div class="escala-desc"><b>Dolor severo:</b> muecas, mandíbula apretada, extremidades tensas, llanto continuo o intenso, inconsolable. En neonatos: también mirar signos vitales.</div>
+        <span class="escala-action badge badge-rojo">Opioide + evaluación urgente</span>
+      </div>
+
+      <div class="alert alert-ambar mt-4">
+        <div class="alert-ico">⚠️</div>
+        <div><b>Discapacidad intelectual (DI):</b> La escala FLACC revisada (r-FLACC) permite adaptar los ítems conductuales al comportamiento habitual de ese niño. Siempre preguntar a los padres/cuidadores qué conductas muestra su hijo cuando tiene dolor — son los mejores informantes.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 3: ANALGESIA MULTIMODAL ══ -->
+  <div class="section-label" id="multimodal">
+    <div class="dot" style="background:var(--teal)"></div>
+    <h2>3 · Principios de Analgesia Multimodal</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--teal-suave)">🎯</div>
+      <div><h3>Escalera analgésica pediátrica — OMS adaptada 2024</h3><div class="sub">Analgesia multimodal = múltiples fármacos con mecanismos complementarios → menos opioides</div></div>
+    </div>
+    <div class="card-body">
+      <div class="proto-flow">
+        <div class="proto-cond" style="background:var(--verde-suave);color:var(--verde);">Escalón 1<br>Dolor leve<br>NRS/FLACC 1–3</div>
+        <div class="proto-action">
+          <b>Analgésicos no opioides + técnicas no farmacológicas</b>
+          <ul>
+            <li>Paracetamol IV/VO/rectal + AINE (ibuprofeno, ketorolaco)</li>
+            <li>Succión no nutritiva (neonato), musicoterapia, distracción</li>
+            <li>Posición confort, contacto piel a piel (kangaroo en neonato)</li>
+            <li>Sacarosa 24% oral en neonatos y lactantes (&lt;3 meses)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="proto-flow">
+        <div class="proto-cond" style="background:var(--ambar-suave);color:var(--ambar);">Escalón 2<br>Dolor moderado<br>NRS/FLACC 4–6</div>
+        <div class="proto-action">
+          <b>Escalón 1 + opioides débiles o adyuvantes</b>
+          <ul>
+            <li>Tramadol 1–2 mg/kg IV (≥1 año) c/6–8h</li>
+            <li>Ketamina subanestésica 0.1–0.3 mg/kg IV como adyuvante</li>
+            <li>Dexmedetomidina 0.5 µg/kg IV bolo o infusión</li>
+            <li>Técnica regional si aplicable (bloqueo periférico, caudal)</li>
+            <li>NO codeína en &lt;12 años (contraindicación absoluta FDA/EMA 2013)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="proto-flow">
+        <div class="proto-cond" style="background:var(--rojo-suave);color:var(--rojo);">Escalón 3<br>Dolor severo<br>NRS/FLACC 7–10</div>
+        <div class="proto-action">
+          <b>Escalones 1+2 + opioides potentes + técnica regional</b>
+          <ul>
+            <li>Morfina 0.05–0.1 mg/kg IV c/2–4h (titular)</li>
+            <li>Fentanilo 1–2 µg/kg IV (inicio rápido)</li>
+            <li>PCA (analgesia controlada por paciente) si ≥6–7 años y cognitivamente capaz</li>
+            <li>Epidural continua / catéter de bloqueo periférico</li>
+            <li>Infusión continua de morfina en neonatos y lactantes bajo vigilancia</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="alert alert-teal mt-4">
+        <div class="alert-ico">🔄</div>
+        <div><b>Concepto de analgesia preventiva (preemptive analgesia):</b> Administrar analgésicos ANTES del estímulo doloroso (incisión). Reduce sensibilización central, disminuye requerimiento de analgésicos postoperatorios 30–40%. Paracetamol IV + AINE + bloqueo regional antes de la incisión es el estándar actual en cirugía pediátrica mayor.</div>
+      </div>
+
+      <div class="alert alert-purp">
+        <div class="alert-ico">💡</div>
+        <div><b>El pilar es la técnica regional:</b> La evidencia actual (Cochrane 2023) es contundente — la anestesia regional pediátrica reduce significativamente el consumo de opioides, acorta la estancia, disminuye NVPO y mejora la satisfacción. En cirugía mayor pediátrica, la técnica regional debe ser la PRIMERA opción analgésica, no el complemento.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 4: FÁRMACOS ══ -->
+  <div class="section-label" id="farmacos">
+    <div class="dot" style="background:var(--azul)"></div>
+    <h2>4 · Fármacos Analgésicos en Pediatría — Dosis y Particularidades</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--azul-suave)">💊</div>
+      <div><h3>No opioides — Primera línea siempre</h3><div class="sub">Paracetamol · AINE · Metamizol · Ketamina · Dexametasona</div></div>
+    </div>
+    <div class="card-body">
+      <table>
+        <thead>
+          <tr><th>Fármaco</th><th>Neonato / Prematuro</th><th>Lactante 1–12m</th><th>Niño 1–12 años</th><th>Adolescente</th><th>Precaución</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Paracetamol IV</b></td>
+            <td>7.5 mg/kg c/8h<br><span class="text-sm">Máx 30 mg/kg/día</span></td>
+            <td>7.5–10 mg/kg c/6–8h<br><span class="text-sm">Máx 40 mg/kg/día</span></td>
+            <td>15 mg/kg c/6h<br><span class="text-sm">Máx 60 mg/kg/día ó 4g</span></td>
+            <td>1 g IV c/6h<br><span class="text-sm">Máx 4 g/día</span></td>
+            <td>Hepatotoxicidad con sobredosis. No exceder dosis máxima. Reducir en desnutrición/hepatopatía.</td>
+          </tr>
+          <tr>
+            <td><b>Paracetamol rectal</b></td>
+            <td>20 mg/kg c/12h</td>
+            <td>20 mg/kg c/8h</td>
+            <td>20–30 mg/kg c/6–8h</td>
+            <td>40 mg/kg c/8h</td>
+            <td>Absorción errática — menos predecible. Usar solo si no hay vía IV/VO.</td>
+          </tr>
+          <tr>
+            <td><b>Ibuprofeno VO</b></td>
+            <td><span class="badge badge-rojo">Contraindicado</span></td>
+            <td><span class="badge badge-ambar">Precaución &lt;6m</span><br>5–10 mg/kg c/6–8h</td>
+            <td>10 mg/kg c/6–8h<br><span class="text-sm">Máx 40 mg/kg/día</span></td>
+            <td>400–600 mg c/6–8h</td>
+            <td>Evitar en neonatos (cierre ductus). Riesgo sangrado GI. Contraindicado en trombocitopenia, disfunción renal.</td>
+          </tr>
+          <tr>
+            <td><b>Ketorolaco IV</b></td>
+            <td><span class="badge badge-rojo">Contraindicado</span></td>
+            <td><span class="badge badge-rojo">Contraindicado &lt;6m</span></td>
+            <td>0.5 mg/kg IV c/6h<br><span class="text-sm">Máx 30 mg/dosis, máx 5 días</span></td>
+            <td>15–30 mg IV c/6h</td>
+            <td>Inhibidor COX no selectivo. No usar &gt;5 días. Contraindicado en sangrado activo, cirugía con riesgo hemorrágico alto.</td>
+          </tr>
+          <tr>
+            <td><b>Metamizol IV</b></td>
+            <td><span class="badge badge-rojo">Contraindicado</span></td>
+            <td><span class="badge badge-ambar">≥3 meses: 10 mg/kg</span></td>
+            <td>10–15 mg/kg IV c/6–8h<br><span class="text-sm">Infundir en 15 min (hipotensión)</span></td>
+            <td>1–2 g IV c/6–8h</td>
+            <td>Agranulocitosis (rara, &lt;1/1.000.000). No disponible en EE.UU. Muy usado en Latinoamérica y Europa. Infundir lento.</td>
+          </tr>
+          <tr>
+            <td><b>Ketamina subanestésica</b></td>
+            <td>0.1 mg/kg IV PRN</td>
+            <td>0.1–0.25 mg/kg IV</td>
+            <td>0.1–0.3 mg/kg IV bolo<br>o 0.1–0.2 mg/kg/h infusión</td>
+            <td>0.1–0.5 mg/kg IV o infusión</td>
+            <td>A dosis subanestésicas: excelente analgésico sin efectos disociativos. Reduce consumo de morfina 30–40%. Broncodilatador. Evitar en HIC.</td>
+          </tr>
+          <tr>
+            <td><b>Dexametasona</b></td>
+            <td>0.1 mg/kg IV</td>
+            <td>0.15 mg/kg IV</td>
+            <td>0.15–0.5 mg/kg IV<br><span class="text-sm">Máx 8 mg</span></td>
+            <td>4–8 mg IV</td>
+            <td>Reduce NVPO, dolor postoperatorio y requerimiento de opioides. Hiperglucemia transitoria. Una sola dosis intraoperatoria es segura.</td>
+          </tr>
+          <tr>
+            <td><b>Gabapentina</b></td>
+            <td><span class="badge badge-rojo">Sin evidencia</span></td>
+            <td><span class="badge badge-rojo">Sin evidencia</span></td>
+            <td>5–10 mg/kg VO preop<br><span class="text-sm">≥3 años</span></td>
+            <td>300–600 mg VO preop</td>
+            <td>Reduce ansiedad y dolor postop en cirugía mayor. Sedación → vigilar. Evidencia moderada en pediátrico 2023.</td>
+          </tr>
+          <tr>
+            <td><b>Dexmedetomidina</b></td>
+            <td>0.1–0.5 µg/kg/h infusión<br><span class="text-sm">Titular despacio</span></td>
+            <td>0.2–0.7 µg/kg/h</td>
+            <td>0.5 µg/kg bolo lento<br>+ 0.2–0.7 µg/kg/h</td>
+            <td>0.5–1 µg/kg bolo<br>+ 0.2–0.7 µg/kg/h</td>
+            <td>Excelente adyuvante — sedación, analgesia, reduce agitación en despertar. Bradicardia. No deprime respiración a dosis correctas.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--rojo-suave)">🔴</div>
+      <div><h3>Opioides en pediatría — Dosis y seguridad</h3><div class="sub">Prescribir solo cuando los no opioides son insuficientes — titular siempre</div></div>
+    </div>
+    <div class="card-body">
+      <div class="alert alert-rojo">
+        <div class="alert-ico">🚨</div>
+        <div><b>CODEÍNA — CONTRAINDICADA en menores de 12 años (FDA/EMA 2013):</b> Metabolizador ultrarrápido de CYP2D6 → sobredosis mortal de morfina. También contraindicada en &lt;18 años post-amigdalectomía/adenoidectomía. No usar nunca.</div>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>Opioide</th><th>Neonato<br><span style="font-weight:400;">(dosis reducidas)</span></th><th>Lactante-Niño<br><span style="font-weight:400;">(1m–12 años)</span></th><th>Adolescente</th><th>Características</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Morfina IV</b><br><span class="text-sm">Gold standard</span></td>
+            <td>0.025–0.05 mg/kg c/4–6h<br><span class="text-sm">Infusión: 0.005–0.01 mg/kg/h</span></td>
+            <td>0.05–0.1 mg/kg IV c/2–4h<br><span class="text-sm">Infusión: 0.01–0.04 mg/kg/h</span></td>
+            <td>0.05–0.15 mg/kg IV c/2–4h</td>
+            <td>Histaminoliberadora (prurito). Vida media larga. M6G activa acumulación en falla renal. PCA disponible ≥6–7 años.</td>
+          </tr>
+          <tr>
+            <td><b>Fentanilo IV</b></td>
+            <td>0.5–1 µg/kg bolo<br><span class="text-sm">Infusión: 0.5–2 µg/kg/h</span></td>
+            <td>1–2 µg/kg IV bolo<br><span class="text-sm">Infusión: 1–3 µg/kg/h</span></td>
+            <td>1–3 µg/kg IV bolo</td>
+            <td>Inicio rápido (2–3 min). Sin histamina. Rigidez torácica con dosis altas rápidas. Parche transdérmico: NO en opioides naive.</td>
+          </tr>
+          <tr>
+            <td><b>Remifentanilo</b></td>
+            <td>0.05–0.2 µg/kg/min infusión</td>
+            <td>0.05–0.3 µg/kg/min infusión</td>
+            <td>0.05–0.3 µg/kg/min</td>
+            <td>Solo intraoperatorio. Offset &lt;5 min. Requiere transición analgésica antes de finalizar. Hiperalgesia postoperatoria — usar ketamina como cobertura.</td>
+          </tr>
+          <tr>
+            <td><b>Tramadol IV</b></td>
+            <td><span class="badge badge-rojo">Contraindicado &lt;1 año</span></td>
+            <td>1–2 mg/kg IV en 15 min c/6h<br><span class="text-sm">Máx 8 mg/kg/día</span></td>
+            <td>1–2 mg/kg IV c/6h<br><span class="text-sm">Máx 400 mg/día</span></td>
+            <td>Evitar en &lt;12 años en EE.UU/UE (restricción FDA 2017). En LATAM aún se usa. Metabolizado por CYP2D6 (igual riesgo que codeína). Usar con precaución.</td>
+          </tr>
+          <tr>
+            <td><b>Metadona IV</b></td>
+            <td>0.05–0.1 mg/kg c/12–24h</td>
+            <td>0.1 mg/kg IV c/8–12h</td>
+            <td>0.1–0.2 mg/kg IV c/8h</td>
+            <td>Vida media muy larga (24–72h). Útil en dolor severo crónico oncológico. Riesgo acumulación. Monitor QT. No titulación rápida.</td>
+          </tr>
+          <tr>
+            <td><b>Oxicodona VO</b></td>
+            <td><span class="badge badge-rojo">Contraindicado</span></td>
+            <td><span class="badge badge-rojo">Contraindicado &lt;1 año</span></td>
+            <td>0.1–0.2 mg/kg VO c/4–6h</td>
+            <td>5–10 mg VO c/4–6h</td>
+            <td>Paso a VO desde morfina IV en postoperatorio mayor. Disponibilidad limitada en LATAM.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-ambar mt-4">
+        <div class="alert-ico">⚠️</div>
+        <div><b>Antagonismo opioide — Naloxona en pediatría:</b> 1–10 µg/kg IV titulado (NO 0.4 mg de golpe → crisis de dolor y abstinencia aguda). Repetir c/2–3 min según respuesta. Duración: 30–60 min → vigilar resurge sedación si el opioide tiene vida media larga. En infusión: 1–2 µg/kg/h si sobredosis de infusión continua.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 5: ANESTESIA REGIONAL ══ -->
+  <div class="section-label" id="regional">
+    <div class="dot" style="background:var(--verde)"></div>
+    <h2>5 · Anestesia Regional Pediátrica</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--verde-suave)">💉</div>
+      <div><h3>Técnicas regionales más utilizadas en pediatría</h3><div class="sub">Bajo guía ecográfica — estándar de cuidado 2024 · ESRA Pediatric Guidelines</div></div>
+    </div>
+    <div class="card-body">
+      <div class="alert alert-verde">
+        <div class="alert-ico">🔬</div>
+        <div><b>Ecografía obligatoria en anestesia regional pediátrica:</b> Las referencias anatómicas son menos confiables en niños. La guía ecográfica reduce el volumen de AL necesario, aumenta la tasa de éxito y disminuye complicaciones. Sin ecógrafo → considerar alternativa o derivar.</div>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>Técnica</th><th>Indicación principal</th><th>AL — Dosis pediátrica</th><th>Duración</th><th>Particularidad pediátrica</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Bloqueo caudal</b><br><span class="text-sm">El más usado en pediatría</span></td>
+            <td>Cirugía perineal, escrotal, inguinal, urológica en &lt;6 años</td>
+            <td>Bupivacaína 0.25% 1 mL/kg (máx 20 mL)<br>o Ropivacaína 0.2% 1 mL/kg</td>
+            <td>4–6h (bupivacaína)<br>2–4h (ropivacaína)</td>
+            <td>Técnica más segura en &lt;5 años. Técnica a ciegas o con ecografía. Agregar dexametasona 0.1 mg/kg para prolongar.</td>
+          </tr>
+          <tr>
+            <td><b>Epidural lumbar</b></td>
+            <td>Cirugía abdominal baja, ortopédica MMII mayor, espinal lumbar</td>
+            <td>Bupivacaína 0.125–0.25% bolus + infusión 0.1–0.2 mg/kg/h<br>± Morfina epidural 30–50 µg/kg (máx 100 µg)</td>
+            <td>Catéter continuo → días</td>
+            <td>Morfina epidural 12–24h de analgesia. Vigilar: prurito, retención urinaria, depresión resp. Monitor SpO₂ mínimo 12h.</td>
+          </tr>
+          <tr>
+            <td><b>Epidural torácica</b></td>
+            <td>Toracotomía, cirugía mayor abdominal alta (Nissen, hepatobiliar)</td>
+            <td>Bupivacaína 0.0625–0.1% + fentanilo 1–2 µg/mL a 0.1–0.3 mL/kg/h</td>
+            <td>Catéter continuo 48–72h</td>
+            <td>Técnica desafiante en lactantes. Alternativa: epidural caudal con catéter avanzado hasta torácico (T6–T10) bajo ecografía.</td>
+          </tr>
+          <tr>
+            <td><b>TAP block</b><br><span class="text-sm">(Transversus Abdominis Plane)</span></td>
+            <td>Laparotomía, apendicectomía, hernia inguinal en &gt;5 kg</td>
+            <td>Bupivacaína 0.25% 0.3 mL/kg por lado<br>(máx 0.5 mL/kg total)</td>
+            <td>8–16h</td>
+            <td>Ecografía obligatoria. Bilateral para línea media. No cubre visceral. Complementar con paracetamol + AINE.</td>
+          </tr>
+          <tr>
+            <td><b>ESPB</b><br><span class="text-sm">(Erector Spinae Plane)</span></td>
+            <td>Toracoscopia, cirugía espinal posterior, VATS pediátrico</td>
+            <td>Bupivacaína 0.25% 0.3–0.4 mL/kg por lado</td>
+            <td>8–12h o catéter continuo</td>
+            <td>Tendencia creciente 2023. Seguro incluso en lactantes. Menor riesgo que epidural torácica. Evidencia en crecimiento.</td>
+          </tr>
+          <tr>
+            <td><b>Bloqueo ilioinguinal / iliohipogástrico</b></td>
+            <td>Hernia inguinal, orquidopexia, hidrocele</td>
+            <td>Bupivacaína 0.25% 0.1–0.2 mL/kg por lado<br>(máx 5 mL por lado)</td>
+            <td>6–10h</td>
+            <td>Ecografía mejora éxito de 70% a 95%. Alternativa al caudal en &gt;5 años.</td>
+          </tr>
+          <tr>
+            <td><b>Bloqueo plexo braquial</b><br><span class="text-sm">(SSIV, axilar, infraclavicular)</span></td>
+            <td>Cirugía ortopédica MMSS (fracturas, malformaciones, reimplantes)</td>
+            <td>Ropivacaína 0.2–0.5% 0.3–0.5 mL/kg<br>(máx según zona)</td>
+            <td>6–14h (ropivacaína)</td>
+            <td>Ecografía obligatoria. Volúmenes menores que adulto. Catéter perineural si necesita analgesia &gt;24h.</td>
+          </tr>
+          <tr>
+            <td><b>Bloqueo femoral / FICB</b></td>
+            <td>Fractura de fémur, cirugía de rodilla, ortopedia MMII</td>
+            <td>Bupivacaína 0.25% 0.3–0.5 mL/kg<br>(máx 20 mL por lado)</td>
+            <td>8–14h</td>
+            <td>FICB (fascia iliaca) más fácil y rápido. Analgesia de urgencias en fractura femoral mientras se prepara cirugía.</td>
+          </tr>
+          <tr>
+            <td><b>Bloqueo peneano dorsal</b></td>
+            <td>Circuncisión, hipospadias, epispadias</td>
+            <td>Bupivacaína 0.25% 0.1 mL/kg por lado (SIN adrenalina)</td>
+            <td>4–6h</td>
+            <td>NO usar adrenalina (extremidad terminal). Simple, rápido, muy efectivo. Alternativa al caudal en &gt;5 años.</td>
+          </tr>
+          <tr>
+            <td><b>Bloqueo paravertebral</b></td>
+            <td>Nuss (pectus), toracotomía, cirugía renal abierta</td>
+            <td>Bupivacaína 0.25% 0.3–0.5 mL/kg por nivel</td>
+            <td>8–12h o catéter</td>
+            <td>Ecografía. Unilateral para mayor eficiencia. Bilateral en Nuss. Alternativa a epidural torácica con menos efectos secundarios hemodinámicos.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-rojo mt-4">
+        <div class="alert-ico">🚨</div>
+        <div>
+          <b>Dosis tóxica de anestésicos locales en pediatría — MÁS sensibles que adultos:</b><br>
+          Bupivacaína: máx 2 mg/kg (sin adrenalina) / 2.5 mg/kg (con adrenalina)<br>
+          Ropivacaína: máx 3 mg/kg<br>
+          Lidocaína: máx 3 mg/kg (sin adrenalina) / 7 mg/kg (con adrenalina)<br>
+          <b>SIEMPRE tener Intralipid 20% disponible:</b> 1.5 mL/kg bolo IV → 0.25 mL/kg/min infusión. En neonatos la toxicidad es 3–4× más sensible por baja unión a proteínas.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 6: INTRAOPERATORIO ══ -->
+  <div class="section-label" id="intraop">
+    <div class="dot" style="background:var(--naranja)"></div>
+    <h2>6 · Protocolo de Analgesia Intraoperatoria</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--naranja-suave)">🏥</div>
+      <div><h3>Estrategia intraoperatoria por tipo de cirugía</h3><div class="sub">Analgesia preventiva + multimodal + regional desde el inicio</div></div>
+    </div>
+    <div class="card-body">
+      <div class="proto-flow">
+        <div class="proto-cond" style="background:var(--verde-suave);color:var(--verde);">Cirugía menor<br>&lt;1h / dolor leve</div>
+        <div class="proto-action">
+          <ul>
+            <li>Paracetamol 15 mg/kg IV al inicio</li>
+            <li>Ketorolaco 0.5 mg/kg IV</li>
+            <li>Bloqueo regional específico si disponible (peneano, ilioinguinal)</li>
+            <li>Fentanilo 1 µg/kg intraoperatorio si necesario</li>
+            <li>NO remifentanilo en cirugía corta (hiperalgesia sin ventana para analgesia de rescate)</li>
+          </ul>
+          <div class="chip-row"><span class="chip">Circuncisión</span><span class="chip">Hernia inguinal</span><span class="chip">Miringotomía</span><span class="chip">Adenoamigdalectomía</span></div>
+        </div>
+      </div>
+      <div class="proto-flow">
+        <div class="proto-cond" style="background:var(--azul-suave);color:var(--azul);">Cirugía<br>abdominal<br>mayor</div>
+        <div class="proto-action">
+          <ul>
+            <li>Paracetamol 15 mg/kg IV + Ketorolaco 0.5 mg/kg IV antes de incisión</li>
+            <li>TAP block bilateral o epidural torácica (Nissen, colostomía, hepatobiliar)</li>
+            <li>Ketamina 0.1–0.3 mg/kg/h infusión intraoperatoria</li>
+            <li>Dexametasona 0.15 mg/kg IV (antiemético + reduce dolor)</li>
+            <li>Fentanilo 1–2 µg/kg para picos dolorosos + mantenimiento con remifentanilo + transición a morfina 0.1 mg/kg 30 min antes del cierre</li>
+          </ul>
+          <div class="chip-row"><span class="chip">Nissen</span><span class="chip">Piloroplastia</span><span class="chip">Colostomía</span><span class="chip">Hepatobiliar</span><span class="chip">Apendicectomía</span></div>
+        </div>
+      </div>
+      <div class="proto-flow">
+        <div class="proto-cond" style="background:var(--ambar-suave);color:var(--ambar);">Cirugía<br>torácica</div>
+        <div class="proto-action">
+          <ul>
+            <li>Epidural torácica o bloqueo paravertebral bilateral</li>
+            <li>ESPB como alternativa creciente 2024</li>
+            <li>Paracetamol + ketorolaco desde la inducción</li>
+            <li>Remifentanilo intraoperatorio + dosis de morfina 0.05–0.1 mg/kg 30 min antes del cierre</li>
+            <li>Infiltración de heridas por cirujano (bupivacaína 0.25%)</li>
+          </ul>
+          <div class="chip-row"><span class="chip">Nuss</span><span class="chip">Toracotomía</span><span class="chip">VATS pediátrico</span><span class="chip">Lobectomía</span></div>
+        </div>
+      </div>
+      <div class="proto-flow">
+        <div class="proto-cond" style="background:var(--purp-suave);color:var(--purp);">Ortopedia<br>mayor</div>
+        <div class="proto-action">
+          <ul>
+            <li>Bloqueo periférico específico (femoral, ciático, braquial) bajo ecografía</li>
+            <li>Catéter perineural si dolor postoperatorio esperado &gt;24h</li>
+            <li>Paracetamol 15 mg/kg + ketorolaco 0.5 mg/kg desde inicio</li>
+            <li>Morfina 0.05–0.1 mg/kg intraoperatorio</li>
+            <li>Dexmedetomidina 0.5 µg/kg para reducir agitación en el despertar</li>
+          </ul>
+          <div class="chip-row"><span class="chip">Escoliosis</span><span class="chip">Fractura fémur</span><span class="chip">Club pie quirúrgico</span><span class="chip">Reimplante</span></div>
+        </div>
+      </div>
+      <div class="proto-flow">
+        <div class="proto-cond" style="background:var(--rojo-suave);color:var(--rojo);">Neonato<br>y lactante<br>&lt;6 meses</div>
+        <div class="proto-action">
+          <ul>
+            <li>Paracetamol 7.5–10 mg/kg IV (dosis reducida neonato)</li>
+            <li>Técnica regional: caudal o bloqueo periférico — PRIMERA elección para reducir opioides</li>
+            <li>Morfina 0.025–0.05 mg/kg IV solo si dolor severo sin respuesta a regional</li>
+            <li>Remifentanilo infusión intraoperatoria con transición a morfina o fentanilo 30 min antes del cierre</li>
+            <li>VIGILANCIA RESPIRATORIA postoperatoria mínima 12–24h con SpO₂ continua</li>
+          </ul>
+          <div class="chip-row"><span class="chip">Gastrosquisis</span><span class="chip">Atresia esofágica</span><span class="chip">Malrotación</span><span class="chip">CIA/CIV neonatal</span></div>
+        </div>
+      </div>
+
+      <div class="alert alert-naranja mt-4">
+        <div class="alert-ico">🔄</div>
+        <div><b>Transición de remifentanilo al cierre (CRÍTICO):</b> Remifentanilo tiene offset de 5 min → sin transición analgésica → dolor severo agudo al despertar. Dar morfina 0.05–0.1 mg/kg IV (adulto equivalente) 30 min antes del cierre O iniciar AINE + paracetamol + bloqueo regional antes de suspender el remi. Es el error más común en TIVA pediátrica.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 7: POSTOPERATORIO ══ -->
+  <div class="section-label" id="postop">
+    <div class="dot" style="background:var(--teal)"></div>
+    <h2>7 · Analgesia Postoperatoria</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--teal-suave)">🏥</div>
+      <div><h3>Protocolo postoperatorio por fase temporal</h3><div class="sub">UCPA → Sala → Alta</div></div>
+    </div>
+    <div class="card-body">
+      <div class="postop-timeline">
+        <div class="pt-col">
+          <div class="pt-head" style="background:var(--rojo-suave);color:var(--rojo);">
+            <div class="dot" style="background:var(--rojo);"></div>UCPA (0–2h)
+          </div>
+          <div class="pt-body">
+            <div class="pt-item">
+              <div class="pi-tag">Evaluación</div>
+              <p>FLACC o NRS al ingreso y c/15 min. Meta: FLACC &lt;4 / NRS &lt;4.</p>
+            </div>
+            <div class="pt-item">
+              <div class="pi-tag">Dolor moderado-severo (FLACC ≥4)</div>
+              <p>Fentanilo 0.5–1 µg/kg IV c/5–10 min hasta control. Máx 3 dosis. Luego pasar a morfina si está indicado.</p>
+            </div>
+            <div class="pt-item">
+              <div class="pi-tag">Continuar base</div>
+              <p>Paracetamol + AINE programados. Regional activa: verificar nivel de bloqueo. Comprobar si hay retención urinaria.</p>
+            </div>
+            <div class="pt-item">
+              <div class="pi-tag">Agitación en el despertar</div>
+              <p>Dexmedetomidina 0.5 µg/kg IV lento o fentanilo 0.5 µg/kg. Diferencial: dolor vs agitación emergente vs delirio.</p>
+            </div>
+          </div>
+        </div>
+        <div class="pt-col">
+          <div class="pt-head" style="background:var(--ambar-suave);color:var(--ambar);">
+            <div class="dot" style="background:var(--ambar);"></div>Sala (2–24h)
+          </div>
+          <div class="pt-body">
+            <div class="pt-item">
+              <div class="pi-tag">Pauta base programada</div>
+              <p>Paracetamol 15 mg/kg c/6h + Ibuprofeno 10 mg/kg c/8h. Horario fijo — no PRN.</p>
+            </div>
+            <div class="pt-item">
+              <div class="pi-tag">Opioide de rescate</div>
+              <p>Morfina 0.05–0.1 mg/kg IV/SC c/2–4h PRN si FLACC ≥4. Solo si analgesia base insuficiente.</p>
+            </div>
+            <div class="pt-item">
+              <div class="pi-tag">PCA (≥6–7 años)</div>
+              <p>Morfina: bolo 0.02 mg/kg, intervalo 5–10 min, máx 4–6 bolos/h. Con o sin infusión basal 0.01–0.02 mg/kg/h.</p>
+            </div>
+            <div class="pt-item">
+              <div class="pi-tag">Epidural continua</div>
+              <p>Bupivacaína 0.1% ± fentanilo 2 µg/mL a 0.1–0.3 mL/kg/h. Evaluar c/4h nivel, motor, PA.</p>
+            </div>
+          </div>
+        </div>
+        <div class="pt-col">
+          <div class="pt-head" style="background:var(--azul-suave);color:var(--azul);">
+            <div class="dot" style="background:var(--azul);"></div>Sala (24–72h)
+          </div>
+          <div class="pt-body">
+            <div class="pt-item">
+              <div class="pi-tag">Paso a vía oral</div>
+              <p>Tan pronto como tolere VO: paracetamol VO + ibuprofeno VO. Suspender IV si dolor controlado oral.</p>
+            </div>
+            <div class="pt-item">
+              <div class="pi-tag">Reducción de opioides</div>
+              <p>Reducir 25–30% dosis de morfina c/24h si dolor ≤3. Objetivo: 0 opioides al alta siempre que sea posible.</p>
+            </div>
+            <div class="pt-item">
+              <div class="pi-tag">Retirada de catéter</div>
+              <p>Epidural: retirar a las 48–72h. Catéter perineural: según tipo cirugía, hasta 72–96h.</p>
+            </div>
+            <div class="pt-item">
+              <div class="pi-tag">Fisioterapia</div>
+              <p>Movilización activa precoz. El dolor no controlado dificulta la fisio y aumenta el riesgo de complicaciones.</p>
+            </div>
+          </div>
+        </div>
+        <div class="pt-col">
+          <div class="pt-head" style="background:var(--verde-suave);color:var(--verde);">
+            <div class="dot" style="background:var(--verde);"></div>Alta
+          </div>
+          <div class="pt-body">
+            <div class="pt-item">
+              <div class="pi-tag">Criterios de analgesia al alta</div>
+              <p>NRS/FLACC ≤3 en reposo, ≤5 en movimiento, dolor controlable con VO.</p>
+            </div>
+            <div class="pt-item">
+              <div class="pi-tag">Pauta domiciliaria</div>
+              <p>Paracetamol 15 mg/kg c/6h + Ibuprofeno 10 mg/kg c/8h de forma horaria los primeros 2–3 días. Explicar a los padres.</p>
+            </div>
+            <div class="pt-item">
+              <div class="pi-tag">Opioides al alta</div>
+              <p>Solo si dolor severo previsto. Tramadol VO en &gt;12 años. No codeína nunca. Instrucciones claras de dosis y señales de alarma.</p>
+            </div>
+            <div class="pt-item">
+              <div class="pi-tag">Educación a padres</div>
+              <p>Reconocer signos de dolor vs sedación. Cuándo volver a urgencias. Nunca dar analgesia "solo si llora" — pautar horaria.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PCA y epidural específica -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--teal-suave)">🎛️</div>
+        <div><h3>PCA en pediatría — Programación estándar</h3><div class="sub">Patient / Nurse / Parent Controlled Analgesia</div></div>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-teal">
+          <div class="alert-ico">💡</div>
+          <div><b>PCA pediátrica:</b> Niños ≥6–7 años con capacidad cognitiva adecuada pueden controlar su PCA. En menores o con DI: NCA (nurse-controlled) o PCA activada por enfermería. La PCA activada por padres (PCA-P) es controvertida — aumento de riesgo de sobredosis.</div>
+        </div>
+        <table>
+          <thead><tr><th>Parámetro</th><th>Morfina</th><th>Fentanilo</th></tr></thead>
+          <tbody>
+            <tr><td>Concentración</td><td>1 mg/mL</td><td>10 µg/mL</td></tr>
+            <tr><td>Bolo PCA</td><td>0.02 mg/kg (máx 2 mg)</td><td>0.5 µg/kg (máx 25 µg)</td></tr>
+            <tr><td>Periodo de cierre</td><td>5–10 min</td><td>5–10 min</td></tr>
+            <tr><td>Límite horario</td><td>0.4 mg/kg/h</td><td>4 µg/kg/h</td></tr>
+            <tr><td>Infusión basal</td><td>0.01–0.02 mg/kg/h</td><td>0.5–1 µg/kg/h</td></tr>
+            <tr><td>Límite 4h</td><td>0.3–0.4 mg/kg</td><td>6–8 µg/kg</td></tr>
+          </tbody>
+        </table>
+        <div class="alert alert-rojo mt-4">
+          <div class="alert-ico">🚨</div>
+          <div><b>Monitoreo obligatorio con PCA:</b> SpO₂ continua. FR cada hora. Escala de sedación (UMSS o Ramsay) cada 4h. Si sedación excesiva o FR &lt;12 → suspender infusión basal y evaluar.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--teal-suave)">📏</div>
+        <div><h3>Analgesia epidural pediátrica continua</h3><div class="sub">Parámetros y vigilancia</div></div>
+      </div>
+      <div class="card-body">
+        <table>
+          <thead><tr><th>Parámetro</th><th>Neonato-Lactante</th><th>Niño 1–5 años</th><th>Niño &gt;5 años</th></tr></thead>
+          <tbody>
+            <tr><td>Solución estándar</td><td>Bupivacaína 0.1%</td><td>Bupivacaína 0.1% ± Fentanilo 1µg/mL</td><td>Bupivacaína 0.1% + Fentanilo 2µg/mL</td></tr>
+            <tr><td>Velocidad infusión</td><td>0.1 mL/kg/h</td><td>0.1–0.2 mL/kg/h</td><td>0.2–0.3 mL/kg/h</td></tr>
+            <tr><td>Máx bupivacaína</td><td>0.2 mg/kg/h</td><td>0.2–0.4 mg/kg/h</td><td>0.4 mg/kg/h</td></tr>
+          </tbody>
+        </table>
+        <hr class="divider">
+        <p class="bold" style="margin-bottom:8px;">Vigilancia epidural pediátrica — cada 4h</p>
+        <ul class="list-clean">
+          <li>Nivel sensitivo (comprobación con frío)</li>
+          <li>Bloqueo motor (escala Bromage 0–3)</li>
+          <li>Presión arterial (hipotensión por bloqueo simpático en &gt;5 años)</li>
+          <li>SpO₂ y FR (depresión resp. por fentanilo epidural)</li>
+          <li>Prurito, náusea, retención urinaria</li>
+          <li>Sitio de inserción del catéter (infección, desplazamiento)</li>
+        </ul>
+        <div class="alert alert-ambar mt-4">
+          <div class="alert-ico">⚠️</div>
+          <div><b>En lactantes &lt;6 meses:</b> No usar opioides epidurales (mayor sensibilidad a depresión respiratoria). Solo bupivacaína 0.1% sin opioides. Monitor SpO₂ continua mínimo 24h.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 8: SITUACIONES ESPECIALES ══ -->
+  <div class="section-label" id="especiales">
+    <div class="dot" style="background:var(--rose)"></div>
+    <h2>8 · Situaciones Especiales</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--rose-suave)">👶</div>
+        <div><h3>Neonato y prematuro</h3><div class="sub">La población más vulnerable — máxima precaución</div></div>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-rojo">
+          <div class="alert-ico">🚨</div>
+          <div><b>Prematuros &lt;60 semanas de edad postconcepcional:</b> Riesgo de apnea postoperatoria hasta 12h después de anestesia. Monitoreo SpO₂ y apnea continua por 12h mínimo. Internar aunque sea cirugía ambulatoria.</div>
+        </div>
+        <div class="param-grid" style="margin-bottom:14px;">
+          <div class="param-box">
+            <div class="pb-head" style="background:var(--rojo-suave);color:var(--rojo);">Morfina neonato</div>
+            <div class="pb-val" style="color:var(--rojo);">0.025<span class="pb-unit"> mg/kg</span></div>
+            <div class="pb-sub">Dosis inicial. Titular c/4–6h. Monitor respiratorio obligatorio.</div>
+          </div>
+          <div class="param-box">
+            <div class="pb-head" style="background:var(--verde-suave);color:var(--verde);">Paracetamol neonato</div>
+            <div class="pb-val" style="color:var(--verde);">7.5<span class="pb-unit"> mg/kg</span></div>
+            <div class="pb-sub">c/8h IV. Pilar analgésico sin riesgo respiratorio.</div>
+          </div>
+        </div>
+        <p class="bold" style="margin-bottom:8px;">Técnicas no farmacológicas neonato (evidencia alta)</p>
+        <ul class="list-clean">
+          <li><b>Sacarosa 24% oral:</b> 0.1–0.5 mL 2 min antes del procedimiento. Reduce respuesta nociceptiva demostrada en metaanálisis. Usar para procedimientos menores (venopunción, extracción de vía).</li>
+          <li><b>Succión no nutritiva:</b> Chupete durante el procedimiento. Reduce NIPS en neonatos a término y prematuros.</li>
+          <li><b>Piel a piel (kangaroo):</b> Reduce FC, cortisol y escala NIPS durante procedimientos en neonatos hospitalizados.</li>
+          <li><b>Reducción de luz y ruido:</b> El ambiente de UCIN con estímulos controlados reduce el estrés basal.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--rose-suave)">🔵</div>
+        <div><h3>Dolor oncológico pediátrico</h3><div class="sub">Principios especiales de manejo crónico</div></div>
+      </div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" style="background:var(--rose)">1</div>
+            <div class="step-content">
+              <strong>Evaluación multidimensional obligatoria</strong>
+              <p>Dolor nociceptivo, neuropático, psicológico y total (concepto de "total pain" de Cicely Saunders). Cada dimensión requiere abordaje específico.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--rose)">2</div>
+            <div class="step-content">
+              <strong>Morfina oral de liberación prolongada</strong>
+              <p>Pilar del dolor oncológico pediátrico crónico. 0.2–0.5 mg/kg c/12h. Ajustar 25–30% cada 48h si dolor no controlado. Siempre asociar laxante (lactulosasa, macrogol).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--rose)">3</div>
+            <div class="step-content">
+              <strong>Dolor neuropático — coadyuvantes</strong>
+              <p>Gabapentina 5–15 mg/kg/día en 3 dosis (escalar lentamente). Amitriptilina 0.1 mg/kg nocturna (en &gt;6 años). Pregabalina en adolescentes. TENS si dolor localizado.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--rose)">4</div>
+            <div class="step-content">
+              <strong>Metadona — Dolor refractario</strong>
+              <p>Cuando la morfina es insuficiente o produce efectos adversos. Requiere conversión cuidadosa. Monitor QTc. Ventaja: también actúa como antagonista NMDA (componente neuropático).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--rose)">5</div>
+            <div class="step-content">
+              <strong>Cuidados paliativos + equipo multidisciplinario</strong>
+              <p>Psicólogo, trabajador social, capellán si aplica. La familia es parte del equipo. Evitar sufrimiento innecesario: umbral de tratamiento agresivo del dolor bajo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--rose-suave)">♿</div>
+        <div><h3>Discapacidad intelectual y TEA</h3><div class="sub">Evaluación y manejo adaptados</div></div>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-purp">
+          <div class="alert-ico">💡</div>
+          <div><b>El niño con DI severa tiende a ser subanalgesiado</b> porque no puede comunicar su dolor verbalmente. La escala r-FLACC adaptada y el conocimiento de los cuidadores son esenciales.</div>
+        </div>
+        <ul class="list-clean">
+          <li>Usar <b>r-FLACC</b> (revisada) con ítems personalizados según el niño específico — los padres ayudan a calibrar la escala</li>
+          <li><b>TEA:</b> mayor sensibilidad sensorial — el contacto y el ambiente del postoperatorio pueden amplificar la experiencia de dolor</li>
+          <li>Premedicación ansiológica más agresiva si necesario (midazolam intranasal 0.2–0.4 mg/kg, dexmedetomidina intranasal 1–2 µg/kg)</li>
+          <li>Dexmedetomidina postoperatoria reduce agitación en el despertar en TEA</li>
+          <li>Involucrar al cuidador habitual en la UCPA — presencia tranquilizadora</li>
+          <li>Ambiente con estímulos reducidos (luz, ruido) en postoperatorio</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--rose-suave)">🦴</div>
+        <div><h3>Adenoamigdalectomía — Caso especial</h3><div class="sub">La cirugía pediátrica con mayor riesgo analgésico</div></div>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-rojo">
+          <div class="alert-ico">🚨</div>
+          <div><b>Codeína post-amigdalectomía: PROHIBIDA en cualquier edad pediátrica</b> (muertes reportadas — FDA 2013). También tramadol en &lt;12 años según EMA 2015.</div>
+        </div>
+        <p class="bold" style="margin-bottom:8px;">Protocolo de analgesia post-amigdalectomía (ESPA 2023)</p>
+        <ul class="list-clean">
+          <li><b>Paracetamol 15 mg/kg IV</b> intraoperatorio + c/6h postoperatorio — pilar fundamental</li>
+          <li><b>Dexametasona 0.15–0.5 mg/kg IV</b> (máx 8 mg) intraoperatorio — reduce dolor, edema y NVPO</li>
+          <li><b>Ibuprofeno VO 10 mg/kg c/8h</b> desde que tolera VO — evidencia fuerte (no aumenta sangrado con dosis estándar)</li>
+          <li><b>Morfina IV 0.05 mg/kg</b> de rescate en UCPA si dolor severo — con vigilancia respiratoria</li>
+          <li><b>Dexmedetomidina 0.5 µg/kg IV</b> — reduce agitación en el despertar (muy frecuente post-amigdalectomía)</li>
+          <li>Alta: paracetamol + ibuprofeno horario los primeros 5–7 días. Instrucciones escritas a los padres.</li>
+        </ul>
+        <div class="alert alert-ambar">
+          <div class="alert-ico">⚠️</div>
+          <div><b>SAOS severo post-amigdalectomía:</b> Mayor riesgo de depresión respiratoria con opioides. Reducir dosis de morfina 30–50%. Ingreso y monitoreo SpO₂ nocturno las primeras 24h en SAOS grave (IAH &gt;10).</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CHEAT SHEET ══ -->
+  <div class="section-label" id="cheatsheet">
+    <div class="dot" style="background:var(--gris-6)"></div>
+    <h2>9 · Cheat Sheet — Resumen Ejecutivo Pediátrico</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--gris-1)">📋</div>
+      <div><h3>Referencia rápida de bolsillo — Analgesia pediátrica perioperatoria</h3></div>
+    </div>
+    <div class="card-body">
+      <table>
+        <thead>
+          <tr><th>Situación</th><th>Acción inmediata</th><th>Fármaco / Dosis</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Dolor leve postop (FLACC 1–3 / NRS ≤3)</b></td>
+            <td>Paracetamol + AINE horarios. Técnicas no farmacológicas.</td>
+            <td>Paracetamol 15 mg/kg IV/VO c/6h + Ibuprofeno 10 mg/kg VO c/8h</td>
+          </tr>
+          <tr>
+            <td><b>Dolor moderado (FLACC 4–6 / NRS 4–6)</b></td>
+            <td>Paracetamol + AINE + tramadol (si &gt;1 año) o ketamina bolo</td>
+            <td>Tramadol 1–2 mg/kg IV en 15 min c/6h ó Ketamina 0.1–0.2 mg/kg IV</td>
+          </tr>
+          <tr>
+            <td><b>Dolor severo en UCPA (FLACC ≥7 / NRS ≥7)</b></td>
+            <td>Fentanilo IV titulado bolo a bolo hasta FLACC &lt;4</td>
+            <td>Fentanilo 0.5–1 µg/kg IV c/5 min. Máx 3 dosis. Luego morfina basal.</td>
+          </tr>
+          <tr>
+            <td><b>Morfina — Niño 1–12 años</b></td>
+            <td>Dolor moderado-severo resistente a no opioides</td>
+            <td>0.05–0.1 mg/kg IV c/2–4h. Infusión: 0.01–0.04 mg/kg/h</td>
+          </tr>
+          <tr>
+            <td><b>Morfina — Neonato</b></td>
+            <td>Dolor severo sin respuesta a regional</td>
+            <td>0.025–0.05 mg/kg IV c/4–6h. SpO₂ continua 12–24h.</td>
+          </tr>
+          <tr>
+            <td><b>PCA morfina (≥6–7 años)</b></td>
+            <td>Cirugía mayor con dolor &gt;24h esperado</td>
+            <td>Bolo 0.02 mg/kg, cierre 5–10 min, límite 0.4 mg/kg/h, basal 0.01–0.02 mg/kg/h</td>
+          </tr>
+          <tr>
+            <td><b>Bloqueo caudal (&lt;6 años)</b></td>
+            <td>Cirugía urológica, escrotal, inguinal, perineal</td>
+            <td>Bupivacaína 0.25% 1 mL/kg (máx 20 mL). ± Dexametasona 0.1 mg/kg</td>
+          </tr>
+          <tr>
+            <td><b>TAP block</b></td>
+            <td>Cirugía abdominal abierta o laparoscópica &gt;5 kg</td>
+            <td>Bupivacaína 0.25% 0.3 mL/kg por lado (bilateral). Ecografía.</td>
+          </tr>
+          <tr>
+            <td><b>Bloqueo peneano</b></td>
+            <td>Circuncisión, hipospadias</td>
+            <td>Bupivacaína 0.25% SIN adrenalina 0.1 mL/kg por lado</td>
+          </tr>
+          <tr>
+            <td><b>Transición remifentanilo al cierre</b></td>
+            <td>30 min antes de finalizar → dar morfina puente</td>
+            <td>Morfina 0.05–0.1 mg/kg IV ó fentanilo 1 µg/kg + paracetamol + AINE</td>
+          </tr>
+          <tr>
+            <td><b>Agitación en el despertar</b></td>
+            <td>Descartar dolor → si agitación pura: dexmedetomidina</td>
+            <td>Dexmedetomidina 0.5 µg/kg IV en 10 min ó Fentanilo 0.5 µg/kg</td>
+          </tr>
+          <tr>
+            <td><b>Sobredosis opioide / depresión resp.</b></td>
+            <td>Naloxona titulada — NUNCA bolo estándar adulto</td>
+            <td>Naloxona 1–10 µg/kg IV titulado. Repetir c/2–3 min. Infusión 2 µg/kg/h si necesario.</td>
+          </tr>
+          <tr>
+            <td><b>Toxicidad anestésico local</b></td>
+            <td>Intralipid 20% inmediato</td>
+            <td>1.5 mL/kg IV bolo → 0.25 mL/kg/min infusión. RCP concurrente.</td>
+          </tr>
+          <tr>
+            <td><b>Neonato — Procedimiento menor (venopunción)</b></td>
+            <td>Sacarosa 24% + succión no nutritiva</td>
+            <td>0.1–0.5 mL VO 2 min antes. Chupete durante el procedimiento.</td>
+          </tr>
+          <tr>
+            <td><b>Post-amigdalectomía</b></td>
+            <td>NO codeína, NO tramadol &lt;12 años</td>
+            <td>Paracetamol 15 mg/kg c/6h + Ibuprofeno 10 mg/kg c/8h + Dexametasona 0.15 mg/kg intraop</td>
+          </tr>
+          <tr>
+            <td><b>Prematuro &lt;60 sem edad postconceptual</b></td>
+            <td>Monitoreo SpO₂ + apnea 12h postop. Internar.</td>
+            <td>Paracetamol 7.5 mg/kg c/8h IV. Regional si posible. Morfina solo si imprescindible.</td>
+          </tr>
+          <tr>
+            <td><b>Alta domiciliaria — Pauta analgésica padres</b></td>
+            <td>Instrucción escrita. Analgesia horaria, no PRN.</td>
+            <td>Paracetamol 15 mg/kg c/6h + Ibuprofeno 10 mg/kg c/8h × 3–5 días</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Recordatorio clave -->
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--purp-suave)">⭐</div>
+      <div><h3>Los 10 principios irrenunciables de analgesia pediátrica</h3></div>
+    </div>
+    <div class="card-body">
+      <div class="grid-2">
+        <ul class="list-clean">
+          <li>El neonato y prematuro SÍ sienten dolor — siempre tratar</li>
+          <li>NUNCA adaptar dosis de adulto — calcular siempre por kg de peso ideal</li>
+          <li>Analgesia multimodal — nunca depender de un solo fármaco</li>
+          <li>La técnica regional es la primera línea en cirugía mayor, no el complemento</li>
+          <li>Evaluar el dolor con escala apropiada a la edad — cada 4h mínimo</li>
+        </ul>
+        <ul class="list-clean">
+          <li>Codeína: NUNCA en &lt;12 años, NUNCA post-amigdalectomía</li>
+          <li>Paracetamol + AINE horarios — no esperar a que el niño llore para dar</li>
+          <li>Transición analgésica antes de suspender remifentanilo — siempre</li>
+          <li>Tener Intralipid 20% disponible antes de cualquier bloqueo regional</li>
+          <li>Los padres son parte del equipo analgésico — educar siempre al alta</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>Guía de Analgesia Intra y Postoperatoria en Pediatría · Anestesiología Pediátrica · Nivel Especialista</p>
+  <p style="margin-top:4px;opacity:.6;">Basada en guías ESPA 2023, APAGBI 2023, SPA 2024, AAPM, Cochrane Pediatric Pain Reviews 2023. Solo para referencia clínica y uso educativo.</p>
+</footer>
+
+</body>
+</html>

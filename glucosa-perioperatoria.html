@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de Manejo de Glucosa Perioperatoria · Anestesiología</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul:       #1e40af;
+    --azul-suave: #dbeafe;
+    --azul-med:   #93c5fd;
+    --rojo:       #b91c1c;
+    --rojo-suave: #fee2e2;
+    --rojo-med:   #fca5a5;
+    --verde:      #15803d;
+    --verde-suave:#dcfce7;
+    --verde-med:  #86efac;
+    --ambar:      #92400e;
+    --ambar-suave:#fef3c7;
+    --ambar-med:  #fcd34d;
+    --gris-f:     #f8fafc;
+    --gris-1:     #f1f5f9;
+    --gris-2:     #e2e8f0;
+    --gris-3:     #cbd5e1;
+    --gris-6:     #475569;
+    --gris-8:     #1e293b;
+    --border:     1px solid #e2e8f0;
+    --shadow:     0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+    --shadow-md:  0 4px 16px rgba(0,0,0,.07);
+    --radius:     10px;
+    --radius-sm:  6px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f0f4f8;
+    color: var(--gris-8);
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 0 0 60px;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 60%, #2563eb 100%);
+    color: white;
+    padding: 48px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .site-header .tag {
+    display: inline-block;
+    background: rgba(255,255,255,.18);
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .site-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .site-header .subtitle {
+    font-size: 15px;
+    opacity: .8;
+    font-weight: 300;
+    max-width: 700px;
+  }
+  .header-chips {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-top: 24px;
+  }
+  .header-chip {
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  /* ── LAYOUT ── */
+  .main { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+
+  /* ── SECCIÓN ── */
+  .section-label {
+    display: flex; align-items: center; gap: 10px;
+    margin: 40px 0 16px;
+  }
+  .section-label .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .section-label h2 {
+    font-size: 11px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--gris-6);
+  }
+  .section-label .line {
+    flex: 1; height: 1px; background: var(--gris-2);
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: white;
+    border: var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 16px 20px;
+    border-bottom: var(--border);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .card-header .icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .card-header h3 { font-size: 15px; font-weight: 600; }
+  .card-header .sub { font-size: 12px; color: var(--gris-6); margin-top: 1px; }
+  .card-body { padding: 20px; }
+
+  /* ── GRID ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media(max-width:760px){
+    .grid-2,.grid-3{ grid-template-columns:1fr; }
+  }
+
+  /* ── TARGET BOX ── */
+  .target-big {
+    display: flex; align-items: center; gap: 16px;
+    padding: 18px 20px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 14px;
+  }
+  .target-big .val {
+    font-size: 28px; font-weight: 700; line-height: 1;
+    white-space: nowrap;
+  }
+  .target-big .unit { font-size: 13px; font-weight: 400; opacity: .7; }
+  .target-big .label { font-size: 13px; font-weight: 500; }
+  .target-big .note { font-size: 11px; opacity: .75; margin-top: 2px; }
+
+  /* ── BADGE ── */
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 10px; border-radius: 12px;
+    font-size: 11px; font-weight: 600; letter-spacing: .04em;
+  }
+  .badge-rojo  { background: var(--rojo-suave);  color: var(--rojo); }
+  .badge-verde { background: var(--verde-suave); color: var(--verde); }
+  .badge-ambar { background: var(--ambar-suave); color: var(--ambar); }
+  .badge-azul  { background: var(--azul-suave);  color: var(--azul); }
+
+  /* ── ALERT ── */
+  .alert {
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    display: flex; gap: 12px; align-items: flex-start;
+    margin-bottom: 12px;
+  }
+  .alert-ico { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .alert-rojo  { background: var(--rojo-suave);  border-left: 3px solid var(--rojo); }
+  .alert-verde { background: var(--verde-suave); border-left: 3px solid var(--verde); }
+  .alert-ambar { background: var(--ambar-suave); border-left: 3px solid var(--ambar); }
+  .alert-azul  { background: var(--azul-suave);  border-left: 3px solid var(--azul); }
+  .alert b { display: block; font-weight: 600; margin-bottom: 3px; font-size: 13px; }
+
+  /* ── TABLA ── */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    background: var(--gris-1); color: var(--gris-6);
+    font-weight: 600; font-size: 11px; letter-spacing: .06em;
+    text-transform: uppercase; padding: 10px 12px; text-align: left;
+    border-bottom: 1px solid var(--gris-2);
+  }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--gris-2); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--gris-f); }
+
+  /* ── STEP FLOW ── */
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: flex; gap: 16px; padding: 14px 0;
+    border-bottom: 1px dashed var(--gris-2);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
+    color: white;
+  }
+  .step-content { flex: 1; }
+  .step-content strong { font-size: 14px; display: block; margin-bottom: 4px; }
+  .step-content p, .step-content ul { font-size: 13px; color: var(--gris-6); }
+  .step-content ul { padding-left: 16px; margin-top: 4px; }
+  .step-content li { margin-bottom: 2px; }
+
+  /* ── PROTOCOL CARD (flow horizontal) ── */
+  .proto-flow {
+    display: flex; align-items: stretch; gap: 0;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: var(--border);
+    margin-bottom: 12px;
+  }
+  .proto-cond {
+    padding: 14px 16px;
+    min-width: 160px;
+    font-size: 13px; font-weight: 600;
+    display: flex; align-items: center;
+    border-right: var(--border);
+  }
+  .proto-action { padding: 14px 16px; flex: 1; font-size: 13px; }
+  .proto-action ul { padding-left: 16px; }
+  .proto-action li { margin-bottom: 3px; }
+
+  /* ── DRIP TABLE ── */
+  .drip-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+  .drip-cell {
+    border: var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  .drip-cell .dc-head {
+    padding: 8px 12px;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: .06em; text-transform: uppercase;
+    border-bottom: var(--border);
+  }
+  .drip-cell .dc-body { padding: 10px 12px; font-size: 13px; }
+  .drip-cell .dc-val { font-size: 22px; font-weight: 700; line-height: 1.1; }
+  .drip-cell .dc-sub { font-size: 11px; color: var(--gris-6); margin-top: 2px; }
+
+  /* ── PILL NAV ── */
+  .pill-nav {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .pill-nav a {
+    padding: 7px 18px; border-radius: 20px;
+    font-size: 13px; font-weight: 500;
+    background: white; border: var(--border);
+    color: var(--gris-6); text-decoration: none;
+    transition: all .15s;
+  }
+  .pill-nav a:hover { background: var(--azul-suave); color: var(--azul); border-color: var(--azul-med); }
+  .pill-nav a.active { background: var(--azul); color: white; border-color: var(--azul); }
+
+  /* ── TIMELINE PERIOPEATORIA ── */
+  .timeline {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: var(--border);
+    margin-bottom: 16px;
+  }
+  .tl-col { border-right: var(--border); }
+  .tl-col:last-child { border-right: none; }
+  .tl-head {
+    padding: 14px 16px;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: .08em; text-transform: uppercase;
+    border-bottom: var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .tl-head .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .tl-body { padding: 14px 16px; }
+  .tl-item { margin-bottom: 10px; }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-item .t-tag {
+    font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .06em;
+    opacity: .65; margin-bottom: 2px;
+  }
+  .tl-item p { font-size: 13px; }
+
+  /* ── RANGE BAR ── */
+  .range-bar {
+    height: 28px;
+    border-radius: 14px;
+    background: linear-gradient(to right,
+      #7f1d1d 0%, #b91c1c 12%,
+      #fcd34d 20%, #86efac 35%,
+      #86efac 70%, #fcd34d 80%,
+      #b91c1c 90%, #7f1d1d 100%);
+    position: relative;
+    margin: 10px 0 6px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.15);
+  }
+  .range-bar .zone-label {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    font-size: 10px; font-weight: 700;
+    color: rgba(0,0,0,.55);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .range-ticks {
+    display: flex; justify-content: space-between;
+    font-size: 11px; color: var(--gris-6); padding: 0 2px;
+  }
+
+  /* ── MISC ── */
+  .two-col { columns: 2; column-gap: 24px; }
+  .two-col li { break-inside: avoid; margin-bottom: 4px; font-size: 13px; }
+  ul.list-clean { list-style: none; padding: 0; }
+  ul.list-clean li::before { content: '→ '; color: var(--azul); font-weight: 600; }
+  ul.list-clean li { margin-bottom: 4px; font-size: 13px; }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .chip {
+    padding: 3px 10px; border-radius: 12px;
+    font-size: 11px; font-weight: 500;
+    background: var(--gris-1); border: var(--border); color: var(--gris-6);
+  }
+  hr.divider { border: none; border-top: 1px dashed var(--gris-2); margin: 14px 0; }
+  .text-sm { font-size: 12px; color: var(--gris-6); }
+  .mt-4 { margin-top: 16px; }
+  .mb-0 { margin-bottom: 0; }
+  .bold { font-weight: 600; }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    text-align: center; padding: 32px 24px;
+    font-size: 12px; color: var(--gris-6);
+    border-top: var(--border); background: white;
+    margin-top: 40px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ HEADER ══════════════════ -->
+<header class="site-header">
+  <div class="tag">🩺 Anestesiología · Especialista</div>
+  <h1>Manejo de la Glucosa Perioperatoria</h1>
+  <p class="subtitle">Hipoglucemia e Hiperglucemia — Control glucémico pre, intra y postoperatorio.<br>Protocolo basado en evidencia para el anestesiólogo.</p>
+  <div class="header-chips">
+    <span class="header-chip">📋 Guía Clínica 2024</span>
+    <span class="header-chip">🎯 Meta: 140–180 mg/dL intraop</span>
+    <span class="header-chip">⚠️ Hipoglucemia &lt; 70 mg/dL → Urgencia</span>
+    <span class="header-chip">🔴 Hiperglucemia &gt; 180 mg/dL → Tratar</span>
+  </div>
+</header>
+
+<div class="main">
+
+  <!-- Pill nav -->
+  <nav class="pill-nav" style="margin-top:24px;">
+    <a href="#fundamentos" class="active">Fundamentos</a>
+    <a href="#preoperatorio">Preoperatorio</a>
+    <a href="#intraoperatorio">Intraoperatorio</a>
+    <a href="#postoperatorio">Postoperatorio</a>
+    <a href="#hipoglucemia">Hipoglucemia</a>
+    <a href="#hiperglucemia">Hiperglucemia</a>
+    <a href="#farmacos">Fármacos</a>
+    <a href="#casos">Casos Especiales</a>
+  </nav>
+
+  <!-- ══ SECCIÓN 1: FUNDAMENTOS ══ -->
+  <div class="section-label" id="fundamentos">
+    <div class="dot" style="background:var(--azul)"></div>
+    <h2>1 · Fundamentos y Metas Glucémicas</h2>
+    <div class="line"></div>
+  </div>
+
+  <!-- Rango glucémico visual -->
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--azul-suave)">📊</div>
+      <div>
+        <h3>Espectro glucémico perioperatorio</h3>
+        <div class="sub">Rangos de acción clínica para anestesiología</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="range-bar">
+        <span class="zone-label" style="left:4%">HIPOGLUCEMIA</span>
+        <span class="zone-label" style="left:42%">META</span>
+        <span class="zone-label" style="left:80%">HIPERGLUC.</span>
+      </div>
+      <div class="range-ticks">
+        <span>&lt;40</span><span>54</span><span>70</span><span>100</span><span>140</span><span>180</span><span>250</span><span>&gt;300</span>
+      </div>
+      <div class="chip-row" style="margin-top:14px;">
+        <span class="chip" style="background:#fee2e2;border-color:#fca5a5;color:#b91c1c;">🔴 &lt;54 mg/dL · Hipoglucemia grave</span>
+        <span class="chip" style="background:#fef3c7;border-color:#fcd34d;color:#92400e;">🟡 54–70 mg/dL · Hipoglucemia clínica</span>
+        <span class="chip" style="background:#dcfce7;border-color:#86efac;color:#15803d;">🟢 140–180 mg/dL · Meta intraoperatoria</span>
+        <span class="chip" style="background:#fef3c7;border-color:#fcd34d;color:#92400e;">🟡 180–250 mg/dL · Hiperglucemia leve-mod</span>
+        <span class="chip" style="background:#fee2e2;border-color:#fca5a5;color:#b91c1c;">🔴 &gt;250 mg/dL · Hiperglucemia grave</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--verde-suave)">🎯</div>
+        <div>
+          <h3>Meta Intraoperatoria</h3>
+          <div class="sub">Recomendación general</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="target-big" style="background:var(--verde-suave);border-radius:8px;">
+          <div>
+            <div class="val" style="color:var(--verde)">140–180 <span class="unit">mg/dL</span></div>
+            <div class="label" style="color:var(--verde)">Paciente no crítico</div>
+          </div>
+        </div>
+        <div class="target-big" style="background:var(--azul-suave);border-radius:8px;">
+          <div>
+            <div class="val" style="color:var(--azul)">140–180 <span class="unit">mg/dL</span></div>
+            <div class="label" style="color:var(--azul)">Paciente crítico (UCI)</div>
+          </div>
+        </div>
+        <p class="text-sm mt-4">Meta &lt;140 mg/dL aumenta riesgo de hipoglucemia sin beneficio adicional demostrado (NICE-SUGAR).</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--rojo-suave)">⚡</div>
+        <div>
+          <h3>Impacto de la Disglucemia</h3>
+          <div class="sub">Consecuencias fisiopatológicas</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="bold" style="color:var(--rojo);margin-bottom:8px;">Hiperglucemia →</p>
+        <ul class="list-clean mb-0">
+          <li>↑ Infección de sitio quirúrgico ×3</li>
+          <li>↑ Mortalidad en cardiopatía isquémica</li>
+          <li>↑ Disfunción renal postoperatoria</li>
+          <li>↑ Tiempo de hospitalización</li>
+          <li>Diuresis osmótica → deshidratación</li>
+        </ul>
+        <hr class="divider">
+        <p class="bold" style="color:var(--ambar);margin-bottom:8px;">Hipoglucemia →</p>
+        <ul class="list-clean mb-0">
+          <li>Daño neurológico irreversible (&lt;40)</li>
+          <li>Enmascarada por anestesia general</li>
+          <li>Arritmias y disfunción miocárdica</li>
+          <li>Vasodilatación y diaphoresis</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--ambar-suave)">📡</div>
+        <div>
+          <h3>Monitoreo recomendado</h3>
+          <div class="sub">Frecuencia según escenario</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <table>
+          <thead>
+            <tr><th>Escenario</th><th>Frecuencia</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Cirugía electiva, DM2 controlada</td><td><span class="badge badge-verde">c/1h</span></td></tr>
+            <tr><td>Cirugía mayor &gt;3h</td><td><span class="badge badge-ambar">c/30–60min</span></td></tr>
+            <tr><td>Infusión de insulina IV</td><td><span class="badge badge-rojo">c/30min</span></td></tr>
+            <tr><td>Paciente con hipoglucemia previa</td><td><span class="badge badge-rojo">c/15–30min</span></td></tr>
+            <tr><td>DM1, bomba de insulina</td><td><span class="badge badge-rojo">c/30min</span></td></tr>
+            <tr><td>Cirugía ambulatoria</td><td><span class="badge badge-verde">Inicio y fin</span></td></tr>
+          </tbody>
+        </table>
+        <div class="alert alert-ambar mt-4">
+          <div class="alert-ico">⚠️</div>
+          <div><b>Glucómetros capilares</b> pueden tener ±15–20% de error. En hipoglucemia o estado de shock → usar muestra venosa/arterial.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECCIÓN 2: PREOPERATORIO ══ -->
+  <div class="section-label" id="preoperatorio">
+    <div class="dot" style="background:#7c3aed"></div>
+    <h2>2 · Manejo Preoperatorio</h2>
+    <div class="line"></div>
+  </div>
+
+  <!-- Timeline preo -->
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:#ede9fe">🗓️</div>
+      <div>
+        <h3>Ajuste de antidiabéticos previo a cirugía</h3>
+        <div class="sub">Protocolo de suspensión / reducción según tipo de fármaco</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <table>
+        <thead>
+          <tr>
+            <th>Fármaco</th><th>Noche antes</th><th>Mañana de cirugía</th><th>Riesgo principal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Metformina</b></td>
+            <td>Dosis habitual</td>
+            <td><span class="badge badge-rojo">OMITIR</span><br><span class="text-sm">Cirugía mayor o con contraste</span></td>
+            <td>Acidosis láctica, especialmente con contraste IV o hipoperfusión</td>
+          </tr>
+          <tr>
+            <td><b>Sulfonilureas</b> (glibenclamida, glipizida)</td>
+            <td>Omitir si CG &lt;140</td>
+            <td><span class="badge badge-rojo">OMITIR</span></td>
+            <td>Hipoglucemia prolongada intraoperatoria</td>
+          </tr>
+          <tr>
+            <td><b>Inhibidores DPP-4</b> (sitagliptina)</td>
+            <td>Dosis habitual</td>
+            <td><span class="badge badge-ambar">Suspender</span></td>
+            <td>Bajo riesgo; suspender como precaución</td>
+          </tr>
+          <tr>
+            <td><b>SGLT-2</b> (empagliflozina, dapagliflozina)</td>
+            <td><span class="badge badge-rojo">SUSPENDER 3–7 días antes</span></td>
+            <td><span class="badge badge-rojo">OMITIR</span></td>
+            <td>Cetoacidosis euglucémica — riesgo vida</td>
+          </tr>
+          <tr>
+            <td><b>GLP-1</b> (semaglutida, liraglutida)</td>
+            <td>Suspender 1 sem (semanal) o 1 día (diaria)</td>
+            <td><span class="badge badge-rojo">OMITIR</span></td>
+            <td>Vaciamiento gástrico lento → broncoaspiración</td>
+          </tr>
+          <tr>
+            <td><b>Insulina basal</b> (glargina, detemir)</td>
+            <td>80% de dosis habitual</td>
+            <td><span class="badge badge-ambar">50–80%</span><br><span class="text-sm">Si glicemia &lt;120: omitir</span></td>
+            <td>Hipoglucemia matutina</td>
+          </tr>
+          <tr>
+            <td><b>Insulina bolo prandial</b></td>
+            <td>Dosis habitual con última comida</td>
+            <td><span class="badge badge-rojo">OMITIR</span><br><span class="text-sm">Ayuno → no hay prandio</span></td>
+            <td>Hipoglucemia grave en ayuno</td>
+          </tr>
+          <tr>
+            <td><b>Bomba de insulina (CSII)</b></td>
+            <td>Basal continua al 80%</td>
+            <td><span class="badge badge-verde">Continuar basal</span><br><span class="text-sm">Suspender bolos manuales</span></td>
+            <td>Hiperglucemia si se suspende totalmente</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:#ede9fe">🔬</div>
+        <div>
+          <h3>Evaluación preoperatoria</h3>
+          <div class="sub">Laboratorio e historia clínica</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" style="background:#7c3aed">1</div>
+            <div class="step-content">
+              <strong>Glucosa en ayunas</strong>
+              <p>Solicitar en consulta preanestésica. Meta &lt;180 mg/dL para cirugía electiva. &gt;300 → considerar diferir.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#7c3aed">2</div>
+            <div class="step-content">
+              <strong>HbA1c (hemoglobina glicosilada)</strong>
+              <p>Refleja control de los últimos 3 meses. HbA1c &gt;8.5% → cirugía electiva diferida en consenso. &gt;9% → riesgo infeccioso alto.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#7c3aed">3</div>
+            <div class="step-content">
+              <strong>Función renal (creatinina, TFG)</strong>
+              <p>Condiciona uso de metformina y contraste. TFG &lt;30 → suspender metformina definitivamente.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#7c3aed">4</div>
+            <div class="step-content">
+              <strong>Tipo y tiempo de DM, complicaciones</strong>
+              <p>Neuropatía autonómica cardiovascular → bradicardia, hipotensión. Gastroparesia → riesgo broncoaspiración.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:#7c3aed">5</div>
+            <div class="step-content">
+              <strong>Dispositivos implantados</strong>
+              <p>Bomba de insulina: planificar manejo. CGM (sensor continuo): confirmar funcionamiento el día de la cirugía.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:#ede9fe">🍽️</div>
+        <div>
+          <h3>Ayuno y carga de carbohidratos</h3>
+          <div class="sub">Protocolo ERAS para diabéticos</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-verde">
+          <div class="alert-ico">✅</div>
+          <div><b>ERAS recomienda:</b> Carga de CHO (maltodextrina 12.5%) 2–3h antes en no diabéticos. En DM2 bien controlada puede aplicarse con monitoreo estrecho.</div>
+        </div>
+        <div class="alert alert-rojo">
+          <div class="alert-ico">🚫</div>
+          <div><b>Contraindicado en:</b> DM1, DM2 con gastroparesia, reflujo no controlado, obesos mórbidos o glucemia &gt;200 mg/dL en consulta.</div>
+        </div>
+        <div class="alert alert-ambar">
+          <div class="alert-ico">⚠️</div>
+          <div><b>GLP-1 agonistas:</b> Retrazan vaciamiento gástrico 3–4 veces. Considerar ayuno de 8h para sólidos aunque la guía estándar diga 6h.</div>
+        </div>
+        <hr class="divider">
+        <p class="bold">Glucemia de ingreso en área quirúrgica:</p>
+        <div class="proto-flow mt-4">
+          <div class="proto-cond" style="background:var(--verde-suave);color:var(--verde)">80–180 mg/dL</div>
+          <div class="proto-action">Proceder a cirugía con monitoreo estándar</div>
+        </div>
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--ambar-suave);color:var(--ambar)">180–250 mg/dL</div>
+          <div class="proto-action">Iniciar corrección con insulina rápida SC o IV antes de inducción. Verificar glicemia en 30 min.</div>
+        </div>
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--rojo-suave);color:var(--rojo)">&gt;250 mg/dL</div>
+          <div class="proto-action">Diferir cirugía electiva. Iniciar protocolo de hiperglucemia. Descartar cetoacidosis. Glucemia &lt;250 antes de proceder.</div>
+        </div>
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--rojo-suave);color:var(--rojo)">&lt;80 mg/dL</div>
+          <div class="proto-action">Tratar hipoglucemia. No inducir hasta glucemia &gt;100 mg/dL sostenida por 15 minutos.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECCIÓN 3: INTRAOPERATORIO ══ -->
+  <div class="section-label" id="intraoperatorio">
+    <div class="dot" style="background:#0891b2"></div>
+    <h2>3 · Manejo Intraoperatorio</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:#cffafe">💉</div>
+      <div>
+        <h3>Infusión de insulina intravenosa — Protocolo de bolsillo</h3>
+        <div class="sub">Para hiperglucemia intraoperatoria ≥ 180 mg/dL que no responde a dosis SC</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="alert alert-azul">
+        <div class="alert-ico">💡</div>
+        <div><b>Preparación estándar:</b> 50 UI de insulina regular en 50 mL SSN 0.9% → concentración 1 UI/mL. Administrar por vía exclusiva. Usar bomba de infusión.</div>
+      </div>
+      <div class="drip-grid mt-4">
+        <div class="drip-cell">
+          <div class="dc-head" style="background:var(--verde-suave);color:var(--verde)">Glucemia 140–180</div>
+          <div class="dc-body">
+            <div class="dc-val" style="color:var(--verde)">0.5–1</div>
+            <div class="dc-sub">UI/h → observar, monitoreo c/1h</div>
+          </div>
+        </div>
+        <div class="drip-cell">
+          <div class="dc-head" style="background:var(--ambar-suave);color:var(--ambar)">Glucemia 181–220</div>
+          <div class="dc-body">
+            <div class="dc-val" style="color:var(--ambar)">1–2</div>
+            <div class="dc-sub">UI/h → verificar c/30–60 min</div>
+          </div>
+        </div>
+        <div class="drip-cell">
+          <div class="dc-head" style="background:#fee2e2;color:var(--rojo)">Glucemia 221–280</div>
+          <div class="dc-body">
+            <div class="dc-val" style="color:var(--rojo)">2–3</div>
+            <div class="dc-sub">UI/h → verificar c/30 min</div>
+          </div>
+        </div>
+        <div class="drip-cell">
+          <div class="dc-head" style="background:#7f1d1d;color:#fecaca">Glucemia &gt;280</div>
+          <div class="dc-body">
+            <div class="dc-val" style="color:#b91c1c">3–5</div>
+            <div class="dc-sub">UI/h + Bolus 2–4 UI. Descartar CAD/SHH</div>
+          </div>
+        </div>
+      </div>
+      <div class="alert alert-rojo mt-4">
+        <div class="alert-ico">🛑</div>
+        <div><b>PARAR infusión si glucemia &lt; 120 mg/dL.</b> Iniciar protocolo de hipoglucemia si &lt;70. Nunca dejar infusión corriendo sin monitoreo activo.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:#cffafe">🏥</div>
+        <div>
+          <h3>Fluidos IV intraoperatorios</h3>
+          <div class="sub">Selección según estado glucémico</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--verde-suave);color:var(--verde)">SSN 0.9%<br>Ringer lactato</div>
+          <div class="proto-action"><b>Primera línea.</b> Ringer tiene 28 mEq/L de lactato — puede elevar levemente la glucemia. Aceptable. Evitar si glucemia &gt;200.</div>
+        </div>
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--rojo-suave);color:var(--rojo)">DAD 5–10%<br>Soluciones glucosadas</div>
+          <div class="proto-action"><b>EVITAR como mantenimiento</b> en diabéticos. Solo usar si hay hipoglucemia documentada o para cubrir infusión de insulina en DM1.</div>
+        </div>
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--azul-suave);color:var(--azul)">GIA (Glucosa-<br>Insulina-K)</div>
+          <div class="proto-action">DAD 5% 500mL + 10 UI insulina + 10 mEq KCl. Útil en DM1, cirugías &gt;4h. Requiere monitoreo estrecho c/30min.</div>
+        </div>
+        <div class="alert alert-ambar mt-4">
+          <div class="alert-ico">⚠️</div>
+          <div><b>Corticoides intraoperatorios</b> (dexametasona, metilprednisolona) → elevan glucemia 50–150 mg/dL en 2–4h. Anticipar y monitorear.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:#cffafe">🫀</div>
+        <div>
+          <h3>Impacto de la anestesia en glucemia</h3>
+          <div class="sub">Respuesta neuroendocrina al estrés quirúrgico</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <table>
+          <thead><tr><th>Factor</th><th>Efecto glucémico</th></tr></thead>
+          <tbody>
+            <tr><td>Estrés quirúrgico</td><td>↑ Cortisol, epinefrina → hiperglucemia</td></tr>
+            <tr><td>Propofol</td><td>Efecto neutro a leve hipoglucemiante</td></tr>
+            <tr><td>Ketamina</td><td>↑ Catecolaminas → hiperglucemia leve</td></tr>
+            <tr><td>Opioides</td><td>↓ Respuesta al estrés → efecto protector</td></tr>
+            <tr><td>Anestesia regional</td><td>↓ Respuesta neuroendocrina → más estable</td></tr>
+            <tr><td>Halogenados</td><td>Inhiben secreción de insulina → hiperglucemia</td></tr>
+            <tr><td>Dexametasona 8mg</td><td>↑ Glucemia ~40–80 mg/dL en 4–6h</td></tr>
+            <tr><td>Ventilación mecánica</td><td>Estrés oxidativo → resistencia a insulina</td></tr>
+          </tbody>
+        </table>
+        <div class="alert alert-azul mt-4">
+          <div class="alert-ico">💡</div>
+          <div><b>La anestesia regional</b> atenúa la respuesta al estrés. En pacientes diabéticos con riesgo glucémico alto, prefiera técnica regional cuando sea posible.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECCIÓN 4: POSTOPERATORIO ══ -->
+  <div class="section-label" id="postoperatorio">
+    <div class="dot" style="background:#059669"></div>
+    <h2>4 · Manejo Postoperatorio</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--verde-suave)">🏥</div>
+      <div>
+        <h3>Protocolo postoperatorio de glucosa</h3>
+        <div class="sub">UCPA, sala de recuperación y hospitalización</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="timeline">
+        <div class="tl-col">
+          <div class="tl-head" style="background:var(--azul-suave);color:var(--azul)">
+            <div class="dot" style="background:var(--azul)"></div>
+            UCPA (0–2h)
+          </div>
+          <div class="tl-body">
+            <div class="tl-item">
+              <div class="t-tag">Glucemia</div>
+              <p>Al ingreso y c/1h. Meta 140–180 mg/dL.</p>
+            </div>
+            <div class="tl-item">
+              <div class="t-tag">Si insulina IV activa</div>
+              <p>Continuar hasta tolerancia oral y primera dosis SC dada.</p>
+            </div>
+            <div class="tl-item">
+              <div class="t-tag">Dieta</div>
+              <p>Iniciar líquidos claros al recuperar reflejo nauseoso. CHO simples si hipoglucemia.</p>
+            </div>
+            <div class="tl-item">
+              <div class="t-tag">Náusea</div>
+              <p>NVPO puede enmascarar hipoglucemia. Medir si palidez o diaforesis.</p>
+            </div>
+          </div>
+        </div>
+        <div class="tl-col">
+          <div class="tl-head" style="background:var(--ambar-suave);color:var(--ambar)">
+            <div class="dot" style="background:var(--ambar)"></div>
+            Sala (2–24h)
+          </div>
+          <div class="tl-body">
+            <div class="tl-item">
+              <div class="t-tag">Glucemia</div>
+              <p>c/4–6h en paciente estable. c/2h si en insulina IV.</p>
+            </div>
+            <div class="tl-item">
+              <div class="t-tag">Transición a SC</div>
+              <p>Calcular dosis total diaria (DTD) de infusión. 80% como insulina basal, iniciar 2h antes de suspender infusión IV.</p>
+            </div>
+            <div class="tl-item">
+              <div class="t-tag">Antidiabéticos orales</div>
+              <p>Reintroducir cuando: dieta oral completa, función renal estable, sin contraste IV activo.</p>
+            </div>
+            <div class="tl-item">
+              <div class="t-tag">Corticoides</div>
+              <p>Si dose-corrective de corticoides: escala de insulina ajustada. Glucemia aumenta 4–8h poscorticoide.</p>
+            </div>
+          </div>
+        </div>
+        <div class="tl-col">
+          <div class="tl-head" style="background:var(--verde-suave);color:var(--verde)">
+            <div class="dot" style="background:var(--verde)"></div>
+            Alta / Egreso
+          </div>
+          <div class="tl-body">
+            <div class="tl-item">
+              <div class="t-tag">Glucemia al alta</div>
+              <p>Confirmar 80–200 mg/dL antes de dar egreso. Instruir al paciente.</p>
+            </div>
+            <div class="tl-item">
+              <div class="t-tag">Reinicio SGLT-2</div>
+              <p>No reiniciar hasta 48–72h post-cirugía, con dieta oral normal y función renal estable.</p>
+            </div>
+            <div class="tl-item">
+              <div class="t-tag">GLP-1</div>
+              <p>Reiniciar con dieta normal y tolerancia gastrointestinal confirmada.</p>
+            </div>
+            <div class="tl-item">
+              <div class="t-tag">Metformina</div>
+              <p>Reiniciar a las 48h si creatinina estable y sin hipoperfusión.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECCIÓN 5: HIPOGLUCEMIA ══ -->
+  <div class="section-label" id="hipoglucemia">
+    <div class="dot" style="background:var(--ambar)"></div>
+    <h2>5 · Protocolo de Hipoglucemia</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="alert alert-rojo" style="border-radius:var(--radius);border:1px solid var(--rojo-med);margin-bottom:16px;">
+    <div class="alert-ico">🚨</div>
+    <div>
+      <b>EMERGENCIA ANESTÉSICA: bajo anestesia general la hipoglucemia NO tiene síntomas clásicos (diaforesis, temblor, ansiedad). Diagnosticar solo por glucometría.</b><br>
+      <span class="text-sm">Todo paciente con bradicardia o hipotensión inexplicada intraoperatoria → medir glucemia INMEDIATAMENTE.</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--ambar-suave)">🔴</div>
+      <div>
+        <h3>Algoritmo de manejo — Hipoglucemia</h3>
+        <div class="sub">Clasificación y respuesta escalonada</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <!-- Nivel 1 -->
+      <div style="border:2px solid var(--ambar-med);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:12px;">
+        <div style="background:var(--ambar-suave);padding:12px 16px;display:flex;align-items:center;gap:12px;">
+          <span class="badge badge-ambar" style="font-size:13px;padding:6px 14px;">Nivel 1 · 54–69 mg/dL</span>
+          <span class="bold">Hipoglucemia clínica — Paciente consciente</span>
+        </div>
+        <div style="padding:14px 16px;">
+          <div class="steps">
+            <div class="step">
+              <div class="step-num" style="background:var(--ambar)">1</div>
+              <div class="step-content">
+                <strong>Regla del 15</strong>
+                <p>15 g de CHO de absorción rápida: 150 mL de jugo, 3–4 tabletas de glucosa, 1 cucharada de azúcar.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="background:var(--ambar)">2</div>
+              <div class="step-content">
+                <strong>Esperar 15 minutos, remedir</strong>
+                <p>Si &lt;70 mg/dL → repetir ciclo. Si ≥70 mg/dL → snack con proteína y CHO complejo.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="background:var(--ambar)">3</div>
+              <div class="step-content">
+                <strong>Intraoperatorio</strong>
+                <p>En paciente bajo AG o sedación: usar vía IV (ver Nivel 2). No dar VO a paciente sin reflejo protector.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nivel 2 -->
+      <div style="border:2px solid var(--rojo-med);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:12px;">
+        <div style="background:var(--rojo-suave);padding:12px 16px;display:flex;align-items:center;gap:12px;">
+          <span class="badge badge-rojo" style="font-size:13px;padding:6px 14px;">Nivel 2 · 40–53 mg/dL</span>
+          <span class="bold">Hipoglucemia grave — Siempre IV</span>
+        </div>
+        <div style="padding:14px 16px;">
+          <div class="grid-2">
+            <div>
+              <p class="bold" style="color:var(--rojo);margin-bottom:8px;">Adulto · Dextrosa IV</p>
+              <div class="proto-flow mb-0">
+                <div class="proto-cond" style="background:var(--rojo-suave);color:var(--rojo)">Dextrosa 50%</div>
+                <div class="proto-action"><b>25–50 mL IV push</b> en 1–3 min → = 12.5–25 g glucosa. Repetir c/15 min si necesario.</div>
+              </div>
+              <div class="proto-flow">
+                <div class="proto-cond" style="background:var(--ambar-suave);color:var(--ambar)">Dextrosa 10%</div>
+                <div class="proto-action">100 mL IV push → menos riesgo de flebitis, útil en hipoglucemia moderada.</div>
+              </div>
+            </div>
+            <div>
+              <p class="bold" style="color:var(--azul);margin-bottom:8px;">Sin acceso IV · Glucagón</p>
+              <div class="alert alert-azul mb-0">
+                <div class="alert-ico">💉</div>
+                <div><b>Glucagón 1 mg IM/SC</b><br>Efecto en 10–15 min. Eleva glucemia 50–100 mg/dL. No útil si glucógeno hepático agotado (hepatopatía, ayuno prolongado). Solo extrahospitalario.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nivel 3 -->
+      <div style="border:2px solid #7f1d1d;border-radius:var(--radius-sm);overflow:hidden;">
+        <div style="background:#7f1d1d;padding:12px 16px;display:flex;align-items:center;gap:12px;">
+          <span style="background:#fecaca;color:#7f1d1d;padding:6px 14px;border-radius:12px;font-weight:700;font-size:13px;">Nivel 3 · &lt; 40 mg/dL</span>
+          <span class="bold" style="color:white;">Hipoglucemia crítica — Riesgo neurológico</span>
+        </div>
+        <div style="padding:14px 16px;">
+          <div class="steps">
+            <div class="step">
+              <div class="step-num" style="background:#b91c1c">1</div>
+              <div class="step-content">
+                <strong>Dextrosa 50% 50–100 mL IV push inmediato</strong>
+                <p>Seguido de infusión de Dextrosa 10% a 100 mL/h. Titular para mantener glucemia 100–140 mg/dL.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="background:#b91c1c">2</div>
+              <div class="step-content">
+                <strong>Monitoreo c/15–30 min hasta estabilización</strong>
+                <p>Documentar tiempo de hipoglucemia. Evaluar función neurológica post-recuperación.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="background:#b91c1c">3</div>
+              <div class="step-content">
+                <strong>Investigar causa</strong>
+                <p>¿Sobredosis de insulina? ¿Sulfonilurea? ¿Ayuno prolongado? Ajustar plan terapéutico. Considerar UCI postoperatoria.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num" style="background:#b91c1c">4</div>
+              <div class="step-content">
+                <strong>¿Sobredosis de insulina de depósito?</strong>
+                <p>Puede requerir infusión de glucosa por 12–24h. Sulfonilureas de vida media larga (glibenclamida) → hipoglucemia prolongada &gt;24h.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECCIÓN 6: HIPERGLUCEMIA ══ -->
+  <div class="section-label" id="hiperglucemia">
+    <div class="dot" style="background:var(--rojo)"></div>
+    <h2>6 · Protocolo de Hiperglucemia</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--rojo-suave)">📈</div>
+      <div>
+        <h3>Algoritmo de manejo — Hiperglucemia</h3>
+        <div class="sub">Clasificación y corrección escalonada perioperatoria</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="grid-2">
+        <div>
+          <div class="proto-flow">
+            <div class="proto-cond" style="background:var(--verde-suave);color:var(--verde)">140–180 mg/dL</div>
+            <div class="proto-action"><b>Meta aceptable.</b> Continuar monitoreo. No tratar salvo tendencia alcista.</div>
+          </div>
+          <div class="proto-flow">
+            <div class="proto-cond" style="background:var(--ambar-suave);color:var(--ambar)">181–250 mg/dL<br>Leve-moderada</div>
+            <div class="proto-action">
+              <b>Dosis SC de corrección:</b> Insulina regular o análogo rápido.<br>
+              Fórmula: (Glucemia - 120) ÷ Factor de sensibilidad (FS)<br>
+              FS estándar: 50 (frágil: 70, resistente: 30)
+            </div>
+          </div>
+          <div class="proto-flow">
+            <div class="proto-cond" style="background:var(--rojo-suave);color:var(--rojo)">251–350 mg/dL<br>Moderada-grave</div>
+            <div class="proto-action">
+              <b>Iniciar infusión IV.</b> Hidratación activa (SSN 0.9%). Verificar electrolitos (K⁺). Descartar desencadenante (infección, corticoides, omisión de insulina basal).
+            </div>
+          </div>
+          <div class="proto-flow">
+            <div class="proto-cond" style="background:#7f1d1d;color:#fecaca">&gt;350 mg/dL<br>Crisis</div>
+            <div class="proto-action">
+              <b>EVALUAR CAD/SHH.</b> Gases arteriales, cetonas, osmolaridad. UCI. Reanimación hídrica agresiva. Potasio antes de insulina si K⁺ &lt;3.5 mEq/L.
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="alert alert-rojo">
+            <div class="alert-ico">🚨</div>
+            <div>
+              <b>Cetoacidosis diabética (CAD) intraoperatoria</b><br>
+              Glucemia &gt;250 + pH &lt;7.3 + HCO₃ &lt;15 + cetonas (+)<br>
+              Diferir cirugía si electiva. Si urgente: hidratación, insulina IV, K⁺, bicarbonato solo si pH &lt;6.9.
+            </div>
+          </div>
+          <div class="alert alert-ambar mt-4">
+            <div class="alert-ico">⚠️</div>
+            <div>
+              <b>Cetoacidosis euglucémica (SGLT-2)</b><br>
+              Glucemia 150–250 mg/dL + cetonas elevadas. Frecuente tras cirugía con SGLT-2 no suspendidos. El anestesiólogo DEBE preguntar por estos fármacos.
+            </div>
+          </div>
+          <div class="alert alert-azul mt-4">
+            <div class="alert-ico">💡</div>
+            <div>
+              <b>Síndrome hiperglucémico hiperosmolar (SHH)</b><br>
+              Glucemia &gt;600 mg/dL, osmolaridad &gt;320, sin acidosis. En DM2 de edad avanzada. Rehidratación es la prioridad. Insulina secundaria.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECCIÓN 7: FÁRMACOS ══ -->
+  <div class="section-label" id="farmacos">
+    <div class="dot" style="background:#6d28d9"></div>
+    <h2>7 · Guía de Fármacos</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:#ede9fe">💊</div>
+      <div>
+        <h3>Insulinas de uso perioperatorio</h3>
+        <div class="sub">Farmacocinética y aplicación clínica</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <table>
+        <thead>
+          <tr>
+            <th>Insulina</th><th>Inicio</th><th>Pico</th><th>Duración</th><th>Uso perioperatorio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Regular (corriente)</b><br><span class="text-sm">Humulin R, Actrapid</span></td>
+            <td>30–60 min SC<br><span style="color:var(--verde);font-weight:600;">Inmediato IV</span></td>
+            <td>2–4h SC</td>
+            <td>6–8h</td>
+            <td><span class="badge badge-verde">Primera línea IV</span><br>Infusión continua, corrección SC, GIA</td>
+          </tr>
+          <tr>
+            <td><b>Aspart / Lispro / Glulisina</b><br><span class="text-sm">Novorapid, Humalog</span></td>
+            <td>10–20 min SC</td>
+            <td>1–3h</td>
+            <td>3–5h</td>
+            <td><span class="badge badge-azul">SC corrección</span><br>Análogos rápidos. No usar IV (preferir regular).</td>
+          </tr>
+          <tr>
+            <td><b>NPH (Isofana)</b><br><span class="text-sm">Humulin N</span></td>
+            <td>2–4h SC</td>
+            <td>4–10h</td>
+            <td>10–18h</td>
+            <td><span class="badge badge-ambar">Precaución</span><br>Ajustar 50–80% la noche anterior. Pico impredecible.</td>
+          </tr>
+          <tr>
+            <td><b>Glargina (U-100/U-300)</b><br><span class="text-sm">Lantus, Toujeo</span></td>
+            <td>2–4h SC</td>
+            <td>Sin pico</td>
+            <td>20–24h</td>
+            <td><span class="badge badge-verde">Basal periop.</span><br>80% de dosis la noche anterior. No dar IV.</td>
+          </tr>
+          <tr>
+            <td><b>Detemir</b><br><span class="text-sm">Levemir</span></td>
+            <td>2–4h SC</td>
+            <td>Sin pico claro</td>
+            <td>16–22h</td>
+            <td><span class="badge badge-verde">Basal periop.</span><br>Igual a glargina. 80% de dosis preoperatoria.</td>
+          </tr>
+          <tr>
+            <td><b>Degludec</b><br><span class="text-sm">Tresiba</span></td>
+            <td>1–2h SC</td>
+            <td>Sin pico</td>
+            <td>&gt;42h</td>
+            <td><span class="badge badge-ambar">Precaución</span><br>Vida media muy larga. Si omisión, menos impacto agudo pero no ajustar el día previo.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ SECCIÓN 8: CASOS ESPECIALES ══ -->
+  <div class="section-label" id="casos">
+    <div class="dot" style="background:#0f766e"></div>
+    <h2>8 · Casos y Escenarios Especiales</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:#ccfbf1">🫁</div>
+        <div><h3>Cirugía cardíaca</h3><div class="sub">Bypass cardiopulmonar (BCP)</div></div>
+      </div>
+      <div class="card-body">
+        <ul class="list-clean">
+          <li>Hiperglucemia durante BCP es universal (estrés + soluciones glucosadas de perfusato)</li>
+          <li>Meta intraoperatoria más estricta: <b>120–180 mg/dL</b></li>
+          <li>Infusión IV de insulina regular durante y post-BCP</li>
+          <li>Medir glucemia c/30 min durante bypass</li>
+          <li>Hipotermia reduce requerimientos de insulina</li>
+          <li>Al recalentar: ↑ glucemia → ajustar infusión</li>
+        </ul>
+        <div class="alert alert-rojo mt-4">
+          <div class="alert-ico">⚠️</div>
+          <div><b>Glucemia &gt;200 mg/dL post-BCP</b> → ×2 riesgo de infección esternal (mediastinitis). Control estricto mejora sobrevida.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:#ccfbf1">🤰</div>
+        <div><h3>Cirugía obstétrica</h3><div class="sub">Diabetes gestacional / pregestacional</div></div>
+      </div>
+      <div class="card-body">
+        <ul class="list-clean">
+          <li>Meta intraoperatoria: <b>80–110 mg/dL</b> (más estricta — riesgo hipoglucemia neonatal)</li>
+          <li>DAD 5% a 100 mL/h + insulina según glucemia intraoperatoria</li>
+          <li>Medir c/1h durante trabajo de parto</li>
+          <li>Postparto: requerimientos de insulina caen dramáticamente en DM gestacional</li>
+          <li>En DM pregestacional: reducir 30–50% la dosis postparto</li>
+        </ul>
+        <div class="alert alert-ambar mt-4">
+          <div class="alert-ico">🍼</div>
+          <div><b>Hipoglucemia neonatal:</b> Neonatos de madres con hiperglucemia intraoperatoria tienen hiperinsulinismo. Medir glucemia al nacer.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:#ccfbf1">🧠</div>
+        <div><h3>Neurocirugía</h3><div class="sub">Cirugía intracraneal y medular</div></div>
+      </div>
+      <div class="card-body">
+        <ul class="list-clean">
+          <li>Hiperglucemia empeora el daño isquémico cerebral → meta más estricta <b>140–180 mg/dL</b></li>
+          <li>Hipoglucemia puede causar daño neurológico irreversible → evitar a toda costa</li>
+          <li>Evitar soluciones hipotónicas y glucosadas (edema cerebral)</li>
+          <li>En TCE grave: meta &lt;180 mg/dL con infusión IV</li>
+          <li>Manitol y dexametasona → hiperglucemia; anticipar</li>
+        </ul>
+        <div class="alert alert-azul mt-4">
+          <div class="alert-ico">💡</div>
+          <div><b>En neurocirugía</b> la hipoglucemia es el mayor riesgo. Preferir glucemia 150–180 sobre arriesgarse a valores &lt;100.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:#ccfbf1">🔪</div>
+        <div><h3>Cirugía de urgencia</h3><div class="sub">Sin tiempo de optimización</div></div>
+      </div>
+      <div class="card-body">
+        <ul class="list-clean">
+          <li>No diferir por hiperglucemia si riesgo vital</li>
+          <li>Iniciar insulina IV inmediatamente mientras se prepara sala</li>
+          <li>Hidratación con SSN 0.9% (no DAD)</li>
+          <li>Descatar cetoacidosis con GAS arterial urgente</li>
+          <li>Monitoreo glucémico c/30 min desde el inicio</li>
+          <li>Comunicar al equipo quirúrgico el estado glucémico</li>
+        </ul>
+        <div class="alert alert-rojo mt-4">
+          <div class="alert-ico">🚨</div>
+          <div><b>CAD + cirugía urgente:</b> Priorizar reanimación con SSN, K⁺ e insulina. La acidosis metabólica severa es tan urgente como la patología quirúrgica.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabla resumen final -->
+  <div class="card mt-4">
+    <div class="card-header">
+      <div class="icon" style="background:var(--azul-suave)">📋</div>
+      <div>
+        <h3>Resumen ejecutivo — Cheat Sheet del anestesiólogo</h3>
+        <div class="sub">Acciones rápidas perioperatorias</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <table>
+        <thead>
+          <tr><th>Escenario</th><th>Acción inmediata</th><th>Meta</th><th>Seguimiento</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Glucemia &lt;54 preinducción</b></td>
+            <td>Dextrosa 10% 100mL IV. No inducir.</td>
+            <td>&gt;100 mg/dL</td>
+            <td>Remedir c/15 min</td>
+          </tr>
+          <tr>
+            <td><b>Glucemia &lt;70 intraoperatoria</b></td>
+            <td>Dextrosa 50% 25–50mL IV push. Parar insulina.</td>
+            <td>100–140 mg/dL</td>
+            <td>Remedir c/15 min</td>
+          </tr>
+          <tr>
+            <td><b>Glucemia 180–250 intraop</b></td>
+            <td>Iniciar insulina IV 1–2 UI/h</td>
+            <td>140–180 mg/dL</td>
+            <td>c/30–60 min</td>
+          </tr>
+          <tr>
+            <td><b>Glucemia &gt;250 intraop</b></td>
+            <td>Insulina IV 2–4 UI/h + SSN 0.9%. Descartar CAD.</td>
+            <td>&lt;200 mg/dL</td>
+            <td>c/30 min</td>
+          </tr>
+          <tr>
+            <td><b>SGLT-2 no suspendido</b></td>
+            <td>GAS arterial + cetonas. Descartar CAD euglucémica.</td>
+            <td>pH &gt;7.35</td>
+            <td>c/1h gases si sospecha</td>
+          </tr>
+          <tr>
+            <td><b>Dexametasona antinéusea</b></td>
+            <td>Anticipar hiperglucemia en 4–6h. Glucometría.</td>
+            <td>&lt;200 mg/dL</td>
+            <td>c/2h postadmin</td>
+          </tr>
+          <tr>
+            <td><b>DM1 + cirugía electiva</b></td>
+            <td>Basal 80% la noche anterior. Infusión GIA intraop.</td>
+            <td>140–180 mg/dL</td>
+            <td>c/30 min</td>
+          </tr>
+          <tr>
+            <td><b>Hipoglucemia bajo AG</b></td>
+            <td>Dextrosa 50% 50mL IV. Documentar. Investigar causa.</td>
+            <td>100–180 mg/dL</td>
+            <td>c/15 min hasta estable</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<footer class="site-footer">
+  <p>Guía de Manejo Glucémico Perioperatorio · Anestesiología · Nivel Especialista</p>
+  <p style="margin-top:4px;opacity:.6;">Basada en guías ADA 2024, AAGBI, ESA y ERAS Society. Solo para uso educativo y de referencia clínica.</p>
+</footer>
+
+</body>
+</html>

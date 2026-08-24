@@ -104,10 +104,14 @@ table td{
 table td:first-child{text-align:left}
 table tr:hover td{background:#F8FAFC}
 .grade-inp{
-  width:46px;padding:3px 4px;border:1.5px solid var(--border);border-radius:5px;
+  width:58px;min-width:58px;box-sizing:border-box;padding:3px 3px;border:1.5px solid var(--border);border-radius:5px;
   font-family:'DM Mono',monospace;font-size:12px;font-weight:600;
-  text-align:center;color:var(--ink);background:#F8FAFC;transition:border-color .18s
+  text-align:center;color:var(--ink);background:#F8FAFC;transition:border-color .18s;
+  white-space:nowrap;overflow:visible
 }
+.grade-inp::-webkit-outer-spin-button,
+.grade-inp::-webkit-inner-spin-button{margin:0}
+
 .grade-inp:focus{outline:none;border-color:#0D47A1;background:#fff}
 .name-inp{
   width:100%;padding:4px 7px;border:1.5px solid var(--border);border-radius:5px;
@@ -154,6 +158,16 @@ table tr:hover td{background:#F8FAFC}
   position:relative;box-shadow:0 2px 8px rgba(0,0,0,.05);transition:border-color .2s
 }
 .nf-box:hover{border-color:#0D47A1}
+.rosario-component-value{
+  font-family:'DM Mono',monospace;
+  font-size:12px;
+  font-weight:700;
+  white-space:nowrap;
+}
+@media print{
+  .rosario-component-value{font-size:9px;color:#111!important}
+}
+
 .nf-box-lbl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--ink-m);margin-bottom:2px;font-family:'DM Sans',sans-serif}
 .nf-box-desc{font-size:10px;color:var(--ink-m);margin-bottom:6px;font-family:'DM Sans',sans-serif}
 .nf-box-val{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px}
@@ -164,6 +178,55 @@ table tr:hover td{background:#F8FAFC}
   border-radius:8px;padding:5px 14px;font-size:11px;font-weight:700;letter-spacing:.5px
 }
 
+/* ── GESTOR DE TALLERES ── */
+.tall-manager{
+  padding:12px 16px;border-bottom:2px solid var(--border);background:#FAFBFD
+}
+.tall-manager-lbl{
+  font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;
+  color:var(--ink-m);margin-bottom:3px;font-family:'DM Sans',sans-serif
+}
+.tall-manager-sub{font-size:11px;color:var(--ink-m);margin-bottom:10px;font-family:'DM Sans',sans-serif}
+.tall-chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tall-chip{
+  display:flex;align-items:center;gap:5px;background:#fff;
+  border:1.5px solid var(--border);border-radius:20px;padding:4px 6px 4px 12px;
+  transition:border-color .18s,box-shadow .18s
+}
+.tall-chip:hover{border-color:#0D47A1;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.tall-chip-inp{
+  border:none;background:transparent;font-family:'DM Sans',sans-serif;
+  font-size:12px;font-weight:600;color:var(--ink);min-width:60px;max-width:220px;
+  padding:2px 0
+}
+.tall-chip-inp:focus{outline:none}
+.tall-chip-pct{
+  font-family:'DM Mono',monospace;font-size:10px;font-weight:700;color:#0D47A1;
+  background:#DBEAFE;border-radius:8px;padding:2px 6px;white-space:nowrap
+}
+.tall-chip-del{
+  width:20px;height:20px;border-radius:50%;border:none;background:#FFEBEE;color:#C62828;
+  font-size:13px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:all .15s;line-height:1
+}
+.tall-chip-del:hover{background:#C62828;color:#fff;transform:scale(1.1)}
+.tall-add-btn{
+  display:flex;align-items:center;gap:6px;background:#0D47A1;color:#fff;border:none;
+  border-radius:20px;padding:7px 16px 7px 12px;font-family:'DM Sans',sans-serif;
+  font-size:12px;font-weight:800;cursor:pointer;transition:all .18s;box-shadow:0 2px 8px rgba(13,71,161,.25)
+}
+.tall-add-btn:hover{background:#08326e;transform:translateY(-1px);box-shadow:0 4px 12px rgba(13,71,161,.35)}
+.tall-reset-btn{
+  background:#fff;color:var(--ink-m);border:1.5px solid var(--border);
+  border-radius:20px;padding:6px 14px;font-family:'DM Sans',sans-serif;
+  font-size:11px;font-weight:700;cursor:pointer;transition:all .18s;margin-left:4px
+}
+.tall-reset-btn:hover{border-color:var(--ink-m);background:#F1F5F9}
+.tall-empty-warn{
+  font-size:11.5px;color:#C62828;font-weight:700;background:#FFEBEE;
+  border:1.5px solid #FFCDD2;border-radius:8px;padding:8px 12px;margin-top:8px
+}
+
 /* ── EMPTY STATE ── */
 .empty{text-align:center;padding:60px 20px;color:var(--ink-m)}
 .empty h2{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1.5px;margin-bottom:8px;color:var(--ink)}
@@ -171,25 +234,407 @@ table tr:hover td{background:#F8FAFC}
 
 /* ── PRINT ── */
 @media print{
-  @page{size:landscape;margin:8mm 6mm}
-  .topbar,.selector-panel,.btn-print-top,.btn-limpiar,.no-print{display:none!important}
-  body{background:#fff}
-  .main{padding:0;width:100%}
-  .card{border:1px solid #CBD5E1;margin-bottom:10px;break-inside:avoid;width:100%;box-shadow:none}
-  .name-inp,.manual-inp,.grade-inp{border:none;background:transparent}
-  table{font-size:9px}
-  table th{font-size:8px;padding:4px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  table th.th-taller{background:#0D47A1!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  table th.th-examen{background:#C62828!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  table th.th-seminario{background:#1B5E20!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  table th.th-teorica{background:#4A148C!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  table td{padding:3px 4px}
-  .grade-inp{width:36px;font-size:9px}
-  .name-inp{font-size:9px}
-  .notas-resumen,.nota-final-section{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  .nota-box-val{font-size:16px}
-  .manual-inp{font-size:13px;width:54px}
+  @page{
+    size: portrait;
+    margin: 5mm 5mm;
+  }
+
+  html,body{
+    width:100%;
+    height:auto;
+    margin:0;
+    padding:0;
+  }
+
+  .topbar,.selector-panel,.btn-print-top,.btn-limpiar,.no-print{
+    display:none!important;
+  }
+
+  body{
+    background:#fff;
+    font-size:10px;
+    color:#111;
+    -webkit-print-color-adjust:exact;
+    print-color-adjust:exact;
+  }
+
+  .main{
+    padding:0;
+    width:100%;
+  }
+
+  .card{
+    border:1px solid #CBD5E1;
+    margin:0;
+    width:100%;
+    box-shadow:none;
+    border-radius:4px;
+    break-inside:avoid;
+    page-break-inside:avoid;
+  }
+
+  .card-header{
+    padding:6px 10px;
+    border-bottom:1px solid #CBD5E1;
+  }
+
+  .card-title{
+    font-size:15px;
+    letter-spacing:.7px;
+  }
+
+  .card-body{
+    padding:5px 7px;
+  }
+
+  .st-wrap{
+    overflow:visible;
+    width:100%;
+  }
+
+  /* En impresión vertical, la tabla principal se convierte
+     en fichas verticales por estudiante. */
+  #main-card .card-body > .st-wrap > table{
+    display:block;
+    width:100%;
+    table-layout:auto;
+  }
+
+  #main-card .card-body > .st-wrap > table thead{
+    display:none;
+  }
+
+  #main-card .card-body > .st-wrap > table tbody{
+    display:block;
+    width:100%;
+  }
+
+  #main-card .card-body > .st-wrap > table tbody tr{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0;
+    width:100%;
+    margin:0 0 8px;
+    padding:5px;
+    border:1px solid #CBD5E1;
+    border-radius:5px;
+    break-inside:avoid;
+    page-break-inside:avoid;
+  }
+
+  #main-card .card-body > .st-wrap > table tbody td{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    min-height:25px;
+    padding:3px 6px;
+    border:0;
+    border-bottom:1px solid #E2E8F0;
+    text-align:right;
+    line-height:1.15;
+    font-size:8.5px;
+  }
+
+  #main-card .card-body > .st-wrap > table tbody td:first-child{
+    grid-column:1 / -1;
+    text-align:left;
+    justify-content:flex-start;
+    background:#F8FAFC;
+    border-bottom:1px solid #CBD5E1;
+    margin-bottom:2px;
+  }
+
+  #main-card .card-body > .st-wrap > table tbody td:nth-last-child(1){
+    background:#F3F0FF;
+    font-weight:700;
+  }
+
+  #main-card .card-body > .st-wrap > table tbody td::before{
+    content:attr(data-label);
+    color:#64748B;
+    font-size:7.5px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.25px;
+    text-align:left;
+    margin-right:8px;
+  }
+
+  #main-card .card-body > .st-wrap > table tbody td:first-child::before{
+    display:none;
+  }
+
+  /* La tabla de resumen también queda vertical, pero compacta. */
+  .notas-resumen table{
+    width:100%!important;
+    min-width:0!important;
+    table-layout:fixed!important;
+  }
+
+  .notas-resumen table th{
+    font-size:7.5px!important;
+    padding:3px 2px!important;
+  }
+
+  .notas-resumen table td{
+    font-size:8px!important;
+    padding:3px 2px!important;
+  }
+
+  .grade-inp{
+    width:48px;
+    min-width:48px;
+    height:22px;
+    padding:2px;
+    border:0;
+    background:transparent;
+    font-family:'DM Mono',monospace;
+    font-size:10px;
+    font-weight:700;
+    color:#111;
+    text-align:center;
+    -webkit-appearance:none;
+    appearance:none;
+  }
+
+  .name-inp{
+    width:100%;
+    height:22px;
+    padding:2px 4px;
+    border:0;
+    background:transparent;
+    font-size:9px;
+    color:#111;
+  }
+
+  .nota-box-val{
+    font-size:14px;
+    line-height:1;
+    letter-spacing:.3px;
+  }
+
+  .notas-resumen{
+    padding:5px 7px;
+    border-top:1px solid #CBD5E1;
+  }
+
+  .notas-resumen > div:first-child,
+  .notas-resumen > div:nth-child(2){
+    font-size:8px!important;
+    margin-bottom:3px!important;
+  }
+
+  .manual-inp{
+    width:52px;
+    min-width:52px;
+    height:22px;
+    padding:2px 3px;
+    border:1px solid #CBD5E1;
+    background:#fff;
+    font-family:'DM Mono',monospace;
+    font-size:10px;
+    font-weight:700;
+    color:#111;
+  }
+
+  .nota-final-section{
+    border-top:1px solid #CBD5E1;
+    padding:5px 7px;
+    background:#fff;
+    break-inside:avoid;
+    page-break-inside:avoid;
+  }
+
+  .nota-final-title{
+    font-size:12px;
+    margin-bottom:4px;
+  }
+
+  .nota-final-title span{
+    font-size:8px!important;
+  }
+
+  .nota-final-section > div[style*="font-size:10.5px"]{
+    font-size:8px!important;
+    margin-bottom:3px!important;
+  }
+
+  .nota-final-section > div[style*="overflow-x:auto"]{
+    overflow:visible!important;
+  }
+
+  .nota-final-section table{
+    width:100%;
+    table-layout:fixed;
+    font-size:8px;
+  }
+
+  .nota-final-section table th{
+    font-size:7.5px;
+    padding:3px 2px;
+    line-height:1.1;
+  }
+
+  .nota-final-section table td{
+    font-size:8px;
+    padding:3px 2px;
+    line-height:1.1;
+  }
+
+  .nota-final-section .nota-box-val{
+    font-size:14px!important;
+  }
+
+  .rosario-component-value{
+    font-size:9px!important;
+    color:#111!important;
+  }
+
+  .nota-final-section .manual-inp{
+    width:48px;
+    min-width:48px;
+    height:21px;
+    font-size:9px;
+  }
+
+  .notas-resumen table{
+    min-width:0!important;
+  }
+
+  table,
+  .notas-resumen,
+  .nota-final-section{
+    break-inside:avoid;
+    page-break-inside:avoid;
+  }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   PALETA VIVA · DISEÑO VERTICAL
+   ══════════════════════════════════════════════════════════════ */
+:root{
+  --vivo-azul:#1565C0;
+  --vivo-celeste:#00ACC1;
+  --vivo-verde:#2E7D32;
+  --vivo-lima:#7CB342;
+  --vivo-naranja:#EF6C00;
+  --vivo-amarillo:#F9A825;
+  --vivo-rojo:#D32F2F;
+  --vivo-fucsia:#C2185B;
+  --vivo-morado:#7B1FA2;
+  --vivo-turquesa:#00897B;
+  --vivo-azul-claro:#E3F2FD;
+  --vivo-verde-claro:#E8F5E9;
+  --vivo-naranja-claro:#FFF3E0;
+  --vivo-amarillo-claro:#FFFDE7;
+  --vivo-rojo-claro:#FFEBEE;
+  --vivo-morado-claro:#F3E5F5;
+  --vivo-turquesa-claro:#E0F2F1;
+}
+
+/* Pantalla */
+.topbar{
+  background:linear-gradient(135deg,#0D47A1,#7B1FA2,#C2185B)!important;
+}
+.selector-panel{
+  border-bottom-color:#00ACC1!important;
+}
+.card{
+  border-color:#00ACC1!important;
+  box-shadow:0 5px 20px rgba(21,101,192,.14)!important;
+}
+.card-header{
+  background:linear-gradient(90deg,#E3F2FD,#F3E5F5)!important;
+  border-bottom-color:#7B1FA2!important;
+}
+.card-title{color:#1565C0!important;}
+
+table th.th-taller{background:#1565C0!important;}
+table th.th-examen{background:#D32F2F!important;}
+table th.th-seminario{background:#2E7D32!important;}
+table th.th-teorica{background:#7B1FA2!important;}
+
+.tall-chip-pct{
+  color:#1565C0!important;
+  background:#E3F2FD!important;
+}
+.tall-add-btn{background:#00897B!important;}
+.tall-add-btn:hover{background:#00695C!important;}
+
+.nota-final-section{
+  background:linear-gradient(135deg,#FFFDE7,#E3F2FD)!important;
+}
+.nota-final-title{color:#7B1FA2!important;}
+.nf-box:nth-child(3n+1){border-color:#1565C0!important;background:#E3F2FD!important;}
+.nf-box:nth-child(3n+2){border-color:#EF6C00!important;background:#FFF3E0!important;}
+.nf-box:nth-child(3n+3){border-color:#2E7D32!important;background:#E8F5E9!important;}
+
+/* Resumen */
+.notas-resumen{
+  background:linear-gradient(90deg,#E0F2F1,#FFFDE7)!important;
+  border-top-color:#00ACC1!important;
+}
+
+/* Impresión */
+@media print{
+  body{background:#fff!important;}
+
+  .card{
+    border:2px solid #1565C0!important;
+  }
+  .card-header{
+    background:linear-gradient(90deg,#E3F2FD,#F3E5F5)!important;
+    border-bottom:2px solid #7B1FA2!important;
+  }
+  .card-title{color:#1565C0!important;}
+
+  table th.th-taller{background:#1565C0!important;color:#fff!important;}
+  table th.th-examen{background:#D32F2F!important;color:#fff!important;}
+  table th.th-seminario{background:#2E7D32!important;color:#fff!important;}
+  table th.th-teorica{background:#7B1FA2!important;color:#fff!important;}
+
+  table tbody tr:nth-child(odd) td{
+    background:#F8FBFF!important;
+  }
+  table tbody tr:nth-child(even) td{
+    background:#FFF9F0!important;
+  }
+
+  .notas-resumen{
+    background:#E0F2F1!important;
+    border-top:2px solid #00897B!important;
+  }
+
+  .nota-final-section{
+    background:#FFFDE7!important;
+    border-top:2px solid #F9A825!important;
+  }
+  .nota-final-title{color:#7B1FA2!important;}
+
+  /* Cajas de nota final alternadas en colores vivos */
+  .nf-box:nth-child(3n+1){
+    background:#E3F2FD!important;
+    border:2px solid #1565C0!important;
+  }
+  .nf-box:nth-child(3n+2){
+    background:#FFF3E0!important;
+    border:2px solid #EF6C00!important;
+  }
+  .nf-box:nth-child(3n+3){
+    background:#E8F5E9!important;
+    border:2px solid #2E7D32!important;
+  }
+
+  .nota-box-val.pass{color:#2E7D32!important;}
+  .nota-box-val.fail{color:#D32F2F!important;}
+  .nota-box-val.neutral{color:#1565C0!important;}
+
+  .manual-inp{
+    border:2px solid #00ACC1!important;
+    background:#fff!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -362,7 +807,20 @@ const UNIS = {
     { key:'rosario', label:'Universidad del Rosario',         shortLabel:'Rosario',
       color:'var(--col-rosario)',   light:'var(--col-rosario-l)',
       grupos:5, estudiantes:1,
-      notaFinal:null
+      notaFinal:{
+        tipo:'rosario',
+        componentes:[
+          {id:'historia',        label:'Elaboración de la historia clínica',                 fuente:'practica'},
+          {id:'fisico',          label:'Examen físico',                                     fuente:'practica'},
+          {id:'diagnostico',     label:'Habilidades de diagnóstico',                        fuente:'practica'},
+          {id:'cientificos',     label:'Conocimientos científicos',                         fuente:'teorica'},
+          {id:'comunicacion',    label:'Habilidades de comunicación interpersonal',         fuente:'teorica'},
+          {id:'profesionalismo', label:'Profesionalismo',                                   fuente:'conductual'},
+          {id:'iniciativa',      label:'Iniciativa y deseo por aprender',                   fuente:'conductual'},
+          {id:'autoevaluacion',  label:'Autoevaluación',                                    fuente:'autoevaluacion'}
+        ],
+        etiqueta:'Nota Final Universidad del Rosario (sobre 5.0)'
+      }
     },
     { key:'narino',  label:'Universidad Antonio Nariño (UAN)',shortLabel:'UAN',
       color:'var(--col-uan)',       light:'var(--col-uan-l)',
@@ -443,7 +901,7 @@ function getData(){
     const talleresNombres = getTalleres(UKEY);
     const nSts = uni ? uni.estudiantes : 2;
     const talleres = talleresNombres.map(nombre=>({nombre}));
-    const estudiantes = Array.from({length:nSts},()=>({nombre:'',notas:{},practica:'',conductual:''}));
+    const estudiantes = Array.from({length:nSts},()=>({nombre:'',notas:{},practica:'',conductual:'',autoevaluacion:''}));
     DATA[HOSP][UKEY][GRUPO] = { talleres, estudiantes };
   }
   return DATA[HOSP][UKEY][GRUPO];
@@ -519,24 +977,57 @@ function render(){
 // ══════════════════════════════════════════════════
 function buildCard(uni,d){
   const nT=d.talleres.length;
-  const pctTaller=+(40/nT).toFixed(4);
+  const pctTaller=nT>0?+(40/nT).toFixed(4):0;
   return `
   <div class="card" id="main-card">
     <div class="card-header" style="background:${uni.light};border-color:${uni.color}">
       <div>
         <div class="card-title" style="color:${uni.color}">${uni.label} · ${GRUPO}</div>
         <div style="font-size:11px;color:${uni.color};opacity:.8;margin-top:3px">
-          ${nT} talleres (40% · ${fmtPct(pctTaller)} c/u) · Examen Final (30%) · Seminario de Integración Clínica (30%) &nbsp;|&nbsp;
+          ${nT} taller${nT===1?'':'es'} (40%${nT>0?' · '+fmtPct(pctTaller)+' c/u':''}) · Examen Final (30%) · Seminario de Integración Clínica (30%) &nbsp;|&nbsp;
           ${d.estudiantes.length} estudiantes · Semestre ${SEM}-${ANIO}
         </div>
       </div>
       <button class="no-print" onclick="addEstudiante()" style="padding:7px 14px;border:2px solid ${uni.color};background:#fff;color:${uni.color};border-radius:6px;font-weight:700;font-size:12px;cursor:pointer">+ Estudiante</button>
     </div>
+    ${buildTalleresManager(uni,d)}
     <div class="card-body">
       <div class="st-wrap">${buildTablaUnificada(uni,d)}</div>
     </div>
     ${buildNotasResumen(uni,d)}
     ${uni.notaFinal ? buildNotaFinal(uni,d) : ''}
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════
+// GESTOR DE TALLERES (añadir / quitar / renombrar)
+// El 40% de la nota teórica se redistribuye automáticamente
+// entre los talleres que estén activos para este grupo
+// ══════════════════════════════════════════════════
+function buildTalleresManager(uni,d){
+  const nT=d.talleres.length;
+  const pct=nT>0?fmtPct(40/nT):'0%';
+  let chips=d.talleres.map((t,i)=>`
+    <div class="tall-chip">
+      <input class="tall-chip-inp" value="${(t.nombre||'').replace(/"/g,'&quot;')}"
+        onchange="renameTaller(${i},this.value)" placeholder="Nombre del taller">
+      <span class="tall-chip-pct">${pct}</span>
+      <button class="tall-chip-del" title="Quitar taller" onclick="removeTaller(${i})">×</button>
+    </div>`).join('');
+
+  const warn = nT===0
+    ? `<div class="tall-empty-warn">⚠️ Este grupo no tiene talleres activos. Agrega al menos uno para poder calcular el 40% de la nota teórica.</div>`
+    : '';
+
+  return `<div class="tall-manager no-print">
+    <div class="tall-manager-lbl">Talleres de este grupo</div>
+    <div class="tall-manager-sub">Añade o quita talleres según lo visto realmente — el 40% se reparte en partes iguales entre los que queden activos.</div>
+    <div class="tall-chips">
+      ${chips}
+      <button class="tall-add-btn" onclick="addTaller()"><span style="font-size:15px;line-height:1">+</span> Agregar taller</button>
+      <button class="tall-reset-btn" onclick="resetTalleres()" title="Restaurar la lista predeterminada de ${uni.label}">↺ Restaurar predeterminados</button>
+    </div>
+    ${warn}
   </div>`;
 }
 
@@ -547,7 +1038,7 @@ function fmtPct(n){
 
 function buildTablaUnificada(uni,d){
   const nT=d.talleres.length;
-  const pctT=fmtPct(40/nT);
+  const pctT=nT>0?fmtPct(40/nT):'—';
 
   // ── Fila 1 de encabezado: tipo (badge) ──
   let hTipo='<th rowspan="3" style="text-align:left;vertical-align:middle;background:#0D1B2A;min-width:140px">Nombre</th>';
@@ -572,18 +1063,18 @@ function buildTablaUnificada(uni,d){
   let rows='';
   d.estudiantes.forEach((st,si)=>{
     let cells=`<td><input class="name-inp" data-si="${si}" placeholder="Nombre completo" value="${st.nombre||''}" oninput="saveField(${si},'nombre',this.value)"></td>`;
-    d.talleres.forEach((_,ai)=>{
+    d.talleres.forEach((t,ai)=>{
       const v=(st.notas&&st.notas[ai]!=null)?st.notas[ai]:'';
-      cells+=`<td><input class="grade-inp" type="number" min="0" max="5" step="0.1" value="${v}" oninput="saveNota(${si},${ai},this.value)" onchange="saveNota(${si},${ai},this.value)"></td>`;
+      cells+=`<td data-label="${String(t.nombre||'Taller').replace(/"/g,'&quot;')}"><input class="grade-inp" type="number" min="0" max="5" step="0.01" value="${v}" oninput="saveNota(${si},${ai},this.value)" onchange="saveNota(${si},${ai},this.value)"></td>`;
     });
     const ex=(st.notas&&st.notas['ex']!=null)?st.notas['ex']:'';
-    cells+=`<td><input class="grade-inp" type="number" min="0" max="5" step="0.1" value="${ex}" oninput="saveNota(${si},'ex',this.value)" onchange="saveNota(${si},'ex',this.value)"></td>`;
+    cells+=`<td data-label="Examen Final"><input class="grade-inp" type="number" min="0" max="5" step="0.01" value="${ex}" oninput="saveNota(${si},'ex',this.value)" onchange="saveNota(${si},'ex',this.value)"></td>`;
     const sem=(st.notas&&st.notas['sem']!=null)?st.notas['sem']:'';
-    cells+=`<td><input class="grade-inp" type="number" min="0" max="5" step="0.1" value="${sem}" oninput="saveNota(${si},'sem',this.value)" onchange="saveNota(${si},'sem',this.value)"></td>`;
+    cells+=`<td data-label="Seminario"><input class="grade-inp" type="number" min="0" max="5" step="0.01" value="${sem}" oninput="saveNota(${si},'sem',this.value)" onchange="saveNota(${si},'sem',this.value)"></td>`;
     const nt=calcTeorica(st,d);
     const ntDisp=nt!==null?nt.toFixed(2):'—';
     const ntClass=nt!==null?(nt>=3?'pass':'fail'):'neutral';
-    cells+=`<td style="background:#f0f0ff"><span id="nt-${si}" class="nota-box-val ${ntClass}" style="font-size:15px">${ntDisp}</span></td>`;
+    cells+=`<td data-label="Nota Teórica" style="background:#f0f0ff"><span id="nt-${si}" class="nota-box-val ${ntClass}" style="font-size:15px">${ntDisp}</span></td>`;
     rows+=`<tr>${cells}</tr>`;
   });
 
@@ -609,18 +1100,27 @@ function buildNotasResumen(uni,d){
     const ntC=nt!==null?(nt>=3?'pass':'fail'):'neutral';
     return `<tr>
       <td style="text-align:left;font-weight:600;font-size:12px;min-width:140px" class="stu-name-cell" data-si="${si}">${st.nombre||`Estudiante ${si+1}`}</td>
-      <td style="text-align:center"><span class="nota-box-val ${ntC}" style="font-size:15px">${ntDisp}</span></td>
-      <td style="text-align:center"><input class="manual-inp" type="number" min="0" max="5" step="0.1" placeholder="0.0" value="${st.practica||''}" oninput="saveField(${si},'practica',this.value)" onchange="saveField(${si},'practica',this.value)"></td>
-      <td style="text-align:center"><input class="manual-inp" type="number" min="0" max="5" step="0.1" placeholder="0.0" value="${st.conductual||''}" oninput="saveField(${si},'conductual',this.value)" onchange="saveField(${si},'conductual',this.value)"></td>
+      <td style="text-align:center">
+        <span id="nt-resumen-${si}" class="nota-box-val ${ntC}" style="font-size:15px">${ntDisp}</span>
+      </td>
+      <td style="text-align:center">
+        <input class="manual-inp" type="number" min="0" max="5" step="0.01" placeholder="0.0"
+          value="${st.practica||''}" oninput="saveField(${si},'practica',this.value)" onchange="saveField(${si},'practica',this.value)">
+      </td>
+      <td style="text-align:center">
+        <input class="manual-inp" type="number" min="0" max="5" step="0.01" placeholder="0.0"
+          value="${st.conductual||''}" oninput="saveField(${si},'conductual',this.value)" onchange="saveField(${si},'conductual',this.value)">
+      </td>
     </tr>`;
   }).join('');
-
   return `<div class="notas-resumen">
     <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--ink-m);margin-bottom:8px">
       Componentes para nota final · Teórica = automática · Práctica y Conductual = manuales
     </div>
-    <div style="overflow-x:auto">
-    <table style="min-width:400px">
+    <div style="font-size:10.5px;color:var(--ink-m);margin-bottom:8px">
+      La <b>Nota Teórica</b> es exactamente la misma nota calculada en la columna morada de la primera fila.
+    </div>
+    <div style="overflow-x:auto"><table style="min-width:400px">
       <thead><tr>
         <th style="text-align:left;background:#334155">Estudiante</th>
         <th style="background:#2c3e7a">Nota Teórica</th>
@@ -636,16 +1136,63 @@ function buildNotaFinal(uni,d){
   const nf=uni.notaFinal;
   let rows=d.estudiantes.map((st,si)=>{
     const nt=calcTeorica(st,d);
-    const pr=parseFloat(st.practica)||0;
-    const co=parseFloat(st.conductual)||0;
+    const pr=parseFloat(st.practica);
+    const co=parseFloat(st.conductual);
+    const ae=parseFloat(st.autoevaluacion);
     let cells=`<td style="text-align:left;font-weight:600;font-size:12px" class="stu-name-cell" data-si="${si}">${st.nombre||`Estudiante ${si+1}`}</td>`;
     let final=null;
-    if(nf.tipo==='pct5'){
+
+    if(nf.tipo==='rosario'){
+      // Los valores de esta tercera fila provienen de la segunda fila:
+      // - 3 componentes usan Nota Práctica
+      // - 2 componentes usan Nota Teórica
+      // - 2 componentes usan Nota Conductual
+      // - Autoevaluación es independiente y vale 20%.
+      const componentes=[
+        {label:'Elaboración de la historia clínica', val:Number.isFinite(pr)?pr:null, fuente:'Nota práctica'},
+        {label:'Examen físico', val:Number.isFinite(pr)?pr:null, fuente:'Nota práctica'},
+        {label:'Habilidades de diagnóstico', val:Number.isFinite(pr)?pr:null, fuente:'Nota práctica'},
+        {label:'Conocimientos científicos', val:nt, fuente:'Nota teórica'},
+        {label:'Habilidades de comunicación interpersonal', val:nt, fuente:'Nota teórica'},
+        {label:'Profesionalismo', val:Number.isFinite(co)?co:null, fuente:'Nota conductual'},
+        {label:'Iniciativa y deseo por aprender', val:Number.isFinite(co)?co:null, fuente:'Nota conductual'}
+      ];
+
+      componentes.forEach(c=>{
+        cells+=`<td>
+          <span class="rosario-component-value">${c.val!==null?c.val.toFixed(2):'—'}</span>
+          <br><span style="font-size:9px;color:var(--ink-m)">${c.fuente}</span>
+        </td>`;
+      });
+
+      cells+=`<td style="text-align:center">
+        <input class="manual-inp" type="number" min="0" max="5" step="0.01" placeholder="0.0"
+          value="${st.autoevaluacion||''}"
+          oninput="saveField(${si},'autoevaluacion',this.value)"
+          onchange="saveField(${si},'autoevaluacion',this.value)">
+        <br><span style="font-size:9px;color:var(--ink-m)">20%</span>
+      </td>`;
+
+      // Los 7 componentes conforman el 80%, distribuidos en partes iguales
+      // dentro de ese 80%. Autoevaluación aporta el 20% restante.
+      if(nt!==null && Number.isFinite(pr) && Number.isFinite(co) && Number.isFinite(ae)){
+        const nota80=(3*pr + 2*nt + 2*co)/7;
+        final=(nota80*0.80)+(ae*0.20);
+      }
+
+      const fc=final!==null?(final>=3?'pass':'fail'):'neutral';
+      cells+=`<td>
+        <span class="nota-box-val ${fc}" style="font-size:18px">
+          ${final!==null?final.toFixed(2):'—'}
+        </span>
+      </td>`;
+
+    } else if(nf.tipo==='pct5'){
       nf.componentes.forEach(comp=>{
         let val=0;
         if(comp.id==='teorica') val=nt!==null?nt:0;
-        else if(comp.id==='practica') val=pr;
-        else if(comp.id==='conductual') val=co;
+        else if(comp.id==='practica') val=Number.isFinite(pr)?pr:0;
+        else if(comp.id==='conductual') val=Number.isFinite(co)?co:0;
         const contrib=val*(comp.pct/100);
         cells+=`<td><span style="font-size:12px;color:var(--ink-m)">${val.toFixed(2)} × ${comp.pct}%</span><br><b>${contrib.toFixed(3)}</b></td>`;
         if(final===null) final=0;
@@ -653,46 +1200,70 @@ function buildNotaFinal(uni,d){
       });
       const fc=final!==null?(final>=3?'pass':'fail'):'neutral';
       cells+=`<td><span class="nota-box-val ${fc}" style="font-size:18px">${final!==null?final.toFixed(2):'—'}</span></td>`;
+
     } else if(nf.tipo==='pct5_sabana'){
-      const promPC=(pr+co)/2;
+      const promPC=((Number.isFinite(pr)?pr:0)+(Number.isFinite(co)?co:0))/2;
       const contrib_t=(nt!==null?nt:0)*0.40;
       const contrib_pc=promPC*0.60;
       final=contrib_t+contrib_pc;
       cells+=`<td><span style="font-size:12px;color:var(--ink-m)">${nt!==null?nt.toFixed(2):'—'} × 40%</span><br><b>${contrib_t.toFixed(3)}</b></td>`;
-      cells+=`<td><span style="font-size:12px;color:var(--ink-m)">prom(${pr.toFixed(2)},${co.toFixed(2)}) × 60%</span><br><b>${contrib_pc.toFixed(3)}</b></td>`;
+      cells+=`<td><span style="font-size:12px;color:var(--ink-m)">prom(${Number.isFinite(pr)?pr.toFixed(2):'0.00'},${Number.isFinite(co)?co.toFixed(2):'0.00'}) × 60%</span><br><b>${contrib_pc.toFixed(3)}</b></td>`;
       const fc=final>=3?'pass':'fail';
       cells+=`<td><span class="nota-box-val ${fc}" style="font-size:18px">${final.toFixed(2)}</span></td>`;
+
     } else if(nf.tipo==='puntos_uan'){
-      const pt=(nt!==null?nt:0)*4, pp=pr*4, pc=co*2;
+      const pt=(nt!==null?nt:0)*4, pp=(Number.isFinite(pr)?pr:0)*4, pc=(Number.isFinite(co)?co:0)*2;
       final=pt+pp+pc;
       cells+=`<td><span style="font-size:12px;color:var(--ink-m)">${nt!==null?nt.toFixed(2):'—'} × 4</span><br><b>${pt.toFixed(1)} pts</b></td>`;
-      cells+=`<td><span style="font-size:12px;color:var(--ink-m)">${pr.toFixed(2)} × 4</span><br><b>${pp.toFixed(1)} pts</b></td>`;
-      cells+=`<td><span style="font-size:12px;color:var(--ink-m)">${co.toFixed(2)} × 2</span><br><b>${pc.toFixed(1)} pts</b></td>`;
+      cells+=`<td><span style="font-size:12px;color:var(--ink-m)">${Number.isFinite(pr)?pr.toFixed(2):'0.00'} × 4</span><br><b>${pp.toFixed(1)} pts</b></td>`;
+      cells+=`<td><span style="font-size:12px;color:var(--ink-m)">${Number.isFinite(co)?co.toFixed(2):'0.00'} × 2</span><br><b>${pc.toFixed(1)} pts</b></td>`;
       const fc=final>=30?'pass':'fail';
       cells+=`<td><span class="nota-box-val ${fc}" style="font-size:18px">${final.toFixed(1)}<span style="font-size:11px;font-weight:400"> /50</span></span></td>`;
     }
+
     return `<tr>${cells}</tr>`;
   }).join('');
 
   let headers='<th style="text-align:left">Estudiante</th>';
-  if(nf.tipo==='pct5'){
+
+  if(nf.tipo==='rosario'){
+    headers+='<th>Elaboración de la<br>historia clínica<br><span style="font-weight:400;font-size:9px">Nota práctica</span></th>';
+    headers+='<th>Examen<br>físico<br><span style="font-weight:400;font-size:9px">Nota práctica</span></th>';
+    headers+='<th>Habilidades de<br>diagnóstico<br><span style="font-weight:400;font-size:9px">Nota práctica</span></th>';
+    headers+='<th>Conocimientos<br>científicos<br><span style="font-weight:400;font-size:9px">Nota teórica</span></th>';
+    headers+='<th>Habilidades de comunicación<br>interpersonal<br><span style="font-weight:400;font-size:9px">Nota teórica</span></th>';
+    headers+='<th>Profesionalismo<br><span style="font-weight:400;font-size:9px">Nota conductual</span></th>';
+    headers+='<th>Iniciativa y deseo<br>por aprender<br><span style="font-weight:400;font-size:9px">Nota conductual</span></th>';
+    headers+='<th>Autoevaluación<br><span style="font-weight:400;font-size:9px">20%</span></th>';
+    headers+='<th style="background:#5b2282">NOTA FINAL<br><span style="font-size:9px;font-weight:400">sobre 5.0</span></th>';
+
+  } else if(nf.tipo==='pct5'){
     nf.componentes.forEach(c=>{ headers+=`<th>${c.label}<br><span style="font-weight:400;font-size:10px">${c.desc}</span></th>`; });
+    headers+='<th style="background:#5b2282">NOTA FINAL</th>';
+
   } else if(nf.tipo==='pct5_sabana'){
     headers+='<th>Teórica<br><span style="font-weight:400;font-size:10px">40%</span></th>';
     headers+='<th>Práctica + Conductual<br><span style="font-weight:400;font-size:10px">60% del promedio</span></th>';
+    headers+='<th style="background:#5b2282">NOTA FINAL</th>';
+
   } else if(nf.tipo==='puntos_uan'){
     nf.componentes.forEach(c=>{ headers+=`<th>${c.label}<br><span style="font-weight:400;font-size:10px">${c.desc}</span></th>`; });
+    headers+='<th style="background:#5b2282">NOTA FINAL</th>';
   }
-  headers+='<th style="background:#5b2282">NOTA FINAL</th>';
 
   return `<div class="nota-final-section">
     <div class="nota-final-title">
       📋 ${nf.etiqueta}
       <span style="font-size:11px;font-weight:400;color:var(--ink-m)">— para copiar directamente al formato de calificación</span>
     </div>
+    ${nf.tipo==='rosario' ? `<div style="font-size:10.5px;color:var(--ink-m);margin-bottom:8px">
+      <b>80%:</b> los 7 componentes anteriores &nbsp;·&nbsp;
+      <b>20%:</b> Autoevaluación &nbsp;·&nbsp; <b>Nota final sobre 5.0</b>
+    </div>` : ''}
     <div style="overflow-x:auto">
-    <table><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>
-    </div></div>`;
+      <table><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>
+    </div>
+  </div>`;
 }
 
 // ══════════════════════════════════════════════════
@@ -759,6 +1330,15 @@ function reRenderNotas(){
       el.textContent=nt!==null?nt.toFixed(2):'—';
       el.className='nota-box-val '+(nt!==null?(nt>=3?'pass':'fail'):'neutral');
     }
+
+    // Mantener sincronizada la "Nota Teórica" de
+    // "Componentes para nota final" con la nota teórica
+    // mostrada en la columna morada de la tabla principal.
+    const ntResumen=document.getElementById(`nt-resumen-${si}`);
+    if(ntResumen){
+      ntResumen.textContent=el ? el.textContent : (nt!==null?nt.toFixed(2):'—');
+      ntResumen.className='nota-box-val '+(nt!==null?(nt>=3?'pass':'fail'):'neutral');
+    }
   });
   const card=document.getElementById('main-card');
   if(!card||!uni||!uni.notaFinal) return;
@@ -772,7 +1352,68 @@ function reRenderNotas(){
 
 function addEstudiante(){
   const d=getData();
-  d.estudiantes.push({nombre:'',notas:{},practica:'',conductual:''});
+  d.estudiantes.push({nombre:'',notas:{},practica:'',conductual:'',autoevaluacion:''});
+  render();
+}
+
+// ══════════════════════════════════════════════════
+// GESTIÓN DE TALLERES DEL GRUPO
+// ══════════════════════════════════════════════════
+function addTaller(){
+  const d=getData();
+  d.talleres.push({nombre:''});
+  render();
+  // Enfocar el nuevo campo de nombre para escribir de inmediato
+  setTimeout(()=>{
+    const inps=document.querySelectorAll('.tall-chip-inp');
+    const last=inps[inps.length-1];
+    if(last) last.focus();
+  },0);
+}
+
+function removeTaller(idx){
+  const d=getData();
+  const nombre=d.talleres[idx]?.nombre || `Taller ${idx+1}`;
+  if(!confirm(`¿Quitar "${nombre}" de este grupo? El 40% se redistribuirá entre los talleres restantes.`)) return;
+  d.talleres.splice(idx,1);
+  // Reindexar las notas guardadas: las llaves numéricas de notas (0,1,2…)
+  // corresponden a posiciones de d.talleres, así que hay que correrlas.
+  d.estudiantes.forEach(st=>{
+    if(!st.notas) return;
+    const nuevas={};
+    Object.keys(st.notas).forEach(k=>{
+      if(k==='ex'||k==='sem'){ nuevas[k]=st.notas[k]; return; }
+      const ki=parseInt(k,10);
+      if(Number.isNaN(ki)) return;
+      if(ki<idx) nuevas[ki]=st.notas[k];
+      else if(ki>idx) nuevas[ki-1]=st.notas[k];
+      // ki===idx se descarta: es la nota del taller eliminado
+    });
+    st.notas=nuevas;
+  });
+  render();
+}
+
+function renameTaller(idx,val){
+  const d=getData();
+  if(!d.talleres[idx]) return;
+  d.talleres[idx].nombre=val;
+  // No hace falta re-renderizar todo: solo sincronizar el encabezado de la tabla
+  render();
+}
+
+function resetTalleres(){
+  const uni=getUni();
+  if(!uni) return;
+  if(!confirm(`¿Restaurar la lista predeterminada de talleres de ${uni.label}? Se perderán las notas de los talleres actuales de este grupo.`)) return;
+  const d=getData();
+  const nombres=getTalleres(UKEY);
+  d.talleres=nombres.map(nombre=>({nombre}));
+  d.estudiantes.forEach(st=>{
+    const notas={};
+    if(st.notas){ if(st.notas.ex!=null) notas.ex=st.notas.ex; if(st.notas.sem!=null) notas.sem=st.notas.sem; }
+    st.notas=notas;
+  });
   render();
 }
 

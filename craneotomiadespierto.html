@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Craneotomía con Paciente Despierto · Neuroanestesia</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul:        #1e40af;
+    --azul-suave:  #dbeafe;
+    --azul-med:    #93c5fd;
+    --azul-dark:   #1e3a8a;
+    --rojo:        #b91c1c;
+    --rojo-suave:  #fee2e2;
+    --rojo-med:    #fca5a5;
+    --verde:       #15803d;
+    --verde-suave: #dcfce7;
+    --verde-med:   #86efac;
+    --ambar:       #92400e;
+    --ambar-suave: #fef3c7;
+    --ambar-med:   #fcd34d;
+    --teal:        #0f766e;
+    --teal-suave:  #ccfbf1;
+    --purp:        #6d28d9;
+    --purp-suave:  #ede9fe;
+    --rose:        #9f1239;
+    --rose-suave:  #ffe4e6;
+    --slate:       #334155;
+    --gris-f:      #f8fafc;
+    --gris-1:      #f1f5f9;
+    --gris-2:      #e2e8f0;
+    --gris-6:      #475569;
+    --gris-8:      #1e293b;
+    --border:      1px solid #e2e8f0;
+    --shadow:      0 1px 3px rgba(0,0,0,.08);
+    --radius:      10px;
+    --radius-sm:   6px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f0f4f8;
+    color: var(--gris-8);
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 0 0 60px;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 55%, #24243e 100%);
+    color: white;
+    padding: 48px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2l-2 2V0zm0 4l4-4h2l-6 6V4zm0 4l8-8h2L40 10V8zm0 4L52 0h2L40 14v-2zm0 4L56 0h2L40 18v-2zm0 4L60 0h2L40 22v-2zm0 4L64 0h2L40 26v-2zm0 4L68 0h2L40 30v-2zm0 4L72 0h2L40 34v-2zm0 4L76 0h2L40 38v-2zm0 4L80 0v2L42 40h-2zm4 0L80 4v2L46 40h-2zm4 0L80 8v2L50 40h-2zm4 0L80 12v2L54 40h-2zm4 0L80 16v2L58 40h-2zm4 0L80 20v2L62 40h-2zm4 0L80 24v2L66 40h-2zm4 0L80 28v2L70 40h-2zm4 0L80 32v2L74 40h-2zm4 0L80 36v2L78 40h-2zm4 0L80 40v-2h-2l-38 2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .site-header .tag {
+    display: inline-block;
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .site-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px; line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .site-header .subtitle { font-size: 15px; opacity: .8; font-weight: 300; max-width: 720px; }
+  .header-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
+  .header-chip {
+    background: rgba(255,255,255,.13);
+    border: 1px solid rgba(255,255,255,.22);
+    border-radius: 20px; padding: 5px 14px;
+    font-size: 12px; font-weight: 500;
+  }
+
+  /* ── LAYOUT ── */
+  .main { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+
+  /* ── SECTION LABEL ── */
+  .section-label { display: flex; align-items: center; gap: 10px; margin: 40px 0 16px; }
+  .section-label .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .section-label h2 { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gris-6); white-space: nowrap; }
+  .section-label .line { flex: 1; height: 1px; background: var(--gris-2); }
+
+  /* ── CARD ── */
+  .card { background: white; border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 16px; overflow: hidden; }
+  .card-header { padding: 16px 20px; border-bottom: var(--border); display: flex; align-items: center; gap: 12px; }
+  .card-header .icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .card-header h3 { font-size: 15px; font-weight: 600; }
+  .card-header .sub { font-size: 12px; color: var(--gris-6); margin-top: 1px; }
+  .card-body { padding: 20px; }
+
+  /* ── GRIDS ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media(max-width:780px){ .grid-2,.grid-3{ grid-template-columns:1fr; } }
+
+  /* ── BADGE ── */
+  .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .badge-rojo  { background: var(--rojo-suave);  color: var(--rojo); }
+  .badge-verde { background: var(--verde-suave); color: var(--verde); }
+  .badge-ambar { background: var(--ambar-suave); color: var(--ambar); }
+  .badge-azul  { background: var(--azul-suave);  color: var(--azul); }
+  .badge-teal  { background: var(--teal-suave);  color: var(--teal); }
+  .badge-purp  { background: var(--purp-suave);  color: var(--purp); }
+  .badge-rose  { background: var(--rose-suave);  color: var(--rose); }
+
+  /* ── ALERT ── */
+  .alert { border-radius: var(--radius-sm); padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+  .alert-ico { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .alert-rojo  { background: var(--rojo-suave);  border-left: 3px solid var(--rojo); }
+  .alert-verde { background: var(--verde-suave); border-left: 3px solid var(--verde); }
+  .alert-ambar { background: var(--ambar-suave); border-left: 3px solid var(--ambar); }
+  .alert-azul  { background: var(--azul-suave);  border-left: 3px solid var(--azul); }
+  .alert-teal  { background: var(--teal-suave);  border-left: 3px solid var(--teal); }
+  .alert-purp  { background: var(--purp-suave);  border-left: 3px solid var(--purp); }
+  .alert-rose  { background: var(--rose-suave);  border-left: 3px solid var(--rose); }
+  .alert b { display: block; font-weight: 600; margin-bottom: 3px; font-size: 13px; }
+
+  /* ── TABLA ── */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--gris-1); color: var(--gris-6); font-weight: 600; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--gris-2); }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--gris-2); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--gris-f); }
+
+  /* ── STEPS ── */
+  .steps { display: flex; flex-direction: column; }
+  .step { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px dashed var(--gris-2); }
+  .step:last-child { border-bottom: none; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; color: white; margin-top: 2px; }
+  .step-content strong { font-size: 14px; display: block; margin-bottom: 4px; }
+  .step-content p, .step-content ul { font-size: 13px; color: var(--gris-6); }
+  .step-content ul { padding-left: 16px; margin-top: 4px; }
+  .step-content li { margin-bottom: 3px; }
+
+  /* ── PROTO FLOW ── */
+  .proto-flow { display: flex; align-items: stretch; border-radius: var(--radius-sm); overflow: hidden; border: var(--border); margin-bottom: 10px; }
+  .proto-cond { padding: 12px 14px; min-width: 155px; font-size: 12px; font-weight: 600; display: flex; align-items: center; border-right: var(--border); line-height: 1.4; }
+  .proto-action { padding: 12px 14px; flex: 1; font-size: 13px; }
+  .proto-action ul { padding-left: 16px; margin-top: 4px; }
+  .proto-action li { margin-bottom: 3px; }
+
+  /* ── PILL NAV ── */
+  .pill-nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; }
+  .pill-nav a { padding: 7px 18px; border-radius: 20px; font-size: 13px; font-weight: 500; background: white; border: var(--border); color: var(--gris-6); text-decoration: none; transition: all .15s; }
+  .pill-nav a:hover { background: var(--purp-suave); color: var(--purp); border-color: #c4b5fd; }
+  .pill-nav a.active { background: var(--purp); color: white; border-color: var(--purp); }
+
+  /* ── TECHNIQUE CARD COLUMNS ── */
+  .tech-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; border: var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 16px; }
+  .tech-col { border-right: var(--border); }
+  .tech-col:last-child { border-right: none; }
+  .tech-head { padding: 14px 16px; font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; border-bottom: var(--border); display: flex; align-items: center; gap: 8px; }
+  .tech-body { padding: 16px; font-size: 13px; }
+  .tech-item { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed var(--gris-2); }
+  .tech-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .tech-item .ti-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; opacity: .6; margin-bottom: 3px; }
+  .tech-item p { color: var(--gris-6); }
+
+  /* ── PHASE BANNER ── */
+  .phase-banner {
+    border-radius: var(--radius-sm);
+    padding: 12px 18px;
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 14px;
+    font-weight: 600; font-size: 14px;
+  }
+  .phase-banner .pb-num {
+    width: 30px; height: 30px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; flex-shrink: 0;
+    color: white;
+  }
+
+  /* ── COMPLICATION TABLE ── */
+  .comp-item { display: flex; align-items: flex-start; gap: 14px; padding: 14px 0; border-bottom: 1px dashed var(--gris-2); }
+  .comp-item:last-child { border-bottom: none; }
+  .comp-emo { font-size: 22px; flex-shrink: 0; width: 34px; text-align: center; }
+  .comp-body { flex: 1; }
+  .comp-body .cb-title { font-weight: 600; font-size: 14px; margin-bottom: 3px; }
+  .comp-body p { font-size: 13px; color: var(--gris-6); }
+
+  /* ── PARAM GRID ── */
+  .param-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px,1fr)); gap: 10px; }
+  .param-box { border: var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+  .param-box .pb-head { padding: 8px 12px; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border-bottom: var(--border); }
+  .param-box .pb-val { font-size: 24px; font-weight: 700; line-height: 1.1; padding: 10px 12px 4px; }
+  .param-box .pb-unit { font-size: 12px; font-weight: 400; }
+  .param-box .pb-sub { font-size: 11px; color: var(--gris-6); padding: 0 12px 10px; }
+
+  /* ── MISC ── */
+  ul.list-clean { list-style: none; padding: 0; }
+  ul.list-clean li::before { content: '→ '; color: var(--purp); font-weight: 600; }
+  ul.list-clean li { margin-bottom: 5px; font-size: 13px; }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .chip { padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 500; background: var(--gris-1); border: var(--border); color: var(--gris-6); }
+  hr.divider { border: none; border-top: 1px dashed var(--gris-2); margin: 14px 0; }
+  .text-sm { font-size: 12px; color: var(--gris-6); }
+  .mt-4 { margin-top: 16px; }
+  .mb-0 { margin-bottom: 0 !important; }
+  .bold { font-weight: 600; }
+
+  /* ── CONTRAINDICACIÓN BOX ── */
+  .contra-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .contra-box { border: var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+  .contra-box .cb-head { padding: 10px 14px; font-size: 12px; font-weight: 700; border-bottom: var(--border); }
+  .contra-box .cb-body { padding: 12px 14px; font-size: 13px; }
+  .contra-box .cb-body li { margin-bottom: 4px; }
+  .contra-box .cb-body ul { padding-left: 16px; }
+
+  /* ── DRUG TABLE ── */
+  .drug-highlight { background: var(--purp-suave); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 10px; border-left: 3px solid var(--purp); }
+  .drug-highlight .dh-name { font-weight: 700; font-size: 14px; color: var(--purp); margin-bottom: 4px; }
+  .drug-highlight .dh-detail { font-size: 13px; color: var(--gris-6); }
+
+  /* ── FOOTER ── */
+  .site-footer { text-align: center; padding: 32px 24px; font-size: 12px; color: var(--gris-6); border-top: var(--border); background: white; margin-top: 40px; }
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header">
+  <div class="tag">🧠 Neuroanestesia · Especialista</div>
+  <h1>Craneotomía con Paciente Despierto</h1>
+  <p class="subtitle">Awake Craniotomy (AC) · Asleep-Awake-Asleep (AAA) · Awake-Awake-Awake (AAA full)<br>Manejo pre, intra y postoperatorio basado en evidencia 2024.</p>
+  <div class="header-chips">
+    <span class="header-chip">🎯 Resección máxima con preservación funcional</span>
+    <span class="header-chip">💊 Dexmedetomidina + Propofol TIVA</span>
+    <span class="header-chip">🛡️ Bloqueo de cuero cabelludo obligatorio</span>
+    <span class="header-chip">🧪 Mapeo cortical intraoperatorio</span>
+    <span class="header-chip">⚠️ Conversión a AG siempre disponible</span>
+  </div>
+</header>
+
+<div class="main">
+
+  <nav class="pill-nav" style="margin-top:24px;">
+    <a href="#indicaciones" class="active">Indicaciones</a>
+    <a href="#tecnicas">Técnicas</a>
+    <a href="#evaluacion">Evaluación preop</a>
+    <a href="#farmacologia">Farmacología</a>
+    <a href="#bloqueo">Bloqueo cuero cabelludo</a>
+    <a href="#aaa">Protocolo AAA</a>
+    <a href="#mapeo">Mapeo cortical</a>
+    <a href="#complicaciones">Complicaciones</a>
+    <a href="#postop">Postoperatorio</a>
+    <a href="#cheatsheet">Cheat Sheet</a>
+  </nav>
+
+  <!-- ══ 1: INDICACIONES ══ -->
+  <div class="section-label" id="indicaciones">
+    <div class="dot" style="background:var(--purp)"></div>
+    <h2>1 · Indicaciones y Contraindicaciones</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--purp-suave)">🧠</div>
+        <div><h3>¿Cuándo está indicada la craneotomía despierta?</h3><div class="sub">Evidencia nivel A/B — guías SNOS/EANS 2023</div></div>
+      </div>
+      <div class="card-body">
+        <p class="bold" style="margin-bottom:8px;color:var(--purp)">Indicaciones neurooncolónicas / funcionales</p>
+        <ul class="list-clean">
+          <li>Gliomas de bajo y alto grado en áreas elocuentes (Broca, Wernicke, corteza motora, sensitiva)</li>
+          <li>Metástasis cerebrales en áreas funcionales críticas</li>
+          <li>Cirugía de epilepsia — resección de zona epileptogénica cortical</li>
+          <li>Estimulación cerebral profunda (DBS) para Parkinson, temblor esencial, distonía</li>
+          <li>Cavernomas en zona elocuente</li>
+          <li>Mapeo cortical de lenguaje, motor o sensitivo prequirúrgico en zona límite</li>
+        </ul>
+        <hr class="divider">
+        <p class="bold" style="margin-bottom:8px;color:var(--teal)">Ventajas demostradas (metaanálisis 2023)</p>
+        <ul class="list-clean">
+          <li>↑ Extensión de resección (EOR) en zona elocuente: 75–80% vs 50–60% con AG sola</li>
+          <li>↓ Déficits neurológicos permanentes: 3.4% vs 8.2% (p &lt;0.001)</li>
+          <li>↓ Estancia hospitalaria media 1–2 días</li>
+          <li>Detección de déficit intraoperatorio → detener antes del daño irreversible</li>
+          <li>Tasa de conversión a AG: 2–6% en centros con experiencia</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--rojo-suave)">🚫</div>
+        <div><h3>Contraindicaciones</h3><div class="sub">Absolutas y relativas — evaluación individualizada</div></div>
+      </div>
+      <div class="card-body">
+        <div class="contra-grid">
+          <div class="contra-box">
+            <div class="cb-head" style="background:var(--rojo-suave);color:var(--rojo)">🔴 Absolutas</div>
+            <div class="cb-body">
+              <ul>
+                <li>Rechazo del paciente informado</li>
+                <li>Incapacidad de cooperación (agitación, demencia severa)</li>
+                <li>Barrera idiomática insalvable</li>
+                <li>Obesidad mórbida IMC &gt;40 (riesgo de vía aérea difícil despierto)</li>
+                <li>Apnea obstructiva del sueño severa no tratada</li>
+                <li>Hipertensión intracraneal grave (edema, herniación inminente)</li>
+                <li>Crisis epilépticas frecuentes no controladas</li>
+                <li>Alergia documentada a anestésicos locales tipo amida</li>
+              </ul>
+            </div>
+          </div>
+          <div class="contra-box">
+            <div class="cb-head" style="background:var(--ambar-suave);color:var(--ambar)">🟡 Relativas</div>
+            <div class="cb-body">
+              <ul>
+                <li>Ansiedad severa (evaluar con psicólogo previo)</li>
+                <li>Claustrofobia</li>
+                <li>Déficit cognitivo leve-moderado</li>
+                <li>Lesión en fosa posterior (difícil posición)</li>
+                <li>Lesión dominante de lenguaje bilateral</li>
+                <li>Cirugía prolongada &gt;6h estimada</li>
+                <li>Tumor con edema perilesional severo</li>
+                <li>Paciente pediátrico &lt;12 años (caso por caso)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="alert alert-purp mt-4">
+          <div class="alert-ico">💡</div>
+          <div><b>El ansiedad no es contraindicación per se.</b> Con preparación psicológica adecuada y dexmedetomidina, la mayoría de pacientes con ansiedad moderada tolera el procedimiento. Evaluación por psicología/neuropsicología preoperatoria es clave.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 2: TÉCNICAS ══ -->
+  <div class="section-label" id="tecnicas">
+    <div class="dot" style="background:var(--teal)"></div>
+    <h2>2 · Técnicas Anestésicas — Comparación</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--teal-suave)">⚗️</div>
+      <div><h3>Las tres técnicas anestésicas en craneotomía despierta</h3><div class="sub">Asleep-Awake-Asleep (AAA) · Awake-Awake-Awake (3A) · Sedación consciente pura</div></div>
+    </div>
+    <div class="card-body">
+      <div class="tech-3">
+        <div class="tech-col">
+          <div class="tech-head" style="background:var(--azul-suave);color:var(--azul);">
+            <span style="font-size:20px;">😴→🧠→😴</span>
+            Asleep-Awake-Asleep (AAA)
+          </div>
+          <div class="tech-body">
+            <div class="tech-item">
+              <div class="ti-tag">Descripción</div>
+              <p>AG o sedación profunda para apertura craneal → despertar completo para mapeo → resedación para cierre.</p>
+            </div>
+            <div class="tech-item">
+              <div class="ti-tag">Vía aérea</div>
+              <p>Mascarilla laríngea (ML) o intubación nasotraqueal para fases dormido. Retirada al despertar.</p>
+            </div>
+            <div class="tech-item">
+              <div class="ti-tag">Ventajas</div>
+              <p>Mayor confort en fases dolorosas (incisión, colgajo). Mejor control de vía aérea en obesos/SAOS. Técnica más usada mundialmente.</p>
+            </div>
+            <div class="tech-item">
+              <div class="ti-tag">Desventajas</div>
+              <p>Riesgo de retención de CO₂ al retirar ML. Dificultad de reinsertar ML si falla el despertar. Edema de lengua.</p>
+            </div>
+            <div class="tech-item">
+              <div class="ti-tag">Indicación preferente</div>
+              <p>Primera elección en centros con experiencia. Pacientes con ansiedad moderada. SAOS controlado.</p>
+            </div>
+            <div style="margin-top:8px;"><span class="badge badge-azul">Técnica estándar global</span></div>
+          </div>
+        </div>
+
+        <div class="tech-col">
+          <div class="tech-head" style="background:var(--verde-suave);color:var(--verde);">
+            <span style="font-size:20px;">🧠🧠🧠</span>
+            Awake-Awake-Awake (3A)
+          </div>
+          <div class="tech-body">
+            <div class="tech-item">
+              <div class="ti-tag">Descripción</div>
+              <p>El paciente está despierto durante TODO el procedimiento. Sedación mínima o nula. Bloqueo de cuero cabelludo completo.</p>
+            </div>
+            <div class="tech-item">
+              <div class="ti-tag">Vía aérea</div>
+              <p>Vía aérea natural del paciente. Oxígeno suplementario por cánula nasal. No hay dispositivo supraglótico.</p>
+            </div>
+            <div class="tech-item">
+              <div class="ti-tag">Ventajas</div>
+              <p>Sin riesgo de retención de CO₂ por ML. Monitoreo neurológico CONTINUO desde incisión. Sin fluctuaciones de nivel de conciencia. Menos NVPO.</p>
+            </div>
+            <div class="tech-item">
+              <div class="ti-tag">Desventajas</div>
+              <p>Mayor demanda psicológica. Requiere bloqueo de cuero cabelludo perfecto. El paciente siente y escucha TODO desde el inicio.</p>
+            </div>
+            <div class="tech-item">
+              <div class="ti-tag">Indicación preferente</div>
+              <p>Centros de alto volumen. Pacientes altamente motivados. DBS (el paciente debe colaborar al colocar el marco estereotáctico).</p>
+            </div>
+            <div style="margin-top:8px;"><span class="badge badge-verde">Tendencia creciente 2023–24</span></div>
+          </div>
+        </div>
+
+        <div class="tech-col">
+          <div class="tech-head" style="background:var(--ambar-suave);color:var(--ambar);">
+            <span style="font-size:20px;">😌</span>
+            Sedación consciente pura (MAC)
+          </div>
+          <div class="tech-body">
+            <div class="tech-item">
+              <div class="ti-tag">Descripción</div>
+              <p>Sedación ansiolítica leve-moderada continua (dexmedetomidina ± propofol bajo). Paciente cooperador todo el tiempo.</p>
+            </div>
+            <div class="tech-item">
+              <div class="ti-tag">Vía aérea</div>
+              <p>Natural. O₂ 2–4 L/min cánula nasal. Monitoreo continuo de FR y SpO₂.</p>
+            </div>
+            <div class="tech-item">
+              <div class="ti-tag">Ventajas</div>
+              <p>Técnicamente más simple para el anestesiólogo. Menor inversión en equipos. Monitoreo neurológico continuo. Sin transición sedación→despertar.</p>
+            </div>
+            <div class="tech-item">
+              <div class="ti-tag">Desventajas</div>
+              <p>Mayor incomodidad en incisión. El bloqueo de cuero cabelludo debe ser impecable. Más difícil en tumores con edema importante.</p>
+            </div>
+            <div class="tech-item">
+              <div class="ti-tag">Indicación preferente</div>
+              <p>DBS, ECoG intraoperatorio, lesiones pequeñas en zona elocuente. Alternativa en centros sin ML disponible.</p>
+            </div>
+            <div style="margin-top:8px;"><span class="badge badge-ambar">DBS / EEG intraop</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-teal">
+        <div class="alert-ico">📊</div>
+        <div><b>Metaanálisis JAMA Neurology 2023 (n=14.208 pacientes):</b> No hay diferencia estadísticamente significativa en déficit neurológico permanente ni extensión de resección entre AAA y 3A cuando se comparan centros de experiencia similar. La elección debe basarse en la anatomía tumoral, experiencia del equipo y preferencia del paciente.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 3: EVALUACIÓN PREOPERATORIA ══ -->
+  <div class="section-label" id="evaluacion">
+    <div class="dot" style="background:var(--azul)"></div>
+    <h2>3 · Evaluación Preoperatoria</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--azul-suave)">🔬</div>
+        <div><h3>Evaluación neuroanestésica especializada</h3><div class="sub">Consulta preanestésica — visita al quirófano recomendada</div></div>
+      </div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" style="background:var(--azul)">1</div>
+            <div class="step-content">
+              <strong>Historia neurológica detallada</strong>
+              <p>Déficits previos (afasia, paresia, sensitivos), crisis epilépticas (tipo, frecuencia, última), medicación antiepiléptica y anticoagulante. Hipertensión intracraneal (cefalea, vómito, edema papilar).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--azul)">2</div>
+            <div class="step-content">
+              <strong>Evaluación neuropsicológica (obligatoria)</strong>
+              <p>Batería: lenguaje (denominación, repetición, comprensión), memoria, función ejecutiva, estado de ánimo. Establece la línea de base y determina qué funciones proteger. Psicólogo del equipo evalúa ansiedad y capacidad de cooperación.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--azul)">3</div>
+            <div class="step-content">
+              <strong>Vía aérea — criterios de alto riesgo</strong>
+              <p>Mallampati, distancia interincisiva, extensión cervical, cuello corto, obesidad. En técnica AAA: plan de manejo de vía aérea difícil si falla la ML. Disponibilidad de videolaringoscopio.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--azul)">4</div>
+            <div class="step-content">
+              <strong>Neuroimagen (RM funcional + tractografía)</strong>
+              <p>RM 3T con fMRI de lenguaje, motor y memoria. DTI tractografía de fascículos elocuentes (fascículo arqueado, corticoespinal). Define la estrategia quirúrgica y el protocolo de mapeo.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--azul)">5</div>
+            <div class="step-content">
+              <strong>Visita preoperatoria al quirófano (ensayo)</strong>
+              <p>Mostrar el quirófano, el pabellón, el marco de Mayfield. Realizar una práctica de las tareas que hará durante el mapeo (contar, nombrar objetos, mover mano). Reducción de ansiedad demostrada en estudios.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--azul)">6</div>
+            <div class="step-content">
+              <strong>Medicación preoperatoria</strong>
+              <p>Continuar antiepilépticos. Dexametasona 8–16 mg IV la noche y mañana previa. Profilaxis antiepiléptica si no estaba en tratamiento: levetiracetam 500–1000 mg IV. NO benzodiazepinas de larga acción (alteran mapeo).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--azul-suave)">📋</div>
+        <div><h3>Test de cooperación preoperatoria</h3><div class="sub">Herramientas validadas para selección de candidatos</div></div>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-purp">
+          <div class="alert-ico">🧪</div>
+          <div><b>Escala de Cooperación de Berlin (BCS) — 2022:</b><br>
+          Evalúa 5 dominios: comprensión de instrucciones, capacidad de comunicar déficits, tolerancia a la posición, control de ansiedad, motivación. Score ≥4/5 predice éxito del procedimiento con sensibilidad 87%.</div>
+        </div>
+        <div class="alert alert-azul">
+          <div class="alert-ico">📊</div>
+          <div><b>STAI (State-Trait Anxiety Inventory):</b><br>
+          Ansiedad estado &gt;50 → considerar entrevista psicológica adicional + programa de mindfulness preoperatorio. No es contraindicación absoluta.</div>
+        </div>
+        <hr class="divider">
+        <p class="bold" style="margin-bottom:10px;">Factores predictores de fallo intraoperatorio</p>
+        <table>
+          <thead><tr><th>Factor</th><th>OR de fallo</th><th>Manejo</th></tr></thead>
+          <tbody>
+            <tr><td>Afasia preoperatoria severa</td><td><span class="badge badge-rojo">OR 4.8</span></td><td>Evaluar tareas no verbales (motoras)</td></tr>
+            <tr><td>Crisis intraoperatoria previa</td><td><span class="badge badge-rojo">OR 3.2</span></td><td>Antiepiléptico carga + protocolo crisis</td></tr>
+            <tr><td>SAOS severo no tratado</td><td><span class="badge badge-ambar">OR 2.9</span></td><td>CPAP 3 meses previos o técnica AAA con ML</td></tr>
+            <tr><td>Ansiedad severa (STAI &gt;60)</td><td><span class="badge badge-ambar">OR 2.1</span></td><td>Psicología + dexmedetomidina carga lenta</td></tr>
+            <tr><td>Tumor con edema masivo</td><td><span class="badge badge-ambar">OR 1.9</span></td><td>Dexametasona agresiva preop + manitol intraop</td></tr>
+          </tbody>
+        </table>
+        <div class="alert alert-verde mt-4">
+          <div class="alert-ico">✅</div>
+          <div><b>El equipo multidisciplinario es no negociable:</b> Neuroanestesiólogo + Neurocirujano + Neuropsicólogo + Logopeda + Enfermería especializada. Sin alguno de estos elementos → diferir o plantear AG estándar.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 4: FARMACOLOGÍA ══ -->
+  <div class="section-label" id="farmacologia">
+    <div class="dot" style="background:var(--purp)"></div>
+    <h2>4 · Farmacología — Sedoanalgesia en Craneotomía Despierta</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--purp-suave)">💊</div>
+      <div><h3>Fármacos de elección 2024</h3><div class="sub">Régimen estándar y alternativas</div></div>
+    </div>
+    <div class="card-body">
+      <div class="drug-highlight">
+        <div class="dh-name">🥇 Dexmedetomidina — Fármaco protagonista</div>
+        <div class="dh-detail">
+          Agonista α₂ adrenérgico selectivo. Sedación sin depresión respiratoria significativa. El paciente despierta fácilmente al estímulo verbal. Sin interferencia con mapeo cortical a dosis correctas. Sin actividad epileptiforme.<br><br>
+          <b>Carga (premedicación):</b> 0.5–1 µg/kg IV en 10–20 min (no rápido → bradicardia/HTA)<br>
+          <b>Mantenimiento:</b> 0.2–0.7 µg/kg/h titulado a RASS -1 a 0<br>
+          <b>Durante mapeo:</b> Reducir a 0.1–0.2 µg/kg/h o suspender 15 min antes<br>
+          <b>Efectos adversos:</b> Bradicardia (tratar con atropina 0.5 mg), hipotensión, boca seca
+        </div>
+      </div>
+
+      <div class="drug-highlight" style="background:var(--azul-suave);border-left-color:var(--azul);">
+        <div class="dh-name" style="color:var(--azul);">🥈 Propofol — Componente sedante en AAA</div>
+        <div class="dh-detail">
+          Usado en la fase "dormido" de AAA. Infusión TCI (Target Controlled Infusion) o TIVA manual.<br><br>
+          <b>Inducción fase sleep:</b> TCI Cp 2–4 µg/mL (modelo Schnider/Marsh)<br>
+          <b>Mantenimiento fase sleep:</b> TCI Cp 1.5–3 µg/mL<br>
+          <b>Fase despertar:</b> Reducir Cp a 0.5–0.8 → despertar suave en 5–10 min<br>
+          <b>Ventaja:</b> Antiemético, reduce PIC, no epileptiforme. <b>Cuidado:</b> depresión respiratoria dosis-dependiente
+        </div>
+      </div>
+
+      <div class="drug-highlight" style="background:var(--teal-suave);border-left-color:var(--teal);">
+        <div class="dh-name" style="color:var(--teal);">🥉 Remifentanilo — Analgesia intraoperatoria</div>
+        <div class="dh-detail">
+          Opioide de acción ultracorta. Ideal en TIVA para craneotomía despierta por su farmacocinética predecible.<br><br>
+          <b>Infusión:</b> 0.03–0.1 µg/kg/min durante las fases dolorosas (incisión, perforación, clampeo de colgajo)<br>
+          <b>Suspender antes del mapeo:</b> 10–15 min antes para evitar sedación residual<br>
+          <b>Hiperalgesia:</b> Anticipar con ketamina subanestésica o dexametasona
+        </div>
+      </div>
+
+      <hr class="divider">
+      <p class="bold" style="margin-bottom:12px;">Tabla comparativa completa de fármacos</p>
+      <table>
+        <thead>
+          <tr><th>Fármaco</th><th>Rol en AC</th><th>Dosis</th><th>Ventaja clave</th><th>Riesgo principal</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Dexmedetomidina</b></td>
+            <td><span class="badge badge-purp">Pilar principal</span></td>
+            <td>Carga 0.5–1 µg/kg/10–20min<br>Mant. 0.2–0.7 µg/kg/h</td>
+            <td>Sin depresión respiratoria. Sedación cooperativa. No interfiere mapeo.</td>
+            <td>Bradicardia, hipotensión</td>
+          </tr>
+          <tr>
+            <td><b>Propofol</b></td>
+            <td><span class="badge badge-azul">Fase dormido (AAA)</span></td>
+            <td>TCI Cp 1.5–4 µg/mL</td>
+            <td>Antiemético, rápido offset, reduce PIC</td>
+            <td>Depresión respiratoria, hipotensión</td>
+          </tr>
+          <tr>
+            <td><b>Remifentanilo</b></td>
+            <td><span class="badge badge-teal">Analgesia intraop</span></td>
+            <td>0.03–0.1 µg/kg/min</td>
+            <td>Offset &lt;5 min. Ideal para pausar antes de mapeo.</td>
+            <td>Hiperalgesia, rigidez torácica en bolos</td>
+          </tr>
+          <tr>
+            <td><b>Ketamina</b></td>
+            <td><span class="badge badge-ambar">Subanestésica</span></td>
+            <td>0.1–0.5 mg/kg bolo o 0.1–0.3 mg/kg/h infusión</td>
+            <td>Analgesia sin depresión resp. Reduce hiperalgesia por remi. Broncodilatador.</td>
+            <td>Disforia, sialorrea. Alucinaciones en dosis altas.</td>
+          </tr>
+          <tr>
+            <td><b>Fentanilo</b></td>
+            <td><span class="badge badge-verde">Premedicación</span></td>
+            <td>1–2 µg/kg previo a bloqueo de cuero cabelludo</td>
+            <td>Analgesia durante bloqueo. Onset 3–5 min.</td>
+            <td>Sedación prolongada si se acumula</td>
+          </tr>
+          <tr>
+            <td><b>Midazolam</b></td>
+            <td><span class="badge badge-rojo">Usar con precaución</span></td>
+            <td>1–2 mg IV solo como ansiolítico inicial</td>
+            <td>Ansiolítico rápido. Amnesia anterógrada.</td>
+            <td>Puede interferir con mapeo de memoria. Efecto prolongado.</td>
+          </tr>
+          <tr>
+            <td><b>Levetiracetam</b></td>
+            <td><span class="badge badge-verde">Antiepiléptico</span></td>
+            <td>500–1000 mg IV en 15 min preop</td>
+            <td>Profilaxis de crisis intraoperatoria. Sin sedación.</td>
+            <td>Irritabilidad, cefalea</td>
+          </tr>
+          <tr>
+            <td><b>Dexametasona</b></td>
+            <td><span class="badge badge-verde">Antiinflamatorio</span></td>
+            <td>8–16 mg IV preop + 4–8 mg intraop</td>
+            <td>Reduce edema cerebral perilesional. Antiemético.</td>
+            <td>Hiperglucemia. No usar en DM sin monitoreo glucémico.</td>
+          </tr>
+          <tr>
+            <td><b>Manitol 20%</b></td>
+            <td><span class="badge badge-azul">Relajación cerebral</span></td>
+            <td>0.5–1 g/kg IV en 15–20 min</td>
+            <td>Reduce PIC, mejora relajación cerebral intraop.</td>
+            <td>Deshidratación, hipernatremia, rebote &gt;4h</td>
+          </tr>
+          <tr>
+            <td><b>Solución salina hipertónica 3%</b></td>
+            <td><span class="badge badge-azul">Alternativa al manitol</span></td>
+            <td>2–5 mL/kg IV en 20 min</td>
+            <td>Sin efecto diurético sistémico. Útil en hipovolemia.</td>
+            <td>Hipernatremia. Precaución renal.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ 5: BLOQUEO CUERO CABELLUDO ══ -->
+  <div class="section-label" id="bloqueo">
+    <div class="dot" style="background:var(--rose)"></div>
+    <h2>5 · Bloqueo del Cuero Cabelludo — Scalp Block</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--rose-suave)">💉</div>
+      <div><h3>Técnica del bloqueo bilateral de cuero cabelludo</h3><div class="sub">La piedra angular de la craneotomía despierta — sin él, la técnica fracasa</div></div>
+    </div>
+    <div class="card-body">
+      <div class="alert alert-rose">
+        <div class="alert-ico">🚨</div>
+        <div><b>El bloqueo de cuero cabelludo es el componente analgésico más crítico de toda la técnica.</b> Un bloqueo inadecuado → dolor insoportable → agitación → conversión a AG. Debe ser realizado por el neuroanestesiólogo experto.</div>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <p class="bold" style="margin-bottom:12px;">Nervios a bloquear (6 bilaterales)</p>
+          <table>
+            <thead><tr><th>Nervio</th><th>Territorio</th><th>Punto de referencia</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><b>Supraorbitario</b><br><span class="text-sm">(V1 oftálmico)</span></td>
+                <td>Frente ipsilateral, cuero cabelludo anterior</td>
+                <td>Foramen supraorbitario (borde orbitario superior, línea pupilar)</td>
+              </tr>
+              <tr>
+                <td><b>Supratroclear</b><br><span class="text-sm">(V1 oftálmico)</span></td>
+                <td>Frente medial, raíz nasal</td>
+                <td>Medial al foramen supraorbitario, 1 cm hacia la línea media</td>
+              </tr>
+              <tr>
+                <td><b>Cigomático-temporal</b><br><span class="text-sm">(V2 maxilar)</span></td>
+                <td>Sien, región temporal anterior</td>
+                <td>1 cm lateral a la sutura cigomático-temporal, dentro del músculo temporal</td>
+              </tr>
+              <tr>
+                <td><b>Auriculotemporal</b><br><span class="text-sm">(V3 mandibular)</span></td>
+                <td>Región temporal, pabellón auricular anterior</td>
+                <td>1.5 cm anterior al tragus, sobre el proceso cigomático</td>
+              </tr>
+              <tr>
+                <td><b>Occipital mayor</b><br><span class="text-sm">(C2 dorsal)</span></td>
+                <td>Cuero cabelludo posterior (línea media)</td>
+                <td>1/3 medial de la línea entre protuberancia occipital y mastoides</td>
+              </tr>
+              <tr>
+                <td><b>Occipital menor</b><br><span class="text-sm">(C2–C3)</span></td>
+                <td>Región occipitoparietal lateral</td>
+                <td>2/3 laterales de la línea protuberancia-mastoides, borde posterior del ECM</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <p class="bold" style="margin-bottom:10px;">Anestésico local — Protocolo recomendado 2024</p>
+          <div class="drug-highlight">
+            <div class="dh-name">💉 Mezcla estándar (2024)</div>
+            <div class="dh-detail">
+              <b>Bupivacaína 0.5% + Lidocaína 1% a partes iguales</b><br>
+              Volumen total: 20–40 mL para bloqueo bilateral completo (2–5 mL por punto)<br>
+              Inicio: lidocaína en 3–5 min. Duración: bupivacaína 6–8h<br><br>
+              <b>Con vasoconstrictor:</b> Adrenalina 1:200.000 (reduce sangrado y prolonga acción)<br>
+              <b>NO usar</b> vasoconstrictor en punto auriculotemporal (arteria temporal superficial)
+            </div>
+          </div>
+          <div class="drug-highlight" style="background:var(--verde-suave);border-left-color:var(--verde);">
+            <div class="dh-name" style="color:var(--verde);">Alternativa: Ropivacaína 0.5%</div>
+            <div class="dh-detail">
+              Menor cardiotoxicidad que bupivacaína. Preferida en pacientes cardíacos o cuando se espera absorción aumentada. Mismos puntos y volúmenes. Onset ligeramente más lento (8–12 min).
+            </div>
+          </div>
+          <div class="alert alert-rojo">
+            <div class="alert-ico">⚠️</div>
+            <div><b>Dosis tóxica de bupivacaína: &gt;2.5 mg/kg</b> (150 mg en adulto 60 kg). Calcular siempre la dosis total antes de iniciar. Tener Intralipid 20% disponible. Toxicidad sistémica de anestésicos locales (LAST): convulsiones, arritmias, paro cardíaco.</div>
+          </div>
+          <div class="alert alert-ambar">
+            <div class="alert-ico">💡</div>
+            <div><b>Bloqueo infiltrativo adicional:</b> Línea de incisión + puntos de fijación del marco de Mayfield (4 pines) → infiltración local con 1–2 mL de lidocaína 1% + adrenalina en cada pin. Los pins son los estímulos más dolorosos de toda la cirugía.</div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+      <p class="bold" style="margin-bottom:8px;">Puntos de dolor intraoperatorio que requieren analgesia adicional</p>
+      <div class="chip-row">
+        <span class="chip" style="background:var(--rojo-suave);border-color:var(--rojo-med);color:var(--rojo);">🔴 Colocación de pines (Mayfield)</span>
+        <span class="chip" style="background:var(--rojo-suave);border-color:var(--rojo-med);color:var(--rojo);">🔴 Incisión de cuero cabelludo</span>
+        <span class="chip" style="background:var(--ambar-suave);border-color:var(--ambar-med);color:var(--ambar);">🟡 Retracción de periostio</span>
+        <span class="chip" style="background:var(--ambar-suave);border-color:var(--ambar-med);color:var(--ambar);">🟡 Perforación del cráneo</span>
+        <span class="chip" style="background:var(--verde-suave);border-color:var(--verde-med);color:var(--verde);">🟢 Apertura dural (indoloro)</span>
+        <span class="chip" style="background:var(--verde-suave);border-color:var(--verde-med);color:var(--verde);">🟢 Manipulación cortical (indoloro)</span>
+        <span class="chip" style="background:var(--ambar-suave);border-color:var(--ambar-med);color:var(--ambar);">🟡 Cierre del cuero cabelludo</span>
+      </div>
+      <p class="text-sm mt-4">El parénquima cerebral y la duramadre (excepto en la base) son insensibles al dolor. Los vasos durales y la dura en la base SÍ tienen inervación sensorial.</p>
+    </div>
+  </div>
+
+  <!-- ══ 6: PROTOCOLO AAA ══ -->
+  <div class="section-label" id="aaa">
+    <div class="dot" style="background:var(--azul)"></div>
+    <h2>6 · Protocolo Completo — Técnica Asleep-Awake-Asleep (AAA)</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--azul-suave)">📋</div>
+      <div><h3>Protocolo paso a paso — Técnica AAA con mascarilla laríngea</h3><div class="sub">La técnica más usada mundialmente — Neuroanestesia avanzada</div></div>
+    </div>
+    <div class="card-body">
+
+      <!-- FASE 1: SLEEP -->
+      <div class="phase-banner" style="background:var(--azul-suave);color:var(--azul);">
+        <div class="pb-num" style="background:var(--azul);">1</div>
+        <div>
+          <div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;opacity:.7;">FASE 1</div>
+          SLEEP (Dormido) — Apertura craneal
+        </div>
+      </div>
+      <div class="steps" style="margin-bottom:16px;">
+        <div class="step">
+          <div class="step-num" style="background:var(--azul)">A</div>
+          <div class="step-content">
+            <strong>Premedicación (sala de preoperatorio)</strong>
+            <p>Dexmedetomidina 0.5–0.7 µg/kg IV en 15–20 min (NUNCA rápido). Fentanilo 1 µg/kg IV 5 min antes de ingreso a QX. Antieméticos: ondansetrón 4mg + dexametasona 8mg.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--azul)">B</div>
+          <div class="step-content">
+            <strong>Inducción y colocación de mascarilla laríngea</strong>
+            <p>Propofol TCI Cp 3–4 µg/mL hasta pérdida de conciencia. Remifentanilo 0.05–0.1 µg/kg/min. Insertar ML supraglótica (ProSeal o Supreme — mejor sello). Confirmar ventilación. Capnografía, SpO₂, PA invasiva ya instalada.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--azul)">C</div>
+          <div class="step-content">
+            <strong>Posicionamiento — Decúbito lateral o supino con giro cefálico</strong>
+            <p>Cabeza en marco de Mayfield. Pins en cuero cabelludo → infiltrar AL antes (lidocaína 1% + adrenalina, 2 mL por pin). Verificar: ojos protegidos, cuello sin compresión yugular, brazo sin tensión, acceso a vía aérea no obstruido.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--azul)">D</div>
+          <div class="step-content">
+            <strong>Bloqueo de cuero cabelludo + infiltración de línea de incisión</strong>
+            <p>Realizar bloqueo bilateral completo (6 nervios) con bupivacaína 0.5% + lidocaína 1%. Esperar 10 min antes de la incisión para confirmar bloqueo efectivo.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--azul)">E</div>
+          <div class="step-content">
+            <strong>Apertura craneal bajo sedación profunda</strong>
+            <p>Propofol TCI Cp 2–3 µg/mL + remifentanilo 0.05–0.1 µg/kg/min. Manitol 0.5–1 g/kg si herniación o edema. Dexametasona 4–8 mg adicional si tumor con edema. El cirujano trabaja en silencio relativo para no alertar al paciente.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FASE 2: AWAKE -->
+      <div class="phase-banner" style="background:var(--verde-suave);color:var(--verde);">
+        <div class="pb-num" style="background:var(--verde);">2</div>
+        <div>
+          <div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;opacity:.7;">FASE 2</div>
+          AWAKE (Despierto) — Mapeo y resección
+        </div>
+      </div>
+      <div class="steps" style="margin-bottom:16px;">
+        <div class="step">
+          <div class="step-num" style="background:var(--verde)">A</div>
+          <div class="step-content">
+            <strong>Reducción progresiva de sedación (15–20 min antes del mapeo)</strong>
+            <p>Reducir Propofol TCI a Cp 0.5–0.8. Remifentanilo a 0.01–0.02 µg/kg/min o suspender. Dexmedetomidina a 0.1–0.2 µg/kg/h. Hablar suavemente al paciente, orientarlo: "Va a ir despertando, está en el quirófano, la cirugía va bien".</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--verde)">B</div>
+          <div class="step-content">
+            <strong>Retirada de la mascarilla laríngea (momento crítico)</strong>
+            <p>Cuando el paciente obedece órdenes y respira espontáneamente sin ML. Aspirar cavidad oral suavemente. Retirar ML en espiración o con tos suave. Colocar cánula nasal 2–4 L/min O₂. NUNCA retirar con tos activa (puede mover cabeza).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--verde)">C</div>
+          <div class="step-content">
+            <strong>Evaluación neurológica baseline despierto</strong>
+            <p>Confirmar que el paciente puede realizar las tareas de mapeo: "Cuenta del 1 al 20, dime tu nombre, nombra este objeto (mostrar tarjeta), levanta el pulgar". Si no puede → evaluar causa antes de continuar.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--verde)">D</div>
+          <div class="step-content">
+            <strong>Mapeo cortical intraoperatorio (ver sección 7)</strong>
+            <p>El neuropsicólogo dirige las tareas. El cirujano aplica la estimulación con el electrodo bipolar. El neuroanestesiólogo mantiene RASS 0 a -1, monitorea vía aérea, presión y SpO₂ sin interferir. Preparado para conversión a AG.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--verde)">E</div>
+          <div class="step-content">
+            <strong>Resección tumoral guiada por mapeo</strong>
+            <p>El paciente continúa realizando tareas de forma continua durante la resección. Cualquier déficit detectado → neurocirujano detiene inmediatamente y reorienta la resección. El anestesiólogo comunica al paciente lo que va a sentir.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FASE 3: SLEEP -->
+      <div class="phase-banner" style="background:var(--purp-suave);color:var(--purp);">
+        <div class="pb-num" style="background:var(--purp);">3</div>
+        <div>
+          <div style="font-size:12px;text-transform:uppercase;letter-spacing:.08em;opacity:.7;">FASE 3</div>
+          SLEEP (Dormido) — Cierre craneal
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num" style="background:var(--purp)">A</div>
+          <div class="step-content">
+            <strong>Re-sedación para cierre</strong>
+            <p>Una vez completada la resección guiada. Propofol TCI Cp 2–3 µg/mL. Remifentanilo 0.05 µg/kg/min. Dexmedetomidina 0.4–0.6 µg/kg/h. Reinsertar ML si es necesario para el cierre (algunos centros cierran sin ML con sedación consciente).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--purp)">B</div>
+          <div class="step-content">
+            <strong>Cierre dural, óseo y cuero cabelludo</strong>
+            <p>Bajo sedación moderada. Infiltración local adicional de línea de cierre si el bloqueo inicial ha cedido (&gt;4h). Analgesia multimodal: paracetamol IV 1g, ketorolaco 30 mg, dexketoprofeno 50 mg si no hay contraindicación.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num" style="background:var(--purp)">C</div>
+          <div class="step-content">
+            <strong>Despertar y evaluación neurológica post-resección</strong>
+            <p>Al finalizar el cierre: reducir sedación, retirar ML si se usó. Evaluación neurológica inmediata: fuerza, lenguaje, campo visual, pares craneales. Documentar y comparar con preoperatorio. Traslado a UCIN con monitoreo continuo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 7: MAPEO CORTICAL ══ -->
+  <div class="section-label" id="mapeo">
+    <div class="dot" style="background:var(--teal)"></div>
+    <h2>7 · Mapeo Cortical Intraoperatorio</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--teal-suave)">⚡</div>
+        <div><h3>Estimulación cortical directa (DCS)</h3><div class="sub">Técnica de Penfield y técnica de alta frecuencia</div></div>
+      </div>
+      <div class="card-body">
+        <table>
+          <thead><tr><th>Parámetro</th><th>Técnica de Penfield (50 Hz)</th><th>Alta frecuencia (60 Hz)</th></tr></thead>
+          <tbody>
+            <tr><td>Frecuencia</td><td>50–60 Hz</td><td>60 Hz</td></tr>
+            <tr><td>Duración pulso</td><td>1 ms</td><td>0.2–0.5 ms</td></tr>
+            <tr><td>Intensidad</td><td>2–16 mA (mapeo inicio a 2)</td><td>1–15 mA</td></tr>
+            <tr><td>Tiempo estimulación</td><td>2–4 seg por sitio</td><td>1–2 seg por sitio</td></tr>
+            <tr><td>Áreas</td><td>Zona elocuente, lenguaje, motor</td><td>Motor principalmente</td></tr>
+            <tr><td>Riesgo de crisis</td><td>Mayor</td><td>Menor</td></tr>
+          </tbody>
+        </table>
+        <div class="alert alert-ambar mt-4">
+          <div class="alert-ico">⚡</div>
+          <div><b>Criterio de seguridad anti-crisis:</b> Si aparecen potenciales después de descargas (afterdischarges) en el ECoG o el paciente tiene sacudidas → irrigar la corteza con SSN fría (4°C) inmediatamente. Suspender estimulación 2 minutos. Si crisis clínica → propofol 0.5–1 mg/kg IV bolo.</div>
+        </div>
+        <div class="alert alert-purp mt-0">
+          <div class="alert-ico">🗺️</div>
+          <div><b>Neuronavegación + DCS:</b> La neuronavegación marca las áreas elocuentes de la fMRI. La DCS confirma o corrige in vivo. Los mapas de imagen son orientativos; el DCS es la verdad funcional.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--teal-suave)">🗣️</div>
+        <div><h3>Protocolo de tareas de mapeo</h3><div class="sub">Baterías validadas según función a preservar</div></div>
+      </div>
+      <div class="card-body">
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--purp-suave);color:var(--purp)">Lenguaje<br>expresivo<br>(Broca)</div>
+          <div class="proto-action">
+            <ul>
+              <li><b>Denominación de objetos:</b> mostrar tarjetas cada 4 seg, nombrar en voz alta</li>
+              <li><b>Lectura en voz alta:</b> oraciones simples</li>
+              <li><b>Contar:</b> del 1 al 20 sin parar</li>
+              <li>Déficit: parafasias, anomia, bloqueo → marcar sitio</li>
+            </ul>
+          </div>
+        </div>
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--teal-suave);color:var(--teal)">Lenguaje<br>receptivo<br>(Wernicke)</div>
+          <div class="proto-action">
+            <ul>
+              <li><b>Comprensión de órdenes:</b> "señale el objeto azul", "abra la boca"</li>
+              <li><b>Repetición:</b> frases de complejidad creciente</li>
+              <li>Déficit: no obedece pero habla → área de comprensión</li>
+            </ul>
+          </div>
+        </div>
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--verde-suave);color:var(--verde)">Función<br>motora</div>
+          <div class="proto-action">
+            <ul>
+              <li><b>Movimiento repetitivo:</b> abrir-cerrar mano contralateral a velocidad constante</li>
+              <li><b>Oposición de dedos:</b> pulgar-índice secuencial</li>
+              <li>Déficit: interrupción involuntaria del movimiento → área motora</li>
+            </ul>
+          </div>
+        </div>
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--azul-suave);color:var(--azul)">Cálculo /<br>Praxias</div>
+          <div class="proto-action">
+            <ul>
+              <li><b>Cálculo:</b> "¿cuánto es 5+7?" para área parietotemporal</li>
+              <li><b>Praxias:</b> "simule que usa un martillo" para área premotora</li>
+              <li>Área de Gerstmann: cálculo + escritura + distinción izq-der</li>
+            </ul>
+          </div>
+        </div>
+        <div class="alert alert-verde mt-4">
+          <div class="alert-ico">✅</div>
+          <div><b>Criterio de resección segura:</b> Una zona puede resecarse si la estimulación a la máxima intensidad utilizada (habitualmente 6–8 mA) no produce ningún déficit. Si produce déficit reproducible → marcar con papel de aluminio estéril y no resecar.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 8: COMPLICACIONES ══ -->
+  <div class="section-label" id="complicaciones">
+    <div class="dot" style="background:var(--rojo)"></div>
+    <h2>8 · Complicaciones Intraoperatorias y Manejo</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--rojo-suave)">⚠️</div>
+      <div><h3>Reconocimiento y manejo inmediato de complicaciones</h3><div class="sub">Todas las complicaciones deben tener protocolo de respuesta predefinido</div></div>
+    </div>
+    <div class="card-body">
+      <div class="comp-item">
+        <div class="comp-emo">🧠</div>
+        <div class="comp-body">
+          <div class="cb-title">Crisis epiléptica intraoperatoria</div>
+          <p><b>Incidencia: 3–7%.</b> Irrigar corteza con SSN fría inmediatamente → propofol 0.5–1 mg/kg IV bolo → si no cede: lorazepam 1–2 mg IV o diazepam 5 mg IV → si generalizó: convertir a AG con propofol 1.5–2 mg/kg + intubar. Documentar tiempo y semiología. El cirujano detiene toda estimulación.</p>
+        </div>
+        <span class="badge badge-rojo" style="align-self:flex-start;margin-top:4px;">Frecuente</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-emo">😰</div>
+        <div class="comp-body">
+          <div class="cb-title">Agitación y pérdida de cooperación</div>
+          <p><b>Incidencia: 8–15%.</b> Hablar con calma, orientar, pausar la cirugía. Verificar dolor (bloqueo insuficiente) → reforzar infiltración local. Dexmedetomidina bolus 0.3–0.5 µg/kg en 10 min. Propofol 0.3–0.5 mg/kg titulado. Si agitación severa incontrolable → conversión a AG.</p>
+        </div>
+        <span class="badge badge-ambar" style="align-self:flex-start;margin-top:4px;">Tratable</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-emo">🤢</div>
+        <div class="comp-body">
+          <div class="cb-title">Náuseas y vómito intraoperatorio</div>
+          <p><b>Incidencia: 5–10%.</b> Causa: tracción dural, manipulación cerebral, opioides, ansiedad. Profilaxis: ondansetrón + dexametasona. Tratamiento: ondansetrón 4 mg IV, metoclopramida 10 mg IV. URGENTE: la náusea → movimiento de cabeza en el marco de Mayfield → riesgo de lesión cerebral. El cirujano PARA inmediatamente hasta que cese.</p>
+        </div>
+        <span class="badge badge-rojo" style="align-self:flex-start;margin-top:4px;">Urgencia</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-emo">💨</div>
+        <div class="comp-body">
+          <div class="cb-title">Depresión respiratoria / obstrucción</div>
+          <p><b>Incidencia: 2–4%.</b> SpO₂ &lt;90% → estimulación táctil y verbal, tracción mandibular, cánula nasofaríngea. Si persiste → suspender remifentanilo y propofol → preparar ML → conversión a AG si no responde en 60–90 seg. Tener siempre videolaringoscopio y equipo de vía aérea difícil disponibles.</p>
+        </div>
+        <span class="badge badge-rojo" style="align-self:flex-start;margin-top:4px;">Urgencia</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-emo">🔝</div>
+        <div class="comp-body">
+          <div class="cb-title">Hipertensión intracraneal intraoperatoria (brain bulge)</div>
+          <p><b>Incidencia: 3–5% en tumores con edema severo.</b> Cerebro hernia hacia la apertura dural → manitol 0.5–1 g/kg IV, hiperventilar levemente (PaCO₂ 32–35), posición de Trendelenburg reversa 30°, furosemida 20 mg IV. Si no mejora → dexametasona 8 mg adicional → considerar reducir tumor antes del mapeo o convertir a AG para mejor control.</p>
+        </div>
+        <span class="badge badge-ambar" style="align-self:flex-start;margin-top:4px;">Grave</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-emo">🩸</div>
+        <div class="comp-body">
+          <div class="cb-title">Sangrado intraoperatorio masivo</div>
+          <p>Raro pero posible en tumores muy vascularizados. El anestesiólogo activa protocolo de hemorragia masiva: acceso venoso adicional grueso, solicitar CH y PFC, conversión a AG inmediata. No tratar de controlar sangrado estando el paciente despierto.</p>
+        </div>
+        <span class="badge badge-rojo" style="align-self:flex-start;margin-top:4px;">Convertir a AG</span>
+      </div>
+
+      <div class="alert alert-rose mt-4">
+        <div class="alert-ico">🚨</div>
+        <div>
+          <b>Protocolo de conversión a AG — Siempre preparado antes de la incisión:</b><br>
+          Propofol 1.5–2 mg/kg IV → rocuronio 1–1.2 mg/kg → videolaringoscopio → intubación orotraqueal. El equipo de vía aérea debe estar en la cabecera de la cama, no en el armario. El tiempo de respuesta objetivo es &lt;90 segundos.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 9: POSTOPERATORIO ══ -->
+  <div class="section-label" id="postop">
+    <div class="dot" style="background:var(--verde)"></div>
+    <h2>9 · Manejo Postoperatorio</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--verde-suave)">🏥</div>
+        <div><h3>Protocolo UCIN postcraneotomía despierta</h3><div class="sub">Primeras 24–48h</div></div>
+      </div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" style="background:var(--verde)">1</div>
+            <div class="step-content">
+              <strong>Evaluación neurológica reglada cada hora × 6h</strong>
+              <p>Escala de Glasgow, pupilas, fuerza en 4 extremidades, lenguaje. Comparar con baseline preoperatorio documentado. Cualquier deterioro → TC urgente.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--verde)">2</div>
+            <div class="step-content">
+              <strong>Control de tensión arterial</strong>
+              <p>Meta: PAS 120–160 mmHg. PAD &lt;100. Evitar hipotensión (PPC). En hipertensión: labetalol 5–10 mg IV, nicardipino 5 mg/h infusión. Evitar nitroglicerina (↑ PIC).</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--verde)">3</div>
+            <div class="step-content">
+              <strong>Analgesia multimodal postoperatoria</strong>
+              <p>Paracetamol 1g IV cada 6h. Dexketoprofeno 50 mg IV cada 8h. Tramadol 50–100 mg IV como rescate. EVITAR morfina (sedación → dificulta evaluación neurológica). Bloqueo de cuero cabelludo con bupivacaína dura 6–8h.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--verde)">4</div>
+            <div class="step-content">
+              <strong>Antiepilépticos</strong>
+              <p>Continuar levetiracetam 500–1000 mg cada 12h durante al menos 7 días. Si había epilepsia previa: mantener régimen previo. No suspender antiepilépticos en el postoperatorio inmediato.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--verde)">5</div>
+            <div class="step-content">
+              <strong>TC de control postoperatorio precoz (2–6h)</strong>
+              <p>Descartar: hematoma epidural/subdural, neumoencéfalo a tensión, edema cerebral agudo. Comparar con RMN preoperatoria para evaluar extensión de resección.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--verde)">6</div>
+            <div class="step-content">
+              <strong>Fisioterapia y logopedia desde el día 1</strong>
+              <p>Evaluación por logopeda a las 6–12h del postoperatorio. Fisioterapia neurológica si hay paresia. Valoración cognitiva formal a los 3 meses.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--verde-suave)">📊</div>
+        <div><h3>Señales de alarma postoperatorias</h3><div class="sub">Indicación de TC urgente o reintervención</div></div>
+      </div>
+      <div class="card-body">
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--rojo-suave);color:var(--rojo);">🔴 TC URGENTE INMEDIATO</div>
+          <div class="proto-action">
+            <ul>
+              <li>Deterioro del nivel de conciencia (GCS cae ≥2 puntos)</li>
+              <li>Aparición de hemiparesia o afasia nueva</li>
+              <li>Crisis epiléptica postoperatoria</li>
+              <li>Cefalea en trueno (onset súbito, peor de su vida)</li>
+              <li>Anisocoria o pupilas fijas</li>
+            </ul>
+          </div>
+        </div>
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--ambar-suave);color:var(--ambar);">🟡 EVALUAR EN 1–2h</div>
+          <div class="proto-action">
+            <ul>
+              <li>Aumento progresivo del dolor de cabeza</li>
+              <li>Agitación no explicada</li>
+              <li>Fiebre &gt;38.5°C en primeras 24h (descartar meningitis)</li>
+              <li>Taquicardia sin causa aparente</li>
+            </ul>
+          </div>
+        </div>
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--verde-suave);color:var(--verde);">🟢 VIGILAR</div>
+          <div class="proto-action">
+            <ul>
+              <li>Déficit neurológico leve preexistente sin cambios</li>
+              <li>Cefalea leve controlada con analgésicos</li>
+              <li>Náuseas sin vómito</li>
+            </ul>
+          </div>
+        </div>
+        <hr class="divider">
+        <p class="bold" style="margin-bottom:8px;">Complicaciones postoperatorias reportadas</p>
+        <table>
+          <thead><tr><th>Complicación</th><th>Incidencia</th></tr></thead>
+          <tbody>
+            <tr><td>Déficit neurológico transitorio (&lt;3 meses)</td><td>15–20%</td></tr>
+            <tr><td>Déficit neurológico permanente</td><td>2–5%</td></tr>
+            <tr><td>Crisis epiléptica postop ≤24h</td><td>3–6%</td></tr>
+            <tr><td>Infección (meningitis, absceso)</td><td>&lt;1%</td></tr>
+            <tr><td>Hematoma que requiere reintervención</td><td>1–2%</td></tr>
+            <tr><td>NVPO severo</td><td>5–10%</td></tr>
+            <tr><td>TVP / TEP</td><td>1–3% (usar heparina 24h postop)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CHEAT SHEET ══ -->
+  <div class="section-label" id="cheatsheet">
+    <div class="dot" style="background:var(--gris-6)"></div>
+    <h2>10 · Cheat Sheet — Resumen Ejecutivo</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--gris-1)">📋</div>
+      <div><h3>Referencia rápida de bolsillo — Neuroanestesia en craneotomía despierta</h3></div>
+    </div>
+    <div class="card-body">
+      <table>
+        <thead>
+          <tr><th>Situación / Escenario</th><th>Acción inmediata</th><th>Fármaco / Dosis</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Premedicación ansiosa</b></td>
+            <td>Dexmedetomidina carga lenta SIEMPRE</td>
+            <td>0.5–0.7 µg/kg en 15–20 min IV</td>
+          </tr>
+          <tr>
+            <td><b>Inducción fase sleep (AAA)</b></td>
+            <td>Propofol TCI + ML + remi infusión</td>
+            <td>Cp 3–4 µg/mL / remi 0.05 µg/kg/min</td>
+          </tr>
+          <tr>
+            <td><b>Pins de Mayfield</b></td>
+            <td>Infiltrar 2 mL lidocaína + adrenalina en cada pin ANTES de colocar</td>
+            <td>Lidocaína 1% + adrenalina 1:200.000</td>
+          </tr>
+          <tr>
+            <td><b>Bloqueo cuero cabelludo</b></td>
+            <td>6 nervios bilaterales, 2–5 mL por punto</td>
+            <td>Bupivacaína 0.5% + lidocaína 1% (mezcla 1:1)</td>
+          </tr>
+          <tr>
+            <td><b>Transición a fase despierto</b></td>
+            <td>Reducir propofol Cp → 0.5–0.8, suspender remi, reducir dexmed 20 min antes del mapeo</td>
+            <td>Dexmed → 0.1–0.2 µg/kg/h solo</td>
+          </tr>
+          <tr>
+            <td><b>Crisis epiléptica intraop</b></td>
+            <td>SSN fría en corteza → propofol bolo → si no cede: BZD</td>
+            <td>Propofol 0.5–1 mg/kg IV / Lorazepam 1–2 mg IV</td>
+          </tr>
+          <tr>
+            <td><b>Agitación del paciente</b></td>
+            <td>Hablar, pausar, evaluar dolor, dexmed bolo</td>
+            <td>Dexmed 0.3–0.5 µg/kg en 10 min</td>
+          </tr>
+          <tr>
+            <td><b>Náusea intraoperatoria</b></td>
+            <td>DETENER CIRUGÍA → antiemético urgente</td>
+            <td>Ondansetrón 4 mg IV + metoclopramida 10 mg</td>
+          </tr>
+          <tr>
+            <td><b>Desaturación (SpO₂ &lt;90%)</b></td>
+            <td>Estimular verbalmente, tracción mandibular, cánula nasofaríngea, suspender remi</td>
+            <td>Si no responde: propofol 1.5 mg/kg + rocuronio 1.2 mg/kg → intubar</td>
+          </tr>
+          <tr>
+            <td><b>Brain bulge (herniación)</b></td>
+            <td>Manitol + hiperventilación leve + posición</td>
+            <td>Manitol 0.5–1 g/kg en 20 min / PaCO₂ 32–35 mmHg</td>
+          </tr>
+          <tr>
+            <td><b>Conversión a AG (urgente)</b></td>
+            <td>Propofol → rocuronio → videolaringoscopio</td>
+            <td>Propofol 1.5–2 mg/kg + rocuronio 1.2 mg/kg</td>
+          </tr>
+          <tr>
+            <td><b>Bradicardia por dexmed</b></td>
+            <td>Suspender infusión → atropina</td>
+            <td>Atropina 0.5–1 mg IV. Si FC &lt;30: efedrina 10 mg IV</td>
+          </tr>
+          <tr>
+            <td><b>Analgesia postop</b></td>
+            <td>Multimodal. Evitar morfina para evaluación neurológica</td>
+            <td>Paracetamol 1g/6h + dexketoprofeno 50mg/8h + tramadol rescue</td>
+          </tr>
+          <tr>
+            <td><b>HTA postop severa</b></td>
+            <td>Labetalol IV titulado. NO nitroglicerina (↑PIC)</td>
+            <td>Labetalol 5–10 mg IV / Nicardipino 5 mg/h</td>
+          </tr>
+          <tr>
+            <td><b>Déficit neurológico postop nuevo</b></td>
+            <td>TC urgente + evaluación neurológica completa</td>
+            <td>Descartar hematoma → neurocirugía</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Parámetros clave -->
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--purp-suave)">📐</div>
+      <div><h3>Objetivos hemodinámicos y de PIC</h3><div class="sub">Metas en neuroanestesia para craneotomía</div></div>
+    </div>
+    <div class="card-body">
+      <div class="param-grid">
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--azul-suave);color:var(--azul)">PAM objetivo</div>
+          <div class="pb-val" style="color:var(--azul)">70–90 <span class="pb-unit">mmHg</span></div>
+          <div class="pb-sub">PPC = PAM − PIC. Meta PPC ≥60 mmHg.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--verde-suave);color:var(--verde)">PaO₂</div>
+          <div class="pb-val" style="color:var(--verde)">&gt;100 <span class="pb-unit">mmHg</span></div>
+          <div class="pb-sub">Evitar hipoxia cerebral. SpO₂ ≥95% mínimo.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--ambar-suave);color:var(--ambar)">PaCO₂</div>
+          <div class="pb-val" style="color:var(--ambar)">35–40 <span class="pb-unit">mmHg</span></div>
+          <div class="pb-sub">Normoventilación. Hipervent. solo si herniación inminente (32–35).</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--rojo-suave);color:var(--rojo)">PIC objetivo</div>
+          <div class="pb-val" style="color:var(--rojo)">&lt;15 <span class="pb-unit">mmHg</span></div>
+          <div class="pb-sub">Monitoreo invasivo si sospecha HIC severa.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--purp-suave);color:var(--purp)">Glucemia</div>
+          <div class="pb-val" style="color:var(--purp)">140–180 <span class="pb-unit">mg/dL</span></div>
+          <div class="pb-sub">Hiperglucemia → peor outcome neuro. Hipoglucemia → daño irreversible.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--teal-suave);color:var(--teal)">Temperatura</div>
+          <div class="pb-val" style="color:var(--teal)">36–37 <span class="pb-unit">°C</span></div>
+          <div class="pb-sub">Normotermia. Hipotermia → ↑ sangrado, ↑ susceptibilidad crisis.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--gris-1);color:var(--gris-6)">Natremia</div>
+          <div class="pb-val">138–145 <span class="pb-unit">mEq/L</span></div>
+          <div class="pb-sub">Evitar hipoosmolaridad. SSN 0.9% como fluido de mantenimiento.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--gris-1);color:var(--gris-6)">Hematocrito</div>
+          <div class="pb-val">&gt;30 <span class="pb-unit">%</span></div>
+          <div class="pb-sub">Transfundir si Hb &lt;8 g/dL en paciente neurológico agudo.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>Guía de Craneotomía con Paciente Despierto · Neuroanestesia · Nivel Especialista</p>
+  <p style="margin-top:4px;opacity:.6;">Basada en guías SNOS/EANS 2023, CNS 2023, JAMA Neurology 2023, European Journal of Anaesthesiology 2024. Solo para referencia clínica y uso educativo.</p>
+</footer>
+
+</body>
+</html>

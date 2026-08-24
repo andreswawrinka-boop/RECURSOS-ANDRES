@@ -1,0 +1,1810 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anestesia para Cirugía Fetal y Procedimiento EXIT — Revisión 2024–2025</title>
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy2: #112040;
+    --blue: #1a56db;
+    --blue-light: #dbeafe;
+    --teal: #0d7c66;
+    --teal-light: #d1fae5;
+    --amber: #b45309;
+    --amber-light: #fef3c7;
+    --red: #b91c1c;
+    --red-light: #fee2e2;
+    --purple: #5521b5;
+    --purple-light: #ede9fe;
+    --coral: #9a3412;
+    --coral-light: #ffedd5;
+    --gray: #374151;
+    --gray-light: #f9fafb;
+    --border: #e5e7eb;
+    --text: #111827;
+    --text-secondary: #4b5563;
+    --sidebar-w: 260px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--text);
+    background: #f3f4f6;
+  }
+
+  /* ── Layout ────────────────────────────────── */
+  .layout { display: flex; min-height: 100vh; }
+
+  /* ── Sidebar ────────────────────────────────── */
+  .sidebar {
+    width: var(--sidebar-w);
+    background: var(--navy);
+    color: #e2e8f0;
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+  }
+
+  .sidebar-header {
+    padding: 20px 16px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .sidebar-header h1 {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #93c5fd;
+    margin-bottom: 4px;
+  }
+
+  .sidebar-header p {
+    font-size: 11px;
+    color: #94a3b8;
+    line-height: 1.4;
+  }
+
+  .nav-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #64748b;
+    padding: 16px 16px 6px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    font-size: 13px;
+    color: #cbd5e1;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: all 0.15s;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .nav-item:hover { background: rgba(255,255,255,0.07); color: #fff; }
+  .nav-item.active { background: rgba(29,99,235,0.25); color: #93c5fd; border-left-color: #3b82f6; }
+
+  .nav-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: currentColor;
+    opacity: 0.5;
+  }
+
+  /* ── Main ────────────────────────────────── */
+  .main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    max-width: 900px;
+    padding: 40px 48px 80px;
+    background: #fff;
+    min-height: 100vh;
+    border-right: 1px solid var(--border);
+  }
+
+  /* ── Sections ────────────────────────────────── */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ── Typography ────────────────────────────────── */
+  .section-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--blue);
+  }
+
+  .section-intro {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+    line-height: 1.8;
+  }
+
+  h2 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--navy2);
+    margin: 36px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  h2::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 20px;
+    background: var(--blue);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gray);
+    margin: 24px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  p { margin-bottom: 14px; color: var(--text-secondary); }
+  p strong { color: var(--text); font-weight: 600; }
+
+  /* ── Cards ────────────────────────────────── */
+  .card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+  }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy2);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-body {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+  }
+
+  .card-body strong { color: var(--text); font-weight: 600; }
+
+  /* ── Alert boxes ────────────────────────────────── */
+  .alert {
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 13.5px;
+    line-height: 1.7;
+    margin: 14px 0;
+    border-left: 4px solid;
+  }
+
+  .alert strong { font-weight: 700; display: block; margin-bottom: 3px; }
+  .alert-blue  { background: var(--blue-light);   border-color: var(--blue);   color: #1e40af; }
+  .alert-teal  { background: var(--teal-light);   border-color: var(--teal);   color: #065f46; }
+  .alert-amber { background: var(--amber-light);  border-color: var(--amber);  color: #78350f; }
+  .alert-red   { background: var(--red-light);    border-color: var(--red);    color: #991b1b; }
+  .alert-purple{ background: var(--purple-light); border-color: var(--purple); color: #3730a3; }
+
+  /* ── Tables ────────────────────────────────── */
+  .tbl-wrap { overflow-x: auto; margin: 16px 0 24px; border-radius: 8px; border: 1px solid var(--border); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+
+  thead { background: var(--navy); color: #e2e8f0; }
+  thead th { padding: 11px 14px; font-weight: 600; text-align: left; font-size: 12px; letter-spacing: 0.03em; text-transform: uppercase; }
+
+  tbody tr:nth-child(even) { background: #f8fafc; }
+  tbody tr:hover { background: #eff6ff; }
+  tbody td { padding: 10px 14px; color: var(--text-secondary); border-bottom: 1px solid #f1f5f9; vertical-align: top; line-height: 1.6; }
+  tbody td strong { color: var(--text); font-weight: 600; }
+
+  /* ── Grids ────────────────────────────────── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+  @media (max-width: 700px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  /* ── Dot lists ────────────────────────────────── */
+  .dot-list { list-style: none; padding: 0; margin: 10px 0; }
+  .dot-list li {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    align-items: flex-start;
+  }
+  .dot-list li::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--blue);
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+  .dot-list li strong { color: var(--text); font-weight: 600; }
+
+  /* Colored bullets */
+  .dot-list.teal li::before { background: var(--teal); }
+  .dot-list.amber li::before { background: var(--amber); }
+  .dot-list.red li::before { background: var(--red); }
+  .dot-list.purple li::before { background: var(--purple); }
+
+  /* ── Badges ────────────────────────────────── */
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 99px;
+    margin: 2px;
+  }
+  .badge-blue   { background: var(--blue-light);   color: #1e40af; }
+  .badge-teal   { background: var(--teal-light);   color: #065f46; }
+  .badge-amber  { background: var(--amber-light);  color: #78350f; }
+  .badge-red    { background: var(--red-light);    color: #991b1b; }
+  .badge-purple { background: var(--purple-light); color: #3730a3; }
+
+  /* ── Steps ────────────────────────────────── */
+  .steps { counter-reset: step; list-style: none; padding: 0; margin: 16px 0; }
+  .steps li {
+    counter-increment: step;
+    display: flex;
+    gap: 14px;
+    margin-bottom: 16px;
+    align-items: flex-start;
+  }
+  .steps li::before {
+    content: counter(step);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .steps li .step-content { flex: 1; }
+  .steps li .step-title { font-weight: 700; color: var(--navy2); font-size: 14px; margin-bottom: 4px; }
+  .steps li .step-body { font-size: 13.5px; color: var(--text-secondary); line-height: 1.65; }
+  .steps li .step-body strong { color: var(--text); font-weight: 600; }
+
+  /* ── Key box ────────────────────────────────── */
+  .keybox {
+    background: var(--navy);
+    color: #e2e8f0;
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 20px 0;
+    font-size: 14px;
+    line-height: 1.75;
+  }
+  .keybox .kb-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #93c5fd; margin-bottom: 10px; }
+  .keybox strong { color: #fbbf24; }
+
+  /* ── Divider ────────────────────────────────── */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
+
+  /* ── Hero ────────────────────────────────── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #1a3a6e 100%);
+    color: #e2e8f0;
+    border-radius: 12px;
+    padding: 30px 32px;
+    margin-bottom: 32px;
+  }
+  .hero h1 { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .hero p { color: #93c5fd; font-size: 14px; margin-bottom: 14px; line-height: 1.6; }
+  .hero-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+  .hero-badge { background: rgba(255,255,255,0.12); color: #bfdbfe; font-size: 11.5px; font-weight: 600; padding: 4px 12px; border-radius: 99px; border: 1px solid rgba(255,255,255,0.15); }
+
+  /* ── Evidence label ────────────────────────────────── */
+  .evidence {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 8px;
+    vertical-align: middle;
+    text-transform: uppercase;
+  }
+  .evidence-I   { background: #dcfce7; color: #166534; }
+  .evidence-II  { background: #fef9c3; color: #713f12; }
+  .evidence-III { background: #fee2e2; color: #991b1b; }
+  .evidence-E   { background: #ede9fe; color: #4c1d95; }
+
+  /* ── Print ────────────────────────────────── */
+  @media print {
+    .sidebar { display: none; }
+    .main { margin-left: 0; max-width: 100%; padding: 20px; border: none; }
+    .section { display: block !important; page-break-before: always; }
+    .section:first-child { page-break-before: avoid; }
+  }
+
+  /* ── Scrollbar ────────────────────────────────── */
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+<!-- ═══════════════════════════════════════════════════════ SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <h1>Cirugía Fetal &amp; EXIT</h1>
+    <p>Revisión para anestesiólogos · 2024–2025</p>
+  </div>
+
+  <div class="nav-section-label">Contenido</div>
+
+  <a class="nav-item active" onclick="show('intro')">
+    <span class="nav-dot"></span> Introducción y principios
+  </a>
+  <a class="nav-item" onclick="show('clasificacion')">
+    <span class="nav-dot"></span> Clasificación de procedimientos
+  </a>
+  <a class="nav-item" onclick="show('fisiologia-mat')">
+    <span class="nav-dot"></span> Fisiología materna
+  </a>
+  <a class="nav-item" onclick="show('fisiologia-fet')">
+    <span class="nav-dot"></span> Fisiología y farmacología fetal
+  </a>
+  <a class="nav-item" onclick="show('preop')">
+    <span class="nav-dot"></span> Evaluación y planificación prequirúrgica
+  </a>
+  <a class="nav-item" onclick="show('tecnica-invasiva')">
+    <span class="nav-dot"></span> Anestesia: procedimientos invasivos mínimos
+  </a>
+  <a class="nav-item" onclick="show('tecnica-abierta')">
+    <span class="nav-dot"></span> Anestesia: cirugía abierta de mediana gestación
+  </a>
+  <a class="nav-item" onclick="show('tocolisis')">
+    <span class="nav-dot"></span> Tocólisis — farmacología completa
+  </a>
+  <a class="nav-item" onclick="show('anestesia-fetal')">
+    <span class="nav-dot"></span> Anestesia fetal directa
+  </a>
+  <a class="nav-item" onclick="show('monitoreo')">
+    <span class="nav-dot"></span> Monitoreo intraoperatorio
+  </a>
+  <a class="nav-item" onclick="show('exit')">
+    <span class="nav-dot"></span> Procedimiento EXIT — manejo completo
+  </a>
+  <a class="nav-item" onclick="show('reanimacion')">
+    <span class="nav-dot"></span> Reanimación fetal intraoperatoria
+  </a>
+  <a class="nav-item" onclick="show('neurotoxicidad')">
+    <span class="nav-dot"></span> Neurotoxicidad anestésica fetal
+  </a>
+  <a class="nav-item" onclick="show('patologias')">
+    <span class="nav-dot"></span> Patologías específicas
+  </a>
+  <a class="nav-item" onclick="show('complicaciones')">
+    <span class="nav-dot"></span> Complicaciones — prevención y manejo
+  </a>
+  <a class="nav-item" onclick="show('postop')">
+    <span class="nav-dot"></span> Manejo posoperatorio
+  </a>
+  <a class="nav-item" onclick="show('evidencia')">
+    <span class="nav-dot"></span> Evidencia clave y futuro
+  </a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ MAIN -->
+<main class="main">
+
+<!-- ─── INTRO ─────────────────────────────────────────────── -->
+<section class="section active" id="intro">
+  <h1 class="section-title">Introducción y principios éticos</h1>
+  <p class="section-intro">
+    La cirugía materno-fetal constituye uno de los dominios más complejos y exigentes de la anestesiología contemporánea. El anestesiólogo enfrenta el desafío singular de gestionar <strong>dos pacientes simultáneos</strong> con fisiologías radicalmente distintas, objetivos anestésicos a veces contradictorios y un margen de error mínimo.
+  </p>
+
+  <div class="hero">
+    <h1>Anestesia para Cirugía Fetal y Procedimiento EXIT</h1>
+    <p>Revisión exhaustiva para anestesiólogos · Evidencia actualizada 2024–2025</p>
+    <div class="hero-badges">
+      <span class="hero-badge">Dos pacientes simultáneos</span>
+      <span class="hero-badge">Fisiología obstétrica + fetal</span>
+      <span class="hero-badge">MOMS Trial · TOTAL Trial · TTTS</span>
+      <span class="hero-badge">EXIT · FETO · MMC · CHAOS</span>
+      <span class="hero-badge">Texas Children's Protocol 2025</span>
+    </div>
+  </div>
+
+  <h2>Contexto histórico y evolución</h2>
+  <p>
+    La cirugía fetal comenzó experimentalmente en la década de 1980 con Harrison y cols. en la Universidad de California San Francisco. Desde entonces, el avance de las técnicas de imagen prenatal (ecografía de alta resolución, RM fetal), la mejora en instrumentación endoscópica y el mayor entendimiento de la fisiología uteroplacentaria han transformado procedimientos antes experimentales en estándar de atención para condiciones específicas.
+  </p>
+  <p>
+    El hito más significativo fue la publicación del <strong>MOMS Trial</strong> (Management of Myelomeningocele Study, NEJM 2011), el primer ensayo clínico aleatorizado controlado que demostró beneficio neurológico de la reparación prenatal vs. postnatal del mielomeningocele. Más recientemente, los ensayos <strong>TOTAL</strong> (Tracheal Occlusion To Accelerate Lung Growth, Lancet 2021–2022) establecieron el FETO como tratamiento estándar para hernia diafragmática congénita severa.
+  </p>
+
+  <h2>El principio del "bystander inocente"</h2>
+  <div class="card">
+    <div class="card-title">⚖️ Marco ético fundamental</div>
+    <div class="card-body">
+      <p>La paciente gestante no recibe <strong>beneficio directo</strong> de la cirugía fetal: es expuesta a todos los riesgos quirúrgicos y anestésicos únicamente por el bienestar de su feto. Este principio ético fundamental exige que:</p>
+      <ul class="dot-list">
+        <li>El beneficio fetal potencial esté <strong>suficientemente documentado</strong> en la evidencia científica</li>
+        <li>Se haya <strong>descartado toda anomalía fetal letal concomitante</strong> que hiciera inútil el procedimiento</li>
+        <li>El <strong>consentimiento informado sea exhaustivo</strong>, incluyendo riesgos maternos a corto y largo plazo (ruptura uterina futura, placenta previa en embarazos posteriores, morbilidad de la histerotomía)</li>
+        <li>El riesgo materno sea minimizado activamente en cada decisión anestésica y quirúrgica</li>
+        <li>El procedimiento se realice en <strong>centros especializados</strong> con equipo multidisciplinario entrenado</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>El equipo multidisciplinario</h2>
+  <p>El éxito de estos procedimientos depende críticamente de la coordinación entre un equipo que habitualmente incluye:</p>
+  <div class="three-col">
+    <div class="card">
+      <div class="card-title">Equipo quirúrgico</div>
+      <div class="card-body">
+        <ul class="dot-list">
+          <li>Cirujano fetal</li>
+          <li>Obstetra-ginecólogo especializado</li>
+          <li>Cirujano pediátrico (EXIT)</li>
+          <li>Otorrinolaringólogo pediátrico (EXIT vía aérea)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Equipo anestésico</div>
+      <div class="card-body">
+        <ul class="dot-list">
+          <li>Anestesiólogo obstétrico</li>
+          <li>Anestesiólogo pediátrico (EXIT)</li>
+          <li>Técnicos/enfermería de anestesia</li>
+          <li>Perfusionista (si ECMO)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Apoyo diagnóstico</div>
+      <div class="card-body">
+        <ul class="dot-list">
+          <li>Radiólogo / Ecocardiografía fetal</li>
+          <li>Neonatólogo</li>
+          <li>Genetista / Asesor prenatal</li>
+          <li>Enfermería especializada en fetal</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h2>Infraestructura requerida</h2>
+  <p>
+    Los centros de cirugía fetal de referencia cuentan típicamente con <strong>dos salas quirúrgicas adyacentes</strong>: la sala principal donde se realiza el procedimiento materno-fetal, y una sala contigua preparada para la reanimación neonatal y cirugía pediátrica inmediata. La cirugía abierta de mediana gestación y los procedimientos EXIT requieren capacidades de UCIN de alta complejidad y banco de sangre con hemoderivados disponibles de inmediato (incluida sangre O negativo compatible con la madre para transfusión fetal).
+  </p>
+
+  <div class="alert alert-blue">
+    <strong>Principio rector para el anestesiólogo</strong>
+    En cirugía fetal, el objetivo anestésico no es simplemente "dormir a la mamá". Es diseñar un estado fisiológico en el que la perfusión uteroplacentaria esté óptimamente preservada, el feto esté adecuadamente anestesiado, el útero esté relajado cuando se requiere, y la madre esté protegida de cada uno de sus riesgos específicos —todo de manera simultánea.
+  </div>
+</section>
+
+<!-- ─── CLASIFICACIÓN ──────────────────────────────────────── -->
+<section class="section" id="clasificacion">
+  <h1 class="section-title">Clasificación de procedimientos</h1>
+  <p class="section-intro">Los procedimientos materno-fetales se clasifican por el grado de invasividad, la edad gestacional en que se realizan y el tipo de acceso quirúrgico. Cada categoría tiene implicaciones anestésicas fundamentalmente distintas.</p>
+
+  <h2>Categoría 1: Procedimientos mínimamente invasivos</h2>
+  <p>Son los más frecuentes. Se realizan bajo guía ecográfica, habitualmente en el segundo o tercer trimestre, con acceso percutáneo o fetoscópico a través de la pared abdominal materna. El útero no se abre directamente y la recuperación materna es rápida.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Procedimiento</th>
+          <th>Indicación</th>
+          <th>Edad gestacional</th>
+          <th>Técnica anestésica preferida</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Fotocoagulación láser selectiva (SFLP)</strong></td>
+          <td>Síndrome de transfusión feto-fetal (STFF) estadios II–IV de Quintero</td>
+          <td>16–26 semanas</td>
+          <td>Local + sedación IV o neuroaxial</td>
+        </tr>
+        <tr>
+          <td><strong>Ablación por radiofrecuencia (RFA)</strong></td>
+          <td>Síndrome TRAP (gemelo acárdico); STFF estadio V; RCIU selectiva severa</td>
+          <td>16–28 semanas</td>
+          <td>Local + sedación IV o neuroaxial</td>
+        </tr>
+        <tr>
+          <td><strong>FETO — inserción de balón</strong></td>
+          <td>HDC severa (LHR &lt;1.0 izq.; LHR &lt;1.4 der.)</td>
+          <td>26–30 semanas</td>
+          <td>Neuroaxial o AGI + HAL reducida</td>
+        </tr>
+        <tr>
+          <td><strong>FETO — retiro de balón</strong></td>
+          <td>Segunda fase del FETO</td>
+          <td>34–35 semanas o urgente</td>
+          <td>Local o neuroaxial (EXIT si falla)</td>
+        </tr>
+        <tr>
+          <td><strong>Shunt toraco-amniótico</strong></td>
+          <td>Hidrotórax fetal, CCAM quística con hidrops</td>
+          <td>18–32 semanas</td>
+          <td>Local + sedación mínima</td>
+        </tr>
+        <tr>
+          <td><strong>Shunt vesico-amniótico</strong></td>
+          <td>Obstrucción del tracto urinario bajo (síndrome de válvulas uretrales posteriores)</td>
+          <td>16–24 semanas</td>
+          <td>Local + sedación mínima</td>
+        </tr>
+        <tr>
+          <td><strong>Valvuloplastia aórtica / pulmonar</strong></td>
+          <td>Estenosis aórtica crítica con HLHS evolutivo; Atresia pulmonar con SIV intacto</td>
+          <td>20–30 semanas</td>
+          <td>AGI o neuroaxial con anestesia fetal IM</td>
+        </tr>
+        <tr>
+          <td><strong>Transfusión intravascular fetal</strong></td>
+          <td>Anemia fetal severa (enfermedad hemolítica, parvo B19)</td>
+          <td>Segundo/tercer trimestre</td>
+          <td>Local ± opioides maternos IV</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Categoría 2: Cirugía fetal abierta de mediana gestación</h2>
+  <p>Requiere laparotomía materna e histerotomía. El feto se expone parcialmente, se interviene en circulación placentaria activa y luego se reintegra al útero. Son los procedimientos de mayor complejidad anestésica en mediana gestación.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Procedimiento</th>
+          <th>Indicación</th>
+          <th>Edad gestacional</th>
+          <th>Notas clave</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Reparación abierta de MMC</strong></td>
+          <td>Mielomeningocele / espina bífida abierta</td>
+          <td>19–26 semanas</td>
+          <td>Estándar de oro (MOMS trial). Requiere AGI + tocólisis profunda + anestesia fetal IM</td>
+        </tr>
+        <tr>
+          <td><strong>Reparación fetoscópica de MMC</strong></td>
+          <td>Mielomeningocele (centros especializados)</td>
+          <td>20–26 semanas</td>
+          <td>En expansión. Menor morbilidad materna. Requiere AGI + epidural + remifentanilo</td>
+        </tr>
+        <tr>
+          <td><strong>Resección de CCAM</strong></td>
+          <td>Malformación adenomatoidea quística congénita con hidrops fetalis</td>
+          <td>20–28 semanas</td>
+          <td>Urgente si hidrops. Alto riesgo de parto prematuro posoperatorio</td>
+        </tr>
+        <tr>
+          <td><strong>Resección de teratoma sacrococcígeo</strong></td>
+          <td>TSC tipo I/II con shunt arteriovenoso de alto flujo e insuficiencia cardíaca fetal</td>
+          <td>20–28 semanas</td>
+          <td>Alta mortalidad fetal. Control de sangrado crítico</td>
+        </tr>
+        <tr>
+          <td><strong>HDC — reparación directa</strong></td>
+          <td>Hernia diafragmática congénita (raramente por vía abierta; FETO es preferida)</td>
+          <td>22–26 semanas</td>
+          <td>Prácticamente abandonada en favor de FETO</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Categoría 3: EXIT (Ex Utero Intrapartum Treatment)</h2>
+  <p>Se realiza al término o cerca de él (≥34 semanas). El feto se entrega parcialmente por cesárea y se interviene mientras mantiene circulación fetoplacentaria activa. Su objetivo es asegurar una vía aérea o acceso vascular antes de interrumpir la circulación placentaria. También llamado <strong>OOPS</strong> (Operation On Placental Support).</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Indicación EXIT</th>
+          <th>Procedimiento fetal</th>
+          <th>Tiempo en soporte placentario</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Masa cervical gigante</strong> (linfangioma, teratoma, bocio, higroma)</td>
+          <td>Laringoscopia directa / video + intubación orotraqueal ± broncoscopia</td>
+          <td>20–60 min</td>
+        </tr>
+        <tr>
+          <td><strong>CHAOS</strong> (atresia laríngea, estenosis subglótica, quiste laríngeo, membrana laríngea, compresión extrínseca)</td>
+          <td>Traqueotomía o intubación retrograda según anatomía</td>
+          <td>30–90 min</td>
+        </tr>
+        <tr>
+          <td><strong>Segunda fase FETO</strong> — retiro de balón traqueal en emergencia (PPROM precoz)</td>
+          <td>Fetoscopia para retiro de balón o punción percutánea</td>
+          <td>15–30 min</td>
+        </tr>
+        <tr>
+          <td><strong>Hipoplasia pulmonar severa</strong> / CDH con mala función pulmonar anticipada</td>
+          <td>Canulación ECMO (veno-arterial)</td>
+          <td>45–120 min</td>
+        </tr>
+        <tr>
+          <td><strong>Tumor mediastinal con compresión cardíaca</strong></td>
+          <td>Resección parcial o drenaje para aliviar obstrucción</td>
+          <td>30–60 min</td>
+        </tr>
+        <tr>
+          <td><strong>Separación de gemelos siameses</strong></td>
+          <td>Separación vascular y de tejidos blandos</td>
+          <td>60–180 min</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert alert-amber">
+    <strong>Importante</strong> El tiempo en soporte placentario es el parámetro más crítico del EXIT. Debe planificarse cuidadosamente con el equipo quirúrgico, ya que determina la duración de la tocólisis profunda materna y el riesgo de hemorragia por atonía uterina.
+  </div>
+</section>
+
+<!-- ─── FISIOLOGÍA MATERNA ─────────────────────────────────── -->
+<section class="section" id="fisiologia-mat">
+  <h1 class="section-title">Fisiología materna relevante</h1>
+  <p class="section-intro">Los cambios fisiológicos del embarazo no son simples adaptaciones secundarias; son transformaciones profundas que alteran la farmacocinética, la seguridad de la vía aérea, la hemodinámica y la respuesta al estrés. El anestesiólogo debe conocerlos en detalle para anticipar y prevenir complicaciones.</p>
+
+  <h2>Sistema respiratorio</h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Parámetro</th><th>Cambio en el embarazo</th><th>Magnitud</th><th>Implicación anestésica</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Capacidad residual funcional (CRF)</td><td>↓ por elevación diafragmática</td><td>−20%</td><td>Desaturación rápida durante apnea. Ventana de preoxigenación corta (~60–90 s)</td></tr>
+        <tr><td>Volumen corriente</td><td>↑ por progesterona</td><td>+40%</td><td>Mayor ventilación minuto; PaCO₂ basal ~32 mmHg en la gestante</td></tr>
+        <tr><td>Consumo de O₂</td><td>↑</td><td>+20%</td><td>Mayor demanda metabólica. Preoxigenar al 100% siempre</td></tr>
+        <tr><td>PaCO₂ basal</td><td>↓ (alcalosis respiratoria compensada)</td><td>~32 mmHg</td><td>Referencia para ventilación: ETCO₂ objetivo 30–35 mmHg</td></tr>
+        <tr><td>HCO₃ basal</td><td>↓ por compensación renal</td><td>~18–20 mEq/L</td><td>Menor capacidad buffer. Acidosis materna → acidosis fetal</td></tr>
+        <tr><td>Edema de mucosa</td><td>↑ por aumento de volemia y estrógenos</td><td>Variable</td><td>Mallampati ↑, diámetro glótico reducido. Usar tubo 6.0–6.5 mm</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert alert-red">
+    <strong>Vía aérea obstétrica — siempre tener plan B y C</strong>
+    La tasa de intubación difícil en la embarazada es 8–10 veces mayor que en la población general. El edema progresa durante el trabajo de parto y durante procedimientos prolongados. En cirugía fetal y EXIT, el videolaringoscopio debe ser el dispositivo de primera línea, con un plan definido de VA difícil que incluya dispositivos supraglóticos y disponibilidad de cricotirotomía.
+  </div>
+
+  <h2>Sistema cardiovascular</h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Parámetro</th><th>Cambio</th><th>Magnitud</th><th>Implicación anestésica</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Volumen plasmático</td><td>↑</td><td>+50%</td><td>Anemia dilucional (Hb basal 10–11 g/dL). Umbral de transfusión diferente</td></tr>
+        <tr><td>Gasto cardíaco</td><td>↑</td><td>+40–50%</td><td>Mayor débito cardíaco; se redistribuye hacia útero, riñones, piel</td></tr>
+        <tr><td>Resistencias vasculares sistémicas</td><td>↓</td><td>−20%</td><td>Hipotensión más fácil con neuroaxial; mayor dependencia de vasopresores</td></tr>
+        <tr><td>Compresión aortocava</td><td>Posición supina → ↓ GC hasta 25–30%</td><td>Desde 20 semanas</td><td><strong>Desplazamiento uterino izquierdo ≥15° obligatorio</strong> en toda gestante supina</td></tr>
+        <tr><td>Presión onótica</td><td>↓ por hipoalbuminemia dilucional</td><td>−15%</td><td>Mayor riesgo de edema pulmonar con sobrecarga de volumen</td></tr>
+        <tr><td>FC basal</td><td>↑</td><td>+15–25%</td><td>Interpretar bradicardia en contexto; la FC basal es 85–100 lpm</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Vasopresores: fenilefrina vs. efedrina</h2>
+  <p>Esta distinción es crítica en cirugía fetal donde la perfusión uteroplacentaria debe preservarse:</p>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title" style="color:#065f46">✓ Fenilefrina — primera línea</div>
+      <div class="card-body">
+        Agonista α-adrenérgico puro. Aumenta RVS → ↑ PAM sin taquicardia. Preserva mejor el flujo uteroplacentario. Reduce náuseas y acidosis neonatal comparado con efedrina. <strong>Puede bradicardia refleja:</strong> si FC &lt;55 lpm, combinar con efedrina o atropina. Dosis: bolos 50–100 mcg IV o infusión 0.5–1 mcg/kg/min.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:#78350f">⚠ Efedrina — segunda línea o si FC baja</div>
+      <div class="card-body">
+        Agonista α y β. Aumenta GC y FC. Cruza la placenta → estimulación β fetal (↑ FC fetal, ↑ consumo O₂ fetal). Asociada a mayor acidosis neonatal comparada con fenilefrina en cesárea espinal. Útil si FC materna &lt;55 lpm o cuando se necesita efecto cronotrópico. Dosis: 5–10 mg IV en bolos.
+      </div>
+    </div>
+  </div>
+
+  <h2>Sistema gastrointestinal</h2>
+  <p>El embarazo produce: vaciamiento gástrico enlentecido, incompetencia del esfínter esofágico inferior por desplazamiento del estómago y aumento de la secreción ácida gástrica. <strong>Todo procedimiento bajo AGI en gestante ≥12 semanas debe considerarse estómago lleno</strong>, independientemente del ayuno. La secuencia de inducción de emergencia (RSI) con presión cricoidea es estándar.</p>
+
+  <h3>Protocolo de profilaxis de aspiración</h3>
+  <ul class="dot-list">
+    <li><strong>Metoclopramida</strong> 10 mg IV 30–60 min antes de inducción → procinético y antiemético</li>
+    <li><strong>Citrato de sodio</strong> 30 mL VO inmediatamente antes → neutraliza acidez gástrica</li>
+    <li><strong>Ranitidina</strong> 50 mg IV o <strong>omeprazol</strong> 40 mg IV → reduce secreción ácida</li>
+    <li>En procedimientos electivos: ayuno ≥6 h sólidos, ≥2 h líquidos claros (guías ASA/ESA)</li>
+  </ul>
+
+  <h2>Sistema hematológico y coagulación</h2>
+  <p>El embarazo genera un estado de <strong>hipercoagulabilidad fisiológica</strong>: fibrinógeno aumenta hasta 4–6 g/L (vs. 2–4 g/L normal), factores VII, VIII, X, XII y von Willebrand aumentan, mientras que proteínas C y S disminuyen. Este estado protege contra la hemorragia obstétrica pero aumenta el riesgo de TEV. En cirugía fetal, el riesgo de sangrado masivo (histerotomía, atonía uterina) requiere:</p>
+  <ul class="dot-list">
+    <li>Acceso venoso amplio: mínimo 2 vías periféricas calibre ≥16G o acceso central</li>
+    <li>Línea arterial para monitoreo continuo de PAM y gases en cirugía abierta y EXIT</li>
+    <li>Banco de sangre con hemoderivados disponibles en sala: GRE, PFC, plaquetas</li>
+    <li>Sangre O negativo disponible para transfusión fetal (compatible con la madre)</li>
+    <li>Oxitocina y ergometrina disponibles para atonía post-EXIT</li>
+  </ul>
+</section>
+
+<!-- ─── FISIOLOGÍA FETAL ───────────────────────────────────── -->
+<section class="section" id="fisiologia-fet">
+  <h1 class="section-title">Fisiología y farmacología fetal</h1>
+  <p class="section-intro">Comprender la fisiología del feto es indispensable para diseñar una estrategia anestésica que proteja su bienestar durante la intervención.</p>
+
+  <h2>Circulación fetal: características únicas</h2>
+  <p>La circulación fetal difiere fundamentalmente de la neonatal y adulta por la presencia de <strong>tres cortocircuitos</strong> que permiten al feto sobrevivir con una SpO₂ del cordón de solo 70–80%:</p>
+  <div class="three-col">
+    <div class="card">
+      <div class="card-title">Foramen oval</div>
+      <div class="card-body">Shunt D→I a nivel auricular. Dirige sangre oxigenada de la vena cava inferior hacia la aurícula izquierda y cerebro, saltando la circulación pulmonar no funcional.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Ductus arterioso</div>
+      <div class="card-body">Conecta la arteria pulmonar con la aorta. Desvía el gasto del ventrículo derecho hacia la circulación sistémica. Alta presión pulmonar fetal lo mantiene abierto.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Ductus venoso</div>
+      <div class="card-body">Desvía parte de la sangre umbilical oxigenada directamente a la VCI, eludiendo la circulación hepática, para priorizar oxigenación cerebral.</div>
+    </div>
+  </div>
+
+  <h2>Dependencia del flujo uteroplacentario</h2>
+  <div class="alert alert-red">
+    <strong>Principio cardinal</strong>
+    Los vasos uteroplacentarios CARECEN de capacidad de autorregulación. El flujo placentario depende DIRECTAMENTE de la presión de perfusión materna. No existe ningún mecanismo compensatorio local: la hipotensión materna es igual a hipoperfusión fetal.
+  </div>
+
+  <p><strong>Flujo uteroplacentario = (PAM − PVU) / RVP</strong></p>
+  <p>Donde PVU = presión venosa uterina y RVP = resistencia vascular uterina. Todo lo que aumente RVP (contracción uterina, vasoconstrictores uterinos, tono uterino elevado) o disminuya PAM compromete el flujo. La tocólisis y el soporte vasopresivo son las dos acciones más importantes para preservar la perfusión fetal.</p>
+
+  <h2>Hemoglobina fetal (HbF) y adaptaciones a la hipoxia</h2>
+  <p>La HbF tiene mayor afinidad por el oxígeno (P50 = 18–20 mmHg vs. 27 mmHg de la HbA), lo que permite captación eficiente de O₂ incluso con PO₂ placentaria baja (~50 mmHg). Además, el hematocrito fetal es más alto (45–60%) compensando la menor saturación. Por estas razones, el feto tolera SpO₂ relativas que serían letales en el adulto, pero es muy sensible a caídas agudas del flujo.</p>
+
+  <h2>Fisiología cardiovascular fetal</h2>
+  <ul class="dot-list">
+    <li><strong>Gasto cardíaco dependiente de la frecuencia:</strong> el ventrículo fetal tiene menor reserva contráctil y es muy dependiente del cronotropismo. Bradicardia fetal &lt;100 lpm sostenida es una emergencia.</li>
+    <li><strong>Sensibilidad extrema a los halogenados:</strong> el tejido miocárdico fetal tiene menos proteínas contráctiles y es más sensible a la depresión por halogenados que el adulto. A 2–2.5 MAC de desflurano, la disfunción sistólica del ventrículo izquierdo fetal es frecuente.</li>
+    <li><strong>Reserva mínima ante sangrado:</strong> la volemia fetal es ~100–120 mL/kg pero en términos absolutos es extremadamente pequeña. Una pérdida de solo 30–40 mL en un feto de 500 g puede ser letal.</li>
+    <li><strong>Piel fetal muy delgada:</strong> predisposición a hipotermia durante exposición. La irrigación con solución salina a 37°C es esencial.</li>
+  </ul>
+
+  <h2>Percepción del dolor fetal — evidencia actual</h2>
+  <p>Este es uno de los temas más debatidos en anestesia fetal. La posición actual de la evidencia es:</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Hito del neurodesarrollo</th><th>Edad gestacional</th><th>Implicación</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Presencia de receptores nociceptivos cutáneos</td><td>7–8 semanas</td><td>Estructuras periféricas presentes temprano</td></tr>
+        <tr><td>Conexiones espinotalámicas completas</td><td>20–24 semanas</td><td>Transmisión de señal nociceptiva posible</td></tr>
+        <tr><td>Conexiones tálamo-corticales</td><td>23–28 semanas</td><td>Integración cortical del dolor posiblemente funcional</td></tr>
+        <tr><td>Respuesta hormonal (cortisol, β-endorfinas) a estímulo invasivo</td><td>&gt;18 semanas</td><td>Respuesta al estrés documentada</td></tr>
+        <tr><td>Cambios hemodinámicos fetales ante estímulo nociceptivo</td><td>&gt;26 semanas</td><td>Evidencia de respuesta comparable a neonatos mayores</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="alert alert-purple">
+    <strong>Posición actual (2024–2025)</strong>
+    No existe consenso sobre si el feto experimenta dolor de forma consciente dado que el estado de conciencia fetal permanece debatido. Sin embargo, la presencia de respuesta neurohumoral al estrés quirúrgico es irrefutable desde las 18–20 semanas. La anestesia fetal directa está indicada en todas las cirugías abiertas y EXIT no solo por consideraciones éticas, sino porque bloquea la respuesta al estrés que puede comprometer la función cardiovascular fetal.
+  </div>
+
+  <h2>Farmacología fetal: transferencia placentaria</h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Fármaco</th><th>Transferencia placentaria</th><th>Efecto fetal</th><th>Relevancia clínica</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Halogenados</strong> (sevo, des)</td><td>Muy alta (liposolubles)</td><td>Anestesia + tocólisis fetal</td><td>Principal fuente de anestesia fetal en AGI. A alta dosis → depresión miocárdica</td></tr>
+        <tr><td><strong>Propofol</strong></td><td>Alta (liposoluble)</td><td>Sedación/anestesia fetal</td><td>TIVA posible. Nivel fetal ~70% del materno. Riesgo de neurotoxicidad en animal</td></tr>
+        <tr><td><strong>Remifentanilo</strong></td><td>Alta y rápida</td><td>Analgesia + depresión resp. fetal</td><td>Metabolismo rápido (esterasas plasmáticas) también en feto. Útil en TIVA</td></tr>
+        <tr><td><strong>Fentanilo</strong></td><td>Alta</td><td>Analgesia fetal</td><td>Principal componente del cóctel IM fetal (10–20 mcg/kg fetal)</td></tr>
+        <tr><td><strong>Ketamina</strong></td><td>Alta</td><td>Anestesia disociativa fetal</td><td>Útil en inducción materna y sedación fetal. Aumenta tono uterino → usar con caución</td></tr>
+        <tr><td><strong>Relajantes NM</strong> (suxametonio)</td><td>Mínima (ionizados)</td><td>Sin efecto fetal clínico</td><td>Relajante para RSI materno; el feto permanece sin relajar</td></tr>
+        <tr><td><strong>Neostigmina</strong></td><td>Baja</td><td>Mínimo</td><td>Reversor materno seguro</td></tr>
+        <tr><td><strong>Atropina</strong></td><td>Alta</td><td>Taquicardia fetal</td><td>Usada en cóctel fetal IM para prevenir bradicardia vagal</td></tr>
+        <tr><td><strong>Midazolam</strong></td><td>Alta</td><td>Sedación fetal</td><td>Advertencia FDA (2016): riesgo de neurotoxicidad fetal. Minimizar dosis</td></tr>
+        <tr><td><strong>Nitroglicerina</strong></td><td>Alta pero metabolismo placentario rápido</td><td>Mínimo hemodinámico fetal</td><td>Ideal como tocolítico: efecto materno sin compromiso fetal significativo</td></tr>
+        <tr><td><strong>Oxitocina</strong></td><td>Mínima</td><td>Sin efecto directo fetal</td><td>Usada post-EXIT para recuperar tono uterino. No cruza placenta significativamente</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ─── PREOP ──────────────────────────────────────────────── -->
+<section class="section" id="preop">
+  <h1 class="section-title">Evaluación y planificación prequirúrgica</h1>
+  <p class="section-intro">La planificación prequirúrgica en cirugía fetal es tan compleja como la del procedimiento mismo. Un briefing multidisciplinario detallado antes de cada caso es obligatorio.</p>
+
+  <h2>Evaluación materna prequirúrgica</h2>
+  <ul class="dot-list">
+    <li><strong>Historia clínica completa:</strong> edad gestacional precisa, comorbilidades (obesidad, hipertensión gestacional, diabetes, cardiopatías), cirugías uterinas previas (mayor riesgo de adherencias y acretismo), embarazos previos</li>
+    <li><strong>Evaluación de vía aérea exhaustiva:</strong> Mallampati, apertura bucal, protrusión mandibular, extensión cervical, antecedentes de intubación difícil. Plan documentado A/B/C con equipo disponible en sala</li>
+    <li><strong>Laboratorio:</strong> hemograma, grupo y Rh, coagulación, función renal y hepática, glucemia, albúmina. Anticuerpos irregulares para prueba de compatibilidad</li>
+    <li><strong>Ecocardiografía materna</strong> si hay sospecha de cardiopatía preexistente o valvulopatía</li>
+    <li><strong>Consentimiento informado extendido:</strong> riesgos específicos de la cirugía fetal (parto prematuro, atonía uterina, implicaciones para futuros embarazos), riesgos anestésicos específicos del embarazo, posibilidad de conversión de técnica anestésica</li>
+  </ul>
+
+  <h2>Evaluación fetal prequirúrgica</h2>
+  <ul class="dot-list teal">
+    <li><strong>Ecografía fetal detallada:</strong> biometría, líquido amniótico, Doppler umbilical y cerebral medio, posición fetal y placentaria, anatomía cardiaca básica</li>
+    <li><strong>RM fetal:</strong> obligatoria en EXIT para planificación de vía aérea (evalúa extensión de la masa, desviación traqueal, grado de compresión), y en MMC para evaluar nivel de la lesión</li>
+    <li><strong>Ecocardiografía fetal detallada:</strong> función ventricular, presencia de derrame pericárdico, hidropesía, anatomía cardiaca. Dato basal imprescindible para comparar intraoperatoriamente</li>
+    <li><strong>Cariotipo / genómica fetal:</strong> descartar cromosomopatías que contraindiquen el procedimiento</li>
+    <li><strong>Planificación del cóctel fetal:</strong> calcular dosis según peso fetal estimado por ecografía</li>
+  </ul>
+
+  <h2>Briefing multidisciplinario preoperatorio</h2>
+  <div class="card">
+    <div class="card-title">Puntos críticos del briefing</div>
+    <div class="card-body">
+      <ul class="dot-list">
+        <li>Confirmación de indicación, tipo de procedimiento y plan quirúrgico específico</li>
+        <li>Tiempo estimado en soporte placentario (EXIT) o duración estimada del procedimiento</li>
+        <li>Plan de tocólisis: agente, dosis, cuándo iniciar, cuándo discontinuar</li>
+        <li>Plan de anestesia fetal: cóctel IM, quién lo aplica, vía de administración</li>
+        <li>Rol de cada miembro del equipo durante complicaciones (hemorragia, bradicardia fetal, fallo de vía aérea EXIT)</li>
+        <li>Criterios para conversión a entrega neonatal de emergencia</li>
+        <li>Disponibilidad de sala de reanimación neonatal y UCIN</li>
+        <li>Verificación de hemoderivados disponibles incluyendo sangre O negativo para feto</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Setup de sala</h2>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Materiales de anestesia materna</div>
+      <div class="card-body">
+        <ul class="dot-list">
+          <li>Videolaringoscopio listo + laringoscopio directo de respaldo</li>
+          <li>Tubos 6.0–6.5 mm (edema de mucosa)</li>
+          <li>Equipo de cricotirotomía abierto</li>
+          <li>Línea arterial (en cirugía abierta y EXIT)</li>
+          <li>2 accesos IV periféricos ≥16G + opción de acceso central</li>
+          <li>Epidural preparada (si se planea)</li>
+          <li>Infusiones listas: oxitocina, fenilefrina, nitroglicerina</li>
+          <li>Cuña o cuña de gel para desplazamiento uterino</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Materiales de anestesia fetal</div>
+      <div class="card-body">
+        <ul class="dot-list">
+          <li>Cóctel IM fetal pre-calculado y rotulado (fentanilo + atropina + relajante NM)</li>
+          <li>Atropina y efedrina para resucitación umbilical</li>
+          <li>Sangre O negativo compatible con la madre (cross-matched)</li>
+          <li>Solución salina tibia (37°C) para irrigación uterina</li>
+          <li>Equipos de ecografía con sonda de alta frecuencia para monitoreo</li>
+          <li>Ecocardiógrafo fetal listo para monitoreo continuo</li>
+          <li>Equipo de reanimación neonatal en sala adyacente</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TÉCNICA INVASIVA MÍNIMA ───────────────────────────── -->
+<section class="section" id="tecnica-invasiva">
+  <h1 class="section-title">Anestesia: procedimientos mínimamente invasivos</h1>
+  <p class="section-intro">Los procedimientos mínimamente invasivos (fetoscópicos y guiados por ultrasonido) ofrecen la mayor flexibilidad en la elección de la técnica anestésica, ya que no requieren tocólisis profunda ni acceso directo al feto.</p>
+
+  <h2>Objetivos anestésicos específicos</h2>
+  <ul class="dot-list">
+    <li>Proporcionar analgesia y sedación materna adecuadas para tolerar el procedimiento</li>
+    <li>Mantener inmovilidad materna (movimientos pueden comprometer la cirugía guiada por ecografía)</li>
+    <li>Minimizar la exposición fetal a fármacos innecesarios</li>
+    <li>Preservar la perfusión uteroplacentaria</li>
+    <li>Proporcionar analgesia fetal cuando el procedimiento implique punciones o instrumentación fetal directa</li>
+  </ul>
+
+  <h2>Técnica 1: Anestesia local + sedación IV</h2>
+  <p>Es la técnica de elección en centros de alta experiencia para STFF (SFLP), ablación por radiofrecuencia y colocación de shunts. Permite comunicación continua con la paciente y minimiza efectos sistémicos.</p>
+  <div class="card">
+    <div class="card-title">Protocolo de sedación consciente</div>
+    <div class="card-body">
+      <ul class="dot-list">
+        <li><strong>Anestesia local:</strong> lidocaína 1% subcutánea en sitio de inserción del trocar. Infiltración en capas hasta peritoneo parietal.</li>
+        <li><strong>Analgesia IV:</strong> fentanilo 25–50 mcg IV titulado, o remifentanilo en infusión 0.025–0.1 mcg/kg/min (titulado para comodidad sin pérdida de reflejo protector)</li>
+        <li><strong>Sedación:</strong> midazolam 1–2 mg IV para ansiólisis inicial. Evitar dosis repetidas por acumulación fetal.</li>
+        <li><strong>Alternativa:</strong> propofol en infusión a dosis sub-hipnóticas (30–60 mcg/kg/min) para sedación titulable sin pérdida de ventilación espontánea</li>
+        <li><strong>Monitoreo materno:</strong> ECG, SpO₂, ETCO₂ por cánula nasal con muestreo de CO₂, PA no invasiva cada 3–5 min, temperatura</li>
+        <li><strong>Posición:</strong> decúbito supino con cuña lateral izquierda 15°, Trendelenburg leve puede solicitarse para exposición</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Técnica 2: Anestesia neuroaxial</h2>
+  <p>Opción excelente para procedimientos de duración moderada (&lt;90 min) cuando la paciente requiere mayor analgesia o el procedimiento es más extenso. Ventajas: excelente control del dolor, no requiere manejo de vía aérea, menor exposición sistémica fetal, posible uso de catéter epidural para analgesia posoperatoria.</p>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Raquídea (para procedimientos cortos)</div>
+      <div class="card-body">
+        Bupivacaína hiperbárica 7.5–10 mg ± fentanilo 15–25 mcg intratecal. Rápido inicio, excelente bloqueo motor y sensitivo. Desventaja: hipotensión más pronunciada y difícil de titular la duración.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Epidural (para procedimientos &gt;60 min)</div>
+      <div class="card-body">
+        Lidocaína 2% o bupivacaína 0.5% al nivel L2-L3. Titulación gradual. Permite continuar el catéter en posoperatorio para analgesia. También útil para convertir a técnica en caso de necesidad imprevista de AGI.
+      </div>
+    </div>
+  </div>
+  <div class="alert alert-amber">
+    <strong>Nitroglicerina IV para tocólisis en procedimientos bajo neuroaxial</strong>
+    Cuando se requiere relajación uterina momentánea durante el procedimiento (inserción de trocar, ajuste de posición del feto) y la paciente está bajo neuroaxial, la nitroglicerina IV (50–100 mcg en bolo) es el tocolítico de elección. Inicio en 30–60 s. Tener vasopresor listo, ya que la hipotensión es la principal complicación.
+  </div>
+
+  <h2>Técnica 3: Anestesia general (cuando requerida)</h2>
+  <p>Indicada si la paciente no tolera el procedimiento bajo sedación/neuroaxial, si se requiere tocólisis profunda con halogenados, o si la duración o complejidad del caso lo justifican (FETO en algunos centros, valvuloplastia fetal). La técnica incluye RSI (estómago lleno), intubación orotraqueal, mantenimiento con halogenado o TIVA, y epidural para posoperatorio.</p>
+
+  <h2>Anestesia fetal en procedimientos invasivos mínimos</h2>
+  <p>Para procedimientos que implican punción o estimulación fetal directa (transfusión, valvuloplastia, cordocentesis diagnóstica), la anestesia fetal se obtiene principalmente por:</p>
+  <ul class="dot-list purple">
+    <li><strong>Opioides maternos transplacentarios:</strong> fentanilo o remifentanilo administrados a la madre cruzan la placenta y proporcionan analgesia/sedación fetal</li>
+    <li><strong>Inyección fetal directa intramuscular:</strong> bajo guía ecográfica en procedimientos más invasivos (valvuloplastia, shunts con estimulación fetal): fentanilo 10–20 mcg/kg IM fetal + atropina 20 mcg/kg IM</li>
+    <li><strong>Inyección umbilical:</strong> en casos excepcionales cuando el cordón es accesible</li>
+  </ul>
+
+  <h2>Consideraciones para SFLP (STFF)</h2>
+  <p>La fotocoagulación láser selectiva de anastomosis placentarias en el STFF merece mención especial. Se realiza bajo sedación IV o epidural, con la paciente en posición supina con cuña izquierda. Durante el procedimiento se drena líquido amniótico del saco del gemelo receptor (amniorred ucción) lo que puede ser doloroso. El volumen drenado puede ser de 2–5 litros, lo que altera la posición del trocar. El anestesiólogo debe anticipar el discomfort de la paciente y titular la sedación de acuerdo.</p>
+</section>
+
+<!-- ─── TÉCNICA ABIERTA ────────────────────────────────────── -->
+<section class="section" id="tecnica-abierta">
+  <h1 class="section-title">Anestesia: cirugía abierta de mediana gestación</h1>
+  <p class="section-intro">La cirugía abierta de mediana gestación (19–28 semanas) es el procedimiento materno-fetal de mayor complejidad en este grupo de edad gestacional. La reparación de mielomeningocele abierta es su representante paradigmático.</p>
+
+  <h2>Técnica anestésica estándar — cirugía abierta</h2>
+  <ol class="steps">
+    <li>
+      <div class="step-content">
+        <div class="step-title">Premedicación y preparación</div>
+        <div class="step-body">Metoclopramida 10 mg IV + citrato de sodio 30 mL VO. Midazolam 1–2 mg IV solo si ansiedad severa (minimizar exposición fetal). Cuña lateral izquierda posicionada. Monitoreo completo instalado. Epidural lumbar colocada antes de inducción general (nivel T8–T10 para cobertura abdominal y posoperatoria). El bolus epidural intraoperatorio se reserva para el final del procedimiento para evitar hipotensión severa durante la cirugía.</div>
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <div class="step-title">Inducción — RSI modificada</div>
+        <div class="step-body">Preoxigenación 3–5 min con FiO₂ 1.0 (SpO₂ objetivo ≥97%). <strong>RSI:</strong> propofol 2–2.5 mg/kg IV (o ketamina 1–2 mg/kg si inestabilidad hemodinámica) + suxametonio 1.5 mg/kg IV. Presión cricoidea. Videolaringoscopio de primera línea. Intubación orotraqueal con tubo 6.0–6.5 mm. Confirmar con capnografía y auscultación bilateral. Iniciar halogenado inmediatamente.</div>
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <div class="step-title">Mantenimiento — hasta histerotomía</div>
+        <div class="step-body">Halogenado (sevoflurano o desflurano) a <strong>1–1.5 MAC</strong> combinado con infusión de remifentanilo (0.05–0.3 mcg/kg/min) y/o propofol (50–100 mcg/kg/min). Esta combinación logra plano anestésico adecuado sin necesidad de HAL en dosis ultra-alta. Objetivo: ETCO₂ 30–35 mmHg, PAM ≥65 mmHg (dentro del 20% del basal), temperatura fetal preservada con irrigación tibia.</div>
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <div class="step-title">Tocólisis para histerotomía — aumento de HAL</div>
+        <div class="step-body">Antes de la histerotomía, aumentar HAL a <strong>2–2.5 MAC</strong> para relajación uterina profunda. Anticipar hipotensión materna: ajustar infusión de fenilefrina. Nitroglicerina en bolo (50–100 mcg) puede añadirse como adyuvante. El objetivo es útero completamente flácido que permita histerotomía sin sangrado y sin contracciones.</div>
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <div class="step-title">Anestesia fetal directa</div>
+        <div class="step-body">Una vez el feto es expuesto a través de la histerotomía, el cirujano administra el <strong>cóctel IM fetal</strong>: fentanilo 10–20 mcg/kg + atropina 20 mcg/kg + vecuronio 0.2 mg/kg (o pancuronio) intramuscular en deltoides o glúteo fetal. Inicio aproximado: 3–5 min. Monitoreo de FC fetal por ecocardiografía continua desde este momento.</div>
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <div class="step-title">Durante la cirugía fetal</div>
+        <div class="step-body">Irrigación uterina continua con RL o SSN a 37°C para mantener temperatura y turgor. Monitoreo fetal continuo por ecocardiografía: FC, contractilidad, derrame. HAL mantenida a 2–2.5 MAC (o en dosis menores con remifentanilo + propofol). Fenilefrina en infusión para soporte de PAM materna. ETCO₂ ajustado a 30–35 mmHg. Si FC fetal &lt;100 lpm → protocolo de reanimación fetal.</div>
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <div class="step-title">Cierre de histerotomía y transición</div>
+        <div class="step-body">Al concluir la cirugía fetal y reintroducir el feto al útero, se inician <strong>tocolíticos de mantenimiento posoperatorio</strong> (indometacina ≤30 semanas, nifedipino, MgSO₄ o atosibán según protocolo institucional). Se reduce HAL gradualmente. Se bolusea el epidural para analgesia posoperatoria (bupivacaína 0.1–0.125% + fentanilo 2 mcg/mL). El útero NO debe recibir oxitocina (se quiere relajado para el feto que permanece in útero).</div>
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <div class="step-title">Extubación y posoperatorio</div>
+        <div class="step-body">Extubación cuando la paciente esté completamente despierta, con reflejos protectores presentes y fuerza muscular completa. <strong>No extubación profunda</strong> por riesgo de aspiración. Traslado a UCMO para monitoreo materno y fetal posoperatorio. Monitoreo cardiotocográfico continuo. Tocolíticos IV → oral según evolución.</div>
+      </div>
+    </li>
+  </ol>
+
+  <h2>Protocolo de Texas Children's para reparación fetoscópica de MMC</h2>
+  <p><em>(Naus et al., International Journal of Obstetric Anesthesia, Feb 2025)</em></p>
+  <div class="alert alert-teal">
+    <strong>Evidencia 2025 — Texas Children's Fetal Center</strong>
+    El protocolo más reciente y completo para reparación fetoscópica de MMC incluye: AGI + epidural + infusión de remifentanilo intraoperatoria + dosis reducida de halogenado (1–1.5 MAC) como estrategia para reducir la depresión miocárdica fetal. La medicación fetal directa IM es obligatoria. Se evitan BNM de larga acción en combinación con MgSO₄ (potenciación). El énfasis está en la consulta preoperatoria exhaustiva que establece expectativas claras sobre el curso perioperatorio.
+  </div>
+
+  <div class="keybox">
+    <div class="kb-title">Ventaja del remifentanilo en cirugía abierta</div>
+    Marsh et al. (Fetal Diagn Ther, 2020) demostraron que el uso de remifentanilo IV durante reparación abierta de MMC permite mantener relajación uterina adecuada con <strong>concentraciones significativamente menores de desflurano</strong> (1.5 MAC vs 2.5 MAC en el grupo control). El grupo con desflurano reducido tuvo <strong>menor incidencia de disfunción sistólica del ventrículo izquierdo fetal</strong> (OR reducido en ~50%) y menos intervenciones de resucitación fetal intraoperatoria.
+  </div>
+</section>
+
+<!-- ─── TOCÓLISIS ──────────────────────────────────────────── -->
+<section class="section" id="tocolisis">
+  <h1 class="section-title">Tocólisis — farmacología completa</h1>
+  <p class="section-intro">La tocólisis es el componente farmacológico más singular de la anestesia para cirugía fetal. Su dominio —conocer cuándo, con qué agente y a qué dosis tocolizar— es indispensable para el anestesiólogo.</p>
+
+  <h2>Fisiopatología de la contracción uterina intraoperatoria</h2>
+  <p>Las manipulaciones quirúrgicas uterinas, la histerotomía y el uso de instrumentos dentro del útero desencadenan la liberación local de prostaglandinas y citoquinas proinflamatorias que inician la cascada contráctil del miometrio. La contracción uterina intraoperatoria es una emergencia porque:</p>
+  <ul class="dot-list red">
+    <li>Comprime los vasos umbilicales → isquemia fetal aguda</li>
+    <li>Aumenta la resistencia vascular uterina → ↓ flujo placentario</li>
+    <li>Puede provocar <strong>desprendimiento de placenta</strong> → interrupción total de circulación fetal</li>
+    <li>En EXIT, el tono uterino impide mantener el feto parcialmente entregado en posición segura</li>
+    <li>Inicia el trabajo de parto prematuro, el riesgo posoperatorio más frecuente</li>
+  </ul>
+
+  <h2>Halogenados como tocolíticos</h2>
+  <div class="card">
+    <div class="card-body">
+      <p>Los agentes halogenados son los únicos tocolíticos que simultáneamente proporcionan anestesia materna, anestesia fetal y tocólisis. Actúan inhibiendo los canales de calcio del miometrio y reduciendo la sensibilidad al calcio de las proteínas contráctiles. Su efecto es dosis-dependiente.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Agente</th><th>MAC</th><th>Partición sangre/gas</th><th>Potencia tocolítica</th><th>Observaciones</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Desflurano</strong></td><td>6%</td><td>0.45</td><td>+++++ (más potente)</td><td>Onset y offset más rápidos. A 2–2.5 MAC mayor depresión cardiovascular fetal. Manejo con vaporizador más preciso.</td></tr>
+            <tr><td><strong>Sevoflurano</strong></td><td>2%</td><td>0.65</td><td>++++ (muy potente)</td><td>Similar a desflurano. Onset/offset rápido. Preferido en muchos centros por menor irritación de vía aérea.</td></tr>
+            <tr><td><strong>Isoflurano</strong></td><td>1.15%</td><td>1.4</td><td>+++ (moderado)</td><td>Onset y offset más lentos. Menos usado actualmente.</td></tr>
+            <tr><td><strong>Halotano</strong></td><td>0.75%</td><td>2.3</td><td>++ (menor en dosis equivalente)</td><td>Prácticamente abandonado.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="alert alert-red" style="margin-top:14px">
+        <strong>Disfunción miocárdica fetal con HAL alta</strong>
+        A 2–2.5 MAC de desflurano o sevoflurano, hasta el 61% de los fetos pueden desarrollar disfunción sistólica del ventrículo izquierdo de grado moderado-severo según el estudio de Boat et al. La TIVA parcial (remifentanilo + propofol) permite reducir la concentración de HAL sin comprometer la tocólisis, y se ha asociado con menor incidencia de disfunción cardiaca fetal.
+      </div>
+    </div>
+  </div>
+
+  <h2>Nitroglicerina</h2>
+  <div class="card">
+    <div class="card-body">
+      <p>Donador de óxido nítrico → relajación del músculo liso uterino. <strong>Ventaja principal:</strong> compatible con anestesia neuroaxial (no requiere AGI para su administración), inicio ultrarrápido (30–60 segundos), efecto de corta duración (4–8 minutos), metabolismo placentario rápido con efectos fetales mínimos.</p>
+      <ul class="dot-list">
+        <li><strong>Bolo IV:</strong> 50–200 mcg IV. Inicio en 30 s, duración 4–8 min. Útil para relajación momentánea durante histerotomía o reposicionamiento</li>
+        <li><strong>Infusión:</strong> 0.5–10 mcg/kg/min IV para tocólisis mantenida bajo neuroaxial. Titular según respuesta uterina y PAM.</li>
+        <li><strong>Complicación principal:</strong> hipotensión materna significativa (RVS ↓). Vasopresor (fenilefrina) debe estar infundiendo o disponible en bolo inmediato</li>
+        <li><strong>Aplicación transdérmica:</strong> parches de 5–10 mg/h han sido descritos como alternativa en algunos centros para procedimientos cortos, con inicio más gradual</li>
+        <li><strong>Metabolismo placentario:</strong> la nitroglicerina es metabolizada rápidamente por la placenta, resultando en exposición fetal mínima comparada con los halogenados</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Sulfato de magnesio</h2>
+  <div class="card">
+    <div class="card-body">
+      <p>Antagonista del calcio → inhibe la contracción del músculo liso. Dosificación: <strong>carga 4–6 g IV en 20 min + mantenimiento 1–3 g/h</strong>. Ventajas adicionales: neuroprotector fetal (reduce riesgo de parálisis cerebral en prematuridad extrema), sedante suave.</p>
+      <ul class="dot-list">
+        <li><strong>Monitoreo de toxicidad:</strong> pérdida de reflejos patelares ≥7 mEq/L → signo de alarma; depresión respiratoria ≥10 mEq/L; paro cardíaco ≥15 mEq/L</li>
+        <li><strong>Interacción crítica con BNM:</strong> el magnesio potencia el bloqueo neuromuscular de los agentes no despolarizantes. <strong>Evitar BNM de larga acción</strong> (pancuronio, rocuronio en dosis altas) en pacientes recibiendo MgSO₄. El protocolo de Texas Children's (2025) específicamente recomienda evitar BNM de larga acción en pacientes con MgSO₄.</li>
+        <li><strong>Antídoto:</strong> gluconato de calcio 1 g IV para reversión de toxicidad</li>
+        <li>Útil en posoperatorio de cirugía abierta para mantener tocólisis varios días</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Indometacina</h2>
+  <div class="card">
+    <div class="card-body">
+      <p>Inhibidor no selectivo de la ciclooxigenasa → inhibe síntesis de prostaglandinas deciduales. Muy eficaz como tocolítico en el período posoperatorio.</p>
+      <div class="alert alert-red">
+        <strong>Contraindicada después de las 32 semanas</strong>
+        Después de las 32 semanas de gestación, la indometacina puede causar: cierre prematuro del ductus arterioso fetal → hipertensión pulmonar neonatal; disminución del flujo renal fetal → oligohidramnios; enterocolitis necrotizante (NEC). Usar con extrema precaución entre 28–32 semanas y nunca más allá.
+      </div>
+      <p><strong>Dosis:</strong> indometacina 100 mg rectal o 50 mg oral cada 6–8 horas. En procedimientos bajo AGI se puede administrar suppositorio rectal antes de la cirugía.</p>
+    </div>
+  </div>
+
+  <h2>Nifedipino</h2>
+  <div class="card">
+    <div class="card-body">
+      <p>Bloqueante de canales de calcio. Tocolítico de segunda línea muy usado en el mantenimiento posoperatorio oral. Dosis: 20–30 mg cada 4–8 horas oral. Ventajas: oral, bien tolerado, puede continuar en casa. Desventajas: hipotensión, cefalea, edema periférico.</p>
+    </div>
+  </div>
+
+  <h2>Atosibán</h2>
+  <div class="card">
+    <div class="card-body">
+      <p>Antagonista competitivo de la oxitocina y vasopresina. Disponible en Europa, no aprobado en EE.UU. Perfil de efectos adversos superior (menos hipotensión que betamiméticos). Carga 6.75 mg IV + mantenimiento 18 mcg/min x 3h + 6 mcg/min x hasta 45h. Útil en posoperatorio de cirugía abierta.</p>
+    </div>
+  </div>
+
+  <h2>Terbutalina</h2>
+  <div class="card">
+    <div class="card-body">
+      <p>β₂-agonista. 0.25 mg SC o 5–10 mcg IV para tocólisis de rescate rápido. Desventajas significativas: taquicardia materna (puede llegar a 130–140 lpm), palpitaciones, hipoglucemia neonatal. Riesgo de edema pulmonar con uso prolongado. <strong>Reservar para situaciones de rescate.</strong></p>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Agente</th><th>Uso intraoperatorio</th><th>Uso posoperatorio</th><th>Dosis habitual</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Halogenados</strong></td><td>✓✓✓ Primera línea (si AGI)</td><td>No aplicable</td><td>2–2.5 MAC para tocólisis profunda</td></tr>
+        <tr><td><strong>Nitroglicerina IV</strong></td><td>✓✓✓ Primera línea (neuroaxial o AGI)</td><td>✗</td><td>50–200 mcg bolo; 0.5–10 mcg/kg/min infusión</td></tr>
+        <tr><td><strong>MgSO₄</strong></td><td>✓ Adyuvante</td><td>✓✓✓ Primera línea</td><td>4–6 g carga + 1–3 g/h mantenimiento</td></tr>
+        <tr><td><strong>Indometacina</strong></td><td>✓ (≤30 sem)</td><td>✓✓ (&lt;32 sem)</td><td>100 mg rectal o 50 mg oral c/6–8h</td></tr>
+        <tr><td><strong>Nifedipino</strong></td><td>✗</td><td>✓✓</td><td>20–30 mg oral c/4–8h</td></tr>
+        <tr><td><strong>Atosibán</strong></td><td>✓</td><td>✓✓</td><td>6.75 mg IV carga + infusión</td></tr>
+        <tr><td><strong>Terbutalina</strong></td><td>✓ Rescate</td><td>✓ Rescate</td><td>0.25 mg SC o 5–10 mcg IV</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ─── ANESTESIA FETAL ────────────────────────────────────── -->
+<section class="section" id="anestesia-fetal">
+  <h1 class="section-title">Anestesia fetal directa</h1>
+  <p class="section-intro">La anestesia directa del feto es un componente único y esencial de la cirugía abierta y el EXIT. Su objetivo es analgesia, inmovilidad, bloqueo de la respuesta al estrés y prevención de la bradicardia vagal.</p>
+
+  <h2>El cóctel anestésico fetal IM</h2>
+  <div class="card">
+    <div class="card-title">Composición estándar (administración IM en masa muscular fetal)</div>
+    <div class="card-body">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Fármaco</th><th>Dosis</th><th>Objetivo</th><th>Observaciones</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Fentanilo</strong></td><td>10–20 mcg/kg IM fetal</td><td>Analgesia, bloqueo de respuesta al estrés</td><td>Principal analgésico. Inicio en 3–5 min IM. Puede complementarse con sufentanilo (3–5 mcg/kg)</td></tr>
+            <tr><td><strong>Atropina</strong></td><td>10–20 mcg/kg IM fetal</td><td>Prevención de bradicardia vagal por estímulo quirúrgico</td><td>Crítico para prevenir bradicardia refleja. Eleva FC basal fetal 10–20%</td></tr>
+            <tr><td><strong>Vecuronio</strong></td><td>0.2 mg/kg IM fetal</td><td>Inmovilidad fetal durante la cirugía</td><td>Alternativa: pancuronio 0.1–0.3 mg/kg. Evitar rocuronio de larga duración si MgSO₄ concomitante</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="alert alert-amber" style="margin-top:14px">
+        <strong>Cálculo de dosis</strong>
+        Las dosis se calculan sobre el peso fetal estimado por ecografía (expresado en gramos). Muchos centros usan una "calculadora fetal" (como la del Texas Children's Fetal Center) para minimizar errores de cálculo. Los fármacos se mezclan en una jeringa única o se administran secuencialmente en el mismo sitio de inyección IM. Rotular claramente la jeringa.
+      </div>
+    </div>
+  </div>
+
+  <h2>Vías de administración</h2>
+  <div class="three-col">
+    <div class="card">
+      <div class="card-title">Intramuscular fetal</div>
+      <div class="card-body">
+        La más común. El cirujano inyecta en el deltoides o glúteo del feto bajo visión directa o guía eco. Inicio: 3–5 min. Confiable y reproducible.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Vena umbilical</div>
+      <div class="card-body">
+        Inicio más rápido (segundos). Usado en emergencias o cuando el sitio IM no es accesible. Mayor riesgo de complicaciones umbilicales. Requiere punción eco-guiada.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Intracardíaco</div>
+      <div class="card-body">
+        Solo en emergencias con paro cardíaco fetal. Epinefrina o atropina directamente al ventrículo izquierdo fetal. Alta especialización.
+      </div>
+    </div>
+  </div>
+
+  <h2>Anestesia fetal en cirugía fetoscópica</h2>
+  <p>En procedimientos fetoscópicos sin histerotomía formal, la anestesia fetal se obtiene mediante:</p>
+  <ul class="dot-list">
+    <li><strong>Transferencia transplacentaria de opioides maternos</strong> (fentanilo o remifentanilo IV). El remifentanilo cruza bien la placenta pero tiene metabolismo rápido también en el feto. El fentanilo da niveles fetales más sostenidos.</li>
+    <li><strong>Exposición a halogenados maternos</strong> (si AGI): todos los halogenados cruzan la placenta y alcanzan concentraciones fetales significativas.</li>
+    <li>Si el procedimiento requiere manipulación fetal directa con alto estímulo (valvuloplastia, algunas MMC fetoscópicas), puede añadirse cóctel IM fetal eco-guiado a través del trocar o por punción separada.</li>
+  </ul>
+
+  <h2>Signos de anestesia fetal inadecuada</h2>
+  <ul class="dot-list red">
+    <li>Movimientos fetales durante el procedimiento → añadir componente de BNM</li>
+    <li>Taquicardia fetal sostenida (&gt;200 lpm) → respuesta de estrés; considerar dosis adicional de opioide fetal</li>
+    <li>Bradicardia severa (&lt;100 lpm) → puede ser vagal por estímulo directo; atropina umbilical</li>
+    <li>Disfunción contráctil fetal aguda → evaluar por ecocardiografía; puede ser por HAL excesivo o hipovolemia</li>
+  </ul>
+</section>
+
+<!-- ─── MONITOREO ──────────────────────────────────────────── -->
+<section class="section" id="monitoreo">
+  <h1 class="section-title">Monitoreo intraoperatorio</h1>
+  <p class="section-intro">El monitoreo en cirugía fetal tiene una dimensión dual única: vigilancia simultánea del estado materno y del bienestar fetal, con capacidad de respuesta inmediata a deterioro en cualquiera de los dos.</p>
+
+  <h2>Monitoreo materno</h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Parámetro</th><th>Método</th><th>Meta</th><th>Notas</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Presión arterial</strong></td><td>Invasiva (línea radial) en cirugía abierta y EXIT; PANI c/3 min en procedimientos menores</td><td>PAM ≥65 mmHg o dentro del 20% del basal</td><td>La PA invasiva permite monitoreo continuo y muestras de gases. En EXIT es obligatoria.</td></tr>
+        <tr><td><strong>ECG</strong></td><td>5 derivaciones</td><td>Ritmo sinusal. Detectar arritmias</td><td>FC materna elevada basal (85–100 lpm). Interpretar en contexto.</td></tr>
+        <tr><td><strong>SpO₂</strong></td><td>Pulsioximetría</td><td>≥97%</td><td>En cirugía abierta y EXIT: 100% FiO₂ todo el tiempo</td></tr>
+        <tr><td><strong>ETCO₂</strong></td><td>Capnografía</td><td>30–35 mmHg</td><td>PaCO₂ basal de la gestante es ~32 mmHg. Evitar hiper- o hipoventilación.</td></tr>
+        <tr><td><strong>Temperatura</strong></td><td>Esofágica o nasofaríngea</td><td>36–37.5°C</td><td>Hipotermia agrava la coagulopatía y la contracción uterina</td></tr>
+        <tr><td><strong>Diuresis</strong></td><td>Sonda vesical</td><td>≥0.5 mL/kg/h</td><td>Obligatoria en procedimientos &gt;90 min o con grandes volúmenes de fluidos</td></tr>
+        <tr><td><strong>Concentración de halogenado</strong></td><td>Analizador de gases del ventilador</td><td>2–2.5 MAC durante histerotomía/EXIT</td><td>Monitoreo preciso para evitar sub- o sobre-dosis de tocolítico</td></tr>
+        <tr><td><strong>Glucemia</strong></td><td>Glucómetro cada 60–90 min</td><td>80–150 mg/dL</td><td>Gestantes con DG o bajo estrés quirúrgico pueden hipoglucar o hiperglucarse</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Monitoreo fetal</h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Parámetro</th><th>Método</th><th>Frecuencia</th><th>Notas</th></tr></thead>
+      <tbody>
+        <tr><td><strong>FC fetal y función ventricular</strong></td><td>Ecocardiografía fetal intraoperatoria (sonda eco estéril o sobre campo)</td><td>Continuo</td><td>Método principal. Evalúa FC, función sistólica, presencia de derrame pericárdico, colapso. Requiere ecocardiografista o anestesiólogo entrenado.</td></tr>
+        <tr><td><strong>SpO₂ fetal</strong></td><td>Oxímetro fetal en extremidad o dedo del feto (cuando accesible)</td><td>Continuo si disponible</td><td>Solo en cirugía abierta cuando la extremidad fetal es accesible. Normal fetal: 40–70% (HbF)</td></tr>
+        <tr><td><strong>Flujo Doppler umbilical</strong></td><td>Sonda eco con Doppler</td><td>Intermitente</td><td>Detecta compresión del cordón, trombosis, flujo reverso en diástole</td></tr>
+        <tr><td><strong>Tono uterino</strong></td><td>Palpación directa por cirujano + ecografía</td><td>Continuo</td><td>Contracción inadvertida puede pasar desapercibida si la paciente está bajo AGI profunda</td></tr>
+        <tr><td><strong>Posición placentaria y cordón</strong></td><td>Ecografía</td><td>Frecuente</td><td>Detectar desplazamiento placentario, torsión de cordón, sangrado retroplacentario</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert alert-blue">
+    <strong>Ecocardiografía fetal intraoperatoria</strong>
+    La ecocardiografía fetal continua es el gold standard del monitoreo fetal en cirugía abierta y EXIT. Permite detección inmediata de bradicardia, disfunción ventricular, derrame pericárdico o efusión pleural. La presencia de un ecocardiografista pediátrico o anestesiólogo entrenado en eco fetal es parte integral del equipo. En Texas Children's, el rol de la ecocardiografía está protocolizado con criterios específicos de intervención.
+  </div>
+</section>
+
+<!-- ─── EXIT ──────────────────────────────────────────────── -->
+<section class="section" id="exit">
+  <h1 class="section-title">Procedimiento EXIT — manejo anestésico completo</h1>
+  <p class="section-intro">El EXIT es el procedimiento materno-fetal de mayor complejidad anestésica. Exige la mayor precisión en el balance entre relajación uterina profunda, perfusión fetoplacentaria preservada y protección materna.</p>
+
+  <h2>Fisiopatología del EXIT</h2>
+  <p>Durante el EXIT, el feto es extraído parcialmente por la histerotomía (tipicamente cabeza, cuello y tórax superior) mientras el cordón umbilical permanece intacto y funcional. La circulación fetoplacentaria provee al feto de oxigenación y eliminación de CO₂. Para que esto funcione se requieren tres condiciones simultáneas:</p>
+  <div class="three-col">
+    <div class="card">
+      <div class="card-title">1. Útero completamente relajado</div>
+      <div class="card-body">Cualquier tono uterino comprime los vasos del cordón o desplaza la placenta. La relajación profunda es condición sine qua non. Se logra principalmente con HAL 2–2.5 MAC.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">2. PAM materna preservada</div>
+      <div class="card-body">Los vasos placentarios dependen de la presión de perfusión materna. La hipotensión por HAL alto debe antagonizarse activamente con vasopresores en infusión continua.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">3. Temperatura fetal mantenida</div>
+      <div class="card-body">El feto expuesto se hipotermiza rápidamente. Irrigación uterina continua con RL o SSN a 37°C, calor radiante sobre el feto, y limitar el tiempo de exposición.</div>
+    </div>
+  </div>
+
+  <h2>Protocolo anestésico EXIT — paso a paso</h2>
+  <ol class="steps">
+    <li>
+      <div class="step-content">
+        <div class="step-title">Planificación preoperatoria (días antes)</div>
+        <div class="step-body">
+          Reunión multidisciplinaria: cirujano fetal, otorrinolaringólogo pediátrico, anestesiólogo obstétrico y pediátrico, neonatólogo, perfusionista (si ECMO). Revisar RM fetal para planificar abordaje de vía aérea. Definir tiempo estimado en soporte placentario. Preparar cóctel fetal calculado. Confirmar sangre O negativo cross-matched con la madre.
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <div class="step-title">Inducción — RSI con videolaringoscopio</div>
+        <div class="step-body">
+          Preoxigenación 5 min FiO₂ 100%. RSI: propofol 2–2.5 mg/kg + suxametonio 1.5 mg/kg. Videolaringoscopio de primera línea. Tubo 6.0–6.5 mm. Confirmación con capnografía. Inmediatamente iniciar sevoflurano o desflurano. Cuña izquierda. Monitoreo invasivo (línea arterial radial, acceso venoso múltiple).
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <div class="step-title">Hasta la histerotomía — establecer tocólisis</div>
+        <div class="step-body">
+          Aumentar HAL a 2–2.5 MAC antes de la histerotomía. Iniciar infusión de fenilefrina 0.5–1.5 mcg/kg/min para sostener PAM. ETCO₂ objetivo 30–35 mmHg. Nitroglicerina 50–100 mcg IV si el útero no está completamente relajado a la histerotomía.
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <div class="step-title">Histerotomía</div>
+        <div class="step-body">
+          El obstetra realiza la histerotomía con stapler uterino hemostático (minimiza sangrado de la incisión). Inmediatamente se inicia irrigación uterina con RL a 37°C para mantener temperatura y volumen amniótico. El líquido se aspira y recircula para mantener el nivel.
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <div class="step-title">Exposición fetal y administración del cóctel</div>
+        <div class="step-body">
+          El cirujano expone la cabeza, cuello y tórax superior del feto. El cordón permanece intacto y sin tracción. Administración del cóctel IM fetal: fentanilo 15–20 mcg/kg + atropina 20 mcg/kg + vecuronio 0.2 mg/kg en deltoides fetal. Monitoreo eco fetal continuo desde este momento. El ecocardiografista anuncia FC, función y observaciones en voz alta al equipo.
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <div class="step-title">Durante el soporte placentario</div>
+        <div class="step-body">
+          El equipo de ORL pediátrico/cirugía fetal trabaja para asegurar la vía aérea fetal (laringoscopia directa, videolaringoscopia, broncoscopia, traqueotomía según caso). El anestesiólogo obstétrico mantiene: HAL 2–2.5 MAC, PAM ≥65 mmHg con fenilefrina, ETCO₂ 30–35, temperatura materna ≥36°C, monitoreo fetal continuo. El anestesiólogo pediátrico se posiciona en la cabecera fetal listo para participar en la intubación.
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <div class="step-title">Pinzamiento del cordón</div>
+        <div class="step-body">
+          Una vez asegurada la vía aérea fetal y confirmada ventilación adecuada (SpO₂ neonatal subiendo, auscultación bilateral), se pinza el cordón. Este es el momento de transición crítica.
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <div class="step-title">Post-pinzamiento — transición materna urgente</div>
+        <div class="step-body">
+          <strong>Inmediatamente:</strong> reducir HAL a 0.5–1 MAC o suspender. Iniciar oxitocina 10–20 UI IV (± ergometrina 0.25 mg IV si atonía severa). El útero debe contraerse en minutos. Si atonía persistente → oxitocina en infusión 20–40 UI/500 mL + misoprostol 800 mcg sublingual + carbetocina + balonear la histerotomía. Hemorragia masiva → activar protocolo de transfusión masiva.
+        </div>
+      </div>
+    </li>
+  </ol>
+
+  <h2>Manejo de la vía aérea fetal en EXIT — consideraciones específicas</h2>
+  <div class="alert alert-purple">
+    <strong>La vía aérea fetal es el centro del EXIT</strong>
+    Todo el procedimiento existe para dar tiempo de asegurar la vía aérea fetal bajo condiciones controladas en vez de en la sala de partos caótica. Si la VA fetal no puede asegurarse en el tiempo previsto, se deben tomar decisiones críticas: ¿Extender el soporte placentario? ¿Conversión a traqueostomía? ¿Pinzamiento de emergencia con reanimación neonatal?
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Tipo de obstrucción</th><th>Abordaje de VA fetal</th><th>Tiempo estimado</th></tr></thead>
+      <tbody>
+        <tr><td>Masa cervical lateral (linfangioma, teratoma externo)</td><td>Laringoscopia directa / videolaringoscopia + IOT. Tracción cuidadosa de la masa para exponer glotis.</td><td>15–30 min</td></tr>
+        <tr><td>CHAOS con glotis accesible pero estrecha</td><td>Laringoscopia + broncoscopia rígida / flexible para dilatación. IOT con tubo de menor calibre.</td><td>20–45 min</td></tr>
+        <tr><td>CHAOS con glotis completamente ocluida (atresia laríngea)</td><td>Traqueotomía directa bajo exposición fetal. Intubación transtraqueal.</td><td>30–60 min</td></tr>
+        <tr><td>Masa que comprime tráquea (bocio gigante)</td><td>Reducción parcial de la masa para acceso a glotis, luego IOT con broncoscopia de guía.</td><td>20–40 min</td></tr>
+        <tr><td>HDC severa para ECMO</td><td>Canulación ECMO veno-arterial (yugular interna derecha + carótida) bajo exposición fetal.</td><td>45–90 min</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Anestesia neuroaxial en EXIT — evidencia emergente</h2>
+  <div class="alert alert-teal">
+    <strong>Evidencia actual (Gaffuri et al., Frontiers in Pediatrics, julio 2025; Cavallaro et al.)</strong>
+    La revisión narrativa más reciente confirma que la AGI con HAL en dosis alta es la técnica estándar para EXIT. Sin embargo, reportes de casos y series pequeñas describen el uso exitoso de anestesia espinal o epidural combinada con nitroglicerina IV para tocólisis en EXIT de corta duración (retiro de balón FETO, masas pequeñas). Esta estrategia evita la exposición fetal a halogenados en dosis alta y los riesgos de la AGI. <strong>No está estandarizada</strong> y requiere centros con altísima experiencia. Los autores concluyen que "las investigaciones deben avanzar para mejorar la seguridad y eficacia".
+  </div>
+</section>
+
+<!-- ─── REANIMACIÓN FETAL ──────────────────────────────────── -->
+<section class="section" id="reanimacion">
+  <h1 class="section-title">Reanimación fetal intraoperatoria</h1>
+  <p class="section-intro">El equipo debe estar preparado para reconocer y tratar el deterioro fetal intraoperatorio de forma inmediata. La reanimación fetal es un protocolo diferente al neonatal y al adulto.</p>
+
+  <h2>Causas de deterioro fetal intraoperatorio</h2>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title" style="color:#991b1b">Causas maternas</div>
+      <div class="card-body">
+        <ul class="dot-list red">
+          <li>Hipotensión materna (la más frecuente) → por HAL alta, neuroaxial, hemorragia, compresión aortocava</li>
+          <li>Hipercapnia materna → acidosis fetal</li>
+          <li>Hipocapnia severa → vasoconstricción uteroplacentaria</li>
+          <li>Hipoxemia materna</li>
+          <li>Hemorragia materna severa</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:#991b1b">Causas fetales/quirúrgicas</div>
+      <div class="card-body">
+        <ul class="dot-list red">
+          <li>Compresión o torsión del cordón umbilical</li>
+          <li>Desprendimiento de placenta</li>
+          <li>Hemorragia fetal directa (transección vascular, iatrogénica)</li>
+          <li>Contracción uterina (comprime vasos umbilicales)</li>
+          <li>Depresión miocárdica por HAL en dosis alta</li>
+          <li>Bradicardia vagal por estimulación quirúrgica fetal</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h2>Protocolo de reanimación fetal — algoritmo</h2>
+  <div class="card">
+    <div class="card-title">Ante FC fetal &lt;100 lpm sostenida (&gt;1–2 min) o disfunción sistólica severa</div>
+    <div class="card-body">
+      <ol class="steps">
+        <li>
+          <div class="step-content">
+            <div class="step-title">Anunciar al equipo y revisar causas maternas</div>
+            <div class="step-body"><strong>Verificar PAM:</strong> si hipotensión → fenilefrina bolo 100–200 mcg IV o efedrina 10 mg IV. <strong>Verificar ETCO₂:</strong> si hipercapnia → ajustar ventilación. <strong>Verificar posición:</strong> confirmar desplazamiento uterino izquierdo. FiO₂ al 100%.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">Verificar causas fetales/quirúrgicas</div>
+            <div class="step-body">El cirujano verifica: posición del cordón (¿comprimido?), tono uterino (¿contracciones?), sangrado fetal, separación placentaria. Si cordón comprimido → reposicionar. Si contracción → nitroglicerina 100 mcg IV.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">Farmacoterapia fetal — vía umbilical</div>
+            <div class="step-body">
+              <strong>Atropina</strong> 0.02 mg/kg fetal IV umbilical (para bradicardia vagal) <br>
+              <strong>Efedrina</strong> 0.05–0.1 mg/kg fetal IV umbilical (para hipotensión fetal) <br>
+              <strong>Volumen</strong>: SSN 0.9% o GRE O negativo 10 mL/kg fetal IV umbilical (si hipovolemia/sangrado)
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">Compresiones cardíacas fetales</div>
+            <div class="step-body">Si FC fetal = 0 o &lt;60 lpm con deterioro progresivo → el cirujano realiza compresiones externas sobre el tórax fetal a 100–120/min. Yilmaz Furtun et al. (UOG 2024) reportaron recuperación exitosa del ritmo sinusal con compresiones en todos los fetos en un caso de intervención cardíaca fetal.</div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">Medicamentos de rescate avanzados</div>
+            <div class="step-body">
+              <strong>Epinefrina</strong> 10 mcg/kg umbilical o intracardíaca <br>
+              <strong>Bicarbonato</strong> 1–2 mEq/kg umbilical si acidosis severa <br>
+              <strong>Amiodarona</strong> 5 mg/kg intracardíaca + <strong>lidocaína</strong> 1 mg/kg intracardíaca si fibrilación ventricular fetal (Yilmaz Furtun 2024) <br>
+              <strong>Digoxina</strong> 88 mcg/kg umbilical si disfunción del VD
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <div class="step-title">Decisión de entregar al neonato</div>
+            <div class="step-body">Si no hay respuesta a todas las medidas anteriores en 5–10 min → pinzamiento del cordón y entrega neonatal para reanimación estándar (NEO-PALS). El equipo neonatal debe estar en sala adyacente listo.</div>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="keybox">
+    <div class="kb-title">Evidencia — Yilmaz Furtun et al., UOG 2024</div>
+    En el grupo de intervención cardíaca fetal de Texas Children's, <strong>5 de 165 procedimientos</strong> requirieron compresiones cardíacas fetales. Todos recuperaron ritmo sinusal. Un caso de fibrilación ventricular fue revertido exitosamente con amiodarona 5 mg/kg + lidocaína 1 mg/kg intracardíacos junto con compresiones. Este reporte establece por primera vez un protocolo de ACLS adaptado al feto.
+  </div>
+</section>
+
+<!-- ─── NEUROTOXICIDAD ─────────────────────────────────────── -->
+<section class="section" id="neurotoxicidad">
+  <h1 class="section-title">Neurotoxicidad anestésica fetal</h1>
+  <p class="section-intro">Uno de los temas más relevantes y debatidos en la práctica actual de la anestesia materno-fetal. La evidencia animal es sólida; la evidencia en humanos es incompleta pero suficiente para emitir advertencias regulatorias.</p>
+
+  <h2>Base molecular de la neurotoxicidad</h2>
+  <p>Los agentes anestésicos actúan sobre receptores NMDA (antagonismo: ketamina, N₂O) y GABA-A (potenciación: halogenados, propofol, midazolam, barbitúricos). Durante períodos críticos del neurodesarrollo, la actividad de estos receptores es esencial para la sinaptogénesis y supervivencia neuronal. La sobreestimulación o inhibición artificial durante el "brain growth spurt" puede inducir:</p>
+  <ul class="dot-list purple">
+    <li><strong>Neuroapoptosis masiva</strong> (demostrada en modelos animales de rata y primate no humano)</li>
+    <li><strong>Reducción de la densidad sináptica</strong> en regiones hipocampales y corticales</li>
+    <li><strong>Déficits cognitivos y de aprendizaje</strong> persistentes en modelos animales</li>
+    <li>Inducción de citoquinas proinflamatorias cerebrales (IL-6) por sevoflurano e isoflurano en cerebros fetales de ratón (no por propofol)</li>
+  </ul>
+
+  <h2>Advertencia FDA (2016) y su relevancia en cirugía fetal</h2>
+  <div class="alert alert-amber">
+    <strong>FDA Drug Safety Communication — Diciembre 14, 2016</strong>
+    La FDA requirió inclusión de advertencias en el etiquetado de: <em>isoflurano, sevoflurano, desflurano, propofol y midazolam</em> para uso en el tercer trimestre de embarazo y en niños menores de 3 años. La advertencia recomienda que los profesionales de salud evalúen el balance riesgo/beneficio, especialmente para procedimientos &gt;3 horas o procedimientos múltiples. Esta advertencia aplica directamente a la cirugía fetal de mediana gestación y al EXIT.
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Agente</th><th>Evidencia animal</th><th>Evidencia humana</th><th>Implicación en cirugía fetal</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Sevoflurano</strong></td><td>Neurotoxicidad documentada en rata y primate. Induce IL-6 en cerebro fetal de ratón.</td><td>Limitada e inconclusa (estudios PANDA, MASK en pediatría)</td><td>Usar la menor dosis necesaria para tocólisis. TIVA complementaria permite reducir concentración.</td></tr>
+        <tr><td><strong>Desflurano</strong></td><td>Similar a sevoflurano</td><td>Similar a sevoflurano</td><td>Mismo principio. Offset más rápido puede ser ventajoso para reducir la duración de exposición alta.</td></tr>
+        <tr><td><strong>Propofol</strong></td><td>Neurotoxicidad en ratas (apoptosis neuronal en sinaptogénesis). Células madre neurales más resistentes.</td><td>Sin evidencia directa en humanos</td><td>Usado en TIVA fetal. Nivel umbilical ~70% del materno. Minimizar dosis.</td></tr>
+        <tr><td><strong>Midazolam</strong></td><td>Inhibe proliferación de células madre neurales. Déficits de aprendizaje en ratas (2024).</td><td>Sin evidencia directa</td><td>Minimizar uso materno intraoperatorio. Dosis de ansiólisis preinducción son probablemente seguras.</td></tr>
+        <tr><td><strong>Ketamina</strong></td><td>Neuroapoptosis en roedores (antagonismo NMDA)</td><td>Sin evidencia directa</td><td>Usar con precaución y solo cuando indicado (inestabilidad hemodinámica)</td></tr>
+        <tr><td><strong>Dexmedetomidina</strong></td><td>Datos emergentes sugeriendo efecto neuroprotector. Reduce la neurotoxicidad del midazolam.</td><td>Datos insuficientes</td><td>Investigacional como sustituto de midazolam. No establecida su seguridad en fetal.</td></tr>
+        <tr><td><strong>Remifentanilo</strong></td><td>Sin evidencia de neurotoxicidad significativa</td><td>Sin evidencia directa</td><td>Perfil más favorable. Permite reducir HAL. Uso creciente en TIVA fetal.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Principios de práctica ante la neurotoxicidad</h2>
+  <div class="card">
+    <div class="card-title">Recomendaciones prácticas</div>
+    <div class="card-body">
+      <ul class="dot-list">
+        <li><strong>Usar la mínima concentración de halogenados</strong> compatible con tocólisis adecuada. La TIVA complementaria (remifentanilo + propofol) permite reducir el MAC de HAL.</li>
+        <li><strong>Minimizar la duración</strong> del procedimiento y de la exposición a dosis altas de anestésicos.</li>
+        <li><strong>Evitar midazolam</strong> en dosis repetidas o altas intraoperatoriamente. La dosis preinducción (1–2 mg) para ansiólisis materna es probablemente aceptable.</li>
+        <li>Cuando sea posible, preferir anestesia neuroaxial ± nitroglicerina para procedimientos mínimamente invasivos, reduciendo exposición sistémica fetal.</li>
+        <li>El balance sigue siendo: <strong>los riesgos de no operar (progresión de la enfermedad, muerte fetal) son generalmente mayores que los riesgos hipotéticos de neurotoxicidad</strong> —especialmente en indicaciones bien establecidas (MMC, HDC severa). Informar a los padres.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PATOLOGÍAS ─────────────────────────────────────────── -->
+<section class="section" id="patologias">
+  <h1 class="section-title">Patologías específicas — consideraciones anestésicas</h1>
+  <p class="section-intro">Cada condición tratada quirúrgicamente in utero tiene implicaciones anestésicas particulares que van más allá del protocolo general.</p>
+
+  <h2>Mielomeningocele (MMC) — Reparación prenatal</h2>
+  <div class="card">
+    <div class="card-body">
+      <p>El <strong>MOMS Trial</strong> (NEJM 2011) demostró que la reparación abierta prenatal vs. postnatal de MMC reduce la necesidad de derivación ventriculoperitoneal (40% vs 82%) y mejora la función motora a 30 meses. Es el ensayo más importante de cirugía fetal.</p>
+      <ul class="dot-list">
+        <li><strong>Consideraciones anestésicas específicas:</strong> posición fetal (decúbito ventral requiere rotación del feto dentro del útero → riesgo de torsión de cordón); el defecto de MMC es posterior, requiriendo estabilización cuidadosa del feto por el cirujano</li>
+        <li>El cierre fetoscópico (en expansión) tiene menor morbilidad materna pero técnicamente más complejo; requiere AGI + epidural + remifentanilo + cóctel fetal IM</li>
+        <li>Alta tasa de parto prematuro posoperatorio (hasta 40%). Monitoreo y tocólisis agresiva posoperatoria son esenciales.</li>
+        <li>Betametasona 12 mg IM x 2 dosis (24h de separación) si &lt;34 semanas: maduración pulmonar fetal ante riesgo de PPT</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Hernia Diafragmática Congénita (HDC) — FETO</h2>
+  <div class="card">
+    <div class="card-body">
+      <p>Los ensayos TOTAL (Lancet 2021–2022) demostraron que FETO aumenta la supervivencia en HDC izquierda severa (LHR &lt;1.0) y moderada (LHR 1.0–1.5) en centros especializados. El FETO izquierdo moderado también muestra beneficio aunque menor.</p>
+      <ul class="dot-list teal">
+        <li>El balón se inserta fetoscópicamente a las 26–30 semanas. Inserción bajo AGI o neuroaxial + anestesia fetal IM.</li>
+        <li>El retiro del balón a las 34–35 semanas es habitualmente fetoscópico bajo local/sedación. Si falla → EXIT.</li>
+        <li><strong>PPROM precoz</strong> (rotura prematura de membranas antes de las 34 semanas) obliga a retiro de emergencia del balón — puede requerir EXIT de urgencia.</li>
+        <li>Supervivencia al alta con FETO: 50–65% para HDC severa vs. ~25–35% con manejo expectante (centros especializados).</li>
+        <li>Betametasona obligatoria si PPROM o trabajo de parto prematuro con balón in situ.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>STFF — Fotocoagulación láser (SFLP)</h2>
+  <div class="card">
+    <div class="card-body">
+      <p>Síndrome de transfusión feto-fetal: anastomosis vasculares placentarias entre gemelos monocoriónicos generan transferencia neta de sangre donante → receptor. Sin tratamiento, mortalidad de hasta 95% a mediana gestación.</p>
+      <ul class="dot-list">
+        <li>SFLP es el tratamiento estándar en estadios II–IV de Quintero. Supervivencia de al menos un gemelo: 70–85%.</li>
+        <li>Anestesia: local + sedación IV (fentanilo + propofol dosis sub-hipnóticas) o neuroaxial. Preferir técnica que minimice exposición fetal.</li>
+        <li>El drenaje de líquido amniótico del saco receptor (amniorreducción) puede ser doloroso → asegurar buena analgesia materna.</li>
+        <li>Monitoreo eco continuo de ambos gemelos. El gemelo receptor puede desarrollar disfunción cardíaca aguda post-láser por cambios hemodinámicos.</li>
+        <li>Complicación: síndrome de TAPS posoperatorio (anemia-policitemia discordante por anastomosis residuales).</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Valvuloplastia aórtica fetal</h2>
+  <div class="card">
+    <div class="card-body">
+      <p>Para estenosis aórtica crítica con hipoplasia del ventrículo izquierdo evolutiva (HLHS). El objetivo es preservar el crecimiento del VI para permitir circulación biventricular postnatal.</p>
+      <ul class="dot-list">
+        <li>Alta tasa de complicaciones: bradicardia fetal (el más frecuente), derrame pericárdico, efusión pleural, muerte fetal hasta 8%.</li>
+        <li>Requiere anestesia fetal IM robusta (fentanilo + atropina), ya que la estimulación del corazón fetal con el catéter es altamente arritmogénica.</li>
+        <li>El equipo debe estar preparado para cardioversión fetal, compresiones, y drenaje de derrame pericárdico (pericardiocentesis).</li>
+        <li>Caso descrito de FV fetal revertida con amiodarona intracardíaca (Yilmaz Furtun, UOG 2024).</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Teratoma sacrococcígeo (TSC)</h2>
+  <div class="card">
+    <div class="card-body">
+      <p>El TSC con gran componente vascular actúa como un shunt AV de alto flujo que puede causar insuficiencia cardíaca fetal de alto gasto e hidrops. La resección in utero está indicada solo en casos con hidrops y deterioro rápido.</p>
+      <ul class="dot-list amber">
+        <li>Alto riesgo de sangrado masivo intraoperatorio del tumor altamente vascularizado.</li>
+        <li>Control vascular del tumor (ligadura pedículo tumoral) antes de resección es crítico.</li>
+        <li>Sangre O negativo y expansores de volumen deben estar disponibles para transfusión fetal inmediata.</li>
+        <li>Primer caso publicado de reanimación fetal exitosa (UCSF): compresiones + epinefrina + bicarbonato + transfusión durante resección de TSC.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ─── COMPLICACIONES ─────────────────────────────────────── -->
+<section class="section" id="complicaciones">
+  <h1 class="section-title">Complicaciones — prevención y manejo</h1>
+  <p class="section-intro">La cirugía materno-fetal tiene una tasa de complicaciones significativamente mayor que los procedimientos obstétricos estándar. Las complicaciones maternas son 3 veces más frecuentes en cirugía abierta vs. fetoscópica (metaanálisis reciente: 20.9% vs. 6.2% respectivamente).</p>
+
+  <h2>Complicaciones maternas</h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Complicación</th><th>Frecuencia</th><th>Factores de riesgo</th><th>Prevención y manejo</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Hemorragia uterina</strong></td><td>Principal en EXIT. Hasta 20% en cirugía abierta.</td><td>Atonía por HAL alta, tiempo quirúrgico largo, histerotomía extensa</td><td>Reducción rápida de HAL post-pinzamiento. Oxitocina 20 UI IV + ergometrina. Misoprostol rectal. Balón uterino. Transfusión si necesario. Histerectomía de rescate.</td></tr>
+        <tr><td><strong>Parto prematuro</strong></td><td>30–50% en cirugía abierta posoperatorio</td><td>Histerotomía, inflamación decidual, manipulación uterina</td><td>Tocólisis posoperatoria agresiva (MgSO₄ + nifedipino). Betametasona para maduración pulmonar si &lt;34 sem.</td></tr>
+        <tr><td><strong>Edema pulmonar</strong></td><td>Reportado 3–10% en fetoscopia con amnioinfusión</td><td>Absorción de grandes volúmenes de irrigación. Hipoalbuminemia gestacional.</td><td>Hidratación conservadora. Restricción de cristaloides. Furosemida si signos de sobrecarga.</td></tr>
+        <tr><td><strong>Vía aérea difícil</strong></td><td>8–10x mayor que en no embarazadas</td><td>Edema, obesidad, Mallampati alto</td><td>Videolaringoscopio de primera línea. Plan B (ILMA) y C (cricotirotomía) preparados. No extubación profunda.</td></tr>
+        <tr><td><strong>Desprendimiento de placenta</strong></td><td>Raro pero catastrófico</td><td>Contracciones uterinas, hiperatonía post-EXIT insuficiente</td><td>Monitoteo eco continuo. Tocólisis oportuna. Diagnóstico ecográfico inmediato.</td></tr>
+        <tr><td><strong>Ruptura prematura de membranas (PPROM)</strong></td><td>6–23% en fetoscopia</td><td>Inserción de trocares, manipulación fetal</td><td>Técnica meticulosa. Cierre adecuado. Si PPROM → hospitalización, tocólisis, betametasona.</td></tr>
+        <tr><td><strong>TEV</strong></td><td>Aumentado vs. general</td><td>Hipercoagulabilidad del embarazo + reposo postquirúrgico</td><td>Medias de compresión neumática. HBPM profiláctica postoperatoria cuando sea seguro.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Complicaciones fetales</h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Complicación</th><th>Frecuencia</th><th>Manejo</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Bradicardia fetal</strong></td><td>Común; 41% en valvuloplastia, variable en cirugía abierta</td><td>Tratar causa. Atropina + efedrina umbilicales. Compresiones si &lt;60 lpm.</td></tr>
+        <tr><td><strong>Depresión miocárdica por HAL</strong></td><td>Hasta 61% a 2.5 MAC desflurano</td><td>Reducir HAL con TIVA complementaria (remifentanilo). Monitoreo eco continuo.</td></tr>
+        <tr><td><strong>Pérdida fetal intraoperatoria</strong></td><td>3–15% según procedimiento</td><td>Reanimación fetal completa. Si sin respuesta → entrega neonatal. Asesoría familiar.</td></tr>
+        <tr><td><strong>Hipotermia fetal</strong></td><td>Frecuente si exposición prolongada</td><td>Irrigación caliente. Calor radiante. Limitar tiempo de exposición.</td></tr>
+        <tr><td><strong>Lesión umbilical</strong></td><td>Rara pero seria</td><td>Monitoreo Doppler del cordón. Reposicionar si compresión. Pinzar si lesión severa.</td></tr>
+        <tr><td><strong>PPROM y PPT</strong></td><td>Principal morbimortalidad perinatal</td><td>Tocólisis posoperatoria. Betametasona. Hospitalización.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ─── POSTOP ──────────────────────────────────────────────── -->
+<section class="section" id="postop">
+  <h1 class="section-title">Manejo posoperatorio</h1>
+  <p class="section-intro">El posoperatorio de cirugía fetal tiene sus propios retos: el feto permanece in útero (excepto EXIT) y debe ser monitoreado, la madre tiene mayor riesgo de parto prematuro, y el manejo del dolor debe ser cuidadoso para no desencadenar contracciones.</p>
+
+  <h2>Monitorizacion posoperatoria</h2>
+  <ul class="dot-list">
+    <li><strong>UCMO (Unidad de Cuidado Materno-Obstétrico) mínimo 24–48 horas</strong> para cirugía abierta y EXIT</li>
+    <li>Cardiotocografía continua: vigilar FCF y actividad uterina. Cualquier actividad contráctil ≥4 contracciones/hora requiere intervención</li>
+    <li>Ecografía fetal a las 24h: verificar bienestar fetal, Doppler umbilical, líquido amniótico, integridad de la histerorrafia</li>
+    <li>Signos vitales maternos horarios las primeras 6h, luego c/4h</li>
+    <li>Vigilar signos de HELLP, edema pulmonar, sangrado vaginal</li>
+  </ul>
+
+  <h2>Analgesia posoperatoria</h2>
+  <div class="card">
+    <div class="card-title">Estrategia multimodal — objetivo: analgesia óptima sin disparar contracción uterina</div>
+    <div class="card-body">
+      <ul class="dot-list">
+        <li><strong>Epidural continua (cuando fue colocada):</strong> bupivacaína 0.0625–0.125% + fentanilo 2 mcg/mL en infusión continua 6–12 mL/h. Es el método más eficaz. Permite analgesia sin opioides sistémicos que puedan deprimir respiratoriamente al neonato si ocurre PPT.</li>
+        <li><strong>Paracetamol IV/oral:</strong> 1 g cada 6h. Excelente perfil de seguridad en embarazo.</li>
+        <li><strong>AINE (ketorolaco):</strong> con precaución. Útil analgesia pero también tocolítico (inhibe prostaglandinas). Usar solo en primeras 48h y si &lt;32 semanas.</li>
+        <li><strong>Opioides sistémicos:</strong> morfina o hidromorfona PCA como rescate si el epidural es insuficiente. Monitoreo neonatal si PPT ocurre mientras están activos.</li>
+        <li><strong>Técnicas de bloqueo regional:</strong> bloqueo TAP (transverso del abdomen plano) bilateral en casos sin epidural. Efectivo para dolor somático de la laparotomía.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Tocólisis posoperatoria</h2>
+  <div class="card">
+    <div class="card-body">
+      <ul class="dot-list">
+        <li><strong>MgSO₄ IV</strong> continuo por 24–48h (mantenimiento 1–2 g/h). Monitoreo de toxicidad.</li>
+        <li><strong>Nifedipino oral</strong> 20–30 mg c/6–8h al suspender MgSO₄. Continuar hasta 37 semanas si tolerado.</li>
+        <li><strong>Indometacina</strong> (si &lt;30 sem): 25–50 mg oral c/6h x 48h. Luego transición a nifedipino.</li>
+        <li>El objetivo es prolongar el embarazo tanto como sea posible hasta que los beneficios del procedimiento se mantengan (idealmente hasta al menos 34–36 semanas).</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Betametasona</h2>
+  <p>Si la edad gestacional es &lt;34 semanas y hay alto riesgo de parto prematuro posoperatorio: <strong>betametasona 12 mg IM cada 24h x 2 dosis</strong>. Maduración pulmonar fetal y reducción de SDR, HIV y NEC neonatal. Puede administrarse el día previo a la cirugía electiva.</p>
+
+  <h2>Consideraciones especiales post-EXIT</h2>
+  <div class="card">
+    <div class="card-body">
+      <ul class="dot-list">
+        <li>La madre post-EXIT ha tenido una cesárea + histerotomía amplia + exposición a anestesia general prolongada + HAL en dosis altas. Riesgo de atonía uterina posoperatoria significativo.</li>
+        <li>Monitoreo de sangrado vaginal activo posoperatorio. Útero debe estar contraído a la palpación.</li>
+        <li>Infusión de oxitocina posoperatoria 20 UI en 500 mL a 125 mL/h por 8–12h.</li>
+        <li>El neonato post-EXIT es trasladado a UCIN. Briefing al equipo neonatal sobre el estado de la vía aérea asegurada, drogas recibidas (cóctel fetal IM), estado hemodinámico durante el procedimiento.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ─── EVIDENCIA Y FUTURO ──────────────────────────────────── -->
+<section class="section" id="evidencia">
+  <h1 class="section-title">Evidencia clave y futuro de la cirugía fetal</h1>
+  <p class="section-intro">Una revisión de los ensayos clínicos que sustentan la práctica actual y las tendencias emergentes que definirán la próxima década.</p>
+
+  <h2>Ensayos clínicos fundamentales</h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Ensayo</th><th>Año</th><th>Revista</th><th>Intervención</th><th>Hallazgo principal</th></tr></thead>
+      <tbody>
+        <tr><td><strong>MOMS Trial</strong></td><td>2011</td><td>NEJM</td><td>Reparación abierta prenatal vs. postnatal de MMC</td><td>↓ VP shunt (40% vs 82%). ↑ función motora. ↑ parto prematuro (13% vs 2% antes de 30 sem).</td></tr>
+        <tr><td><strong>TOTAL Trial (severo)</strong></td><td>2021</td><td>NEJM</td><td>FETO vs. expectante en HDC severa</td><td>↑ supervivencia al alta (40% vs 15%, p=0.009)</td></tr>
+        <tr><td><strong>TOTAL Trial (moderado)</strong></td><td>2022</td><td>Lancet</td><td>FETO vs. expectante en HDC moderada</td><td>↑ supervivencia al alta (73% vs 57%, p=0.0029)</td></tr>
+        <tr><td><strong>Eurofetus Trial</strong></td><td>2004</td><td>NEJM</td><td>SFLP vs. amniorred ucción en STFF</td><td>↑ supervivencia de al menos un gemelo (76% vs 56%). ↓ lesiones neurológicas.</td></tr>
+        <tr><td><strong>Naus et al.</strong></td><td>2025</td><td>IJOA</td><td>Protocolo anestésico para MMC fetoscópica</td><td>Primer protocolo completo de AGI + epidural + remifentanilo + cóctel fetal para reparación fetoscópica de MMC.</td></tr>
+        <tr><td><strong>Gaffuri et al.</strong></td><td>2025</td><td>Front Pediatr</td><td>Revisión narrativa EXIT</td><td>Confirma HAL como estándar. Datos emergentes de neuroaxial + tocolíticos IV para EXIT corto.</td></tr>
+        <tr><td><strong>Provinciatto et al.</strong></td><td>2024</td><td>J Clin Med</td><td>FETO metaanálisis HDC severa izquierda</td><td>FETO superior a expectante en supervivencia (RR 1.7) sin diferencias en comorbilidades.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Tendencias y futuro (2025–2030)</h2>
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title" style="color:#065f46">Tendencias quirúrgicas</div>
+      <div class="card-body">
+        <ul class="dot-list teal">
+          <li><strong>MMC fetoscópica en expansión:</strong> busca igual eficacia que la abierta con menor morbilidad materna. Múltiples centros en implementación activa (Texas Children's, Leuven, Brasil).</li>
+          <li><strong>FETO en más centros:</strong> evidencia TOTAL ha incentivado su adopción. Múltiples trials en reclutamiento activo (2024–2028) para CDH bilateral y moderada.</li>
+          <li><strong>Cirugía robótica fetal:</strong> en fase experimental. Potencial de mayor precisión y menor trauma uterino.</li>
+          <li><strong>Cirugía fetal para espina bífida cerrada:</strong> investigacional. Reducción del defecto neurológico en casos seleccionados.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:#1e40af">Tendencias anestésicas</div>
+      <div class="card-body">
+        <ul class="dot-list">
+          <li><strong>TIVA + neuroaxial:</strong> reducción de exposición a halogenados en dosis altas, especialmente con evidencia creciente de preocupación por neurotoxicidad fetal.</li>
+          <li><strong>Dexmedetomidina:</strong> interés como sedante fetal con posible perfil neuroprotector vs. midazolam. Datos preclínicos prometedores.</li>
+          <li><strong>Monitoreo fetal avanzado:</strong> nuevas sondas eco de alta frecuencia, posible SpO₂ fetal no invasiva.</li>
+          <li><strong>EXIT bajo neuroaxial:</strong> factible en centros de alta especialización para procedimientos cortos. No estándar.</li>
+          <li><strong>Protocolos formales de reanimación fetal</strong> (ACLS-fetal): estandarización creciente tras reportes como Yilmaz Furtun (UOG 2024).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h2>Conclusiones para la práctica del anestesiólogo</h2>
+  <div class="keybox">
+    <div class="kb-title">Puntos clave para llevar a la práctica</div>
+    <p><strong>1. Dos pacientes, dos planes:</strong> la estrategia anestésica debe considerar explícitamente tanto a la madre como al feto en cada decisión farmacológica y técnica.</p><br>
+    <p><strong>2. El flujo placentario no se autorregula:</strong> la hipotensión materna es la causa más frecuente de compromiso fetal intraoperatorio. Vasopresor en infusión y monitoreo continuo de PAM son obligatorios en cirugía abierta y EXIT.</p><br>
+    <p><strong>3. Tocólisis + vasopresores + anestesia fetal = triada del anestesiólogo fetal:</strong> estos tres componentes deben manejarse simultánea y cuidadosamente. No son intercambiables.</p><br>
+    <p><strong>4. El remifentanilo reduce el HAL requerido:</strong> esta combinación es la estrategia más sólida para preservar la función cardíaca fetal mientras se mantiene tocólisis adecuada.</p><br>
+    <p><strong>5. Plan de VA siempre:</strong> la tasa de VAD en embarazadas es 8–10x mayor. Videolaringoscopio de primera línea sin excepción. Plan B y C documentado antes de inducir.</p><br>
+    <p><strong>6. Reanimación fetal = protocolo, no improvisación:</strong> el equipo debe haber ensayado el protocolo de reanimación fetal antes del procedimiento. Atropina, efedrina, volumen y sangre O negativo deben estar inmediatamente accesibles.</p><br>
+    <p><strong>7. Briefing multidisciplinario sin excepción:</strong> ningún caso de cirugía fetal debe iniciarse sin una reunión previa donde todos los roles, planes de contingencia y criterios de conversión estén claros y acordados.</p>
+  </div>
+
+  <hr class="divider">
+  <p style="font-size:12px; color:#6b7280; line-height:1.7;">
+    <strong>Fuentes principales:</strong> Joshi &amp; Packiasabapathy, StatPearls 2023/2026 · Gaffuri et al., Frontiers in Pediatrics, julio 2025 (PMC12310721) · Naus et al., International Journal of Obstetric Anesthesia, febrero 2025 (PMID 39721283) · MDPI Medicina, junio 2025 · ATOTW 532, septiembre 2024 · Yilmaz Furtun et al., UOG, octubre 2024 · Provinciatto et al., J Clin Med, junio 2024 · Kunpalin et al., Prenatal Diagnosis, abril 2025 · MOMS Trial, NEJM 2011 · TOTAL Trial (severo y moderado), NEJM/Lancet 2021–2022 · FDA Drug Safety Communication 2016 · OpenAnesthesia 2024 · Borzage &amp; Peterson, Anesth Analg, 2025.
+  </p>
+</section>
+
+</main>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>

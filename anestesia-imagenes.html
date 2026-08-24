@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anestesia y Sedación en RM y TAC · Anestesiología</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --azul:        #1e40af;
+    --azul-suave:  #dbeafe;
+    --azul-med:    #93c5fd;
+    --rojo:        #b91c1c;
+    --rojo-suave:  #fee2e2;
+    --rojo-med:    #fca5a5;
+    --verde:       #15803d;
+    --verde-suave: #dcfce7;
+    --verde-med:   #86efac;
+    --ambar:       #92400e;
+    --ambar-suave: #fef3c7;
+    --ambar-med:   #fcd34d;
+    --teal:        #0f766e;
+    --teal-suave:  #ccfbf1;
+    --purp:        #6d28d9;
+    --purp-suave:  #ede9fe;
+    --naranja:     #9a3412;
+    --naranja-suave:#ffedd5;
+    --slate:       #0f172a;
+    --gris-f:      #f8fafc;
+    --gris-1:      #f1f5f9;
+    --gris-2:      #e2e8f0;
+    --gris-6:      #475569;
+    --gris-8:      #1e293b;
+    --border:      1px solid #e2e8f0;
+    --shadow:      0 1px 3px rgba(0,0,0,.08);
+    --radius:      10px;
+    --radius-sm:   6px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f0f4f8;
+    color: var(--gris-8);
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 0 0 60px;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: linear-gradient(135deg, #0c2340 0%, #163d6e 50%, #1a5276 100%);
+    color: white;
+    padding: 48px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='50' r='40' fill='none' stroke='%23ffffff' stroke-opacity='0.03' stroke-width='1'/%3E%3Ccircle cx='50' cy='50' r='25' fill='none' stroke='%23ffffff' stroke-opacity='0.03' stroke-width='1'/%3E%3Ccircle cx='50' cy='50' r='10' fill='none' stroke='%23ffffff' stroke-opacity='0.04' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: 120px 120px;
+  }
+  .site-header .tag {
+    display: inline-block;
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .site-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px; line-height: 1.2; margin-bottom: 10px;
+  }
+  .site-header .subtitle { font-size: 15px; opacity: .8; font-weight: 300; max-width: 720px; }
+  .header-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
+  .header-chip {
+    background: rgba(255,255,255,.13);
+    border: 1px solid rgba(255,255,255,.22);
+    border-radius: 20px; padding: 5px 14px;
+    font-size: 12px; font-weight: 500;
+  }
+
+  /* ── LAYOUT ── */
+  .main { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+
+  /* ── SECTION LABEL ── */
+  .section-label { display: flex; align-items: center; gap: 10px; margin: 40px 0 16px; }
+  .section-label .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .section-label h2 { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gris-6); white-space: nowrap; }
+  .section-label .line { flex: 1; height: 1px; background: var(--gris-2); }
+
+  /* ── CARD ── */
+  .card { background: white; border: var(--border); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 16px; overflow: hidden; }
+  .card-header { padding: 16px 20px; border-bottom: var(--border); display: flex; align-items: center; gap: 12px; }
+  .card-header .icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .card-header h3 { font-size: 15px; font-weight: 600; }
+  .card-header .sub { font-size: 12px; color: var(--gris-6); margin-top: 1px; }
+  .card-body { padding: 20px; }
+
+  /* ── GRIDS ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media(max-width:780px){ .grid-2,.grid-3{ grid-template-columns:1fr; } }
+
+  /* ── BADGE ── */
+  .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .badge-rojo    { background: var(--rojo-suave);    color: var(--rojo); }
+  .badge-verde   { background: var(--verde-suave);   color: var(--verde); }
+  .badge-ambar   { background: var(--ambar-suave);   color: var(--ambar); }
+  .badge-azul    { background: var(--azul-suave);    color: var(--azul); }
+  .badge-teal    { background: var(--teal-suave);    color: var(--teal); }
+  .badge-purp    { background: var(--purp-suave);    color: var(--purp); }
+  .badge-naranja { background: var(--naranja-suave); color: var(--naranja); }
+
+  /* ── ALERT ── */
+  .alert { border-radius: var(--radius-sm); padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+  .alert-ico { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .alert-rojo    { background: var(--rojo-suave);    border-left: 3px solid var(--rojo); }
+  .alert-verde   { background: var(--verde-suave);   border-left: 3px solid var(--verde); }
+  .alert-ambar   { background: var(--ambar-suave);   border-left: 3px solid var(--ambar); }
+  .alert-azul    { background: var(--azul-suave);    border-left: 3px solid var(--azul); }
+  .alert-teal    { background: var(--teal-suave);    border-left: 3px solid var(--teal); }
+  .alert-purp    { background: var(--purp-suave);    border-left: 3px solid var(--purp); }
+  .alert-naranja { background: var(--naranja-suave); border-left: 3px solid var(--naranja); }
+  .alert b { display: block; font-weight: 600; margin-bottom: 3px; font-size: 13px; }
+
+  /* ── TABLA ── */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--gris-1); color: var(--gris-6); font-weight: 600; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--gris-2); }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--gris-2); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--gris-f); }
+
+  /* ── STEPS ── */
+  .steps { display: flex; flex-direction: column; }
+  .step { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px dashed var(--gris-2); }
+  .step:last-child { border-bottom: none; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; color: white; margin-top: 2px; }
+  .step-content strong { font-size: 14px; display: block; margin-bottom: 4px; }
+  .step-content p, .step-content ul { font-size: 13px; color: var(--gris-6); }
+  .step-content ul { padding-left: 16px; margin-top: 4px; }
+  .step-content li { margin-bottom: 3px; }
+
+  /* ── PROTO FLOW ── */
+  .proto-flow { display: flex; align-items: stretch; border-radius: var(--radius-sm); overflow: hidden; border: var(--border); margin-bottom: 10px; }
+  .proto-cond { padding: 12px 14px; min-width: 150px; font-size: 12px; font-weight: 600; display: flex; align-items: center; border-right: var(--border); line-height: 1.4; }
+  .proto-action { padding: 12px 14px; flex: 1; font-size: 13px; }
+  .proto-action ul { padding-left: 16px; margin-top: 4px; }
+  .proto-action li { margin-bottom: 3px; }
+
+  /* ── PILL NAV ── */
+  .pill-nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; }
+  .pill-nav a { padding: 7px 18px; border-radius: 20px; font-size: 13px; font-weight: 500; background: white; border: var(--border); color: var(--gris-6); text-decoration: none; transition: all .15s; }
+  .pill-nav a:hover { background: var(--azul-suave); color: var(--azul); border-color: var(--azul-med); }
+  .pill-nav a.active { background: var(--azul); color: white; border-color: var(--azul); }
+
+  /* ── PARAM BOX ── */
+  .param-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px,1fr)); gap: 10px; }
+  .param-box { border: var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+  .param-box .pb-head { padding: 8px 12px; font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border-bottom: var(--border); }
+  .param-box .pb-val { font-size: 24px; font-weight: 700; line-height: 1.1; padding: 10px 12px 4px; }
+  .param-box .pb-unit { font-size: 12px; font-weight: 400; }
+  .param-box .pb-sub { font-size: 11px; color: var(--gris-6); padding: 0 12px 10px; line-height: 1.4; }
+
+  /* ── ZONA CARD (peligro magnético) ── */
+  .zona-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: var(--border); border-radius: var(--radius); overflow: hidden; }
+  .zona-col { border-right: var(--border); }
+  .zona-col:last-child { border-right: none; }
+  .zona-head { padding: 14px 12px; font-size: 12px; font-weight: 800; text-align: center; letter-spacing: .06em; border-bottom: var(--border); }
+  .zona-body { padding: 12px; font-size: 12px; }
+  .zona-body li { margin-bottom: 4px; }
+  .zona-body ul { padding-left: 14px; }
+
+  /* ── DROGA CARD ── */
+  .drug-card { border: var(--border); border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 12px; }
+  .drug-card .dc-head { padding: 11px 16px; font-size: 13px; font-weight: 700; border-bottom: var(--border); display: flex; align-items: center; gap: 10px; }
+  .drug-card .dc-body { padding: 12px 16px; font-size: 13px; }
+  .drug-card .dc-body ul { padding-left: 16px; margin-top: 4px; }
+  .drug-card .dc-body li { margin-bottom: 3px; color: var(--gris-6); }
+
+  /* ── POBLACIÓN CARD ── */
+  .pop-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; border: var(--border); border-radius: var(--radius); overflow: hidden; }
+  .pop-col { border-right: var(--border); }
+  .pop-col:last-child { border-right: none; }
+  .pop-head { padding: 13px 14px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; border-bottom: var(--border); }
+  .pop-body { padding: 14px; font-size: 13px; }
+  .pop-item { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed var(--gris-2); }
+  .pop-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .pop-item .pi-tag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; opacity: .6; margin-bottom: 3px; }
+
+  /* ── MISC ── */
+  ul.list-clean { list-style: none; padding: 0; }
+  ul.list-clean li::before { content: '→ '; color: var(--azul); font-weight: 600; }
+  ul.list-clean li { margin-bottom: 5px; font-size: 13px; }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .chip { padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 500; background: var(--gris-1); border: var(--border); color: var(--gris-6); }
+  hr.divider { border: none; border-top: 1px dashed var(--gris-2); margin: 14px 0; }
+  .text-sm { font-size: 12px; color: var(--gris-6); }
+  .mt-4 { margin-top: 16px; }
+  .mb-0 { margin-bottom: 0 !important; }
+  .bold { font-weight: 600; }
+
+  /* ── SCORE RAMSAY ── */
+  .ramsay-row { display: flex; align-items: center; gap: 12px; padding: 9px 0; border-bottom: 1px dashed var(--gris-2); }
+  .ramsay-row:last-child { border-bottom: none; }
+  .ramsay-num { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; flex-shrink: 0; }
+  .ramsay-desc { flex: 1; font-size: 13px; }
+  .ramsay-uso { font-size: 11px; }
+
+  /* FOOTER */
+  .site-footer { text-align: center; padding: 32px 24px; font-size: 12px; color: var(--gris-6); border-top: var(--border); background: white; margin-top: 40px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="tag">🧲 Anestesia Fuera del Quirófano · Especialista</div>
+  <h1>Anestesia y Sedación en<br>Resonancia Magnética y TAC</h1>
+  <p class="subtitle">Out-of-OR Anesthesia (OOA) — Entorno no quirúrgico, riesgos únicos.<br>Manejo basado en evidencia 2024 · ASA · ESAIC · ACR · Joint Commission.</p>
+  <div class="header-chips">
+    <span class="header-chip">🧲 RM: ambiente MR-Conditional obligatorio</span>
+    <span class="header-chip">☢️ TAC: radiación ionizante — protección personal</span>
+    <span class="header-chip">🔌 Equipo compatible RM certificado</span>
+    <span class="header-chip">🚨 Distancia al carro de paro: mínimo 5 m del gantry</span>
+    <span class="header-chip">💊 Propofol TIVA — primera línea en ambas modalidades</span>
+  </div>
+</header>
+
+<div class="main">
+  <nav class="pill-nav" style="margin-top:24px;">
+    <a href="#entorno" class="active">Entorno y riesgos</a>
+    <a href="#zonas">Zonas de seguridad RM</a>
+    <a href="#equipos">Equipos MR-Safe</a>
+    <a href="#evaluacion">Evaluación preop</a>
+    <a href="#tecnicas">Técnicas anestésicas</a>
+    <a href="#farmacos">Fármacos</a>
+    <a href="#poblaciones">Poblaciones especiales</a>
+    <a href="#monitoreo">Monitoreo</a>
+    <a href="#complicaciones">Complicaciones</a>
+    <a href="#cheatsheet">Cheat Sheet</a>
+  </nav>
+
+  <!-- ══ 1: ENTORNO Y RIESGOS ══ -->
+  <div class="section-label" id="entorno">
+    <div class="dot" style="background:var(--azul)"></div>
+    <h2>1 · El Entorno — Por qué es diferente al quirófano</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--azul-suave)">🧲</div>
+        <div><h3>Resonancia Magnética — Peligros físicos únicos</h3><div class="sub">El campo magnético no se apaga — siempre activo</div></div>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-rojo">
+          <div class="alert-ico">🚨</div>
+          <div><b>EL CAMPO MAGNÉTICO ESTÁ SIEMPRE ENCENDIDO — incluso sin el paciente dentro.</b> Un objeto ferromagnético puede convertirse en proyectil a &gt;300 km/h. Nunca asumir que el imán está apagado.</div>
+        </div>
+        <p class="bold" style="margin-bottom:8px;">Peligros específicos de la RM</p>
+        <ul class="list-clean">
+          <li><b>Efecto proyectil:</b> objetos ferromagnéticos atraídos violentamente al gantry (cilindros de O₂, laringoscopios metálicos, tijeras, esfigmomanómetros)</li>
+          <li><b>Calentamiento de tejido:</b> implantes metálicos, cables de electrodos, parches de desfibrilador → quemaduras</li>
+          <li><b>Interferencia con dispositivos:</b> marcapasos, DAI, bombas de insulina, neuroestimuladores → malfunción o daño</li>
+          <li><b>Gradientes acústicos:</b> ruido 95–130 dB → protección auditiva para paciente y personal</li>
+          <li><b>Efectos biológicos del campo estático:</b> nauseas, vértigo, sabor metálico al acercarse → normales, no peligrosos</li>
+          <li><b>RF (radiofrecuencia):</b> puede causar quemaduras en puntos de contacto piel-piel (rodillas, axilas) → almohadillas protectoras</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--naranja-suave)">☢️</div>
+        <div><h3>TAC — Riesgos específicos del entorno</h3><div class="sub">Radiación, contraste yodado y acceso limitado</div></div>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-naranja">
+          <div class="alert-ico">☢️</div>
+          <div><b>Protección radiológica obligatoria:</b> el anestesiólogo debe abandonar la sala durante la adquisición de imágenes O usar delantal plomado + protector tiroideo. Nunca exposición directa continua.</div>
+        </div>
+        <p class="bold" style="margin-bottom:8px;">Desafíos del TAC vs RM</p>
+        <table>
+          <thead><tr><th>Aspecto</th><th>TAC</th><th>RM</th></tr></thead>
+          <tbody>
+            <tr><td>Campo magnético</td><td><span class="badge badge-verde">No</span></td><td><span class="badge badge-rojo">Siempre activo</span></td></tr>
+            <tr><td>Radiación ionizante</td><td><span class="badge badge-rojo">Sí</span></td><td><span class="badge badge-verde">No</span></td></tr>
+            <tr><td>Restricción de equipos</td><td><span class="badge badge-verde">Mínima</span></td><td><span class="badge badge-rojo">Estricta (MR-safe)</span></td></tr>
+            <tr><td>Duración del estudio</td><td><span class="badge badge-verde">1–10 min</span></td><td><span class="badge badge-ambar">15–90 min</span></td></tr>
+            <tr><td>Ruido ambiental</td><td><span class="badge badge-verde">Bajo</span></td><td><span class="badge badge-rojo">95–130 dB</span></td></tr>
+            <tr><td>Necesidad de sedación</td><td><span class="badge badge-ambar">Frecuente en niños</span></td><td><span class="badge badge-rojo">Muy frecuente</span></td></tr>
+            <tr><td>Contraste yodado</td><td><span class="badge badge-ambar">Frecuente</span></td><td><span class="badge badge-verde">No (gadolinio)</span></td></tr>
+            <tr><td>Temperatura sala</td><td><span class="badge badge-ambar">Fría (18–22°C)</span></td><td><span class="badge badge-rojo">Muy fría (18–20°C)</span></td></tr>
+          </tbody>
+        </table>
+        <div class="alert alert-ambar mt-4">
+          <div class="alert-ico">⚠️</div>
+          <div><b>Contraste yodado IV (TAC):</b> Riesgo de reacción alérgica (0.5–3%), nefropatía por contraste, tirotoxicosis. Gadolinio (RM): fibrosis sistémica nefrogénica en ERC avanzada (TFG &lt;30). Siempre verificar función renal antes.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- El gran problema -->
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--rojo-suave)">⚠️</div>
+      <div><h3>Los 5 problemas críticos de la anestesia fuera del quirófano</h3><div class="sub">Por qué la morbimortalidad es 5–10× mayor que en quirófano estándar</div></div>
+    </div>
+    <div class="card-body">
+      <div class="grid-3">
+        <div>
+          <div class="alert alert-rojo mb-0">
+            <div class="alert-ico">🚑</div>
+            <div><b>1 · Acceso limitado al paciente</b><br>El paciente está dentro del gantry. Acceso a vía aérea, venas y tórax es difícil o imposible durante la adquisición. La reanimación cardiopulmonar DENTRO del gantry no es efectiva — hay que sacar al paciente primero.</div>
+          </div>
+        </div>
+        <div>
+          <div class="alert alert-ambar mb-0">
+            <div class="alert-ico">🔌</div>
+            <div><b>2 · Equipo incompatible</b><br>El equipo estándar de quirófano NO puede entrar a la sala de RM. Se requiere equipo MR-Conditional certificado: máquina de anestesia, monitor, bombas, desfibrilador, carro de paro.</div>
+          </div>
+        </div>
+        <div>
+          <div class="alert alert-naranja mb-0">
+            <div class="alert-ico">👁️</div>
+            <div><b>3 · Visibilidad reducida</b><br>El paciente queda fuera del campo visual del anestesiólogo durante adquisición RM. El vidrio plomado en TAC también limita la observación. El monitoreo remoto es obligatorio.</div>
+          </div>
+        </div>
+        <div>
+          <div class="alert alert-purp mb-0">
+            <div class="alert-ico">🏥</div>
+            <div><b>4 · Lejanía del quirófano</b><br>La sala de imagen está fuera del área quirúrgica. El carro de paro, los fármacos de emergencia y el personal de soporte están lejos. Tiempo de respuesta a emergencias: 5–15 min en muchos centros.</div>
+          </div>
+        </div>
+        <div>
+          <div class="alert alert-azul mb-0">
+            <div class="alert-ico">🌡️</div>
+            <div><b>5 · Temperatura ambiental adversa</b><br>Las salas de RM/TAC son muy frías (18–20°C) para proteger los equipos. Riesgo de hipotermia especialmente en niños, ancianos y sedaciones prolongadas. Mantener normotermia activamente.</div>
+          </div>
+        </div>
+        <div>
+          <div class="alert alert-teal mb-0">
+            <div class="alert-ico">🔊</div>
+            <div><b>6 · Ruido de la RM</b><br>95–130 dB durante secuencias rápidas. Interfiere con la comunicación voz del anestesiólogo con el personal. Usar sistema de intercomunicación integrado. Protección auditiva para todos.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 2: ZONAS DE SEGURIDAD RM ══ -->
+  <div class="section-label" id="zonas">
+    <div class="dot" style="background:var(--rojo)"></div>
+    <h2>2 · Zonas de Seguridad en RM — Sistema ACR</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--rojo-suave)">🗺️</div>
+      <div><h3>Clasificación de zonas ACR (American College of Radiology)</h3><div class="sub">Sistema de 4 zonas — restricción progresiva de acceso</div></div>
+    </div>
+    <div class="card-body">
+      <div class="zona-grid">
+        <div class="zona-col">
+          <div class="zona-head" style="background:#f0fdf4;color:#15803d;">ZONA I · Verde</div>
+          <div class="zona-body">
+            <p style="font-weight:600;margin-bottom:6px;">Área pública general</p>
+            <ul>
+              <li>Sala de espera, pasillos generales</li>
+              <li>Sin restricciones de acceso</li>
+              <li>No hay campo magnético</li>
+              <li>Personal y visitantes sin restricción</li>
+            </ul>
+          </div>
+        </div>
+        <div class="zona-col">
+          <div class="zona-head" style="background:#fefce8;color:#92400e;">ZONA II · Amarilla</div>
+          <div class="zona-body">
+            <p style="font-weight:600;margin-bottom:6px;">Área de transición</p>
+            <ul>
+              <li>Recepción RM, vestidores</li>
+              <li>Cuestionario de cribado MR obligatorio</li>
+              <li>Personal NO RM puede entrar acompañado</li>
+              <li>Revisar implantes y objetos metálicos</li>
+            </ul>
+          </div>
+        </div>
+        <div class="zona-col">
+          <div class="zona-head" style="background:#fff7ed;color:#9a3412;">ZONA III · Naranja</div>
+          <div class="zona-body">
+            <p style="font-weight:600;margin-bottom:6px;">Sala de control — RESTRINGIDA</p>
+            <ul>
+              <li>Sala del técnico de RM</li>
+              <li>Solo personal acreditado RM</li>
+              <li>El anestesiólogo DEBE estar acreditado</li>
+              <li>Campo magnético débil pero presente</li>
+              <li>Equipos estándar de qx: acceso con precaución</li>
+            </ul>
+          </div>
+        </div>
+        <div class="zona-col">
+          <div class="zona-head" style="background:#fef2f2;color:#b91c1c;">ZONA IV · Roja</div>
+          <div class="zona-body">
+            <p style="font-weight:600;margin-bottom:6px;">Sala del imán — PELIGRO</p>
+            <ul>
+              <li>Gantry RM — campo intenso</li>
+              <li>Solo equipos MR-Safe o MR-Conditional</li>
+              <li>Personal con cribado completado</li>
+              <li>NUNCA introducir metal ferromagnético</li>
+              <li>Carro de paro: queda FUERA de zona IV</li>
+              <li>RCP: sacar al paciente antes</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-rojo mt-4">
+        <div class="alert-ico">🚨</div>
+        <div><b>Paro cardiorrespiratorio en RM:</b> Sacar al paciente de la sala del imán → zona III/sala de control. SOLO ENTONCES iniciar RCP y desfibrilación. Un desfibrilador estándar NO puede entrar a zona IV. El tiempo de traslado debe ser &lt;30 seg con entrenamiento previo del equipo.</div>
+      </div>
+
+      <div class="alert alert-ambar">
+        <div class="alert-ico">📋</div>
+        <div>
+          <b>Cuestionario de cribado MR — Elementos críticos para el anestesiólogo:</b><br>
+          Marcapasos / DAI, neuroestimuladores (DBS, espinal), coclear implantes, clips de aneurisma (pre-2000 → contraindicado), cuerpos extraños metálicos intraoculares, bomba de insulina, stents &lt;6 sem, filtros de vena cava &lt;6 sem, válvulas cardíacas metálicas antiguas, tatuajes extensos (pigmentos metálicos).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 3: EQUIPOS MR-SAFE ══ -->
+  <div class="section-label" id="equipos">
+    <div class="dot" style="background:var(--teal)"></div>
+    <h2>3 · Equipos y Clasificación MR-Safe / MR-Conditional</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--teal-suave)">🏷️</div>
+      <div><h3>Sistema de clasificación ASTM F2503</h3><div class="sub">Todo equipo que entre a zona IV debe estar clasificado</div></div>
+    </div>
+    <div class="card-body">
+      <div class="grid-3" style="margin-bottom:16px;">
+        <div style="border:2px solid var(--verde-med);border-radius:var(--radius-sm);overflow:hidden;">
+          <div style="background:var(--verde-suave);padding:12px 14px;font-weight:700;font-size:13px;color:var(--verde);display:flex;align-items:center;gap:8px;">
+            <span style="font-size:20px;">🟢</span> MR-SAFE
+          </div>
+          <div style="padding:12px 14px;font-size:13px;">
+            <p>Seguro en CUALQUIER condición RM. Sin riesgo de proyectil, calentamiento ni interferencia.</p>
+            <p style="margin-top:8px;color:var(--gris-6);">Ejemplos: estetoscopios de plástico, catéteres no metálicos, algunos TET especiales, guantes, gasas.</p>
+          </div>
+        </div>
+        <div style="border:2px solid var(--ambar-med);border-radius:var(--radius-sm);overflow:hidden;">
+          <div style="background:var(--ambar-suave);padding:12px 14px;font-weight:700;font-size:13px;color:var(--ambar);display:flex;align-items:center;gap:8px;">
+            <span style="font-size:20px;">🟡</span> MR-CONDITIONAL
+          </div>
+          <div style="padding:12px 14px;font-size:13px;">
+            <p>Seguro SOLO bajo condiciones específicas (campo &lt;X Tesla, SAR limitado, gradiente máximo). Leer el etiquetado.</p>
+            <p style="margin-top:8px;color:var(--gris-6);">Ejemplos: máquinas de anestesia MR-conditional, monitores de signos vitales certificados, bombas de infusión MR.</p>
+          </div>
+        </div>
+        <div style="border:2px solid var(--rojo-med);border-radius:var(--radius-sm);overflow:hidden;">
+          <div style="background:var(--rojo-suave);padding:12px 14px;font-weight:700;font-size:13px;color:var(--rojo);display:flex;align-items:center;gap:8px;">
+            <span style="font-size:20px;">🔴</span> MR-UNSAFE
+          </div>
+          <div style="padding:12px 14px;font-size:13px;">
+            <p>PROHIBIDO en zona IV. Riesgo de proyectil, quemaduras o malfunción.</p>
+            <p style="margin-top:8px;color:var(--gris-6);">Ejemplos: laringoscopios metálicos estándar, cilindros de O₂ metálicos, monitores convencionales, desfibriladores estándar.</p>
+          </div>
+        </div>
+      </div>
+
+      <table>
+        <thead><tr><th>Equipo</th><th>Quirófano estándar</th><th>Zona IV RM — Alternativa</th><th>Nota</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>Fuente de O₂</b></td>
+            <td>Cilindro acero / pared</td>
+            <td>Cilindro aluminio MR-Safe o toma de pared RM</td>
+            <td>El cilindro de acero se convierte en proyectil</td>
+          </tr>
+          <tr>
+            <td><b>Laringoscopio</b></td>
+            <td>Metálico convencional</td>
+            <td>Laringoscopio plástico MR-Safe o videolaringoscopio MR-Conditional</td>
+            <td>Preparar fuera, intubar antes de entrar a zona IV si posible</td>
+          </tr>
+          <tr>
+            <td><b>Monitor signos vitales</b></td>
+            <td>Estándar (no compatible)</td>
+            <td>Monitor MR-Conditional certificado (InVivo, Siemens MR-compatible)</td>
+            <td>Cables de ECG especiales sin ferromagnético. Filtros RF</td>
+          </tr>
+          <tr>
+            <td><b>Máquina de anestesia</b></td>
+            <td>Estándar (no entra)</td>
+            <td>Máquina MR-Conditional (Dräger Perseus, GE Aisys CS²) o TIVA con bombas MR-Conditional</td>
+            <td>TIVA con bombas en sala de control + líneas largas es alternativa válida</td>
+          </tr>
+          <tr>
+            <td><b>Desfibrilador</b></td>
+            <td>Estándar</td>
+            <td>Queda en zona III. Sacar paciente antes de desfibrilar</td>
+            <td>Desfibriladores MR-Conditional existen pero son raros y caros</td>
+          </tr>
+          <tr>
+            <td><b>Bombas de infusión</b></td>
+            <td>Estándar</td>
+            <td>Bombas MR-Conditional (Fresenius MR) o bombas en zona III con extensiones largas</td>
+            <td>Extensiones &gt;5 m. Calcular volumen muerto de la línea</td>
+          </tr>
+          <tr>
+            <td><b>Carro de paro</b></td>
+            <td>Al lado del paciente</td>
+            <td>Fuera de zona IV (zona II–III). Acceso en &lt;30 seg con entrenamiento</td>
+            <td>Simulacros de emergencia RM obligatorios cada 6 meses</td>
+          </tr>
+          <tr>
+            <td><b>Aspirador</b></td>
+            <td>Estándar</td>
+            <td>Aspirador MR-Conditional o manual (jeringa) para emergencias dentro del gantry</td>
+            <td>Aspirador neumático sin componentes eléctricos también válido</td>
+          </tr>
+          <tr>
+            <td><b>TET / LMA</b></td>
+            <td>Cualquiera</td>
+            <td>Cualquiera (son plásticos). Verificar si el piloto del balón tiene válvula metálica → sustituir por plástico</td>
+            <td>La mayoría de TET modernos son MR-Safe o MR-Conditional</td>
+          </tr>
+          <tr>
+            <td><b>Estetoscopio precordial</b></td>
+            <td>Cualquiera</td>
+            <td>Estetoscopio de plástico o precordial con extensión hasta zona III</td>
+            <td>Simple y efectivo para vigilancia en niños</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ 4: EVALUACIÓN PREOPERATORIA ══ -->
+  <div class="section-label" id="evaluacion">
+    <div class="dot" style="background:var(--purp)"></div>
+    <h2>4 · Evaluación y Preparación del Paciente</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--purp-suave)">📋</div>
+        <div><h3>Evaluación preanestésica</h3><div class="sub">Aspectos específicos del entorno RM/TAC</div></div>
+      </div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" style="background:var(--purp)">1</div>
+            <div class="step-content">
+              <strong>Cuestionario de cribado MR (RM) — OBLIGATORIO</strong>
+              <p>Revisar implantes, dispositivos electrónicos, fragmentos metálicos. Si hay duda → verificar con fabricante antes. MRI Safety website (mrisafety.com) como referencia. El cribado es responsabilidad COMPARTIDA del equipo.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--purp)">2</div>
+            <div class="step-content">
+              <strong>¿Por qué el paciente necesita sedación/anestesia?</strong>
+              <p>Ansiedad/claustrofobia · Incapacidad de permanecer quieto · Dolor con la posición · Déficit cognitivo · Pediátrico · Procedimiento guiado por imagen (biopsia, ablación). Cada indicación tiene requerimientos diferentes de profundidad.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--purp)">3</div>
+            <div class="step-content">
+              <strong>Vía aérea — Evaluación rigurosa</strong>
+              <p>Si se prevé intubación: planificar ANTES de entrar a zona IV (materiales MR-safe listos). En sedación: mallampati, SAOS, obesidad → factores de riesgo de obstrucción dentro del gantry donde el acceso es difícil.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--purp)">4</div>
+            <div class="step-content">
+              <strong>Función renal (si hay contraste)</strong>
+              <p>TAC con contraste yodado: creatinina + TFG. TFG &lt;30 → nefropatía por contraste significativa → hidratación previa + N-acetilcisteína. RM con gadolinio: TFG &lt;30 → riesgo de fibrosis sistémica nefrogénica → gadolinio de baja dosis o gadolinio macrocíclico.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--purp)">5</div>
+            <div class="step-content">
+              <strong>Alergias a contrastes — Historia previa</strong>
+              <p>Reacción previa leve a contraste yodado: premedicación con prednisolona 50 mg VO 13h, 7h y 1h antes + difenhidramina 50 mg IM 1h antes. Reacción grave previa: evaluar riesgo-beneficio y considerar alternativa sin contraste.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--purp)">6</div>
+            <div class="step-content">
+              <strong>Ayuno — Guías ASA 2023 actualizadas</strong>
+              <p>Líquidos claros: 2h. Leche materna: 4h. Fórmula/leche vaca: 6h. Sólidos: 6–8h. En sedación leve para ansiedad: considerar protocolo de ayuno mínimo. NO relajar ayuno en paciente con reflujo, obeso o embarazada.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--purp-suave)">🎯</div>
+        <div><h3>Decisión de profundidad anestésica</h3><div class="sub">¿Qué nivel de sedación/anestesia necesita este paciente?</div></div>
+      </div>
+      <div class="card-body">
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--verde-suave);color:var(--verde);">Ansiolisis<br>leve<br>Ramsay 2</div>
+          <div class="proto-action">
+            <b>Adulto cooperador con claustrofobia leve.</b> Midazolam 1–2 mg IV + explicación detallada del procedimiento. Sin necesidad de anestesiólogo si el paciente está compensado. Monitoreo básico. Duración &lt;30 min.
+          </div>
+        </div>
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--azul-suave);color:var(--azul);">Sedación<br>moderada<br>Ramsay 3–4</div>
+          <div class="proto-action">
+            <b>Adulto con ansiedad moderada, dolor leve o discapacidad intelectual leve.</b> Propofol TCI bajo + dexmedetomidina. Responde a estimulación verbal. El paciente puede proteger su vía aérea. Monitoreo estándar + capnografía.
+          </div>
+        </div>
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--ambar-suave);color:var(--ambar);">Sedación<br>profunda<br>Ramsay 5</div>
+          <div class="proto-action">
+            <b>Pediátrico, DI moderada-severa, procedimientos dolorosos guiados por imagen.</b> Propofol ± ketamina. Vía aérea puede comprometerse → cánula nasofaríngea, mascarilla laríngea de rescate. Anestesiólogo obligatorio.
+          </div>
+        </div>
+        <div class="proto-flow">
+          <div class="proto-cond" style="background:var(--rojo-suave);color:var(--rojo);">Anestesia<br>general<br>Ramsay 6</div>
+          <div class="proto-action">
+            <b>Neonato, lactante, DI severa, procedimientos largos/dolorosos, vía aérea difícil anticipada, paciente que no colabora bajo ninguna circunstancia.</b> Intubación o ML. Control total de vía aérea. Capnografía obligatoria.
+          </div>
+        </div>
+
+        <hr class="divider">
+        <p class="bold" style="margin-bottom:8px;">Escala de Ramsay — referencia rápida</p>
+        <div class="ramsay-row">
+          <div class="ramsay-num" style="background:var(--gris-1);color:var(--gris-6);">1</div>
+          <div class="ramsay-desc">Ansioso, agitado o inquieto</div>
+          <span class="badge badge-rojo ramsay-uso">Demasiado despierto</span>
+        </div>
+        <div class="ramsay-row">
+          <div class="ramsay-num" style="background:var(--verde-suave);color:var(--verde);">2</div>
+          <div class="ramsay-desc">Cooperador, orientado y tranquilo</div>
+          <span class="badge badge-verde ramsay-uso">Meta ansiolisis</span>
+        </div>
+        <div class="ramsay-row">
+          <div class="ramsay-num" style="background:var(--azul-suave);color:var(--azul);">3</div>
+          <div class="ramsay-desc">Responde a órdenes verbales</div>
+          <span class="badge badge-azul ramsay-uso">Sedación moderada</span>
+        </div>
+        <div class="ramsay-row">
+          <div class="ramsay-num" style="background:var(--azul-suave);color:var(--azul);">4</div>
+          <div class="ramsay-desc">Dormido, responde rápido a estímulo</div>
+          <span class="badge badge-azul ramsay-uso">Sedación moderada-profunda</span>
+        </div>
+        <div class="ramsay-row">
+          <div class="ramsay-num" style="background:var(--ambar-suave);color:var(--ambar);">5</div>
+          <div class="ramsay-desc">Dormido, responde lento a estímulo</div>
+          <span class="badge badge-ambar ramsay-uso">Sedación profunda</span>
+        </div>
+        <div class="ramsay-row">
+          <div class="ramsay-num" style="background:var(--rojo-suave);color:var(--rojo);">6</div>
+          <div class="ramsay-desc">Sin respuesta a estímulos</div>
+          <span class="badge badge-rojo ramsay-uso">Anestesia general</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 5: TÉCNICAS ANESTÉSICAS ══ -->
+  <div class="section-label" id="tecnicas">
+    <div class="dot" style="background:var(--verde)"></div>
+    <h2>5 · Técnicas Anestésicas Específicas</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--verde-suave)">🫁</div>
+      <div><h3>Manejo de vía aérea en RM/TAC</h3><div class="sub">La decisión más crítica — dentro del gantry el acceso es mínimo</div></div>
+    </div>
+    <div class="card-body">
+      <div class="alert alert-rojo">
+        <div class="alert-ico">🚨</div>
+        <div><b>Regla de oro:</b> Si hay CUALQUIER duda sobre la capacidad del paciente de mantener una vía aérea permeable durante el estudio → asegurar la vía aérea ANTES de entrar al gantry, no después. El "rescate" dentro del tubo es extremadamente difícil.</div>
+      </div>
+      <table>
+        <thead><tr><th>Estrategia</th><th>Indicación</th><th>Ventajas</th><th>Precauciones en RM</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>Vía aérea natural + O₂ cánula nasal</b></td>
+            <td>Sedación leve-moderada en adulto cooperador</td>
+            <td>Mínima intervención. Simple. Sin riesgo de dispositivo.</td>
+            <td>Cánula de plástico MR-Safe. Capnografía nasal obligatoria.</td>
+          </tr>
+          <tr>
+            <td><b>Cánula nasofaríngea</b></td>
+            <td>Sedación moderada-profunda con obstrucción parcial prevista (niño, obeso, DI)</td>
+            <td>Mantiene permeabilidad sin dispositivo supraglótico. Bien tolerada.</td>
+            <td>Material plástico MR-Safe. Verificar que el fijador no sea metálico.</td>
+          </tr>
+          <tr>
+            <td><b>Mascarilla laríngea (LMA)</b></td>
+            <td>Sedación profunda o AG corta (&lt;60 min) en paciente sin riesgo de aspiración</td>
+            <td>Control de vía aérea sin laringoscopia. Offset rápido con propofol. Permite ventilación.</td>
+            <td>LMAs modernas son MR-Safe. Verificar el piloto del manguito (válvula plástica). Fijación con cinta sin clips metálicos.</td>
+          </tr>
+          <tr>
+            <td><b>Intubación orotraqueal (IOT)</b></td>
+            <td>AG en neonato/lactante, cirugía larga, riesgo aspiración, procedimientos intervencionales</td>
+            <td>Control definitivo de vía aérea. Permite IPPV. Capnografía exacta.</td>
+            <td>TET plástico MR-Safe. Videolaringoscopio plástico o laringoscopio plástico MR-Safe. Realizar intubaciuón en zona II y luego entrar a zona IV si es posible.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="alert alert-ambar mt-4">
+        <div class="alert-ico">💡</div>
+        <div><b>Estrategia preferida en pediátricos:</b> Inducir en sala de inducción (fuera de zona IV) → asegurar vía aérea → transportar ya dormido al gantry. Evitar inducción dentro del tubo siempre que sea posible.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--verde-suave)">🔧</div>
+        <div><h3>TIVA con líneas largas — Técnica estándar</h3><div class="sub">Bombas fuera de zona IV + extensiones largas</div></div>
+      </div>
+      <div class="card-body">
+        <div class="steps">
+          <div class="step">
+            <div class="step-num" style="background:var(--verde)">1</div>
+            <div class="step-content">
+              <strong>Instalación previa al gantry (zona II–III)</strong>
+              <p>Canalizar vía venosa. Conectar líneas con extensiones largas (&gt;5 m) que llegarán desde zona III hasta el paciente en zona IV.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--verde)">2</div>
+            <div class="step-content">
+              <strong>Bombas de infusión en zona III (sala de control)</strong>
+              <p>Las bombas estándar quedan en zona III. Solo las líneas de infusión pasan por el portal hacia zona IV. Marcar las líneas con su contenido claramente.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--verde)">3</div>
+            <div class="step-content">
+              <strong>Calcular volumen muerto de extensiones</strong>
+              <p>Extensión 5 m × 2 mL/m = 10 mL de volumen muerto. Un cambio de velocidad de infusión tarda en reflejarse en el paciente. Considerar para el ajuste de TCI y para administración de bolos de emergencia.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num" style="background:var(--verde)">4</div>
+            <div class="step-content">
+              <strong>Llave de tres vías en el brazo del paciente</strong>
+              <p>Para administrar bolos de rescate directamente cerca del paciente sin depender del recorrido de la extensión larga.</p>
+            </div>
+          </div>
+        </div>
+        <div class="alert alert-teal mt-4">
+          <div class="alert-ico">💡</div>
+          <div><b>Alternativa eficiente:</b> Bomba de infusión MR-Conditional certificada dentro de la zona IV. Elimina el problema del volumen muerto y permite ajustes más rápidos. Cada vez más disponible en centros de alto volumen.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="icon" style="background:var(--verde-suave)">🔄</div>
+        <div><h3>Anestesia inhalatoria en RM</h3><div class="sub">Máquina MR-Conditional — Cuando está disponible</div></div>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-azul">
+          <div class="alert-ico">💡</div>
+          <div><b>Máquinas de anestesia MR-Conditional disponibles:</b> Dräger Perseus MRI, GE Aisys CS² MRI Edition. Funcionan con campo &lt;0.5 mT en su ubicación. Ofrecen ventilación completa + anestesia inhalatoria + monitoreo integrado.</div>
+        </div>
+        <p class="bold" style="margin-bottom:10px;">Consideraciones técnicas</p>
+        <ul class="list-clean">
+          <li>La máquina debe estar en posición fija certificada por el fabricante en zona IV</li>
+          <li>Circuito anestésico con tubos largos MR-Conditional para alcanzar al paciente en el gantry</li>
+          <li>Vaporizador calibrado para agentes halogenados (sevoflurano o desflurano)</li>
+          <li>El flujo de gas fresco puede interferir con el campo — seguir recomendaciones del fabricante</li>
+          <li>Verificar alarmas: el ruido del gantry puede enmascarar alarmas audibles → alarmas visuales prioritarias</li>
+        </ul>
+        <div class="alert alert-ambar mt-4">
+          <div class="alert-ico">⚠️</div>
+          <div><b>Si no hay máquina MR-Conditional:</b> TIVA es la alternativa universal. Propofol + remifentanilo o propofol + dexmedetomidina son las combinaciones más usadas en centros sin máquina de anestesia RM.</div>
+        </div>
+        <div class="alert alert-verde">
+          <div class="alert-ico">✅</div>
+          <div><b>Sevoflurano vs Propofol en RM pediátrico:</b> No hay diferencia en tiempo de recuperación ni incidencia de agitación. Sevoflurano tiene mejor perfil de inducción (máscara facial). Propofol mejor control de profundidad en procedimientos largos.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 6: FÁRMACOS ══ -->
+  <div class="section-label" id="farmacos">
+    <div class="dot" style="background:var(--purp)"></div>
+    <h2>6 · Farmacología — Sedoanalgesia en RM y TAC</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--purp-suave)">💊</div>
+      <div><h3>Fármacos de elección y sus protocolos</h3><div class="sub">Evidencia actualizada 2024 — Adaptados al entorno fuera del quirófano</div></div>
+    </div>
+    <div class="card-body">
+
+      <div class="drug-card">
+        <div class="dc-head" style="background:var(--purp-suave);">
+          <span class="badge badge-purp" style="font-size:12px;">Primera línea</span>
+          <span style="color:var(--purp);">🥇 Propofol — Estándar de oro en OOA</span>
+        </div>
+        <div class="dc-body">
+          <div class="grid-2">
+            <div>
+              <p><b>Adulto — Sedación moderada:</b></p>
+              <ul>
+                <li>Bolo inicial: 0.5–1 mg/kg IV lento</li>
+                <li>Mantenimiento: 25–75 µg/kg/min (1.5–4.5 mg/kg/h)</li>
+                <li>TCI (Schnider/Marsh): Cp objetivo 0.8–2 µg/mL sedación, 2–4 µg/mL AG</li>
+              </ul>
+              <p style="margin-top:8px;"><b>Adulto — Anestesia general:</b></p>
+              <ul>
+                <li>Inducción TCI: Cp 4–6 µg/mL</li>
+                <li>Mantenimiento TCI: Cp 2–4 µg/mL</li>
+                <li>Ajustar según BIS/entropía si disponible</li>
+              </ul>
+            </div>
+            <div>
+              <p><b>Ventajas específicas en RM/TAC:</b></p>
+              <ul>
+                <li>Offset rápido → recuperación rápida al finalizar el estudio</li>
+                <li>Antiemético → reduce NVPO postprocedimiento</li>
+                <li>Profundidad fácilmente titulable</li>
+                <li>Sin interferencia con señal RM</li>
+              </ul>
+              <p style="margin-top:8px;"><b>Precauciones:</b></p>
+              <ul>
+                <li>Dolor a la inyección → lidocaína 20mg IV previo</li>
+                <li>Hipotensión → tener efedrina y fenilefrina listos</li>
+                <li>Apnea con bolos → lento siempre</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="drug-card">
+        <div class="dc-head" style="background:var(--teal-suave);">
+          <span class="badge badge-teal" style="font-size:12px;">Complemento clave</span>
+          <span style="color:var(--teal);">🥈 Dexmedetomidina — Sedación cooperativa</span>
+        </div>
+        <div class="dc-body">
+          <div class="grid-2">
+            <div>
+              <p><b>Protocolo:</b></p>
+              <ul>
+                <li>Carga: 0.5–1 µg/kg en 10–15 min</li>
+                <li>Mantenimiento: 0.2–0.7 µg/kg/h</li>
+                <li>El paciente duerme pero despierta fácilmente</li>
+                <li>Sin depresión respiratoria significativa</li>
+              </ul>
+            </div>
+            <div>
+              <p><b>Indicaciones preferentes en RM/TAC:</b></p>
+              <ul>
+                <li>RM funcional donde necesitan cooperación intermitente</li>
+                <li>Paciente ansioso que necesita permanecer quieto sin anestesia profunda</li>
+                <li>Complemento al propofol para reducir dosis</li>
+                <li>Biopsia guiada por imagen donde se requiere respuesta verbal</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="drug-card">
+        <div class="dc-head" style="background:var(--ambar-suave);">
+          <span class="badge badge-ambar" style="font-size:12px;">Pediátrico / Procedimientos cortos</span>
+          <span style="color:var(--ambar);">🥉 Ketamina — Sedación disociativa</span>
+        </div>
+        <div class="dc-body">
+          <div class="grid-2">
+            <div>
+              <p><b>Pediátrico — IM (cuando no hay vía venosa):</b></p>
+              <ul>
+                <li>3–5 mg/kg IM → sedación en 3–5 min</li>
+                <li>Duración 15–30 min</li>
+                <li>Mantiene reflejos laríngeos</li>
+                <li>Broncodilatador — útil en asma</li>
+              </ul>
+              <p style="margin-top:8px;"><b>IV:</b></p>
+              <ul>
+                <li>1–2 mg/kg IV + propofol 0.5 mg/kg (mezcla "ketofol")</li>
+                <li>Reduce disforia de ketamina sola</li>
+              </ul>
+            </div>
+            <div>
+              <p><b>Ventajas:</b></p>
+              <ul>
+                <li>Mantiene PA y FC → útil en cardiópatas</li>
+                <li>No requiere vía venosa para dosis IM</li>
+                <li>Broncodilatación</li>
+                <li>Analgesia inherente para procedimientos dolorosos (biopsia)</li>
+              </ul>
+              <p style="margin-top:8px;"><b>Desventajas:</b></p>
+              <ul>
+                <li>Hipersecreción → atropina 0.02 mg/kg previa</li>
+                <li>Disforia/alucinaciones → midazolam 0.03 mg/kg</li>
+                <li>↑ Presión intracraneal → evitar en HIC</li>
+                <li>Agitación en la recuperación</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <table style="margin-top:8px;">
+        <thead><tr><th>Fármaco</th><th>Indicación</th><th>Dosis adulto</th><th>Dosis pediátrico</th><th>Ventaja RM/TAC</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>Midazolam</b></td>
+            <td>Ansiolisis leve, premedicación</td>
+            <td>1–3 mg IV lento</td>
+            <td>0.05–0.1 mg/kg IV<br>0.3–0.5 mg/kg intranasal</td>
+            <td>Ansiolítico. Amnesia. Claustrofobia leve.</td>
+          </tr>
+          <tr>
+            <td><b>Fentanilo</b></td>
+            <td>Procedimientos dolorosos (biopsia guiada)</td>
+            <td>1–2 µg/kg IV lento</td>
+            <td>1–2 µg/kg IV</td>
+            <td>Analgesia corta. Complementa propofol.</td>
+          </tr>
+          <tr>
+            <td><b>Remifentanilo</b></td>
+            <td>TIVA AG con intubación</td>
+            <td>0.05–0.2 µg/kg/min infusión</td>
+            <td>0.05–0.1 µg/kg/min</td>
+            <td>Offset ultracorto → despertar al final del estudio.</td>
+          </tr>
+          <tr>
+            <td><b>Sevoflurano</b></td>
+            <td>AG pediátrico o adulto con máquina MR-conditional</td>
+            <td>1–2% mantenimiento</td>
+            <td>Inducción 6–8%, mant. 2–3%</td>
+            <td>Inducción inhalatoria fácil en niños. Sin agujas.</td>
+          </tr>
+          <tr>
+            <td><b>Hidrato de cloral</b></td>
+            <td>Sedación en &lt;2 años sin vía venosa (RM diagnóstica)</td>
+            <td>No aplica</td>
+            <td>50–100 mg/kg VO/rectal 30–45 min antes</td>
+            <td>Sin vía venosa. Sin anestesiólogo en lactante sano. OJO: ventana de 2h, vigilancia post 2h obligatoria.</td>
+          </tr>
+          <tr>
+            <td><b>Dexametasona</b></td>
+            <td>Profilaxis NVPO + edema cerebral</td>
+            <td>4–8 mg IV</td>
+            <td>0.15 mg/kg IV</td>
+            <td>Reduce NVPO. Especialmente útil en RM cerebral.</td>
+          </tr>
+          <tr>
+            <td><b>Atropina</b></td>
+            <td>Prevención/tratamiento bradicardia con dexmedetomidina o ketamina</td>
+            <td>0.5 mg IV</td>
+            <td>0.02 mg/kg IV (mín 0.1 mg)</td>
+            <td>Tener siempre en sala o zona III accesible.</td>
+          </tr>
+          <tr>
+            <td><b>Flumazenilo</b></td>
+            <td>Reversión de BZD si sobredosis</td>
+            <td>0.2 mg IV, repetir c/1 min hasta 1 mg</td>
+            <td>0.01 mg/kg IV</td>
+            <td>Duración 45–90 min → puede recurrir sedación BZD.</td>
+          </tr>
+          <tr>
+            <td><b>Naloxona</b></td>
+            <td>Reversión opioides si depresión resp.</td>
+            <td>0.04 mg IV titulado</td>
+            <td>0.01 mg/kg IV</td>
+            <td>No usar 0.4 mg de golpe → dolor agudo + HTA.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ 7: POBLACIONES ESPECIALES ══ -->
+  <div class="section-label" id="poblaciones">
+    <div class="dot" style="background:var(--naranja)"></div>
+    <h2>7 · Poblaciones Especiales</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--naranja-suave)">👥</div>
+      <div><h3>Protocolos por población</h3><div class="sub">Pediátrico · Anciano · Embarazada · Paciente crítico · Claustrofobia · DI</div></div>
+    </div>
+    <div class="card-body">
+      <div class="pop-cols">
+        <div class="pop-col">
+          <div class="pop-head" style="background:var(--azul-suave);color:var(--azul);">🧒 Pediátrico</div>
+          <div class="pop-body">
+            <div class="pop-item">
+              <div class="pi-tag">Principio general</div>
+              <p>El niño &lt;6–8 años generalmente requiere sedación profunda o AG para permanecer quieto el tiempo suficiente. La colaboración voluntaria es mínima en esta edad.</p>
+            </div>
+            <div class="pop-item">
+              <div class="pi-tag">Técnica preferida</div>
+              <p>Inducción con máscara de sevoflurano en sala de inducción → canalizar vía → asegurar vía aérea → trasladar a gantry. Mantenimiento: sevoflurano (si hay máquina MR) o propofol TIVA.</p>
+            </div>
+            <div class="pop-item">
+              <div class="pi-tag">Alternativa neonato / lactante sano</div>
+              <p>Hidrato de cloral 50–100 mg/kg VO/rectal 30–45 min antes. Solo para estudios cortos (&lt;30 min). Vigilancia de 2h post-administración. NO si SAOS, cardiopatía o prematurez.</p>
+            </div>
+            <div class="pop-item">
+              <div class="pi-tag">Hipotermia</div>
+              <p>Alto riesgo. Sala RM muy fría. Manta térmica activa, soluciones calientes. Temperatura cada 15 min.</p>
+            </div>
+            <div class="pop-item">
+              <div class="pi-tag">Dosis propofol pediátrico</div>
+              <p>Inducción: 2.5–3.5 mg/kg. Mantenimiento: 100–200 µg/kg/min. Mayor requerimiento que adultos por mayor volumen distribución.</p>
+            </div>
+          </div>
+        </div>
+        <div class="pop-col">
+          <div class="pop-head" style="background:var(--ambar-suave);color:var(--ambar);">👴 Anciano / ASA III–IV</div>
+          <div class="pop-body">
+            <div class="pop-item">
+              <div class="pi-tag">Reducción de dosis</div>
+              <p>Propofol: reducir 30–40% de dosis de adulto joven. Metabolismo reducido, volumen de distribución reducido. Iniciar bajo y titular lento.</p>
+            </div>
+            <div class="pop-item">
+              <div class="pi-tag">Delírium post-sedación</div>
+              <p>Prevalencia 15–25% en &gt;70 años. Factores de riesgo: demencia previa, privación visual/auditiva (dentro del gantry), hipoxia. Preferir dexmedetomidina sobre BZD en este grupo.</p>
+            </div>
+            <div class="pop-item">
+              <div class="pi-tag">Hipotensión</div>
+              <p>Alto riesgo con propofol. Fenilefrina 50–100 µg IV de rescate. Norepinefrina en infusión si es necesario. Evaluar estado de hidratación previo.</p>
+            </div>
+            <div class="pop-item">
+              <div class="pi-tag">Dispositivos implantados</div>
+              <p>Marcapasos, DAI, prótesis metálicas más frecuentes. Cribado MR exhaustivo. Muchos marcapasos modernos son MR-Conditional bajo protocolo.</p>
+            </div>
+          </div>
+        </div>
+        <div class="pop-col">
+          <div class="pop-head" style="background:var(--verde-suave);color:var(--verde);">🤰 Embarazada / Paciente crítico</div>
+          <div class="pop-body">
+            <div class="pop-item">
+              <div class="pi-tag">Embarazada — RM</div>
+              <p>RM no tiene radiación ionizante → preferida sobre TAC en embarazo. Segura desde el 2° trimestre. 1er trimestre: solo si urgente. NO gadolinio en embarazo salvo riesgo vital (pasa barrera placentaria).</p>
+            </div>
+            <div class="pop-item">
+              <div class="pi-tag">Embarazada — TAC</div>
+              <p>Radiación ionizante → usar solo si imprescindible. Proteger abdomen con plomo. Menor dosis posible. Riesgo real de teratogénesis &lt;10 mSv es mínimo.</p>
+            </div>
+            <div class="pop-item">
+              <div class="pi-tag">Paciente UCI / ventilado</div>
+              <p>Alto riesgo logístico. Verificar compatibilidad del ventilador transporte con RM. Extensiones de circuito largo. Monitoreo invasivo: líneas arteriales con transductores MR-Conditional. Equipo de UCI acompaña siempre.</p>
+            </div>
+            <div class="pop-item">
+              <div class="pi-tag">Claustrofobia severa</div>
+              <p>Midazolam 2 mg + lorazepam 1 mg VO 30 min antes como primer intento. Si falla: propofol sedación en sala de control. Alternativa: RM de 1.5T abierta si disponible (menos campo, más espacio).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 8: MONITOREO ══ -->
+  <div class="section-label" id="monitoreo">
+    <div class="dot" style="background:var(--teal)"></div>
+    <h2>8 · Monitoreo Intraoperatorio</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--teal-suave)">📡</div>
+      <div><h3>Monitoreo mínimo obligatorio y recomendado</h3><div class="sub">Guías ASA 2023 para sedación y anestesia fuera del quirófano</div></div>
+    </div>
+    <div class="card-body">
+      <div class="param-grid">
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--verde-suave);color:var(--verde);">SpO₂ — OBLIGATORIO</div>
+          <div class="pb-val" style="color:var(--verde);">≥95 <span class="pb-unit">%</span></div>
+          <div class="pb-sub">Sensor plástico MR-Safe. Colocar en dedo de mano que queda fuera del gantry si es posible. Alarma visual en sala de control.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--azul-suave);color:var(--azul);">Capnografía (EtCO₂) — OBLIGATORIO sedación ≥moderada</div>
+          <div class="pb-val" style="color:var(--azul);">35–45 <span class="pb-unit">mmHg</span></div>
+          <div class="pb-sub">Cánula nasal buecos dual O₂/CO₂ o adaptador en TET/LMA. Línea de muestreo larga hasta zona III. El mejor monitor de ventilación.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--ambar-suave);color:var(--ambar);">ECG — OBLIGATORIO en AG</div>
+          <div class="pb-val" style="font-size:16px;color:var(--ambar);">Filtrado RF</div>
+          <div class="pb-sub">Electrodos MR-Conditional. Cables sin bucles (riesgo quemadura RF). Colocar electrodos en tórax anterior, no en espalda. Imagen ECG artefactada por gradientes — normal.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--rojo-suave);color:var(--rojo);">PA no invasiva — OBLIGATORIO</div>
+          <div class="pb-val" style="font-size:16px;color:var(--rojo);">c/5 min</div>
+          <div class="pb-sub">Brazalete con manguito plástico MR-Conditional. Tubo neumático largo hasta zona III. En AG: línea arterial recomendada.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--purp-suave);color:var(--purp);">Temperatura — RECOMENDADO</div>
+          <div class="pb-val" style="font-size:16px;color:var(--purp);">36–37°C</div>
+          <div class="pb-sub">Especialmente en pediátrico y estudios &gt;30 min. Termómetro infrarrojo o sonda esofágica MR-Conditional.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--teal-suave);color:var(--teal);">Profundidad anestésica — RECOMENDADO</div>
+          <div class="pb-val" style="font-size:14px;color:var(--teal);">BIS/Entropía</div>
+          <div class="pb-sub">Monitores BIS MR-Conditional disponibles. Especialmente útil en AG prolongada. Meta BIS 40–60 en AG, 60–80 en sedación profunda.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--gris-1);color:var(--gris-6);">Precordial / Estetoscopio</div>
+          <div class="pb-val" style="font-size:14px;">Pediátrico</div>
+          <div class="pb-sub">Estetoscopio de plástico con extensión hasta zona III. Permite oír frecuencia cardíaca y ruidos respiratorios. Económico y efectivo.</div>
+        </div>
+        <div class="param-box">
+          <div class="pb-head" style="background:var(--gris-1);color:var(--gris-6);">Cámara de video</div>
+          <div class="pb-val" style="font-size:14px;">Visual</div>
+          <div class="pb-sub">Cámara fibra óptica dentro del gantry transmite imagen en tiempo real a sala de control. Permite vigilar coloración, movimientos, vía aérea del paciente.</div>
+        </div>
+      </div>
+
+      <div class="alert alert-rojo mt-4">
+        <div class="alert-ico">🚨</div>
+        <div><b>La capnografía es el monitor más importante en sedación fuera del quirófano.</b> Detecta apnea/hipoventilación 60–90 seg antes de que aparezca desaturación en la SpO₂. La saturación sola es insuficiente en sedación. Guías ASA 2023: capnografía obligatoria en sedación moderada-profunda.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 9: COMPLICACIONES ══ -->
+  <div class="section-label" id="complicaciones">
+    <div class="dot" style="background:var(--rojo)"></div>
+    <h2>9 · Complicaciones y Manejo de Emergencias</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--rojo-suave)">🚨</div>
+      <div><h3>Complicaciones específicas del entorno RM/TAC</h3><div class="sub">Identificación y respuesta rápida</div></div>
+    </div>
+    <div class="card-body">
+      <div class="comp-item">
+        <div class="comp-emo">💨</div>
+        <div class="comp-body">
+          <div class="cb-title">Obstrucción de vía aérea / Apnea</div>
+          <p><b>Incidencia: 2–8% en sedación profunda</b> (la complicación más frecuente). Reconocimiento: SpO₂ cae, EtCO₂ se aplana o desaparece. Acción: extraer al paciente del gantry → tracción mandibular → cánula nasofaríngea → LMA si necesario. Si no responde: secuencia de inducción rápida → IOT. En RM: todos los dispositivos de vía aérea usados deben ser MR-Safe/Conditional. En TAC: sin restricciones de material.</p>
+        </div>
+        <span class="badge badge-rojo" style="align-self:flex-start;margin-top:4px;">Más frecuente</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-emo">🧲</div>
+        <div class="comp-body">
+          <div class="cb-title">Accidente por proyectil ferromagnético (RM)</div>
+          <p><b>Incidencia: rara pero catastrófica</b> cuando ocurre. Objeto metálico ferromagnético entra a zona IV → acelerado hacia el gantry → puede impactar al paciente o personal. Prevención: doble cribado (personal + visitantes), señalización, detector de metales en el portal. En emergencia: no intentar recuperar el objeto — apagar el campo (quench) solo en riesgo vital inmediato (quench = proceso irreversible y costoso).</p>
+        </div>
+        <span class="badge badge-rojo" style="align-self:flex-start;margin-top:4px;">Catastrófico</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-emo">🔥</div>
+        <div class="comp-body">
+          <div class="cb-title">Quemaduras por RF (RM)</div>
+          <p>Cables de monitoreo sin filtros RF, electrodos en bucle, contacto piel-piel (rodillas juntas, axila con tronco). Prevención: almohadillas en puntos de presión, cables sin bucles, electrodos con pads aislantes, verificar que todos los cables estén certificados. Tratamiento: como quemaduras estándar.</p>
+        </div>
+        <span class="badge badge-ambar" style="align-self:flex-start;margin-top:4px;">Prevenible</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-emo">💔</div>
+        <div class="comp-body">
+          <div class="cb-title">Paro cardiorrespiratorio</div>
+          <p><b>Plan OBLIGATORIO predefinido:</b> 1. Avisar al técnico de RM → para la secuencia. 2. Extraer al paciente del gantry con velocidad (práctica previa obligatoria). 3. Llamar equipo de paro desde zona III/II. 4. Iniciar RCP en zona II–III donde el desfibrilador ya está listo. 5. Si el paciente está intubado con TET MR-Safe: la ventilación continúa durante el traslado. Tiempo objetivo de extracción: &lt;30 seg.</p>
+        </div>
+        <span class="badge badge-rojo" style="align-self:flex-start;margin-top:4px;">Protocolo obligatorio</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-emo">🤢</div>
+        <div class="comp-body">
+          <div class="cb-title">Reacción alérgica al contraste (TAC)</div>
+          <p><b>Leve (urticaria, eritema):</b> observar, difenhidramina 25–50 mg IV. <b>Moderada (broncoespasmo, angioedema):</b> adrenalina 0.3 mg SC o IM, difenhidramina, dexametasona 8 mg IV, oxígeno. <b>Grave/anafilaxia:</b> adrenalina 0.5 mg IM muslo → 0.5 mg IV si no responde → RCP si paro. Protocolo de anafilaxia estándar. El contraste debe suspenderse inmediatamente.</p>
+        </div>
+        <span class="badge badge-ambar" style="align-self:flex-start;margin-top:4px;">Frecuente</span>
+      </div>
+      <div class="comp-item">
+        <div class="comp-emo">🌡️</div>
+        <div class="comp-body">
+          <div class="cb-title">Hipotermia</div>
+          <p>Especialmente en pediátrico y estudios prolongados. Sala &lt;20°C. Soluciones tibias, manta térmica activa, cubrir con sabanas. En RM: mantas de calentamiento deben ser MR-Safe (no eléctricas — riesgo RF). Temperatura cada 15 min en &gt;30 min de estudio.</p>
+        </div>
+        <span class="badge badge-verde" style="align-self:flex-start;margin-top:4px;">Prevenible</span>
+      </div>
+
+      <div class="alert alert-naranja mt-4">
+        <div class="alert-ico">🔔</div>
+        <div><b>Quench de emergencia RM:</b> Solo si hay riesgo vital inmediato de aplastamiento o incendio dentro del gantry. El quench libera helio criogénico (asfixiante si hay fuga en sala). Evacuar la sala inmediatamente tras activar el quench. El imán tarda 20–60 seg en apagarse.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CHEAT SHEET ══ -->
+  <div class="section-label" id="cheatsheet">
+    <div class="dot" style="background:var(--gris-6)"></div>
+    <h2>10 · Cheat Sheet — Resumen Ejecutivo</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--gris-1)">📋</div>
+      <div><h3>Acciones rápidas de bolsillo — Anestesia en RM y TAC</h3></div>
+    </div>
+    <div class="card-body">
+      <table>
+        <thead>
+          <tr><th>Situación</th><th>Acción inmediata</th><th>Fármaco / Protocolo</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Adulto con claustrofobia leve</b></td>
+            <td>Ansiolisis oral previa + explicación detallada</td>
+            <td>Midazolam 5 mg VO 30 min antes o Lorazepam 1 mg VO</td>
+          </tr>
+          <tr>
+            <td><b>Adulto — sedación moderada</b></td>
+            <td>Propofol TCI baja concentración + capnografía</td>
+            <td>TCI Cp 0.8–1.5 µg/mL. Dexmedetomidina 0.5 µg/kg carga + 0.2–0.4 µg/kg/h</td>
+          </tr>
+          <tr>
+            <td><b>Adulto — sedación profunda / AG</b></td>
+            <td>Propofol TCI + LMA + capnografía + BIS</td>
+            <td>Inducción: Cp 3–4 µg/mL. Mant: Cp 2–3 µg/mL. BIS meta 40–60.</td>
+          </tr>
+          <tr>
+            <td><b>Pediátrico &gt;6 meses sano</b></td>
+            <td>Inducción inhalatoria sala inducción → LMA → traslado a gantry</td>
+            <td>Sevoflurano 6–8% inducción → 2–3% mantenimiento. O Propofol 2.5–3 mg/kg + mantenimiento 125–175 µg/kg/min</td>
+          </tr>
+          <tr>
+            <td><b>Lactante &lt;6 meses o ASA I–II estudio corto</b></td>
+            <td>Hidrato de cloral VO/rectal 30–45 min antes</td>
+            <td>50–100 mg/kg. Vigilar 2h post. No en SAOS/cardiopatía.</td>
+          </tr>
+          <tr>
+            <td><b>Obstrucción VA dentro del gantry</b></td>
+            <td>Extraer del gantry → tracción mandibular → cánula nasofaríngea → LMA</td>
+            <td>Si persiste: propofol 1.5 mg/kg + rocuronio 1.2 mg/kg → IOT con videolaringoscopio MR-safe</td>
+          </tr>
+          <tr>
+            <td><b>Paro cardiorrespiratorio en RM</b></td>
+            <td>1. Extraer del gantry. 2. RCP en zona II–III. 3. Desfibrilar con equipo estándar fuera de zona IV</td>
+            <td>Tiempo extracción objetivo: &lt;30 seg. Simular mensualmente.</td>
+          </tr>
+          <tr>
+            <td><b>Hipotensión por propofol</b></td>
+            <td>Reducir TCI + bolo de efedrina o fenilefrina</td>
+            <td>Efedrina 5–10 mg IV / Fenilefrina 50–100 µg IV</td>
+          </tr>
+          <tr>
+            <td><b>Bradicardia por dexmedetomidina</b></td>
+            <td>Suspender infusión → atropina</td>
+            <td>Atropina 0.5 mg IV. Si persiste: efedrina 10 mg IV</td>
+          </tr>
+          <tr>
+            <td><b>Reacción al contraste yodado leve</b></td>
+            <td>Suspender contraste → difenhidramina</td>
+            <td>Difenhidramina 25–50 mg IV + hidrocortisona 200 mg IV</td>
+          </tr>
+          <tr>
+            <td><b>Anafilaxia por contraste</b></td>
+            <td>Adrenalina IM inmediato → RCR si paro</td>
+            <td>Adrenalina 0.5 mg IM muslo → repetir c/5 min → 0.5 mg IV si no responde</td>
+          </tr>
+          <tr>
+            <td><b>Objeto ferromagnético en zona IV</b></td>
+            <td>NO entrar a rescatarlo. Evaluar si hay riesgo vital → quench solo si aplastamiento/incendio</td>
+            <td>Quench: botón de emergencia. Evacuar sala inmediatamente. Helio → asfixia.</td>
+          </tr>
+          <tr>
+            <td><b>SpO₂ cae durante sedación</b></td>
+            <td>Estimular al paciente → verificar EtCO₂ → O₂ → tracción mandibular</td>
+            <td>Si SpO₂ &lt;90% sin respuesta → extraer del gantry → manejo vía aérea</td>
+          </tr>
+          <tr>
+            <td><b>Hipotermia (&lt;36°C)</b></td>
+            <td>Manta térmica MR-Safe + soluciones tibias + cubrir</td>
+            <td>Temperatura cada 15 min en estudio &gt;30 min. NO manta eléctrica en RM.</td>
+          </tr>
+          <tr>
+            <td><b>Paciente UCI a RM</b></td>
+            <td>Ventilador transporte MR-Compatible + extensiones de circuito + líneas arteriales MR-Conditional</td>
+            <td>Equipo UCI acompaña siempre. Dos profesionales en sala de control mínimo.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Recordatorio de seguridad -->
+  <div class="card">
+    <div class="card-header">
+      <div class="icon" style="background:var(--rojo-suave)">📌</div>
+      <div><h3>Lista de verificación pre-procedimiento RM</h3><div class="sub">Checklist obligatoria antes de cada caso</div></div>
+    </div>
+    <div class="card-body">
+      <div class="grid-2">
+        <div>
+          <p class="bold" style="margin-bottom:10px;color:var(--azul)">✅ Seguridad del entorno</p>
+          <ul class="list-clean">
+            <li>Cuestionario de cribado MR completado y firmado</li>
+            <li>Personal acompañante cribado también</li>
+            <li>Implantes verificados en mrisafety.com si hay duda</li>
+            <li>Todos los equipos etiquetados MR-Safe/Conditional</li>
+            <li>Carro de paro ubicado en zona III accesible</li>
+            <li>Desfibrilador externo en zona III con electrodos listos</li>
+            <li>Ruta de evacuación del gantry practicada y libre de obstáculos</li>
+            <li>Extintor en sala de control (en caso de incendio)</li>
+          </ul>
+        </div>
+        <div>
+          <p class="bold" style="margin-bottom:10px;color:var(--verde)">✅ Seguridad del paciente</p>
+          <ul class="list-clean">
+            <li>Almohadillas en puntos de presión (rodillas, codos, axilas)</li>
+            <li>Oídos protegidos (tapones o audífonos especiales MR)</li>
+            <li>Ojos protegidos y cerrados (no lentes de contacto)</li>
+            <li>Cables sin bucles, alejados de la piel</li>
+            <li>Piel-piel separada con esponja o toalla seca</li>
+            <li>Capnografía y SpO₂ visibles desde sala de control</li>
+            <li>Cámara de video funcionando</li>
+            <li>Sistema de comunicación paciente-anestesiólogo activo (bulb squeeze o intercomunicador)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>Guía de Anestesia y Sedación en RM y TAC · Anestesia Fuera del Quirófano · Especialista</p>
+  <p style="margin-top:4px;opacity:.6;">Basada en guías ASA 2023 (OOA), ACR 2023, ESAIC 2024, Joint Commission 2023, ASNR. Solo para referencia clínica y uso educativo.</p>
+</footer>
+
+</body>
+</html>
