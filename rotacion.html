@@ -169,6 +169,8 @@ select option{background:#fff;color:var(--txt);}
 .mc-day.t-clase      {background:#78350F;color:#FDE68A;font-weight:800;}
 .mc-day.t-preclase   {background:#FEF3C7;color:#92400E;font-weight:700;border:1.5px dashed #F59E0B;}
 .mc-day.t-fest-bg    {background:#FFEBEE;color:#C62828;font-weight:800;}
+.mc-day.t-hosp_bosa    {background:#C62828;color:#FFCDD2;font-weight:800;border:1.5px dashed #FFCDD2;}
+.mc-day.t-hosp_kennedy {background:#0D47A1;color:#BBDEFB;font-weight:800;border:1.5px dashed #BBDEFB;}
 
 /* TYPE SELECTOR */
 .type-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-bottom:10px;}
@@ -355,12 +357,18 @@ select option{background:#fff;color:var(--txt);}
       </div>
       <div class="frow" id="salas-b-row" style="display:none;"><label>Salas de cirugía en Bosa <span style="color:#C62828;font-weight:700;">(varían)</span></label>
         <select id="f-nsalas-b"></select>
+        <div style="font-size:10.5px;color:#7C3AED;font-weight:600;margin-top:4px;">🃏 Además, la Sala 6 (comodín) se activa automáticamente solo si hace falta, con menor prioridad que las demás actividades, y nunca los viernes.</div>
       </div>
       <div class="frow" id="tintal-row" style="display:none;"><label>Hospital Tintal</label>
         <input type="number" id="f-tintalcap" value="1" style="width:100%;" readonly>
       </div>
+      <div class="frow" style="display:flex;align-items:center;gap:8px;">
+        <input type="checkbox" id="f-resetall" style="width:auto;">
+        <label for="f-resetall" style="margin:0;text-transform:none;font-weight:600;font-size:11.5px;">🔄 Volver a barajar todo desde cero (ignora el reparto ya generado)</label>
+      </div>
       <button class="btn-p" onclick="generateSchedule()" type="button">⚡ Generar Distribución</button>
     </div>
+    <div class="ibox" style="margin:0 20px 12px;">Si solo agregaste o quitaste estudiantes, deja la casilla sin marcar: los nuevos ocuparán los cupos que quedaron libres y el resto de la distribución ya generada no cambia. Márcala solo si quieres un reparto totalmente nuevo.</div>
     <div class="ps" id="dl-panel" style="display:none;">
       <button class="btn-grn" onclick="downloadHTML()" type="button" style="width:100%;">⬇ Descargar HTML</button>
     </div>
@@ -442,6 +450,8 @@ const TYPES={
   libre:       {label:'Día Libre',            emoji:'🏖️',bg:'#374151',lt:'#9CA3AF'},
   seminario:   {label:'Seminario Integración', emoji:'🎓',bg:'#5B21B6',lt:'#DDD6FE'},
   examen:      {label:'Examen Final',          emoji:'📝',bg:'#9A3412',lt:'#FED7AA'},
+  hosp_bosa:    {label:'Cambio a Bosa (hoy)',    emoji:'↪️',bg:'#C62828',lt:'#FFCDD2'},
+  hosp_kennedy: {label:'Cambio a Kennedy (hoy)', emoji:'↩️',bg:'#0D47A1',lt:'#BBDEFB'},
 };
 
 const DAYS_ES=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
@@ -458,6 +468,7 @@ let ST = {
   periodo: '',
   students: [],
   specialDays: {}, // { stuId: { iso: type } }
+  roomAssignments: {}, // { kennedy:{iso:{slot:stuId}}, bosa:{...} } — último reparto generado, para no reordenar todo al editar
 };
 let stuN=0, activeType='night', curStep=1;
 let calState={}; // { stuId: {year,month} }
@@ -472,7 +483,7 @@ function _gatherConfig(){
     v:1, savedAt:new Date().toISOString(),
     hosp:ST.hosp||'ambos', grupo:gv('f-grupo'), semestre:gv('f-semestre'), anio:gv('f-anio'),
     nSalasK:gv('f-nsalas'), nSalasB:gv('f-nsalas-b'),
-    stuN, students:ST.students, specialDays:ST.specialDays
+    stuN, students:ST.students, specialDays:ST.specialDays, roomAssignments:ST.roomAssignments||{}
   };
 }
 function persistLocal(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(_gatherConfig())); }catch(e){} }
@@ -492,6 +503,7 @@ function applyConfig(cfg, silent){
   ST.grupo = cfg.grupo || '';
   ST.students = cfg.students.map(s=>({id:s.id, name:s.name||'', base:s.base||'kennedy', univ:s.univ, iniDate:s.iniDate||'', finDate:s.finDate||''}));
   ST.specialDays = cfg.specialDays || {};
+  ST.roomAssignments = cfg.roomAssignments || {};
   stuN = cfg.stuN || ST.students.length;
   calState={};
   ST.students.forEach(s=>{ if(!ST.specialDays[s.id]) ST.specialDays[s.id]={}; calState[s.id]=null; });
@@ -570,7 +582,7 @@ function refreshSalasOptions(){
   const selK=document.getElementById('f-nsalas');
   const selB=document.getElementById('f-nsalas-b');
   if(selK && !selK.options.length){ selK.innerHTML=[[4,'4 salas · la mayoría de los días'],[5,'5 salas · algunos días']].map(([v,l])=>`<option value="${v}">${l}</option>`).join(''); selK.value='4'; }
-  if(selB && !selB.options.length){ selB.innerHTML=[[5,'5 salas · normal'],[6,'6 salas · algunos días']].map(([v,l])=>`<option value="${v}">${l}</option>`).join(''); selB.value='5'; }
+  if(selB && !selB.options.length){ selB.innerHTML=[[4,'4 salas · algunos días'],[5,'5 salas · normal']].map(([v,l])=>`<option value="${v}">${l}</option>`).join(''); selB.value='5'; }
   const show=(id,on)=>{const r=document.getElementById(id); if(r) r.style.display=on?'':'none';};
   show('salas-k-row', h==='kennedy'||ambos);
   show('salas-b-row', h==='bosa'||ambos);
@@ -699,11 +711,15 @@ function buildStep3(){
   const ambos=ST.hosp==='ambos';
   // Ajustar labels según hospital
   TYPES.recovery.label = isKennedy ? 'Recuperación' : 'Gastro AM / Recup PM';
-  const visibleTypes=Object.entries(TYPES).filter(([k])=> ambos ? true : (!(isKennedy&&k==='resonancia') && !(isKennedy&&k==='recovery') && !(!isKennedy&&k==='tintal')));
+  const visibleTypes=Object.entries(TYPES).filter(([k])=>{
+    if(k==='hosp_bosa'||k==='hosp_kennedy') return ambos; // cambios de última hora solo si hay ambos hospitales
+    return ambos ? true : (!(isKennedy&&k==='resonancia') && !(isKennedy&&k==='recovery') && !(!isKennedy&&k==='tintal'));
+  });
   tg.innerHTML=visibleTypes.map(([k,v])=>{
     let nota='';
     if(k==='resonancia') nota='<div style="font-size:9px;color:rgba(255,255,255,.65);margin-top:2px;">Solo martes · Bosa</div>';
     else if(k==='tintal') nota='<div style="font-size:9px;color:rgba(255,255,255,.65);margin-top:2px;">Solo manual · Kennedy</div>';
+    else if(k==='hosp_bosa'||k==='hosp_kennedy') nota='<div style="font-size:9px;color:rgba(255,255,255,.65);margin-top:2px;">Cambio de última hora por sala</div>';
     return `<button class="type-btn" data-t="${k}" onclick="setType('${k}')" type="button">
       ${v.emoji} ${v.label}${nota}</button>`;
   }).join('');
@@ -1105,6 +1121,15 @@ function dayClick(stuId,isoStr){
     return;
   }
 
+  if(activeType==='hosp_bosa' || activeType==='hosp_kennedy'){
+    const targetHosp = activeType==='hosp_bosa' ? 'bosa' : 'kennedy';
+    if(ST.hosp!=='ambos'){ alert('⚠️ El cambio de hospital solo aplica cuando el grupo trabaja en Kennedy + Bosa a la vez.'); return; }
+    if(base===targetHosp){ alert(`⚠️ Este estudiante ya tiene base en ${targetHosp==='bosa'?'Bosa':'Kennedy'}; no se requiere cambio.`); return; }
+    sp[isoStr]=activeType;
+    renderCal(stuId); persistLocal();
+    return;
+  }
+
   if(activeType==='night'){
     if(base==='bosa'){ alert('⚠️ Los estudiantes con base en Bosa no hacen turno de noche.'); return; }
     // Turnos de noche permitidos también en sábados/domingos/festivos, siempre que no
@@ -1193,22 +1218,26 @@ function buildAssignments(opts){
   const tintal='tintal';
   const bosa='bosa';
 
+  const comodin='comodin'; // Bosa: sala "comodín" — última prioridad, no se activa los viernes
+
   // Columnas visibles de la tabla (una por slot).
   // Kennedy: Salas + Interconsultas   (Tintal y Apoyo-Bosa se muestran como etiquetas de sobrecupo)
-  // Bosa:    Salas + Gastro/Recup + Resonancia (martes) + Interconsultas
+  // Bosa:    Salas + Gastro/Recup + Resonancia (martes) + Interconsultas + Comodín (último recurso)
   const allSlots=isKennedy
     ? [...salas,interconsult,tintal]
-    : [...salas,recup,resonancia,interconsult];
+    : [...salas,recup,resonancia,interconsult,comodin];
 
-  // Slots que ROTAN AUTOMÁTICAMENTE cada día (todos con la misma equidad).
+  // Slots que ROTAN AUTOMÁTICAMENTE cada día con la misma equidad.
+  // El comodín NO entra aquí a propósito: solo se usa como último recurso, después de
+  // llenar todas las demás actividades (ver bloque 4 más abajo).
   const rotSlots=isKennedy
     ? [...salas,interconsult]
     : [...salas,recup,interconsult];
 
-  // Exposición por estudiante (para equidad). Incluye resonancia, tintal y bosa para stats.
+  // Exposición por estudiante (para equidad). Incluye resonancia, tintal, bosa y comodín para stats.
   const exp={}; // {stuId:{slotKey:count}}
-  const trackKeys=[...new Set([...allSlots,...rotSlots,resonancia,tintal,bosa])];
-  students.forEach(s=>{
+  const trackKeys=[...new Set([...allSlots,...rotSlots,resonancia,tintal,bosa,comodin])];
+  [...students,...(opts.extraStudents||[])].forEach(s=>{
     exp[s.id]={};
     trackKeys.forEach(sl=>exp[s.id][sl]=0);
   });
@@ -1233,7 +1262,9 @@ function buildAssignments(opts){
 
     // Estudiantes disponibles hoy (excluye posturno/libre/tintal, día de clase y turno-noche
     // víspera de día académico)
-    const avail=students.filter(stu=>{
+    const oppHospType = isKennedy?'hosp_bosa':'hosp_kennedy'; // marca que saca a un estudiante propio hoy
+    const inHospType   = isKennedy?'hosp_kennedy':'hosp_bosa'; // marca que trae a un estudiante del otro hospital hoy
+    const availBase=(stu)=>{
       const stuIni=stu.iniDate,stuFin=stu.finDate;
       if(!stuIni||!stuFin) return false;
       if(date<stuIni||date>stuFin) return false;
@@ -1246,7 +1277,17 @@ function buildAssignments(opts){
         if(claseDow.includes(nextWd)) return false;
       }
       return true;
-    });
+    };
+    const avail=[
+      ...students.filter(stu=>{
+        if((ST.specialDays[stu.id]||{})[date]===oppHospType) return false; // trasladado hoy al otro hospital
+        return availBase(stu);
+      }),
+      ...(opts.extraStudents||[]).filter(stu=>{
+        if((ST.specialDays[stu.id]||{})[date]!==inHospType) return false; // solo si vino trasladado hoy
+        return availBase(stu);
+      }),
+    ];
 
     const usedSlots=new Set();
     let pool=[...avail];
@@ -1258,6 +1299,29 @@ function buildAssignments(opts){
       usedSlots.add(slot);
       pool=pool.filter(p=>p.id!==stu.id);
     };
+
+    // ── 0) REUTILIZAR EL REPARTO YA GENERADO ──
+    // Si ya existía una distribución previa para esta fecha, se respeta la sala/actividad de
+    // cada estudiante que SIGUE disponible hoy y no tiene ahora una marca manual distinta.
+    // Así, cuando se agregan o quitan estudiantes, solo se llenan los huecos que quedan libres
+    // (los del estudiante retirado, o los días nuevos) en vez de reordenar a todos de nuevo.
+    const dayLocked=(opts.locked && opts.locked[date]) || null;
+    if(dayLocked){
+      const expectedType={interconsult:'interconsult',recup:'recovery',resonancia:'resonancia'};
+      allSlots.forEach(sl=>{
+        if(usedSlots.has(sl)) return;
+        const lockedId=dayLocked[sl];
+        if(!lockedId) return;
+        const stu=pool.find(p=>p.id===lockedId);
+        if(!stu) return; // ya no existe o ya no está disponible hoy con las reglas actuales
+        const spNow=(ST.specialDays[stu.id]||{})[date];
+        if(spNow && ['interconsult','recovery','resonancia','tintal'].includes(spNow)){
+          const exp1=expectedType[sl];
+          if(spNow!==exp1) return; // ahora tiene una marca manual que apunta a otro lugar
+        }
+        lock(stu,sl);
+      });
+    }
 
     // ── HOSPITAL TINTAL (Kennedy) — asignación manual va al sobrecupo de Tintal ──
     if(isKennedy){
@@ -1355,10 +1419,35 @@ function buildAssignments(opts){
       });
       pool=[];
     }
+
+    // ── 4) SALA COMODÍN (Bosa) — última prioridad: solo si sobran estudiantes después de llenar
+    // salas + gastro/recup + interconsultas. Nunca se activa los viernes. ──
+    if(!isKennedy && pool.length && wd!==5 && !usedSlots.has(comodin)){
+      const ordered2=shuffle(pool).sort((a,b)=>(exp[a.id][comodin]||0)-(exp[b.id][comodin]||0));
+      lock(ordered2[0], comodin);
+    }
+
+    // ── 5) ÚLTIMO RECURSO (Bosa): si aún sobran estudiantes (más gente que cupos, incluso con
+    // el comodín, o es viernes y el comodín no está disponible), se comparte una sala ya ocupada
+    // entre 2 estudiantes, priorizando a quien menos ha repetido esa sala. Queda marcada como
+    // ALERTA para que se revise antes de descargar/imprimir. ──
+    if(!isKennedy && pool.length){
+      assignments[date].__double = assignments[date].__double || {};
+      pool.slice().forEach(stu=>{
+        const candSlots=salas.filter(sl=>assignments[date][sl]);
+        if(!candSlots.length) return; // no debería pasar si hay al menos una sala activa
+        const chosen=[...candSlots].sort((a,b)=>(exp[stu.id][a]-exp[stu.id][b]))[0];
+        (assignments[date].__double[chosen]=assignments[date].__double[chosen]||[]).push(stu.id);
+        if(exp[stu.id][chosen]!=null) exp[stu.id][chosen]++;
+        assignments[date].__overflowAlert=true;
+        pool=pool.filter(p=>p.id!==stu.id);
+      });
+    }
     dayIdx++;
   });
 
-  return {assignments, salaKeys:allSlots, salaLabels:generateSalaLabels(nSalas, isKennedy)};
+  const overflowDays=Object.keys(assignments).filter(d=>assignments[d].__overflowAlert);
+  return {assignments, salaKeys:allSlots, salaLabels:generateSalaLabels(nSalas, isKennedy), overflowDays};
 }
 function generateSalaLabels(n, isKennedy){
   const labels={};
@@ -1370,17 +1459,18 @@ function generateSalaLabels(n, isKennedy){
   labels['interconsult']='Interconsultas';
   labels['resonancia']='Resonancia Magnética';
   labels['tintal']='Hospital Tintal';
+  if(!isKennedy) labels['comodin']=`Sala ${n+1} (Comodín)`;
   return labels;
 }
 
 // ══════════════════════════════════════════════
 // BUILD OUTPUT HTML
 // ══════════════════════════════════════════════
-function buildBoth(nSalasK, nSalasB, tintalCap, range){
+function buildBoth(nSalasK, nSalasB, tintalCap, range, useLocked){
   const kStu=ST.students.filter(s=>(s.base||'kennedy')==='kennedy');
   const bStu=ST.students.filter(s=>(s.base||'kennedy')==='bosa');
-  const kOut=buildAssignments({hosp:'kennedy',students:kStu,nSalas:nSalasK,tintalCap,range});
-  const bOut=buildAssignments({hosp:'bosa',students:bStu,nSalas:nSalasB,tintalCap:0,range});
+  const kOut=buildAssignments({hosp:'kennedy',students:kStu,extraStudents:bStu,nSalas:nSalasK,tintalCap,range,locked:useLocked?((ST.roomAssignments||{}).kennedy||null):null});
+  const bOut=buildAssignments({hosp:'bosa',students:bStu,extraStudents:kStu,nSalas:nSalasB,tintalCap:0,range,locked:useLocked?((ST.roomAssignments||{}).bosa||null):null});
   // Inserta el sobrecupo de Kennedy (__bosa) en cupos REALES vacíos de Bosa
   if(kOut.assignments && bOut.assignments){
     Object.keys(kOut.assignments).forEach(date=>{
@@ -1407,10 +1497,21 @@ function generateSchedule(){
   const nSalasK=parseInt(document.getElementById('f-nsalas')?.value)||4;
   const nSalasB=parseInt(document.getElementById('f-nsalas-b')?.value)||5;
   const tintalCap=1; // Tintal: siempre 1 estudiante por día (mar/jue/vie)
+  const resetAll=!!document.getElementById('f-resetall')?.checked;
+  const useLocked=!resetAll;
   let kOut=null,bOut=null;
-  if(ambos){ const r=buildBoth(nSalasK,nSalasB,tintalCap,range); kOut=r.kOut; bOut=r.bOut; }
-  else if(ST.hosp==='bosa'){ bOut=buildAssignments({hosp:'bosa',students:ST.students,nSalas:nSalasB,tintalCap:0,range}); }
-  else { kOut=buildAssignments({hosp:'kennedy',students:ST.students,nSalas:nSalasK,tintalCap,range}); }
+  if(ambos){ const r=buildBoth(nSalasK,nSalasB,tintalCap,range,useLocked); kOut=r.kOut; bOut=r.bOut; }
+  else if(ST.hosp==='bosa'){ bOut=buildAssignments({hosp:'bosa',students:ST.students,nSalas:nSalasB,tintalCap:0,range,locked:useLocked?((ST.roomAssignments||{}).bosa||null):null}); }
+  else { kOut=buildAssignments({hosp:'kennedy',students:ST.students,nSalas:nSalasK,tintalCap,range,locked:useLocked?((ST.roomAssignments||{}).kennedy||null):null}); }
+  ST.roomAssignments = ST.roomAssignments || {};
+  if(kOut) ST.roomAssignments.kennedy = kOut.assignments; else delete ST.roomAssignments.kennedy;
+  if(bOut) ST.roomAssignments.bosa = bOut.assignments; else delete ST.roomAssignments.bosa;
+  persistLocal();
+  if(bOut && bOut.overflowDays && bOut.overflowDays.length){
+    alert(`⚠️ ATENCIÓN: en Bosa hay ${bOut.overflowDays.length} día(s) donde los estudiantes disponibles superaron las salas + comodín, y se tuvo que compartir una sala entre 2 estudiantes:\n\n`+
+      bOut.overflowDays.map(d=>'  • '+fmt(d)).join('\n')+
+      '\n\nQuedan marcados con ⚠️ en el cuadro y en las fichas individuales. Revísalos antes de descargar/imprimir.');
+  }
   const nSalas=ST.hosp==='bosa'?nSalasB:nSalasK;
   const hospName=ambos?'Kennedy + Bosa':(ST.hosp==='kennedy'?'Hospital de Kennedy':'Hospital de Bosa');
   const grupo=document.getElementById('f-grupo').value||'Grupo';
@@ -1481,6 +1582,10 @@ function buildTable(assignments, salaKeys, salaLabels, tblStudents, palette){
         wkDays.map(date=>{
           const dayAssign=assignments[date]||{};
           if(isNonWorking(date)) return `<td class="cell-wknd">·</td>`;
+          // Comodín (Bosa): nunca se activa los viernes
+          if(slKey==='comodin' && new Date(date+'T12:00').getDay()===5){
+            return `<td class="cell-empty" style="background:${c.lt};color:#94A3B8;font-size:9.5px;font-style:italic;">No disponible<br>los viernes</td>`;
+          }
           // Tintal: lista
           if(slKey==='tintal'){
             const list=(dayAssign.__tintal||[]);
@@ -1489,6 +1594,7 @@ function buildTable(assignments, salaKeys, salaLabels, tblStudents, palette){
               return `<div class="gc-in"><div class="cell-uni" style="background:${u.bg};border-color:${u.border};color:${u.dark};">${u.name}</div><div class="cell-name" style="color:${nc};">${s.name||'Est.'}</div></div>`;}).join('')}</td>`;
           }
           const stuId=dayAssign[slKey];
+          const doubleList=((dayAssign.__double||{})[slKey])||[];
           if(!stuId) return `<td class="cell-empty" style="background:${c.lt};">·</td>`;
           const stu=getStu(stuId); if(!stu) return `<td class="cell-empty" style="background:${c.lt};">·</td>`;
           const u=getUniv(stu.univ);
@@ -1499,7 +1605,9 @@ function buildTable(assignments, salaKeys, salaLabels, tblStudents, palette){
           if(slKey==='interconsult') badge=`<div class="gc-badge" style="color:#0F766E;">📋 IC</div>`;
           else if(slKey==='recup') badge=`<div class="gc-badge" style="color:#0369A1;">🔄 GR</div>`;
           else if(slKey==='resonancia') badge=`<div class="gc-badge" style="color:#B45309;">🧲 RM</div>`;
+          else if(slKey==='comodin') badge=`<div class="gc-badge" style="color:#7C3AED;">🃏 Comodín</div>`;
           const apoyoK=(dayAssign.__fromKennedy&&dayAssign.__fromKennedy[slKey])?`<div class="gc-badge" style="color:#4F46E5;font-weight:800;">🏥 Apoyo K</div>`:'';
+          const moveBadge=(spType==='hosp_bosa'||spType==='hosp_kennedy')?`<div class="gc-badge" style="color:${spType==='hosp_bosa'?'#C62828':'#0D47A1'};font-weight:800;">🔀 Viene de ${spType==='hosp_bosa'?'Kennedy':'Bosa'}</div>`:'';
           if(isNight){
             return `<td class="grid-cell night-cell">
               <div class="cell-uni cell-uni-night">${u.name}</div>
@@ -1507,9 +1615,19 @@ function buildTable(assignments, salaKeys, salaLabels, tblStudents, palette){
               <div class="night-moon">🌙 Turno noche</div>${apoyoK}
             </td>`;
           }
+          if(doubleList.length){
+            const extras=doubleList.map(id=>{const s2=getStu(id); if(!s2) return ''; const u2=getUniv(s2.univ); const nc2=stuColor(id); const sp2=(ST.specialDays[id]||{})[date];
+              return `<div class="gc-in" style="border-top:1px dashed #F59E0B;margin-top:3px;padding-top:3px;"><div class="cell-uni" style="background:${u2.bg};border-color:${u2.border};color:${u2.dark};">${u2.name}</div><div class="cell-name" style="color:${nc2};">${s2.name||'Est.'}</div></div>`;}).join('');
+            return `<td class="grid-cell" style="background:#FFFBEB;border:2px solid #F59E0B;">
+              <div class="gc-badge" style="color:#B45309;font-weight:800;">⚠️ Sala compartida</div>
+              <div class="cell-uni" style="background:${u.bg};border-color:${u.border};color:${u.dark};">${u.name}</div>
+              <div class="cell-name" style="color:${nc};">${stu.name||'Est.'}</div>${badge}
+              ${extras}
+            </td>`;
+          }
           return `<td class="grid-cell" style="background:${c.lt};">
             <div class="cell-uni" style="background:${u.bg};border-color:${u.border};color:${u.dark};">${u.name}</div>
-            <div class="cell-name" style="color:${nc};">${stu.name||'Est.'}</div>${badge}${apoyoK}
+            <div class="cell-name" style="color:${nc};">${stu.name||'Est.'}</div>${badge}${apoyoK}${moveBadge}
           </td>`;
         }).join('')
       }</tr>`;
@@ -1543,7 +1661,7 @@ function buildTable(assignments, salaKeys, salaLabels, tblStudents, palette){
     }
 
     // ── Filas de notas (Post-turno / Clase / Libre) ──
-    [['🎓 Seminario','seminario','#5B21B6'],['📝 Examen Final','examen','#9A3412'],['😴 Post-turno','posturno','#6D28D9'],['📚 Clase','clase','#B45309'],['🏖️ Día libre','libre','#475569']].forEach(([lbl,state,bg])=>{
+    [['🎓 Seminario','seminario','#5B21B6'],['📝 Examen Final','examen','#9A3412'],['😴 Post-turno','posturno','#6D28D9'],['📚 Clase','clase','#B45309'],['🏖️ Día libre','libre','#475569'],['🔀 Cambio a Bosa hoy','hosp_bosa','#C62828'],['🔀 Cambio a Kennedy hoy','hosp_kennedy','#0D47A1']].forEach(([lbl,state,bg])=>{
       if(!wkDays.some(d=>stateOn(d,state).length)) return;
       html+=`<tr class="note-row"><td class="sala-lbl note-lbl" style="background:${bg};">${lbl}</td>${
         wkDays.map(date=>{
@@ -1560,7 +1678,7 @@ function buildTable(assignments, salaKeys, salaLabels, tblStudents, palette){
 }
 
   // ── INDIVIDUAL CARDS ──
-  function buildCards(cardStudents, assignments, salaKeys, salaLabels, apoyoMap){
+  function buildCards(cardStudents, assignments, salaKeys, salaLabels, apoyoMap, awayType, crossAssignments, crossSalaLabels){
   return cardStudents.map((stu,si)=>{
     const u=getUniv(stu.univ);
     const stuIni=stu.iniDate;const stuFin=stu.finDate;
@@ -1580,7 +1698,8 @@ function buildTable(assignments, salaKeys, salaLabels, tblStudents, palette){
       const spType=sp[date];
       const isClase=claseDow.includes(wd);
       const dayAssign=assignments[date]||{};
-      const assignedSlot=salaKeys.find(k=>dayAssign[k]===stu.id);
+      const doubledSlot=Object.keys(dayAssign.__double||{}).find(k=>(dayAssign.__double[k]||[]).includes(stu.id));
+      const assignedSlot=salaKeys.find(k=>dayAssign[k]===stu.id) || doubledSlot;
 
       if(nonWork){
         if(spType==='urgencias'){
@@ -1592,7 +1711,17 @@ function buildTable(assignments, salaKeys, salaLabels, tblStudents, palette){
       }
 
       let typeTag='',assignLabel='—';
-      if(spType==='night'){
+      if(awayType && spType===awayType){
+        const destName = awayType==='hosp_bosa' ? 'Bosa' : 'Kennedy';
+        const destColor = awayType==='hosp_bosa' ? '#C62828' : '#0D47A1';
+        const crossDay = crossAssignments && crossAssignments[date];
+        const crossSlot = crossDay ? Object.keys(crossSalaLabels||{}).find(k=>crossDay[k]===stu.id) : null;
+        typeTag=`<span class="badge-ind" style="background:${destColor};color:#fff;">🔀 Cambio a ${destName}</span>`;
+        assignLabel = crossSlot
+          ? `<span style="font-weight:700;color:${destColor};">${destName}: ${crossSalaLabels[crossSlot]}</span>`
+          : `<span style="color:#9CA3AF;font-size:10px;">En ${destName} hoy</span>`;
+      }
+      else if(spType==='night'){
         // Night shift: student IS in sala 7am-1pm, then preturno 1pm-7pm, then night 7pm-7am
         if(assignedSlot){
           const sc=SALA_PALETTE[salaKeys.indexOf(assignedSlot)%SALA_PALETTE.length];
@@ -1614,6 +1743,12 @@ function buildTable(assignments, salaKeys, salaLabels, tblStudents, palette){
       else if(assignedSlot==='interconsult'){typeTag=`<span class="badge-ind" style="background:#14532D;color:#4ADE80;">📋 Interconsultas</span>`;assignLabel=`<span style="font-weight:700;color:#14532D;">Interconsultas</span>`;salaVisits[assignedSlot]++;}
       else if(assignedSlot==='recup'){const recLbl=('🔄 '+(salaLabels['recup']||'Recuperación'));typeTag=`<span class="badge-ind" style="background:#0C4A6E;color:#7DD3FC;">${recLbl}</span>`;assignLabel=`<span style="font-weight:700;color:#0C4A6E;">${salaLabels[assignedSlot]}</span>`;salaVisits[assignedSlot]++;}
       else if(assignedSlot==='resonancia'){typeTag=`<span class="badge-ind" style="background:#7C2D12;color:#FED7AA;">🧲 Resonancia Magnética</span>`;assignLabel=`<span style="font-weight:700;color:#7C2D12;">Resonancia Magnética</span>`;salaVisits[assignedSlot]++;}
+      else if(assignedSlot==='comodin'){typeTag=`<span class="badge-ind" style="background:#5B21B6;color:#DDD6FE;">🃏 Sala Comodín</span>`;assignLabel=`<span style="font-weight:700;color:#5B21B6;">${salaLabels[assignedSlot]||'Comodín'}</span>`;salaVisits[assignedSlot]++;}
+      else if(doubledSlot){
+        typeTag=`<span class="badge-ind" style="background:#B45309;color:#fff;">⚠️ Sala compartida</span>`;
+        assignLabel=`<span style="font-weight:700;color:#B45309;">${salaLabels[doubledSlot]||doubledSlot} (compartida)</span>`;
+        salaVisits[doubledSlot]=(salaVisits[doubledSlot]||0)+1;
+      }
       else if(assignedSlot){
         const sc=SALA_PALETTE[salaKeys.indexOf(assignedSlot)%SALA_PALETTE.length];
         assignLabel=`<span style="font-weight:700;color:${sc.hdr};">${salaLabels[assignedSlot]}</span>`;
@@ -1734,9 +1869,9 @@ function buildTable(assignments, salaKeys, salaLabels, tblStudents, palette){
       bOut.salaKeys.forEach(sl=>{ if(bA.__fromKennedy[sl] && bA[sl]){ (apoyoMap[bA[sl]]=apoyoMap[bA[sl]]||{})[date]=bOut.salaLabels[sl]; } });
     });
     const kPanel = tableSection(1,'🔵','HOSPITAL DE KENNEDY',kOut,kStu,sub,'#4F46E5',KEN_PAL,'')
-                 + cardsSection(2,'🔵','Kennedy',buildCards(kStu,kOut.assignments,kOut.salaKeys,kOut.salaLabels,apoyoMap),'#0D47A1',kStu.length);
+                 + cardsSection(2,'🔵','Kennedy',buildCards(kStu,kOut.assignments,kOut.salaKeys,kOut.salaLabels,apoyoMap,'hosp_bosa',bOut.assignments,bOut.salaLabels),'#0D47A1',kStu.length);
     const bPanel = tableSection(1,'🔴','HOSPITAL DE BOSA',bOut,bStu,sub,'#E11D48',BOS_PAL,'incluye 🔵 apoyo de Kennedy')
-                 + cardsSection(2,'🔴','Bosa',buildCards(bStu,bOut.assignments,bOut.salaKeys,bOut.salaLabels),'#C62828',bStu.length);
+                 + cardsSection(2,'🔴','Bosa',buildCards(bStu,bOut.assignments,bOut.salaKeys,bOut.salaLabels,null,'hosp_kennedy',kOut.assignments,kOut.salaLabels),'#C62828',bStu.length);
     mainContentHTML = weekPickerHTML + `
       <div class="hosp-tabs">
         <button class="hosp-tab active" data-tab="kennedy" onclick="showHospTab('kennedy',this)">🔵 Kennedy · ${kStu.length}</button>
@@ -2010,7 +2145,7 @@ body{font-family:'Inter',sans-serif;font-size:13.5px;line-height:1.6;color:var(-
     </div>
   </div>
 </div>
-<div class="nota nota-info"><strong>📋 Sistema de asignación:</strong> Las salas se asignan por aleatorización equitativa rotativa — cada estudiante rota por todas las salas e interconsultas. ${ambos?'Se registran <strong>Kennedy y Bosa a la vez</strong>: cuando sobran estudiantes en Kennedy, pasan <strong>primero al Hospital Tintal</strong> (solo mar/jue/vie) y, si no hay cupo, ocupan un <strong>cupo real en el cuadro de Bosa</strong> (marcados 🏥 Apoyo Kennedy).':(ST.hosp==='kennedy'?'Cuando hay más estudiantes que cupos en Kennedy, el sobrecupo va <strong>primero al Hospital Tintal</strong> (solo martes, jueves y viernes) y, si no hay cupo, como <strong>apoyo en Bosa</strong> — nadie queda sin actividad.':'Incluye Gastro AM / Recuperación PM, Resonancia Magnética (martes) e Interconsultas.')} Los días de clase, turno noche y post-turno quedan excluidos. Los festivos colombianos están marcados automáticamente.</div>
+<div class="nota nota-info"><strong>📋 Sistema de asignación:</strong> Las salas se asignan por aleatorización equitativa rotativa — cada estudiante rota por todas las salas e interconsultas. ${ambos?'Se registran <strong>Kennedy y Bosa a la vez</strong>: cuando sobran estudiantes en Kennedy, pasan <strong>primero al Hospital Tintal</strong> (solo mar/jue/vie) y, si no hay cupo, ocupan un <strong>cupo real en el cuadro de Bosa</strong> (marcados 🏥 Apoyo Kennedy).':(ST.hosp==='kennedy'?'Cuando hay más estudiantes que cupos en Kennedy, el sobrecupo va <strong>primero al Hospital Tintal</strong> (solo martes, jueves y viernes) y, si no hay cupo, como <strong>apoyo en Bosa</strong> — nadie queda sin actividad.':'Incluye Gastro AM / Recuperación PM, Resonancia Magnética (martes) e Interconsultas.')} Los días de clase, turno noche y post-turno quedan excluidos. Los festivos colombianos están marcados automáticamente.${(!ambos&&ST.hosp!=='kennedy')||ambos?' En Bosa, si sobran estudiantes tras llenar salas + gastro/recup + interconsultas, se activa la <strong>🃏 Sala Comodín</strong> (última prioridad, nunca los viernes); si aun así no alcanza, se <strong>comparte una sala entre 2 estudiantes</strong>, marcado con ⚠️.':''}</div>
 <div class="nota nota-warn"><strong>🚨 Urgencias:</strong> Los fines de semana y festivos colombianos muestran los estudiantes asignados a urgencias. Las celdas sin asignar pueden completarse manualmente.</div>
 
 <div class="leyenda">
@@ -2028,6 +2163,8 @@ body{font-family:'Inter',sans-serif;font-size:13.5px;line-height:1.6;color:var(-
         <span class="ley-badge" style="background:#FFF1F2;border-left-color:#E11D48;color:#881337;">🇨🇴 Festivo</span>
         <span class="ley-badge" style="background:#CCFBF1;border-left-color:#0F766E;color:#0F766E;">🏨 Hospital Tintal (sobrecupo · mar/jue/vie)</span>
         <span class="ley-badge" style="background:#FFE4E6;border-left-color:#E11D48;color:#9F1239;">🏥 Apoyo en Bosa (sobrecupo)</span>
+        <span class="ley-badge" style="background:#EDE9FE;border-left-color:#7C3AED;color:#5B21B6;">🃏 Sala Comodín (Bosa · último recurso · no viernes)</span>
+        <span class="ley-badge" style="background:#FFFBEB;border-left-color:#F59E0B;color:#B45309;">⚠️ Sala compartida entre 2 estudiantes (sobrecupo Bosa)</span>
       </div>
     </div>
   </div>
