@@ -131,6 +131,19 @@ h1 .line2{display:block;background:linear-gradient(90deg,var(--mint),var(--sky),
 .export-btn{margin-top:10px;padding:9px 16px;background:linear-gradient(135deg,#2563EB,#4F46E5);color:#FFFFFF;border:none;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:800;cursor:pointer;transition:filter .2s;}
 .export-btn:hover{filter:brightness(1.08);}
 
+/* AJUSTE MANUAL DE NOTA */
+.ajuste-cell{display:flex;align-items:center;justify-content:center;gap:4px;}
+.ajuste-btn{background:rgba(0,0,0,.05);border:1.5px solid rgba(0,0,0,.14);border-radius:7px;color:#000;font-family:'JetBrains Mono',monospace;font-weight:800;font-size:13px;cursor:pointer;transition:all .12s;width:24px;height:24px;display:flex;align-items:center;justify-content:center;line-height:1;}
+.ajuste-btn:hover{transform:translateY(-1px);}
+.ajuste-btn.minus{color:#DC2626;border-color:#DC2626;background:rgba(220,38,38,.08);}
+.ajuste-btn.minus:hover{background:#DC2626;color:#FFFFFF;}
+.ajuste-btn.plus{color:#059669;border-color:#059669;background:rgba(5,150,105,.08);}
+.ajuste-btn.plus:hover{background:#059669;color:#FFFFFF;}
+.ajuste-val{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:800;min-width:34px;text-align:center;cursor:pointer;border-radius:5px;padding:2px 3px;color:#000;}
+.ajuste-val.pos{color:#059669;}
+.ajuste-val.neg{color:#DC2626;}
+.ajuste-val:hover{background:rgba(0,0,0,.06);}
+
 /* SORPRESA / TURNO */
 .sorpresa-box{background:var(--panel);border:2px solid var(--sky);border-radius:var(--radius);padding:16px;box-shadow:0 10px 34px rgba(20,27,46,.10);}
 .sorpresa-inner{text-align:center;}
@@ -247,6 +260,52 @@ h1 .line2{display:block;background:linear-gradient(90deg,var(--mint),var(--sky),
 .btn-cerrar-caso{background:#EF4444;color:#FFFFFF;border:none;border-radius:10px;padding:8px 14px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:12px;cursor:pointer;}
 
 .footer{text-align:center;padding:30px 20px;color:#000000;font-size:11px;font-weight:500;opacity:.7;}
+
+/* ══════════════════════════════════════════
+   CALCULADORA FLOTANTE (no obstruye la vista: inicia cerrada como botón)
+══════════════════════════════════════════ */
+#calc-widget{position:fixed;bottom:78px;left:20px;width:270px;background:var(--panel);border:2px solid var(--c1);border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.18);z-index:996;font-family:'Plus Jakarta Sans',sans-serif;display:none;user-select:none;}
+#calc-widget.visible{display:block;}
+.calc-header{display:flex;justify-content:space-between;align-items:center;background:var(--c1);color:#FFFFFF;padding:9px 12px;border-radius:11px 11px 0 0;cursor:move;font-weight:800;font-size:13px;letter-spacing:.05em;text-transform:uppercase;}
+.calc-header-title{display:flex;align-items:center;gap:7px;}
+.calc-header-btns{display:flex;gap:6px;}
+.calc-header-btn{background:rgba(255,255,255,.18);border:none;color:#FFFFFF;width:20px;height:20px;border-radius:4px;cursor:pointer;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:background .15s;}
+.calc-header-btn:hover{background:rgba(255,255,255,.32);}
+.calc-body{padding:0;}
+#calc-widget.collapsed .calc-body{display:none;}
+#calc-widget.collapsed{width:190px;}
+.calc-tabs{display:flex;background:var(--panel-2);border-bottom:1px solid var(--line);}
+.calc-tab{flex:1;padding:7px 6px;border:none;background:transparent;cursor:pointer;font-size:12px;font-weight:800;color:#000;text-transform:uppercase;letter-spacing:.04em;transition:all .15s;border-bottom:3px solid transparent;}
+.calc-tab:hover{color:var(--c1);background:#FFFFFF;}
+.calc-tab.active{color:var(--c1);background:#FFFFFF;border-bottom-color:var(--c1);}
+.calc-panel{display:none;padding:11px;}
+.calc-panel.active{display:block;}
+.calc-display{background:#111827;color:#FFFFFF;padding:9px 11px;border-radius:6px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:600;min-height:40px;margin-bottom:7px;overflow:hidden;word-break:break-all;}
+.calc-display-prev{font-size:12px;color:#000;min-height:13px;margin-bottom:2px;opacity:.65;}
+.calc-keys{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;}
+.calc-key{padding:9px 0;border:1px solid var(--line);background:#FFFFFF;border-radius:5px;cursor:pointer;font-size:15px;font-weight:700;color:#000;font-family:'JetBrains Mono',monospace;transition:all .1s;}
+.calc-key:hover{background:var(--panel-2);}
+.calc-key:active{transform:scale(0.95);}
+.calc-key.op{background:#E0E7FF;color:var(--c1);border-color:var(--c1);}
+.calc-key.op:hover{background:var(--c1);color:#FFFFFF;}
+.calc-key.eq{background:var(--c1);color:#FFFFFF;border-color:var(--c1);grid-column:span 2;}
+.calc-key.eq:hover{background:#3730A3;}
+.calc-key.clear{background:#FEE2E2;color:var(--red);border-color:var(--red);}
+.calc-key.clear:hover{background:var(--red);color:#FFFFFF;}
+.calc-form-row{margin-bottom:9px;}
+.calc-form-label{display:block;font-size:12px;font-weight:800;color:#000;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;}
+.calc-sex-toggle{display:flex;gap:4px;margin-bottom:9px;}
+.calc-sex-btn{flex:1;padding:6px 0;border:1.5px solid var(--line);background:#FFFFFF;border-radius:5px;cursor:pointer;font-size:13px;font-weight:800;color:#000;transition:all .15s;}
+.calc-sex-btn.active{background:var(--c1);color:#FFFFFF;border-color:var(--c1);}
+.calc-input-field{width:100%;padding:7px 9px;border:1.5px solid var(--line);border-radius:5px;font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600;color:#000;}
+.calc-input-field:focus{outline:none;border-color:var(--c1);}
+.calc-result{margin-top:9px;padding:9px;background:#E6FBF6;border-left:3px solid var(--mint-2);border-radius:4px;}
+.calc-result-label{font-size:11px;font-weight:800;color:var(--mint-2);text-transform:uppercase;letter-spacing:.05em;}
+.calc-result-value{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:800;color:#000;margin-top:2px;}
+.calc-result-formula{font-size:11px;color:#000;margin-top:4px;font-family:'JetBrains Mono',monospace;opacity:.75;}
+#calc-fab{position:fixed;bottom:20px;left:20px;width:48px;height:48px;background:var(--c1);color:#FFFFFF;border:none;border-radius:50%;cursor:pointer;font-size:20px;box-shadow:0 6px 20px rgba(79,70,229,.35);z-index:996;transition:transform .15s;}
+#calc-fab:hover{transform:scale(1.1);}
+@media(max-width:480px){#calc-widget{width:88vw;max-width:270px;left:6vw;}#calc-fab{left:14px;bottom:14px;}}
 </style>
 </head>
 <body>
@@ -304,8 +363,8 @@ h1 .line2{display:block;background:linear-gradient(90deg,var(--mint),var(--sky),
       <div class="rubrica-sub">Cada estudiante tiene <strong>un único turno</strong>. La nota se construye puntuando cada una de las 5 preguntas del caso con 0, 0.5 o 1 (máx 5.0). Un <strong>robo de punto suma +0.3</strong> a la nota del que roba.</div>
       <div class="rubrica-table-wrap">
         <table class="rubrica-table">
-          <thead><tr><th>Estudiante</th><th>Turno / Robos</th><th style="text-align:center">Nota /5.0</th></tr></thead>
-          <tbody id="rubricaBody"><tr><td colspan="3" style="text-align:center;color:#000000;font-size:13px;padding:20px;opacity:.6">Los estudiantes aparecen aquí al registrarlos.</td></tr></tbody>
+          <thead><tr><th>Estudiante</th><th>Turno / Robos</th><th style="text-align:center">Ajuste</th><th style="text-align:center">Nota /5.0</th></tr></thead>
+          <tbody id="rubricaBody"><tr><td colspan="4" style="text-align:center;color:#000000;font-size:13px;padding:20px;opacity:.6">Los estudiantes aparecen aquí al registrarlos.</td></tr></tbody>
         </table>
       </div>
       <div class="rubrica-legend">
@@ -408,6 +467,72 @@ h1 .line2{display:block;background:linear-gradient(90deg,var(--mint),var(--sky),
 <div class="footer">Seminario de Casos Clínicos · Anestesiología · Uso docente</div>
 
 </div>
+
+<!-- ════════════════════════════════
+     CALCULADORA FLOTANTE
+════════════════════════════════ -->
+<div id="calc-widget">
+  <div class="calc-header" id="calc-header">
+    <div class="calc-header-title">🧮 <span>Calculadora</span></div>
+    <div class="calc-header-btns">
+      <button class="calc-header-btn" onclick="toggleCalcCollapse()" title="Minimizar" id="calc-collapse-btn">−</button>
+      <button class="calc-header-btn" onclick="hideCalc()" title="Cerrar">✕</button>
+    </div>
+  </div>
+  <div class="calc-body">
+    <div class="calc-tabs">
+      <button class="calc-tab active" data-panel="basic" onclick="switchCalcTab('basic')">Básica</button>
+      <button class="calc-tab" data-panel="ibw" onclick="switchCalcTab('ibw')">Peso Ideal</button>
+    </div>
+
+    <div class="calc-panel active" id="calc-panel-basic">
+      <div class="calc-display-prev" id="calc-prev"></div>
+      <div class="calc-display" id="calc-display">0</div>
+      <div class="calc-keys">
+        <button class="calc-key clear" onclick="calcClear()">C</button>
+        <button class="calc-key op" onclick="calcOp('(')">(</button>
+        <button class="calc-key op" onclick="calcOp(')')">)</button>
+        <button class="calc-key op" onclick="calcOp('/')">÷</button>
+        <button class="calc-key" onclick="calcNum('7')">7</button>
+        <button class="calc-key" onclick="calcNum('8')">8</button>
+        <button class="calc-key" onclick="calcNum('9')">9</button>
+        <button class="calc-key op" onclick="calcOp('*')">×</button>
+        <button class="calc-key" onclick="calcNum('4')">4</button>
+        <button class="calc-key" onclick="calcNum('5')">5</button>
+        <button class="calc-key" onclick="calcNum('6')">6</button>
+        <button class="calc-key op" onclick="calcOp('-')">−</button>
+        <button class="calc-key" onclick="calcNum('1')">1</button>
+        <button class="calc-key" onclick="calcNum('2')">2</button>
+        <button class="calc-key" onclick="calcNum('3')">3</button>
+        <button class="calc-key op" onclick="calcOp('+')">+</button>
+        <button class="calc-key" onclick="calcNum('0')">0</button>
+        <button class="calc-key" onclick="calcNum('.')">.</button>
+        <button class="calc-key eq" onclick="calcEq()">=</button>
+      </div>
+    </div>
+
+    <div class="calc-panel" id="calc-panel-ibw">
+      <div class="calc-form-row">
+        <label class="calc-form-label">Sexo</label>
+        <div class="calc-sex-toggle">
+          <button class="calc-sex-btn active" id="ibw-sex-m" onclick="setIbwSex('M')">♂ Hombre</button>
+          <button class="calc-sex-btn" id="ibw-sex-f" onclick="setIbwSex('F')">♀ Mujer</button>
+        </div>
+      </div>
+      <div class="calc-form-row">
+        <label class="calc-form-label">Talla (cm)</label>
+        <input type="number" class="calc-input-field" id="ibw-height" placeholder="Ej: 170" oninput="calcIbw()" inputmode="decimal">
+      </div>
+      <div class="calc-result">
+        <div class="calc-result-label">Peso ideal (Devine)</div>
+        <div class="calc-result-value" id="ibw-result">— kg</div>
+        <div class="calc-result-formula" id="ibw-formula">♂ = 50 + 0.9 × (talla − 152)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button id="calc-fab" onclick="showCalc()" title="Abrir calculadora">🧮</button>
 
 <script>
 // ═══════════════════════════════════════════════════════════
@@ -517,7 +642,8 @@ function resetEstudiantes(){
 let ratings={};
 
 function ensureRating(nombre){
-  if(!ratings[nombre]) ratings[nombre]={tuvoTurno:false,caso:null,preguntasIdx:[],puntos:{},notaTurno:0,robos:0};
+  if(!ratings[nombre]) ratings[nombre]={tuvoTurno:false,caso:null,preguntasIdx:[],puntos:{},notaTurno:0,robos:0,ajuste:0};
+  if(ratings[nombre].ajuste===undefined) ratings[nombre].ajuste=0;
   return ratings[nombre];
 }
 
@@ -569,14 +695,38 @@ function actualizarNotaTurnoLive(){
 function notaFinal(nombre){
   const r=ratings[nombre];
   if(!r||!r.tuvoTurno) return null;
-  return Math.min(5.0,r.notaTurno+0.3*r.robos);
+  return Math.max(0,Math.min(5.0,r.notaTurno+0.3*r.robos+(r.ajuste||0)));
+}
+
+// ── Ajuste manual de última hora (± sobre la nota final) ──
+function ajustarNota(nombre,delta){
+  const r=ensureRating(nombre);
+  r.ajuste=Math.round(((r.ajuste||0)+delta)*10)/10;
+  renderRubrica();
+  pnfActualizar();
+  const nota=r.tuvoTurno||r.robos>0?Math.max(0,Math.min(5.0,(r.notaTurno||0)+0.3*r.robos+r.ajuste)):null;
+  if(nota!==null){
+    const badge=document.getElementById('notaGuardadaBadge');
+    if(badge){badge.textContent=`✎ ${nombre.split(' ')[0]}: ajuste ${r.ajuste>0?'+':''}${fmt(r.ajuste,1)} → ${fmt(nota,1)}/5.0`;badge.classList.add('show');setTimeout(()=>badge.classList.remove('show'),2200);}
+  }
+}
+function ajustarNotaManual(nombre){
+  const r=ensureRating(nombre);
+  const actual=r.ajuste||0;
+  const input=prompt(`Ajuste manual para ${nombre} (puede ser negativo, ej: -0.5 o 0.3). Ajuste actual: ${fmt(actual,1)}`,actual);
+  if(input===null) return;
+  const val=parseFloat(input.replace(',','.'));
+  if(isNaN(val)){alert('Valor no válido.');return;}
+  r.ajuste=Math.round(val*10)/10;
+  renderRubrica();
+  pnfActualizar();
 }
 function notaColor(n){if(n===null||n===undefined) return '#000000';const v=parseFloat(n);return v>=4.5?'#10B981':v>=3.5?'#3B82F6':v>=3?'#F59E0B':v>=2?'#EA580C':'#DC2626';}
 
 function renderRubrica(){
   const tb=document.getElementById('rubricaBody');
   if(!estudiantes.length){
-    tb.innerHTML='<tr><td colspan="3" style="text-align:center;color:#000000;font-size:13px;padding:20px;opacity:.6">Los estudiantes aparecen aquí al registrarlos.</td></tr>';return;
+    tb.innerHTML='<tr><td colspan="4" style="text-align:center;color:#000000;font-size:13px;padding:20px;opacity:.6">Los estudiantes aparecen aquí al registrarlos.</td></tr>';return;
   }
   tb.innerHTML=estudiantes.map((n,i)=>{
     const color=EST_COLORS[i%EST_COLORS.length];
@@ -595,11 +745,21 @@ function renderRubrica(){
       detalle+=`<div style="font-size:10px;color:#000000;margin-top:3px;font-weight:600;opacity:.5;font-style:italic">Sin turno aún</div>`;
     }
     const active=n===ultimoSorteado?`style="background:rgba(16,185,129,.08)"`:'';
-    const notaMostrar=nota!==null?fmt(nota,1):(r&&r.robos>0?fmt(Math.min(5.0,0.3*r.robos),1):'—');
+    const ajuste=r&&r.ajuste?r.ajuste:0;
+    const notaMostrar=nota!==null?fmt(nota,1):(r&&r.robos>0?fmt(Math.max(0,Math.min(5.0,0.3*r.robos+ajuste)),1):(ajuste!==0?fmt(Math.max(0,Math.min(5.0,ajuste)),1):'—'));
+    const ajusteCls=ajuste>0?'pos':ajuste<0?'neg':'';
+    const nombreSeguro=n.replace(/'/g,"\\'");
     return `<tr ${active}>
       <td><span class="student-name-cell" style="color:${color}">${n}</span>${detalle}</td>
       <td style="font-size:11px;color:#000000;font-weight:600">${r&&r.tuvoTurno?`Caso ${r.caso}`:'—'}</td>
-      <td class="nota-cell" style="color:${notaColor(nota||(r&&r.robos>0?0.3*r.robos:null))}">${notaMostrar}</td>
+      <td>
+        <div class="ajuste-cell">
+          <button class="ajuste-btn minus" onclick="ajustarNota('${nombreSeguro}',-0.1)" title="Restar 0.1">−</button>
+          <span class="ajuste-val ${ajusteCls}" onclick="ajustarNotaManual('${nombreSeguro}')" title="Clic para escribir un valor exacto">${ajuste>0?'+':''}${fmt(ajuste,1)}</span>
+          <button class="ajuste-btn plus" onclick="ajustarNota('${nombreSeguro}',0.1)" title="Sumar 0.1">+</button>
+        </div>
+      </td>
+      <td class="nota-cell" style="color:${notaColor(nota!==null?nota:(r&&(r.robos>0||ajuste!==0)?Math.max(0,Math.min(5.0,0.3*(r?r.robos:0)+ajuste)):null))}">${notaMostrar}</td>
     </tr>`;
   }).join('');
 }
@@ -611,17 +771,20 @@ function exportNotas(){
     const r=ratings[n];
     const nota=notaFinal(n);
     lines.push(n);
+    const ajuste=r&&r.ajuste?r.ajuste:0;
     if(r&&r.tuvoTurno){
       lines.push(`  Caso ${r.caso}: ${r.casoTitulo||''}`);
       const puntos=Object.entries(r.puntos).map(([k,v])=>`P${parseInt(k)+1}=${v}`).join('  ');
       lines.push(`  Puntuación por pregunta: ${puntos}`);
       lines.push(`  Nota base (suma preguntas): ${fmt(r.notaTurno,1)}/5.0`);
       if(r.robos>0) lines.push(`  Bonus por robos: +${fmt(0.3*r.robos,1)} (${r.robos} robo${r.robos>1?'s':''})`);
+      if(ajuste!==0) lines.push(`  Ajuste manual: ${ajuste>0?'+':''}${fmt(ajuste,1)}`);
       lines.push(`  NOTA FINAL: ${fmt(nota,1)}/5.0`);
-    } else if(r&&r.robos>0){
+    } else if(r&&(r.robos>0||ajuste!==0)){
       lines.push(`  Sin turno propio`);
-      lines.push(`  Bonus por robos: +${fmt(0.3*r.robos,1)} (${r.robos} robo${r.robos>1?'s':''})`);
-      lines.push(`  NOTA FINAL: ${fmt(Math.min(5.0,0.3*r.robos),1)}/5.0`);
+      if(r.robos>0) lines.push(`  Bonus por robos: +${fmt(0.3*r.robos,1)} (${r.robos} robo${r.robos>1?'s':''})`);
+      if(ajuste!==0) lines.push(`  Ajuste manual: ${ajuste>0?'+':''}${fmt(ajuste,1)}`);
+      lines.push(`  NOTA FINAL: ${fmt(Math.max(0,Math.min(5.0,0.3*(r.robos||0)+ajuste)),1)}/5.0`);
     } else lines.push(`  Sin calificar`);
     lines.push('');
   });
@@ -688,7 +851,8 @@ function pnfActualizar(){
     const respondidas=Object.keys(r.puntos).length;
     const color=notaColor(nota);
     const bonus=0.3*r.robos;
-    pnfNotaActual.innerHTML=`Caso ${r.caso} · ${respondidas}/5 preguntas<br>Nota: <span class="pnf-nota-val" style="color:${color}">${fmt(nota,1)}/5.0</span>${bonus>0?` <span style="color:#EC4899;font-weight:800">(+${fmt(bonus,1)})</span>`:''}`;
+    const ajuste=r.ajuste||0;
+    pnfNotaActual.innerHTML=`Caso ${r.caso} · ${respondidas}/5 preguntas<br>Nota: <span class="pnf-nota-val" style="color:${color}">${fmt(nota,1)}/5.0</span>${bonus>0?` <span style="color:#EC4899;font-weight:800">(+${fmt(bonus,1)})</span>`:''}${ajuste!==0?` <span style="color:${ajuste>0?'#059669':'#DC2626'};font-weight:800">(ajuste ${ajuste>0?'+':''}${fmt(ajuste,1)})</span>`:''}`;
   } else {
     pnfNotaActual.textContent='Pulsa 🎲 GIRAR y luego sortea 5 preguntas.';
   }
@@ -1149,6 +1313,106 @@ function sortear5Preguntas(){
 
 // Inicializar
 renderEstudiantes();
+
+// ═══════════════════════════════════════════════════════
+//  CALCULADORA FLOTANTE
+// ═══════════════════════════════════════════════════════
+let calcExpr='';
+let calcSex='M';
+
+function showCalc(){
+  document.getElementById('calc-widget').classList.add('visible');
+  document.getElementById('calc-fab').style.display='none';
+}
+function hideCalc(){
+  document.getElementById('calc-widget').classList.remove('visible');
+  document.getElementById('calc-fab').style.display='block';
+}
+function toggleCalcCollapse(){
+  const w=document.getElementById('calc-widget');
+  const btn=document.getElementById('calc-collapse-btn');
+  w.classList.toggle('collapsed');
+  btn.textContent=w.classList.contains('collapsed')?'□':'−';
+}
+function switchCalcTab(panel){
+  document.querySelectorAll('.calc-tab').forEach(t=>t.classList.toggle('active',t.dataset.panel===panel));
+  document.querySelectorAll('.calc-panel').forEach(p=>p.classList.toggle('active',p.id==='calc-panel-'+panel));
+}
+function calcNum(n){
+  calcExpr+=n;
+  document.getElementById('calc-display').textContent=calcExpr||'0';
+}
+function calcOp(op){
+  calcExpr+=op;
+  document.getElementById('calc-display').textContent=calcExpr||'0';
+}
+function calcClear(){
+  calcExpr='';
+  document.getElementById('calc-prev').textContent='';
+  document.getElementById('calc-display').textContent='0';
+}
+function calcEq(){
+  const prev=document.getElementById('calc-prev');
+  const disp=document.getElementById('calc-display');
+  try{
+    if(!/^[0-9+\-*/().\s]+$/.test(calcExpr)) throw new Error('inválido');
+    const result=Function('"use strict";return('+calcExpr+')')();
+    if(typeof result!=='number'||!isFinite(result)) throw new Error('inválido');
+    prev.textContent=calcExpr+' =';
+    calcExpr=String(Math.round(result*100000)/100000);
+    disp.textContent=calcExpr;
+  }catch(e){
+    disp.textContent='Error';
+    calcExpr='';
+  }
+}
+function setIbwSex(sex){
+  calcSex=sex;
+  document.getElementById('ibw-sex-m').classList.toggle('active',sex==='M');
+  document.getElementById('ibw-sex-f').classList.toggle('active',sex==='F');
+  const f=sex==='M'?'♂ = 50 + 0.9 × (talla − 152)':'♀ = 45.5 + 0.9 × (talla − 152)';
+  document.getElementById('ibw-formula').textContent=f;
+  calcIbw();
+}
+function calcIbw(){
+  const h=parseFloat(document.getElementById('ibw-height').value);
+  const out=document.getElementById('ibw-result');
+  if(isNaN(h)||h<=0){out.textContent='— kg';return;}
+  const base=calcSex==='M'?50:45.5;
+  const ibw=base+0.9*(h-152);
+  out.textContent=ibw.toFixed(1)+' kg';
+}
+(function makeCalcDraggable(){
+  const widget=document.getElementById('calc-widget');
+  const header=document.getElementById('calc-header');
+  let ox=0,oy=0,dragging=false;
+  function onDown(e){
+    if(e.target.closest('.calc-header-btn'))return;
+    dragging=true;
+    const rect=widget.getBoundingClientRect();
+    const p=e.touches?e.touches[0]:e;
+    ox=p.clientX-rect.left;oy=p.clientY-rect.top;
+    widget.style.left=rect.left+'px';widget.style.top=rect.top+'px';
+    widget.style.bottom='auto';widget.style.right='auto';
+    e.preventDefault();
+  }
+  function onMove(e){
+    if(!dragging)return;
+    const p=e.touches?e.touches[0]:e;
+    let x=p.clientX-ox,y=p.clientY-oy;
+    const w=widget.offsetWidth,h=widget.offsetHeight;
+    x=Math.max(4,Math.min(window.innerWidth-w-4,x));
+    y=Math.max(4,Math.min(window.innerHeight-h-4,y));
+    widget.style.left=x+'px';widget.style.top=y+'px';
+  }
+  function onUp(){dragging=false;}
+  header.addEventListener('mousedown',onDown);
+  window.addEventListener('mousemove',onMove);
+  window.addEventListener('mouseup',onUp);
+  header.addEventListener('touchstart',onDown,{passive:false});
+  window.addEventListener('touchmove',onMove,{passive:false});
+  window.addEventListener('touchend',onUp);
+})();
 </script>
 </body>
 </html>
