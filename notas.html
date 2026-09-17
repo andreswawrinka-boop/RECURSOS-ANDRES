@@ -66,6 +66,12 @@ select:focus{outline:none;border-color:#0D47A1;box-shadow:0 0 0 3px rgba(13,71,1
   font-size:12px;font-weight:800;cursor:pointer;margin-left:auto;transition:all .2s
 }
 .btn-limpiar:hover{background:#C62828;color:#fff}
+.btn-json{
+  padding:8px 16px;border-radius:8px;border:1.5px solid #0D47A1;
+  background:#fff;color:#0D47A1;font-family:'DM Sans',sans-serif;
+  font-size:12px;font-weight:800;cursor:pointer;transition:all .2s
+}
+.btn-json:hover{background:#0D47A1;color:#fff}
 
 /* ── MAIN AREA ── */
 .main{padding:16px 20px;width:100%}
@@ -672,6 +678,9 @@ table th.th-teorica{background:#7B1FA2!important;}
     <option value="Grupo 4">Grupo 4</option>
     <option value="Grupo 5">Grupo 5</option>
   </select>
+  <button class="btn-json" onclick="exportarJSON()">⬇ Exportar JSON</button>
+  <button class="btn-json" onclick="document.getElementById('input-import-json').click()">⬆ Importar JSON</button>
+  <input type="file" id="input-import-json" accept="application/json,.json" style="display:none" onchange="importarJSON(event)">
   <button class="btn-limpiar" onclick="limpiarGrupo()">🗑 Limpiar grupo</button>
 </div>
 
@@ -1427,6 +1436,116 @@ function limpiarGrupo(){
 function imprimir(){
   if(!UKEY||!GRUPO){alert('Selecciona universidad y grupo primero.');return;}
   window.print();
+}
+
+// ══════════════════════════════════════════════════
+// EXPORTAR / IMPORTAR JSON
+// Permite guardar TODO el conjunto de notas cargado
+// (todos los hospitales, universidades y grupos) para
+// continuar trabajando después o complementarlo.
+// ══════════════════════════════════════════════════
+function exportarJSON(){
+  const payload = {
+    tipo:'notas-anestesiologia-export',
+    version:1,
+    exportadoEn:new Date().toISOString(),
+    semestre:SEM,
+    anio:ANIO,
+    seleccionActual:{ hosp:HOSP, universidad:UKEY, grupo:GRUPO },
+    data:DATA
+  };
+  const blob = new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const fecha = new Date().toISOString().slice(0,10);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `notas_anestesiologia_${SEM}-${ANIO}_${fecha}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function importarJSON(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    let payload;
+    try{
+      payload = JSON.parse(e.target.result);
+    }catch(err){
+      alert('No se pudo leer el archivo: no es un JSON válido.');
+      event.target.value='';
+      return;
+    }
+    // Acepta tanto el formato exportado por esta app ({data:{...}})
+    // como un objeto DATA "crudo" ({hosp:{uni:{grupo:{...}}}}).
+    const incoming = (payload && typeof payload==='object' && payload.data) ? payload.data : payload;
+    if(!incoming || typeof incoming!=='object'){
+      alert('El archivo no tiene un formato reconocido.');
+      event.target.value='';
+      return;
+    }
+    let gruposImportados = 0;
+    Object.keys(incoming).forEach(hosp=>{
+      if(!DATA[hosp]) DATA[hosp]={};
+      Object.keys(incoming[hosp]||{}).forEach(uni=>{
+        if(!DATA[hosp][uni]) DATA[hosp][uni]={};
+        Object.keys(incoming[hosp][uni]||{}).forEach(grp=>{
+          DATA[hosp][uni][grp] = incoming[hosp][uni][grp];
+          gruposImportados++;
+        });
+      });
+    });
+
+    // Restaurar semestre/año si vienen en el archivo
+    if(payload && payload.semestre){
+      SEM = payload.semestre;
+      const selSem=document.getElementById('sel-sem');
+      if(selSem) selSem.value=SEM;
+    }
+    if(payload && payload.anio){
+      ANIO = payload.anio;
+      const selAnio=document.getElementById('sel-anio');
+      if(selAnio){
+        if(![...selAnio.options].some(o=>Number(o.value)===Number(ANIO))){
+          const o=document.createElement('option');
+          o.value=ANIO; o.textContent=ANIO;
+          selAnio.appendChild(o);
+        }
+        selAnio.value=ANIO;
+      }
+    }
+    updateSemLabel();
+
+    // Restaurar la selección de hospital/universidad/grupo si viene en el archivo
+    const sel = payload && payload.seleccionActual;
+    if(sel && sel.hosp){
+      setHosp(sel.hosp);
+      if(sel.universidad){
+        const selUni=document.getElementById('sel-uni');
+        selUni.value = sel.universidad;
+        UKEY = sel.universidad;
+        fillGrupo();
+        if(sel.grupo){
+          document.getElementById('sel-grp').value = sel.grupo;
+          GRUPO = sel.grupo;
+        }
+      }
+    }
+    render();
+
+    alert(gruposImportados>0
+      ? `Datos importados correctamente (${gruposImportados} grupo(s) cargado(s)/actualizado(s)).`
+      : 'El archivo se leyó pero no contenía grupos con datos.');
+    event.target.value='';
+  };
+  reader.onerror = function(){
+    alert('Ocurrió un error al leer el archivo.');
+    event.target.value='';
+  };
+  reader.readAsText(file);
 }
 
 // ══════════════════════════════════════════════════
