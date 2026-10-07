@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bienvenida · Rotación de Anestesiología</title>
+<meta name="description" content="Qué hacer al iniciar la rotación de Anestesiología · Subred Suroccidente">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Hanken+Grotesk:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0D1B2A; --txt:#000;
+    --blue:#1D4ED8; --green:#047857; --red:#BE123C; --orange:#EA580C;
+    --amber:#D97706; --violet:#7C3AED; --teal:#0E7490;
+    --bg:#EEF1F6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Hanken Grotesk',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.45;-webkit-text-size-adjust:100%}
+  .wrap{max-width:560px;margin:0 auto;padding:0 16px 34px}
+  h2{font-family:'Bebas Neue',Impact,'Arial Narrow Bold',sans-serif;font-weight:400;font-size:25px;letter-spacing:1px;color:var(--navy);margin:24px 0 10px;display:flex;align-items:center;gap:9px}
+  h2::after{content:'';flex:1;height:3px;border-radius:3px;background:var(--c,var(--blue))}
+
+  /* Hero */
+  .hero{background:linear-gradient(140deg,#0D1B2A 0%,#1D4ED8 60%,#0E7490 100%);color:#fff;padding:30px 20px 26px;border-radius:0 0 26px 26px;margin:0 -16px 6px;position:relative;overflow:hidden}
+  .hero svg{position:absolute;right:-10px;bottom:10px;width:220px;opacity:.28}
+  .hero small{font-weight:800;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;color:#FBBF24}
+  .hero h1{font-family:'Bebas Neue',Impact,'Arial Narrow Bold',sans-serif;font-weight:400;font-size:40px;line-height:.98;letter-spacing:1px;margin:6px 0 10px}
+  .hero p{font-size:15px;font-weight:700;max-width:420px}
+  .hero .who{margin-top:14px;font-size:13px;font-weight:800;background:rgba(0,0,0,.25);display:inline-block;padding:6px 11px;border-radius:9px}
+
+  .letter{background:#fff;border-radius:16px;border:2px solid var(--blue);padding:0 0 14px;margin-top:18px;overflow:hidden;box-shadow:0 6px 18px rgba(29,78,216,.18)}
+  .letter-h{background:var(--blue);color:#fff;font-family:'Bebas Neue',Impact,'Arial Narrow Bold',sans-serif;font-size:22px;letter-spacing:1px;padding:9px 16px}
+  .letter p{font-size:14.5px;font-weight:500;padding:10px 16px 0}
+  .letter b{font-weight:900;color:var(--navy)}
+  .sign{margin:14px 16px 0;padding-top:10px;border-top:2px dashed var(--blue)}
+  .sign b{display:block;font-size:15px;color:var(--blue)!important}
+  .sign span{display:block;font-size:12.5px;font-weight:700}
+  /* Pasos */
+  .steps{list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:9px}
+  .steps li{counter-increment:s;background:#fff;border-radius:14px;padding:13px 14px 13px 58px;position:relative;border:2px solid var(--c);font-size:14.5px;font-weight:600}
+  .steps li::before{content:counter(s);position:absolute;left:12px;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:10px;background:var(--c);color:#fff;font-family:'Bebas Neue',Impact,'Arial Narrow Bold',sans-serif;font-size:23px;display:flex;align-items:center;justify-content:center}
+  .steps b{font-weight:900}
+
+  /* Tarjetas */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .card{background:#fff;border-radius:14px;padding:13px;border-top:5px solid var(--c)}
+  .card .i{font-size:24px}
+  .card b{display:block;font-size:14.5px;font-weight:900;margin-top:4px;color:var(--c)}
+  .card span{display:block;font-size:13px;font-weight:600;margin-top:2px}
+  .full{grid-column:1/-1}
+
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{background:#fff;border:2px solid var(--green);border-radius:10px;padding:7px 11px;font-size:14px;font-weight:800}
+  .note{font-size:13px;font-weight:600;margin-top:9px}
+
+  /* Nota */
+  .bar{display:flex;border-radius:12px;overflow:hidden;font-weight:900;color:#fff;font-size:13px;text-align:center}
+  .bar div{padding:11px 4px}
+  .bar small{display:block;font-size:22px;font-family:'Bebas Neue',Impact,'Arial Narrow Bold',sans-serif;font-weight:400;letter-spacing:1px}
+
+  /* Reglas */
+  .rules{background:var(--navy);color:#fff;border-radius:16px;padding:15px 16px}
+  .rules li{list-style:none;padding:8px 0 8px 30px;position:relative;font-size:14px;font-weight:600;border-bottom:1px dashed rgba(255,255,255,.35)}
+  .rules li:last-child{border-bottom:0}
+  .rules li::before{content:'⚠️';position:absolute;left:0;top:8px}
+  .rules b{color:#FBBF24;font-weight:900}
+
+  .shift{--sc:var(--violet);background:#fff;border:2px solid var(--sc);border-radius:14px;margin-top:9px;overflow:hidden}
+  .shift-h{background:var(--sc);color:#fff;font-weight:900;font-size:14px;letter-spacing:.3px;padding:9px 13px}
+  .tl{padding:6px 13px 10px}
+  .tl-i{position:relative;padding:7px 0 7px 20px;border-left:3px solid var(--c);margin-left:5px}
+  .tl-i::before{content:'';position:absolute;left:-8px;top:11px;width:13px;height:13px;border-radius:50%;background:var(--c)}
+  .tl-i b{display:block;font-size:14.5px;font-weight:900;color:var(--c)}
+  .tl-i span{display:block;font-size:13.5px;font-weight:600}
+  .tl-i em{font-style:normal;font-weight:900}
+  .cta{display:block;text-align:center;margin-top:24px;background:linear-gradient(135deg,var(--orange),var(--amber));color:#fff;text-decoration:none;font-family:'Bebas Neue',Impact,'Arial Narrow Bold',sans-serif;font-size:26px;letter-spacing:1.2px;padding:15px;border-radius:16px;box-shadow:0 8px 22px rgba(234,88,12,.35)}
+  .cta span{display:block;font-family:'Hanken Grotesk',sans-serif;font-size:13.5px;letter-spacing:0;font-weight:800;margin-top:4px;line-height:1.4}
+  /* Barra de descarga / compartir (no se incluye en el archivo descargado) */
+  .dl-bar{display:flex;gap:8px;margin-top:16px}
+  .dl-bar button{flex:1;border:none;border-radius:14px;padding:13px 10px;font-family:'Hanken Grotesk',sans-serif;font-size:14.5px;font-weight:900;color:#fff;cursor:pointer;line-height:1.2}
+  .dl-wa{background:#00A152;box-shadow:0 4px 0 #006B36}
+  .dl-file{background:var(--blue);box-shadow:0 4px 0 #1E3A8A}
+  .dl-bar button:active{transform:translateY(3px);box-shadow:none}
+  .dl-msg{font-size:12.5px;font-weight:700;color:var(--navy);text-align:center;margin-top:8px;display:none}
+  @media print{.dl-bar,.dl-msg{display:none}}
+  footer{text-align:center;font-size:12px;font-weight:700;color:var(--navy);margin-top:20px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <svg viewBox="0 0 220 60" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M0 34h60l10-24 16 44 12-30 8 10h114"/></svg>
+    <small>Subred Suroccidente · Kennedy y Bosa</small>
+    <h1>¡Bienvenido a la rotación de Anestesiología!</h1>
+    <p>Léelo completo ANTES de tu primer día.</p>
+    <div class="who">Dr. Andrés Robayo C. · Coordinador Académico</div>
+  </header>
+
+  <div class="dl-bar" data-quitar>
+    <button class="dl-wa" type="button" onclick="compartirBienvenida()">📲 Compartir por WhatsApp</button>
+    <button class="dl-file" type="button" onclick="descargarBienvenida()">⬇ Descargar HTML</button>
+  </div>
+  <p class="dl-msg" id="dl-msg" data-quitar></p>
+
+  <section class="letter">
+    <div class="letter-h">👋 Un saludo de bienvenida</div>
+    <p><b>¡Hola y bienvenidos!</b> Es un gusto recibirlos en el Servicio de Anestesiología y Reanimación de la Subred Integrada de Servicios de Salud Suroccidente, en los Hospitales de Kennedy y Bosa.</p>
+    <p>Mi nombre es <b>Andrés Robayo</b> y soy el coordinador académico del servicio. Durante estas semanas estarán en quirófano junto a nuestro equipo de anestesiólogos, aprendiendo a cuidar al paciente en uno de los momentos más críticos de su atención: vía aérea, farmacología, monitoría, manejo del dolor y reanimación.</p>
+    <p>Les pido <b>puntualidad, compromiso y respeto</b> por el paciente y por el equipo de trabajo. Pregunten todo lo que necesiten: aquí están para aprender, y nosotros para enseñarles.</p>
+    <p>A continuación encontrarán lo esencial para empezar con el pie derecho. <b>¡Les deseo una excelente rotación!</b></p>
+    <div class="sign"><b>Dr. Andrés Robayo C.</b><span>Especialista en Anestesiología y Reanimación · Coordinador Académico</span></div>
+  </section>
+
+  <h2 style="--c:var(--blue)">Tus primeros pasos</h2>
+  <ol class="steps">
+    <li style="--c:var(--violet)">Únete al <b>chat de WhatsApp</b> del grupo (canal oficial). En la <b>descripción del chat</b> está el link del portal.</li>
+    <li style="--c:var(--blue)">Entra al <b>portal de la rotación</b> y lee las <b>Instrucciones</b> y las <b>Normas generales</b> (lectura OBLIGATORIA).</li>
+    <li style="--c:var(--green)">Revisa el <b>cronograma de tu universidad</b>: talleres, seminario y examen final.</li>
+    <li style="--c:var(--teal)">Consulta la <b>distribución diaria</b> de salas CADA DÍA antes de llegar al hospital.</li>
+    <li style="--c:var(--orange)">Inscríbete en <b>Google Classroom</b>: allí se entregan los talleres.</li>
+    <li style="--c:var(--red)">Imprime el <b>formato de calificación diaria</b> y hazlo firmar por el anestesiólogo de sala en cada turno.</li>
+  </ol>
+
+  <h2 style="--c:var(--teal)">Horarios</h2>
+  <div class="grid">
+    <div class="card" style="--c:var(--blue)"><div class="i">☀️</div><b>Lunes a viernes</b><span>7:00 am – 4:00 pm</span></div>
+    <div class="card" style="--c:var(--green)"><div class="i">📆</div><b>Sábado y domingo (día)</b><span>7:00 am – 5:00 pm · entras a la sala disponible (sin asignación fija)</span></div>
+  </div>
+
+  <div class="shift">
+    <div class="shift-h">🌙 Turno nocturno ENTRE SEMANA</div>
+    <div class="tl">
+      <div class="tl-i" style="--c:var(--blue)"><b>7:00 am – 1:00 pm</b><span>Actividad normal en sala</span></div>
+      <div class="tl-i" style="--c:var(--amber)"><b>1:00 pm – 7:00 pm</b><span><em>PRETURNO</em> · sales a descansar</span></div>
+      <div class="tl-i" style="--c:var(--violet)"><b>7:00 pm – 7:00 am</b><span><em>TURNO</em> · preséntate con el anestesiólogo de turno</span></div>
+      <div class="tl-i" style="--c:var(--green)"><b>Desde 7:00 am</b><span><em>POSTURNO</em> completo al día siguiente</span></div>
+    </div>
+  </div>
+
+  <div class="shift" style="--sc:var(--red)">
+    <div class="shift-h">🌙 Turno nocturno SÁBADO, DOMINGO O FESTIVO</div>
+    <div class="tl">
+      <div class="tl-i" style="--c:var(--violet)"><b>7:00 pm – 7:00 am</b><span><em>TURNO</em> · sin preturno</span></div>
+      <div class="tl-i" style="--c:var(--green)"><b>Desde 7:00 am</b><span><em>POSTURNO</em> completo al día siguiente</span></div>
+    </div>
+  </div>
+
+  <h2 style="--c:var(--green)">Qué traer todos los días</h2>
+  <div class="chips">
+    <span class="chip">🖊️ Esfero</span><span class="chip">🩺 Fonendoscopio</span><span class="chip">🆔 Carnet</span><span class="chip">🔒 Candado</span><span class="chip">🔢 Calculadora</span>
+  </div>
+  <p class="note">El carnet queda como garantía del uniforme · el candado es para tu locker · 🥼 bata SOLO los días de consulta externa o interconsultas.</p>
+
+  <h2 style="--c:var(--orange)">Actividades académicas</h2>
+  <div class="grid">
+    <div class="card" style="--c:var(--blue)"><div class="i">📗</div><b>Talleres semanales</b><span>Súbelos a Classroom antes del domingo 11:59 pm</span></div>
+    <div class="card" style="--c:var(--amber)"><div class="i">🎤</div><b>Exposición semanal</b><span>Virtual · 1 hora · exponen TODOS los estudiantes de la universidad asignada</span></div>
+    <div class="card" style="--c:var(--red)"><div class="i">🩺</div><b>Seminario clínico</b><span>Lee las instrucciones antes del día del seminario</span></div>
+    <div class="card" style="--c:var(--violet)"><div class="i">📝</div><b>Examen final</b><span>Presencial · calculadora obligatoria · sin celular</span></div>
+  </div>
+
+  <h2 style="--c:var(--violet)">¿Cómo se calcula tu nota?</h2>
+  <div class="bar">
+    <div style="flex:20;background:var(--blue)"><small>20%</small>Talleres</div>
+    <div style="flex:40;background:var(--red)"><small>40%</small>Seminario</div>
+    <div style="flex:40;background:var(--violet)"><small>40%</small>Examen</div>
+  </div>
+  <p class="note">+ Formato de calificación diaria (componente práctico y conductual), firmado en cada turno y entregado el último día al Dr. Robayo o al Dr. Geovanny Rodríguez.</p>
+
+  <h2 style="--c:var(--red)">Reglas que NO puedes olvidar</h2>
+  <ul class="rules">
+    <li><b>No cambies de sala ni de turno</b> sin autorización del coordinador.</li>
+    <li>Si no puedes asistir, <b>notifícalo el MISMO día</b> por el WhatsApp del grupo. Más del 10% de fallas injustificadas = nota 0.0.</li>
+    <li><b>No se aceptan talleres tardíos</b> sin justificación médica.</li>
+    <li>Enmendaduras o fraude en el formato diario = <b>pérdida de la rotación</b>.</li>
+    <li>Las notas finales <b>NO se entregan</b> al estudiante: consúltalas en tu universidad.</li>
+  </ul>
+
+  <div class="cta">📲 ¿Dónde está el portal?<span>El link está en la DESCRIPCIÓN del chat de WhatsApp del grupo. Allí encuentras cronogramas, distribución, talleres, exposiciones y preguntas frecuentes.</span></div>
+
+
+  <div class="dl-bar" data-quitar>
+    <button class="dl-wa" type="button" onclick="compartirBienvenida()">📲 Compartir por WhatsApp</button>
+    <button class="dl-file" type="button" onclick="descargarBienvenida()">⬇ Descargar HTML</button>
+  </div>
+  <p class="dl-msg"  data-quitar></p>
+
+  <footer>Servicio de Anestesiología y Reanimación · Hospitales de Kennedy y Bosa<br>¿Dudas? Revisa primero las Preguntas frecuentes del portal.</footer>
+</div>
+<script data-quitar>
+// Genera una copia limpia de esta página (sin los botones) lista para enviar
+function archivoBienvenida(){
+  const doc=document.documentElement.cloneNode(true);
+  doc.querySelectorAll('[data-quitar]').forEach(e=>e.remove());
+  const html='<!DOCTYPE html>\n'+doc.outerHTML;
+  return new File([html],'Bienvenida_Anestesiologia.html',{type:'text/html'});
+}
+function aviso(t){const m=document.getElementById('dl-msg');if(m){m.textContent=t;m.style.display='block';}}
+function descargarBienvenida(){
+  const f=archivoBienvenida();
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(f);a.download=f.name;
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+  aviso('✓ Archivo descargado. Adjúntalo en WhatsApp como Documento.');
+}
+async function compartirBienvenida(){
+  const f=archivoBienvenida();
+  if(navigator.canShare && navigator.canShare({files:[f]})){
+    try{
+      await navigator.share({files:[f],title:'Bienvenida · Rotación de Anestesiología'});
+      return;
+    }catch(e){ if(e.name==='AbortError') return; }
+  }
+  // Computador o navegador sin opción de compartir: se descarga el archivo
+  descargarBienvenida();
+}
+</script>
+</body>
+</html>
