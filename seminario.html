@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Seminario de Casos Clínicos · Anestesiología</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Hanken+Grotesk:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#EEF1F6;--bg-2:#F7F9FC;
@@ -25,7 +25,7 @@ body{background:
     radial-gradient(900px 520px at 6% 2%, rgba(14,165,164,.10), transparent 58%),
     radial-gradient(800px 500px at 50% 108%, rgba(147,51,234,.08), transparent 60%),
     var(--bg);
-  background-attachment:fixed;color:#000000;font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
+  background-attachment:fixed;color:#000000;font-family:'Hanken Grotesk',sans-serif;min-height:100vh;overflow-x:hidden;}
 .container{max-width:1200px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
 .cuadros-grid{max-width:1160px;margin:0 auto 24px;display:grid;grid-template-columns:1fr 1.3fr;gap:16px;align-items:stretch;}
 .cuadros-grid > section{margin:0;max-width:none;display:flex;flex-direction:column;}
@@ -45,33 +45,33 @@ header{padding:0;text-align:center;}
     linear-gradient(180deg,#FFFFFF,#F5F8FD);
   padding:44px 24px 36px;position:relative;overflow:hidden;border-radius:0 0 28px 28px;margin-bottom:14px;border:1px solid var(--line);border-top:none;box-shadow:0 16px 40px rgba(20,27,46,.08);}
 .header-inner::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c4),var(--c5),var(--c6));}
-h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:clamp(28px,5vw,54px);line-height:1;letter-spacing:-1px;margin-bottom:10px;color:#000000;}
+h1{font-family:'Bebas Neue',sans-serif;font-weight:600;font-size:clamp(28px,5vw,54px);line-height:1;letter-spacing:-1px;margin-bottom:10px;color:#000000;}
 h1 .line2{display:block;background:linear-gradient(90deg,var(--mint),var(--sky),var(--c4));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .subtitle{color:#000000;font-size:14px;font-weight:500;margin-bottom:20px;}
 
 /* CRONÓMETRO */
 .crono-general{margin:22px auto 0;max-width:520px;background:var(--panel);border:2px solid var(--mint);border-radius:16px;padding:14px 18px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 26px rgba(16,185,129,.14);}
 .cg-label{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#000000;}
-.cg-time{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;color:#000000;font-variant-numeric:tabular-nums;}
+.cg-time{font-family:'DM Mono',monospace;font-size:28px;font-weight:700;color:#000000;font-variant-numeric:tabular-nums;}
 .cg-time.warning{color:#D97706;}
 .cg-time.danger{color:#DC2626;}
 .cg-bar-wrap{flex:1;height:6px;background:rgba(0,0,0,.08);border-radius:6px;overflow:hidden;}
 .cg-bar{height:100%;background:#10B981;width:100%;transition:width 1s linear,background .3s;}
 .cg-btns{display:flex;gap:6px;}
-.cg-btn{padding:8px 12px;background:#10B981;border:none;border-radius:8px;color:#FFFFFF;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:filter .2s;}
+.cg-btn{padding:8px 12px;background:#10B981;border:none;border-radius:8px;color:#FFFFFF;font-family:'Hanken Grotesk',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:filter .2s;}
 .cg-btn:hover{filter:brightness(1.05);}
 .cg-btn-reset{background:#E3E9F3;color:#000000;}
 .cg-btn-start.pausado{background:#F59E0B;}
 
 /* SECTION LABEL */
-.section-label{font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:#000000;margin-bottom:14px;display:flex;align-items:center;gap:11px;font-family:'JetBrains Mono',monospace;}
+.section-label{font-size:11px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:#000000;margin-bottom:14px;display:flex;align-items:center;gap:11px;font-family:'DM Mono',monospace;}
 .section-label::before{content:'';width:8px;height:8px;border-radius:2px;background:var(--mint);box-shadow:0 0 10px var(--mint);flex-shrink:0;}
 .section-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent);}
 
 /* ── FLUJO ── */
 .flujo-turno{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px 6px;margin:0 auto 20px;max-width:1160px;padding:13px 16px;background:var(--panel);border:2px solid var(--mint);border-radius:14px;box-shadow:0 10px 26px rgba(16,185,129,.12);}
 .flujo-step{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:#000000;}
-.flujo-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#10B981;color:#FFFFFF;font-family:'Bricolage Grotesque',sans-serif;font-size:12px;font-weight:800;}
+.flujo-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#10B981;color:#FFFFFF;font-family:'Bebas Neue',sans-serif;font-size:12px;font-weight:800;}
 .flujo-arrow{color:#000000;font-weight:800;}
 .flujo-loop{margin-left:8px;font-size:11px;font-weight:800;color:#EC4899;background:rgba(236,72,153,.10);padding:4px 10px;border-radius:10px;}
 @media(max-width:640px){.flujo-arrow{display:none;}.flujo-turno{gap:9px 16px;}.flujo-step{font-size:11px;}}
@@ -88,13 +88,13 @@ h1 .line2{display:block;background:linear-gradient(90deg,var(--mint),var(--sky),
 
 /* ESTUDIANTES */
 .estudiantes-box{background:var(--panel);border:2px solid var(--mint);border-radius:var(--radius);padding:14px 16px;margin-bottom:0;box-shadow:0 10px 34px rgba(20,27,46,.10);}
-.est-title{font-family:'Bricolage Grotesque',sans-serif;font-size:16px;letter-spacing:2px;color:#000000;margin-bottom:2px;}
+.est-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:#000000;margin-bottom:2px;}
 .est-sub{font-size:11px;color:#000000;font-weight:500;margin-bottom:9px;line-height:1.35;}
 .est-add-row{display:flex;gap:10px;margin-bottom:14px;}
-.est-input{flex:1;background:rgba(0,0,0,.05);border:2px solid rgba(0,0,0,.11);border-radius:10px;padding:8px 12px;color:#000000;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:500;outline:none;transition:border-color .2s;}
+.est-input{flex:1;background:rgba(0,0,0,.05);border:2px solid rgba(0,0,0,.11);border-radius:10px;padding:8px 12px;color:#000000;font-family:'Hanken Grotesk',sans-serif;font-size:13px;font-weight:500;outline:none;transition:border-color .2s;}
 .est-input::placeholder{color:#000000;opacity:.5;}
 .est-input:focus{border-color:#10B981;}
-.est-add-btn{padding:8px 18px;background:#10B981;border:none;border-radius:10px;color:#FFFFFF;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:800;cursor:pointer;transition:background .2s;white-space:nowrap;}
+.est-add-btn{padding:8px 18px;background:#10B981;border:none;border-radius:10px;color:#FFFFFF;font-family:'Hanken Grotesk',sans-serif;font-size:13px;font-weight:800;cursor:pointer;transition:background .2s;white-space:nowrap;}
 .est-add-btn:hover{background:#059669;}
 .est-list{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;min-height:38px;}
 .est-empty{color:#000000;font-size:12px;padding:6px;font-style:italic;opacity:.7;}
@@ -103,18 +103,18 @@ h1 .line2{display:block;background:linear-gradient(90deg,var(--mint),var(--sky),
 .est-chip-del{background:none;border:none;color:#000000;cursor:pointer;font-size:14px;padding:0;line-height:1;transition:color .2s;opacity:.5;}
 .est-chip-del:hover{color:#EF4444;opacity:1;}
 .est-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
-.est-sorteo-btn{padding:11px 24px;background:linear-gradient(135deg,#10B981,#0E9E86);color:#FFFFFF;border:none;border-radius:12px;font-family:'Bricolage Grotesque',sans-serif;font-size:18px;letter-spacing:2px;cursor:pointer;transition:transform .15s,box-shadow .2s;box-shadow:0 4px 14px rgba(16,185,129,.4);}
+.est-sorteo-btn{padding:11px 24px;background:linear-gradient(135deg,#10B981,#0E9E86);color:#FFFFFF;border:none;border-radius:12px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;cursor:pointer;transition:transform .15s,box-shadow .2s;box-shadow:0 4px 14px rgba(16,185,129,.4);}
 .est-sorteo-btn:hover{transform:scale(1.04);}
-.est-reset-btn{padding:11px 15px;background:rgba(239,68,68,.15);border:2px solid rgba(239,68,68,.35);border-radius:12px;color:#DC2626;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:800;cursor:pointer;transition:background .2s;}
+.est-reset-btn{padding:11px 15px;background:rgba(239,68,68,.15);border:2px solid rgba(239,68,68,.35);border-radius:12px;color:#DC2626;font-family:'Hanken Grotesk',sans-serif;font-size:12px;font-weight:800;cursor:pointer;transition:background .2s;}
 .est-reset-btn:hover{background:rgba(239,68,68,.30);}
 .est-resultado{background:linear-gradient(135deg,rgba(16,185,129,.15),rgba(37,99,235,.10));border:2px solid #10B981;border-radius:12px;padding:14px 16px;text-align:center;}
 .est-res-label{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#000000;margin-bottom:6px;}
-.est-res-nombre{font-family:'Bricolage Grotesque',sans-serif;font-size:22px;color:#000000;letter-spacing:1px;}
+.est-res-nombre{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#000000;letter-spacing:1px;}
 .est-res-sub{font-size:12px;color:#000000;margin-top:6px;font-weight:500;}
 
 /* RÚBRICA */
 .rubrica-box{background:var(--panel);border:2px solid #2563EB;border-radius:var(--radius);padding:14px 16px;box-shadow:0 10px 34px rgba(20,27,46,.10);}
-.rubrica-title{font-family:'Bricolage Grotesque',sans-serif;font-size:16px;letter-spacing:2px;color:#000000;margin-bottom:2px;}
+.rubrica-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:#000000;margin-bottom:2px;}
 .rubrica-sub{font-size:11px;color:#000000;font-weight:500;margin-bottom:12px;line-height:1.35;}
 .rubrica-table-wrap{overflow-x:auto;margin-bottom:10px;}
 .rubrica-table{width:100%;border-collapse:collapse;}
@@ -122,24 +122,24 @@ h1 .line2{display:block;background:linear-gradient(90deg,var(--mint),var(--sky),
 .rubrica-table td{padding:10px 6px;border-bottom:1px solid rgba(0,0,0,.06);vertical-align:middle;color:#000000;}
 .student-name-cell{font-weight:800;font-size:13px;}
 .rating-btns{display:flex;gap:6px;align-items:center;}
-.rating-btn{background:rgba(0,0,0,.04);border:2px solid rgba(0,0,0,.10);border-radius:8px;color:#000000;font-family:'JetBrains Mono',monospace;font-weight:800;font-size:12px;cursor:pointer;transition:all .15s;padding:4px 8px;min-width:34px;height:32px;}
+.rating-btn{background:rgba(0,0,0,.04);border:2px solid rgba(0,0,0,.10);border-radius:8px;color:#000000;font-family:'DM Mono',monospace;font-weight:800;font-size:12px;cursor:pointer;transition:all .15s;padding:4px 8px;min-width:34px;height:32px;}
 .rating-btn:hover{transform:translateY(-1px);}
-.nota-cell{font-family:'Bricolage Grotesque',sans-serif;font-size:22px;text-align:center;color:#000000;font-weight:700;}
+.nota-cell{font-family:'Bebas Neue',sans-serif;font-size:22px;text-align:center;color:#000000;font-weight:700;}
 .rubrica-legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;padding-top:10px;border-top:1px solid rgba(0,0,0,.06);}
 .legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:#000000;font-weight:600;}
 .legend-dot{width:10px;height:10px;border-radius:2px;}
-.export-btn{margin-top:10px;padding:9px 16px;background:linear-gradient(135deg,#2563EB,#4F46E5);color:#FFFFFF;border:none;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:800;cursor:pointer;transition:filter .2s;}
+.export-btn{margin-top:10px;padding:9px 16px;background:linear-gradient(135deg,#2563EB,#4F46E5);color:#FFFFFF;border:none;border-radius:10px;font-family:'Hanken Grotesk',sans-serif;font-size:12px;font-weight:800;cursor:pointer;transition:filter .2s;}
 .export-btn:hover{filter:brightness(1.08);}
 
 /* AJUSTE MANUAL DE NOTA */
 .ajuste-cell{display:flex;align-items:center;justify-content:center;gap:4px;}
-.ajuste-btn{background:rgba(0,0,0,.05);border:1.5px solid rgba(0,0,0,.14);border-radius:7px;color:#000;font-family:'JetBrains Mono',monospace;font-weight:800;font-size:13px;cursor:pointer;transition:all .12s;width:24px;height:24px;display:flex;align-items:center;justify-content:center;line-height:1;}
+.ajuste-btn{background:rgba(0,0,0,.05);border:1.5px solid rgba(0,0,0,.14);border-radius:7px;color:#000;font-family:'DM Mono',monospace;font-weight:800;font-size:13px;cursor:pointer;transition:all .12s;width:24px;height:24px;display:flex;align-items:center;justify-content:center;line-height:1;}
 .ajuste-btn:hover{transform:translateY(-1px);}
 .ajuste-btn.minus{color:#DC2626;border-color:#DC2626;background:rgba(220,38,38,.08);}
 .ajuste-btn.minus:hover{background:#DC2626;color:#FFFFFF;}
 .ajuste-btn.plus{color:#059669;border-color:#059669;background:rgba(5,150,105,.08);}
 .ajuste-btn.plus:hover{background:#059669;color:#FFFFFF;}
-.ajuste-val{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:800;min-width:34px;text-align:center;cursor:pointer;border-radius:5px;padding:2px 3px;color:#000;}
+.ajuste-val{font-family:'DM Mono',monospace;font-size:12px;font-weight:800;min-width:34px;text-align:center;cursor:pointer;border-radius:5px;padding:2px 3px;color:#000;}
 .ajuste-val.pos{color:#059669;}
 .ajuste-val.neg{color:#DC2626;}
 .ajuste-val:hover{background:rgba(0,0,0,.06);}
@@ -147,30 +147,30 @@ h1 .line2{display:block;background:linear-gradient(90deg,var(--mint),var(--sky),
 /* SORPRESA / TURNO */
 .sorpresa-box{background:var(--panel);border:2px solid var(--sky);border-radius:var(--radius);padding:16px;box-shadow:0 10px 34px rgba(20,27,46,.10);}
 .sorpresa-inner{text-align:center;}
-.sorpresa-title{font-family:'Bricolage Grotesque',sans-serif;font-size:18px;letter-spacing:2px;color:#000000;margin-bottom:8px;}
+.sorpresa-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#000000;margin-bottom:8px;}
 .sorpresa-sub{font-size:12px;color:#000000;font-weight:500;margin-bottom:14px;}
-.sorpresa-btn{padding:14px 34px;background:linear-gradient(135deg,#2563EB,#4F46E5);color:#FFFFFF;border:none;border-radius:14px;font-family:'Bricolage Grotesque',sans-serif;font-size:22px;letter-spacing:2px;cursor:pointer;transition:transform .15s,box-shadow .2s;box-shadow:0 6px 22px rgba(37,99,235,.4);}
+.sorpresa-btn{padding:14px 34px;background:linear-gradient(135deg,#2563EB,#4F46E5);color:#FFFFFF;border:none;border-radius:14px;font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;cursor:pointer;transition:transform .15s,box-shadow .2s;box-shadow:0 6px 22px rgba(37,99,235,.4);}
 .sorpresa-btn:hover{transform:scale(1.04);}
 .sorpresa-btn.girando{animation:girar .5s infinite;}
 @keyframes girar{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
 .sorpresa-resultado{display:none;}
 .sr-header{margin-bottom:12px;}
 .sr-emoji{font-size:44px;line-height:1;margin-bottom:6px;}
-.sr-nombre{font-family:'Bricolage Grotesque',sans-serif;font-size:20px;color:#000000;letter-spacing:1px;}
+.sr-nombre{font-family:'Bebas Neue',sans-serif;font-size:20px;color:#000000;letter-spacing:1px;}
 .sr-desc{font-size:12px;color:#000000;font-weight:500;margin-top:4px;}
 .sr-crono-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px;}
-.sr-btn-girar,.sr-btn-ir{padding:10px 18px;border:none;border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:800;cursor:pointer;color:#FFFFFF;}
+.sr-btn-girar,.sr-btn-ir{padding:10px 18px;border:none;border-radius:10px;font-family:'Hanken Grotesk',sans-serif;font-size:13px;font-weight:800;cursor:pointer;color:#FFFFFF;}
 .sr-btn-girar{background:#2563EB;}
 .sr-btn-ir{background:#10B981;}
 
 /* NUEVO TURNO */
 .nuevo-turno-wrap{text-align:center;margin-bottom:20px;}
-.btn-nuevo-turno{padding:20px 56px;background:linear-gradient(135deg,#0EA5A4,#06B6D4);color:#FFFFFF;border:none;border-radius:20px;font-family:'Bricolage Grotesque',sans-serif;font-size:30px;letter-spacing:3px;cursor:pointer;transition:transform .15s;box-shadow:0 8px 32px rgba(14,165,164,.5);}
+.btn-nuevo-turno{padding:20px 56px;background:linear-gradient(135deg,#0EA5A4,#06B6D4);color:#FFFFFF;border:none;border-radius:20px;font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:3px;cursor:pointer;transition:transform .15s;box-shadow:0 8px 32px rgba(14,165,164,.5);}
 .btn-nuevo-turno:hover{transform:scale(1.04);}
 .btn-nuevo-turno:active{transform:scale(.97);}
 
 /* ROBO */
-.btn-robo{padding:12px 24px;background:linear-gradient(135deg,#EC4899,#DB2777);border:none;border-radius:12px;color:#FFFFFF;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16px;letter-spacing:1px;cursor:pointer;transition:all .2s;width:100%;box-shadow:0 6px 18px rgba(236,72,153,.35);}
+.btn-robo{padding:12px 24px;background:linear-gradient(135deg,#EC4899,#DB2777);border:none;border-radius:12px;color:#FFFFFF;font-family:'Bebas Neue',sans-serif;font-weight:700;font-size:16px;letter-spacing:1px;cursor:pointer;transition:all .2s;width:100%;box-shadow:0 6px 18px rgba(236,72,153,.35);}
 .btn-robo:hover{filter:brightness(1.08);}
 .robo-selector{display:none;margin-top:12px;background:rgba(0,0,0,.045);border-radius:12px;padding:14px;}
 .robo-selector.visible{display:block;}
@@ -183,32 +183,32 @@ h1 .line2{display:block;background:linear-gradient(90deg,var(--mint),var(--sky),
 .banner-activo{display:none;position:fixed;top:0;left:0;right:0;z-index:997;background:linear-gradient(90deg,#10B981,#2563EB);color:#FFFFFF;padding:10px 22px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.14);}
 .banner-activo.visible{display:block;}
 .banner-activo-label{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;opacity:.9;}
-.banner-activo-nombre{font-family:'Bricolage Grotesque',sans-serif;font-size:18px;letter-spacing:1px;}
+.banner-activo-nombre{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;}
 .banner-activo-ruleta{font-size:12px;font-weight:600;opacity:.9;margin-top:2px;}
 
 /* PANEL FLOTANTE de notas */
 .panel-notas-flotante{position:fixed;top:80px;right:20px;z-index:998;background:#FFFFFF;border:2px solid #10B981;border-radius:16px;padding:14px 16px;box-shadow:0 8px 32px rgba(0,0,0,.14);min-width:220px;max-width:280px;display:none;}
 .panel-notas-flotante.visible{display:block;}
 .pnf-titulo{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#000000;margin-bottom:6px;}
-.pnf-nombre{font-family:'Bricolage Grotesque',sans-serif;font-size:15px;color:#000000;margin-bottom:10px;letter-spacing:.5px;}
+.pnf-nombre{font-family:'Bebas Neue',sans-serif;font-size:15px;color:#000000;margin-bottom:10px;letter-spacing:.5px;}
 .pnf-botones{display:flex;gap:5px;justify-content:space-between;}
-.pnf-btn{flex:1;padding:8px 0;border:2px solid rgba(0,0,0,.10);background:rgba(0,0,0,.04);border-radius:8px;font-family:'JetBrains Mono',monospace;font-weight:800;font-size:13px;color:#000000;cursor:pointer;transition:all .15s;}
+.pnf-btn{flex:1;padding:8px 0;border:2px solid rgba(0,0,0,.10);background:rgba(0,0,0,.04);border-radius:8px;font-family:'DM Mono',monospace;font-weight:800;font-size:13px;color:#000000;cursor:pointer;transition:all .15s;}
 .pnf-btn:hover{transform:translateY(-1px);}
 .pnf-btn.pnf-1.active{background:#DC2626;color:#FFFFFF;border-color:#DC2626;}
 .pnf-btn.pnf-2.active{background:#EA580C;color:#FFFFFF;border-color:#EA580C;}
 .pnf-btn.pnf-3.active{background:#F59E0B;color:#FFFFFF;border-color:#F59E0B;}
 .pnf-btn.pnf-4.active{background:#3B82F6;color:#FFFFFF;border-color:#3B82F6;}
 .pnf-btn.pnf-5.active{background:#10B981;color:#FFFFFF;border-color:#10B981;}
-.pnf-nota-actual{font-family:'Bricolage Grotesque',sans-serif;font-size:12px;color:#000000;margin-top:8px;text-align:center;}
+.pnf-nota-actual{font-family:'Bebas Neue',sans-serif;font-size:12px;color:#000000;margin-top:8px;text-align:center;}
 .pnf-nota-val{font-size:16px;font-weight:800;}
-.nota-guardada-badge{position:fixed;top:170px;right:24px;z-index:999;background:#10B981;border:2px solid #10B981;border-radius:12px;padding:10px 18px;color:#FFFFFF;font-family:'Bricolage Grotesque',sans-serif;font-size:16px;letter-spacing:1px;pointer-events:none;opacity:0;transition:opacity .2s;}
+.nota-guardada-badge{position:fixed;top:170px;right:24px;z-index:999;background:#10B981;border:2px solid #10B981;border-radius:12px;padding:10px 18px;color:#FFFFFF;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;pointer-events:none;opacity:0;transition:opacity .2s;}
 .nota-guardada-badge.show{opacity:1;}
 @keyframes notaFlash{0%{transform:scale(1)}30%{transform:scale(1.3)}100%{transform:scale(1)}}
 .nota-flash{animation:notaFlash .35s ease;}
 
 /* ── CASO CLÍNICO CARD ── */
 .caso-launcher-wrap{text-align:center;margin:16px auto 24px;}
-.btn-caso{padding:16px 42px;background:linear-gradient(135deg,#9333EA,#4F46E5);color:#FFFFFF;border:none;border-radius:16px;font-family:'Bricolage Grotesque',sans-serif;font-size:24px;letter-spacing:2px;cursor:pointer;transition:transform .15s;box-shadow:0 6px 24px rgba(147,51,234,.4);margin:0 6px;}
+.btn-caso{padding:16px 42px;background:linear-gradient(135deg,#9333EA,#4F46E5);color:#FFFFFF;border:none;border-radius:16px;font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;cursor:pointer;transition:transform .15s;box-shadow:0 6px 24px rgba(147,51,234,.4);margin:0 6px;}
 .btn-caso:hover{transform:scale(1.04);}
 .btn-caso.secundario{background:linear-gradient(135deg,#F59E0B,#D97706);box-shadow:0 6px 24px rgba(245,158,11,.4);}
 
@@ -216,7 +216,7 @@ h1 .line2{display:block;background:linear-gradient(90deg,var(--mint),var(--sky),
 .caso-container.visible{display:block;}
 .caso-card{background:var(--panel);border:2px solid var(--c4);border-radius:20px;padding:24px;box-shadow:0 12px 40px rgba(20,27,46,.10);}
 .caso-header{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:18px;padding-bottom:14px;border-bottom:2px solid rgba(0,0,0,.06);}
-.caso-titulo{font-family:'Bricolage Grotesque',sans-serif;font-size:26px;color:#000000;letter-spacing:1px;}
+.caso-titulo{font-family:'Bebas Neue',sans-serif;font-size:26px;color:#000000;letter-spacing:1px;}
 .caso-num{display:inline-block;background:#9333EA;color:#FFFFFF;padding:4px 12px;border-radius:8px;font-size:12px;font-weight:800;letter-spacing:2px;margin-right:10px;}
 .caso-esc{font-size:13px;color:#000000;font-weight:500;margin-top:6px;line-height:1.5;}
 
@@ -226,45 +226,45 @@ h1 .line2{display:block;background:linear-gradient(90deg,var(--mint),var(--sky),
 .paciente-dato.pi{background:linear-gradient(135deg,#F59E0B,#D97706);}
 .paciente-dato.pm{background:linear-gradient(135deg,#E11D48,#BE185D);}
 .pd-label{font-size:9px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:#FFFFFF;opacity:.95;}
-.pd-val{font-family:'JetBrains Mono',monospace;font-size:17px;font-weight:800;color:#FFFFFF;margin-top:1px;line-height:1.1;}
+.pd-val{font-family:'DM Mono',monospace;font-size:17px;font-weight:800;color:#FFFFFF;margin-top:1px;line-height:1.1;}
 .pd-unit{font-size:10px;font-weight:600;color:#FFFFFF;opacity:.9;}
 
 .caso-preguntas-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:20px 0 14px;}
-.caso-preguntas-titulo{font-family:'Bricolage Grotesque',sans-serif;font-size:18px;color:#000000;letter-spacing:1.5px;}
-.btn-sortear5{padding:10px 20px;background:linear-gradient(135deg,#10B981,#059669);color:#FFFFFF;border:none;border-radius:10px;font-family:'Bricolage Grotesque',sans-serif;font-size:15px;letter-spacing:1.5px;cursor:pointer;box-shadow:0 4px 14px rgba(16,185,129,.30);transition:transform .15s;}
+.caso-preguntas-titulo{font-family:'Bebas Neue',sans-serif;font-size:18px;color:#000000;letter-spacing:1.5px;}
+.btn-sortear5{padding:10px 20px;background:linear-gradient(135deg,#10B981,#059669);color:#FFFFFF;border:none;border-radius:10px;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1.5px;cursor:pointer;box-shadow:0 4px 14px rgba(16,185,129,.30);transition:transform .15s;}
 .btn-sortear5:hover{transform:scale(1.04);}
-.btn-mostrar-todas{padding:8px 14px;background:#E3E9F3;color:#000000;border:2px solid rgba(0,0,0,.08);border-radius:10px;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;}
+.btn-mostrar-todas{padding:8px 14px;background:#E3E9F3;color:#000000;border:2px solid rgba(0,0,0,.08);border-radius:10px;font-family:'Hanken Grotesk',sans-serif;font-size:12px;font-weight:700;cursor:pointer;}
 
 .pregunta{background:#F7F9FC;border:2px solid rgba(0,0,0,.08);border-left:5px solid #9333EA;border-radius:12px;padding:14px 16px;margin-bottom:10px;color:#000000;}
 .pregunta.destacada{border-left-color:#10B981;background:linear-gradient(90deg,rgba(16,185,129,.08),#F7F9FC 30%);}
-.p-num{font-family:'Bricolage Grotesque',sans-serif;font-size:15px;color:#9333EA;letter-spacing:1px;margin-bottom:4px;font-weight:700;}
+.p-num{font-family:'Bebas Neue',sans-serif;font-size:15px;color:#9333EA;letter-spacing:1px;margin-bottom:4px;font-weight:700;}
 .pregunta.destacada .p-num{color:#059669;}
-.p-titulo{font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:800;color:#000000;margin-bottom:6px;}
+.p-titulo{font-family:'Hanken Grotesk',sans-serif;font-size:14px;font-weight:800;color:#000000;margin-bottom:6px;}
 .p-texto{font-size:13px;line-height:1.5;color:#000000;}
 .p-nota{display:inline-block;margin-top:6px;background:#FEF3C7;border-left:3px solid #F59E0B;padding:5px 10px;border-radius:6px;font-size:11px;color:#000000;font-weight:700;}
 .p-puntos{margin-top:10px;padding-top:10px;border-top:1px dashed rgba(0,0,0,.15);display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
 .p-puntos-label{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#000000;}
 .p-puntos-btns{display:flex;gap:6px;}
-.p-punto-btn{background:#FFFFFF;border:2px solid rgba(0,0,0,.15);border-radius:8px;padding:6px 14px;font-family:'JetBrains Mono',monospace;font-weight:800;font-size:14px;color:#000000;cursor:pointer;transition:all .15s;min-width:48px;}
+.p-punto-btn{background:#FFFFFF;border:2px solid rgba(0,0,0,.15);border-radius:8px;padding:6px 14px;font-family:'DM Mono',monospace;font-weight:800;font-size:14px;color:#000000;cursor:pointer;transition:all .15s;min-width:48px;}
 .p-punto-btn:hover{transform:translateY(-1px);}
 .p-punto-btn.sel-0{background:#DC2626;color:#FFFFFF;border-color:#DC2626;}
 .p-punto-btn.sel-05{background:#F59E0B;color:#FFFFFF;border-color:#F59E0B;}
 .p-punto-btn.sel-1{background:#10B981;color:#FFFFFF;border-color:#10B981;}
-.p-parcial{margin-left:auto;font-family:'Bricolage Grotesque',sans-serif;font-size:14px;color:#000000;font-weight:700;}
+.p-parcial{margin-left:auto;font-family:'Bebas Neue',sans-serif;font-size:14px;color:#000000;font-weight:700;}
 .nota-turno-live{background:linear-gradient(135deg,#10B981,#059669);color:#FFFFFF;padding:14px 20px;border-radius:14px;text-align:center;margin-top:16px;box-shadow:0 6px 20px rgba(16,185,129,.30);}
 .ntl-label{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;opacity:.9;}
-.ntl-valor{font-family:'Bricolage Grotesque',sans-serif;font-size:34px;letter-spacing:2px;margin-top:4px;}
+.ntl-valor{font-family:'Bebas Neue',sans-serif;font-size:34px;letter-spacing:2px;margin-top:4px;}
 .ntl-detalle{font-size:11px;font-weight:600;opacity:.9;margin-top:4px;}
 
 /* Cerrar caso */
-.btn-cerrar-caso{background:#EF4444;color:#FFFFFF;border:none;border-radius:10px;padding:8px 14px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:12px;cursor:pointer;}
+.btn-cerrar-caso{background:#EF4444;color:#FFFFFF;border:none;border-radius:10px;padding:8px 14px;font-family:'Hanken Grotesk',sans-serif;font-weight:800;font-size:12px;cursor:pointer;}
 
 .footer{text-align:center;padding:30px 20px;color:#000000;font-size:11px;font-weight:500;opacity:.7;}
 
 /* ══════════════════════════════════════════
    CALCULADORA FLOTANTE (no obstruye la vista: inicia cerrada como botón)
 ══════════════════════════════════════════ */
-#calc-widget{position:fixed;bottom:78px;left:20px;width:270px;background:var(--panel);border:2px solid var(--c1);border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.18);z-index:996;font-family:'Plus Jakarta Sans',sans-serif;display:none;user-select:none;}
+#calc-widget{position:fixed;bottom:78px;left:20px;width:270px;background:var(--panel);border:2px solid var(--c1);border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.18);z-index:996;font-family:'Hanken Grotesk',sans-serif;display:none;user-select:none;}
 #calc-widget.visible{display:block;}
 .calc-header{display:flex;justify-content:space-between;align-items:center;background:var(--c1);color:#FFFFFF;padding:9px 12px;border-radius:11px 11px 0 0;cursor:move;font-weight:800;font-size:13px;letter-spacing:.05em;text-transform:uppercase;}
 .calc-header-title{display:flex;align-items:center;gap:7px;}
@@ -280,10 +280,10 @@ h1 .line2{display:block;background:linear-gradient(90deg,var(--mint),var(--sky),
 .calc-tab.active{color:var(--c1);background:#FFFFFF;border-bottom-color:var(--c1);}
 .calc-panel{display:none;padding:11px;}
 .calc-panel.active{display:block;}
-.calc-display{background:#111827;color:#FFFFFF;padding:9px 11px;border-radius:6px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:600;min-height:40px;margin-bottom:7px;overflow:hidden;word-break:break-all;}
+.calc-display{background:#111827;color:#FFFFFF;padding:9px 11px;border-radius:6px;text-align:right;font-family:'DM Mono',monospace;font-size:19px;font-weight:600;min-height:40px;margin-bottom:7px;overflow:hidden;word-break:break-all;}
 .calc-display-prev{font-size:12px;color:#000;min-height:13px;margin-bottom:2px;opacity:.65;}
 .calc-keys{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;}
-.calc-key{padding:9px 0;border:1px solid var(--line);background:#FFFFFF;border-radius:5px;cursor:pointer;font-size:15px;font-weight:700;color:#000;font-family:'JetBrains Mono',monospace;transition:all .1s;}
+.calc-key{padding:9px 0;border:1px solid var(--line);background:#FFFFFF;border-radius:5px;cursor:pointer;font-size:15px;font-weight:700;color:#000;font-family:'DM Mono',monospace;transition:all .1s;}
 .calc-key:hover{background:var(--panel-2);}
 .calc-key:active{transform:scale(0.95);}
 .calc-key.op{background:#E0E7FF;color:var(--c1);border-color:var(--c1);}
@@ -297,15 +297,118 @@ h1 .line2{display:block;background:linear-gradient(90deg,var(--mint),var(--sky),
 .calc-sex-toggle{display:flex;gap:4px;margin-bottom:9px;}
 .calc-sex-btn{flex:1;padding:6px 0;border:1.5px solid var(--line);background:#FFFFFF;border-radius:5px;cursor:pointer;font-size:13px;font-weight:800;color:#000;transition:all .15s;}
 .calc-sex-btn.active{background:var(--c1);color:#FFFFFF;border-color:var(--c1);}
-.calc-input-field{width:100%;padding:7px 9px;border:1.5px solid var(--line);border-radius:5px;font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600;color:#000;}
+.calc-input-field{width:100%;padding:7px 9px;border:1.5px solid var(--line);border-radius:5px;font-family:'DM Mono',monospace;font-size:15px;font-weight:600;color:#000;}
 .calc-input-field:focus{outline:none;border-color:var(--c1);}
 .calc-result{margin-top:9px;padding:9px;background:#E6FBF6;border-left:3px solid var(--mint-2);border-radius:4px;}
 .calc-result-label{font-size:11px;font-weight:800;color:var(--mint-2);text-transform:uppercase;letter-spacing:.05em;}
-.calc-result-value{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:800;color:#000;margin-top:2px;}
-.calc-result-formula{font-size:11px;color:#000;margin-top:4px;font-family:'JetBrains Mono',monospace;opacity:.75;}
+.calc-result-value{font-family:'DM Mono',monospace;font-size:20px;font-weight:800;color:#000;margin-top:2px;}
+.calc-result-formula{font-size:11px;color:#000;margin-top:4px;font-family:'DM Mono',monospace;opacity:.75;}
 #calc-fab{position:fixed;bottom:20px;left:20px;width:48px;height:48px;background:var(--c1);color:#FFFFFF;border:none;border-radius:50%;cursor:pointer;font-size:20px;box-shadow:0 6px 20px rgba(79,70,229,.35);z-index:996;transition:transform .15s;}
 #calc-fab:hover{transform:scale(1.1);}
 @media(max-width:480px){#calc-widget{width:88vw;max-width:270px;left:6vw;}#calc-fab{left:14px;bottom:14px;}}
+
+/* ══════════════════════════════════════════
+   PALETA VIVA (estilo portal) + TIPOGRAFÍA Bebas Neue / Hanken Grotesk / DM Mono
+══════════════════════════════════════════ */
+:root{--line:#6366F1;--navy:#0D1B2A}
+body{background:#EEF1F6!important}
+h1,.est-title,.est-res-nombre,.rubrica-title,.nota-cell,.sorpresa-title,.sorpresa-btn,.sr-nombre,.btn-nuevo-turno,.btn-robo,.banner-activo-nombre,.pnf-nombre,.nota-guardada-badge,.btn-caso,.caso-titulo,.caso-preguntas-titulo,.btn-sortear5,.p-num,.p-parcial,.ntl-valor,.flujo-num,.est-sorteo-btn,.p-clave-h{font-weight:400!important;letter-spacing:1.2px}
+.pnf-nota-actual{font-family:'Hanken Grotesk',sans-serif;font-weight:700}
+.est-title,.rubrica-title{font-size:22px}
+.caso-titulo{font-size:30px}
+.caso-preguntas-titulo{font-size:24px}
+.sorpresa-title{font-size:24px}
+
+/* Header */
+.header-inner{background:linear-gradient(135deg,#0D1B2A 0%,#1D4ED8 55%,#0EA5E9 100%)!important;border:none!important;box-shadow:0 16px 40px rgba(29,78,216,.30)!important}
+.header-inner::before{background:linear-gradient(90deg,#F97316,#FBBF24,#10B981,#0EA5E9,#8B5CF6,#EC4899)!important;height:6px}
+h1{color:#FFFFFF!important;font-size:clamp(38px,6vw,66px)!important;letter-spacing:2px!important}
+h1 .line2{background:none!important;-webkit-text-fill-color:#FBBF24!important;color:#FBBF24!important}
+.subtitle{color:#FFFFFF!important;font-weight:700!important;font-size:15px!important}
+
+/* Flujo */
+.flujo-turno{border-color:#0EA5E9!important;box-shadow:0 10px 26px rgba(14,165,233,.18)!important}
+.flujo-step:nth-child(1) .flujo-num{background:#0EA5E9}
+.flujo-step:nth-child(3) .flujo-num{background:#F97316}
+.flujo-step:nth-child(5) .flujo-num{background:#8B5CF6}
+.flujo-step:nth-child(7) .flujo-num{background:#10B981}
+.flujo-step:nth-child(9) .flujo-num{background:#DC2626}
+.flujo-num{font-size:15px!important}
+.flujo-loop{background:#EC4899!important;color:#FFFFFF!important}
+
+/* Estudiantes */
+.est-input{background:#FFFFFF!important;border-color:#6366F1!important}
+.est-input:focus{border-color:#10B981!important}
+.est-empty{opacity:1!important}
+.est-chip{background:#FFFFFF!important;border-color:#0EA5E9!important}
+.est-chip.selected{border-color:#10B981!important;box-shadow:0 0 0 3px #10B981}
+.est-sorteo-btn{background:linear-gradient(135deg,#10B981,#047857)!important;font-size:20px!important}
+.est-reset-btn{background:#DC2626!important;border:none!important;color:#FFFFFF!important}
+.est-resultado{background:linear-gradient(135deg,#10B981,#0EA5E9)!important;border:none!important}
+.est-res-label,.est-res-nombre,.est-res-sub{color:#FFFFFF!important}
+.est-res-nombre{font-size:28px!important}
+.est-resultado strong{color:#FBBF24!important}
+
+/* Rúbrica */
+.rubrica-table th{border-bottom:2px solid #2563EB!important}
+.rubrica-table td{border-bottom:1px dashed #2563EB!important}
+.rating-btn{background:#FFFFFF!important;border-color:#6366F1!important}
+.rubrica-legend{border-top:2px dashed #2563EB!important}
+.export-btn{background:linear-gradient(135deg,#2563EB,#7C3AED)!important}
+
+/* Girar / robo */
+.sorpresa-btn{background:linear-gradient(135deg,#F97316,#DC2626)!important;box-shadow:0 6px 22px rgba(249,115,22,.4)!important;font-size:26px!important}
+.sr-btn-girar{background:#F97316!important}
+.robo-box{border-color:#EC4899!important}
+.robo-selector{background:#FFFFFF!important;border:2px dashed #EC4899}
+.btn-nuevo-turno{background:linear-gradient(135deg,#8B5CF6,#EC4899)!important;box-shadow:0 8px 32px rgba(139,92,246,.45)!important}
+.cg-btn-reset,.btn-mostrar-todas{background:#F59E0B!important;color:#000000!important;border:none!important;font-weight:800!important}
+.banner-activo{background:linear-gradient(90deg,#F97316,#DB2777,#7C3AED)!important}
+
+/* Caso */
+.caso-card{border-color:#7C3AED!important}
+.caso-header{border-bottom:2px solid #7C3AED!important}
+.caso-num{background:#7C3AED!important}
+.paciente-strip{border-bottom:2px solid #7C3AED!important}
+.paciente-dato{background:linear-gradient(135deg,#1D4ED8,#0EA5E9)!important}
+.paciente-dato.imc{background:linear-gradient(135deg,#10B981,#047857)!important}
+.paciente-dato.pi{background:linear-gradient(135deg,#F97316,#C2410C)!important}
+.paciente-dato.pm{background:linear-gradient(135deg,#DB2777,#9D174D)!important}
+.btn-sortear5{background:linear-gradient(135deg,#10B981,#047857)!important;font-size:18px!important}
+
+/* Preguntas */
+.pregunta{--pc:#7C3AED;background:#FFFFFF!important;border:2px solid var(--pc)!important;border-left:8px solid var(--pc)!important;box-shadow:0 4px 14px rgba(13,27,42,.08)}
+.pregunta.destacada{background:#FFFFFF!important}
+.p-num,.pregunta.destacada .p-num{color:var(--pc)!important;font-size:20px!important}
+.p-titulo{font-size:16px!important;font-weight:900!important}
+.p-texto{font-size:14px!important}
+.p-nota{background:#FFFFFF!important;border:2px solid #F59E0B!important;border-left:5px solid #F59E0B!important;font-size:12px!important}
+.p-clave{display:none;margin-top:10px;background:#0D1B2A;color:#FFFFFF;border-radius:10px;padding:11px 13px;font-size:13px;line-height:1.65;border-left:5px solid #FBBF24}
+body.ver-clave .p-clave{display:block}
+.p-clave b{color:#FFFFFF;font-weight:900}
+.p-clave-h{font-family:'Bebas Neue',sans-serif;font-size:17px;color:#FBBF24;margin-bottom:3px}
+.k-num{font-family:'DM Mono',monospace;font-weight:500;color:#FBBF24;background:rgba(251,191,36,.14);padding:0 5px;border-radius:4px}
+.k-mini{font-size:11.5px;color:#38BDF8;font-weight:700}
+.p-puntos{border-top:2px dashed var(--pc)!important}
+.p-punto-btn{border-color:var(--pc)!important}
+.p-punto-btn.sel-0{background:#DC2626!important;border-color:#DC2626!important}
+.p-punto-btn.sel-05{background:#F59E0B!important;border-color:#F59E0B!important}
+.p-punto-btn.sel-1{background:#10B981!important;border-color:#10B981!important}
+body.ver-clave #btnClave{background:#0D1B2A!important;color:#FBBF24!important}
+
+.footer{opacity:1!important;color:#0D1B2A!important;font-weight:700!important}
+
+/* Calculadora */
+.calc-tabs{background:#FFFFFF!important;border-bottom:2px solid var(--c1)!important}
+.calc-key{border-color:#6366F1!important}
+.calc-key:hover{background:#6366F1!important;color:#FFFFFF!important}
+.calc-key.op{background:#6366F1!important;color:#FFFFFF!important}
+.calc-key.eq{background:#10B981!important;border-color:#10B981!important}
+.calc-key.clear{background:#DC2626!important;color:#FFFFFF!important;border-color:#DC2626!important}
+.calc-result{background:#FFFFFF!important;border:2px solid #10B981!important;border-left:5px solid #10B981!important}
+.calc-input-field,.calc-sex-btn{border-color:#6366F1!important}
+@media(max-width:980px){.cuadros-grid{grid-template-columns:minmax(0,1fr)!important}.cuadros-grid > section{min-width:0}}
+@media(max-width:640px){.container{padding:0 14px}.header-inner{padding:32px 16px 26px}}
 </style>
 </head>
 <body>
@@ -316,7 +419,7 @@ h1 .line2{display:block;background:linear-gradient(90deg,var(--mint),var(--sky),
 <header>
   <div class="header-inner">
     <h1><span>SEMINARIO DE</span><span class="line2">CASOS CLÍNICOS</span></h1>
-    <div class="subtitle">Anestesiología · Cálculos, farmacología y toma de decisiones</div>
+    <div class="subtitle">Anestesiología · Vía aérea, ventilación mecánica y farmacología · 5 preguntas por caso</div>
   </div>
 </header>
 
@@ -328,7 +431,7 @@ h1 .line2{display:block;background:linear-gradient(90deg,var(--mint),var(--sky),
   <div class="flujo-arrow">→</div>
   <div class="flujo-step"><span class="flujo-num">3</span> Girar caso clínico</div>
   <div class="flujo-arrow">→</div>
-  <div class="flujo-step"><span class="flujo-num">4</span> Sortear 5 preguntas</div>
+  <div class="flujo-step"><span class="flujo-num">4</span> Comenzar las 5 preguntas</div>
   <div class="flujo-arrow">→</div>
   <div class="flujo-step"><span class="flujo-num">5</span> Puntúa 0 / ½ / 1 por pregunta</div>
   <div class="flujo-loop">↻ nuevo turno (otro estudiante)</div>
@@ -455,8 +558,8 @@ h1 .line2{display:block;background:linear-gradient(90deg,var(--mint),var(--sky),
     <div class="caso-preguntas-header">
       <div class="caso-preguntas-titulo">📋 Preguntas del caso</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="btn-sortear5" onclick="sortear5Preguntas()">🎲 SORTEAR 5 PREGUNTAS Y COMENZAR</button>
-        <button class="btn-mostrar-todas" onclick="mostrarTodasPreguntas()">Ver las 10 (docente)</button>
+        <button class="btn-sortear5" onclick="sortear5Preguntas()">▶ COMENZAR TURNO Y CALIFICAR</button>
+        <button class="btn-mostrar-todas" id="btnClave" onclick="toggleClave()">🔑 Mostrar clave docente</button>
       </div>
     </div>
 
@@ -854,7 +957,7 @@ function pnfActualizar(){
     const ajuste=r.ajuste||0;
     pnfNotaActual.innerHTML=`Caso ${r.caso} · ${respondidas}/5 preguntas<br>Nota: <span class="pnf-nota-val" style="color:${color}">${fmt(nota,1)}/5.0</span>${bonus>0?` <span style="color:#EC4899;font-weight:800">(+${fmt(bonus,1)})</span>`:''}${ajuste!==0?` <span style="color:${ajuste>0?'#059669':'#DC2626'};font-weight:800">(ajuste ${ajuste>0?'+':''}${fmt(ajuste,1)})</span>`:''}`;
   } else {
-    pnfNotaActual.textContent='Pulsa 🎲 GIRAR y luego sortea 5 preguntas.';
+    pnfNotaActual.textContent='Pulsa 🎲 GIRAR y luego ▶ COMENZAR TURNO.';
   }
 }
 
@@ -1091,85 +1194,162 @@ const CASOS = [
     reversor:'SUGAMMADEX', reversor_dosis:'2 mg/kg (T2) / 4 mg/kg (PTC 1–2) / 16 mg/kg si reversión inmediata tras 1.2 mg/kg rocuronio', reversor_peso:'PESO REAL'},
 ];
 
-// Diluciones estándar por fármaco (mg → mL finales)
-const DILUCIONES = {
-  'REMIFENTANILO': '2 mg (2 amp de 1 mg) en 100 mL SSN 0.9%',
-  'PROPOFOL': '1 frasco de 500 mg / 50 mL (viene listo para bomba, no requiere dilución adicional)',
-  'DEXMEDETOMIDINA': '200 mcg (2 mL de la amp 100 mcg/mL) en 50 mL SSN 0.9%',
-  'NOREPINEFRINA': '4 mg (1 amp de 4 mg) en 100 mL DAD 5%',
-  'FENILEFRINA': '10 mg (1 amp) en 100 mL SSN 0.9%',
-  'EFEDRINA': 'Amp 50 mg/mL. Para bolo: diluir 1 amp (50 mg) en 10 mL SSN 0.9%',
-  'ATROPINA (para reflejo oculocardíaco)': 'Amp 1 mg/mL — administración en bolo directo (no requiere dilución para infusión)',
-  'ATROPINA / EFEDRINA': 'Atropina amp 1 mg/mL en bolo. Efedrina: diluir 1 amp de 50 mg en 10 mL SSN → 5 mg/mL',
-};
+// ═══════════════════════════════════════════════════════════
+// FÁRMACOS — presentación, dosis y escalar de peso
+// escalar (solo adulto con IMC ≥ 30): 'TBW' peso real · 'IBW' peso ideal · 'LBW' peso magro
+// En pediátricos y adultos con IMC < 30 se usa PESO REAL.
+// ═══════════════════════════════════════════════════════════
+const FARMACOS = {
+  PROPOFOL:       {grupo:'Inductor', pres:'Ampolla 1% · 200 mg / 20 mL', conc:10, ud:'mg', dA:[1.5,2.5], dP:[2.5,3.5], esc:'LBW'},
+  KETAMINA:       {grupo:'Inductor', pres:'Vial 500 mg / 10 mL', conc:50, ud:'mg', dA:[1,2], dP:[1,2], esc:'IBW'},
+  DEXMEDETOMIDINA:{grupo:'Inductor / sedante', pres:'Ampolla 200 mcg / 2 mL (100 mcg/mL). Diluir 200 mcg en 50 mL SSN 0.9% → 4 mcg/mL', conc:4, ud:'mcg', dA:[0.5,1], dP:[0.5,1], esc:'IBW', extra:'Bolo lento en 10 min (no es un inductor de bolo rápido).'},
+  TIOPENTAL:      {grupo:'Inductor', pres:'Vial 1 g polvo. Reconstituir en 40 mL → 25 mg/mL (2.5%)', conc:25, ud:'mg', dA:[3,5], dP:[5,6], esc:'LBW'},
+  MIDAZOLAM:      {grupo:'Inductor', pres:'Ampolla 15 mg / 3 mL (5 mg/mL)', conc:5, ud:'mg', dA:[0.1,0.2], dP:[0.1,0.2], esc:'TBW'},
+  ETOMIDATO:      {grupo:'Inductor', pres:'Ampolla 20 mg / 10 mL (2 mg/mL)', conc:2, ud:'mg', dA:[0.2,0.3], dP:[0.2,0.3], esc:'LBW'},
 
-function getDilucion(farmaco){
-  return DILUCIONES[farmaco] || 'Consultar presentación disponible en el servicio';
+  FENTANILO:      {grupo:'Opioide', pres:'Ampolla 500 mcg / 10 mL (50 mcg/mL)', conc:50, ud:'mcg', dA:[1,3], dP:[1,2], esc:'LBW'},
+  REMIFENTANILO:  {grupo:'Opioide', pres:'Vial 1 mg polvo. Reconstituir y diluir en 50 mL SSN 0.9% → 20 mcg/mL', conc:20, ud:'mcg', dA:[0.5,1], dP:[0.5,1], esc:'LBW', infusion:[0.1,0.25], extra:'Bolo en 30–60 s. Además calcule la infusión de mantenimiento (0.1–0.25 mcg/kg/min) en mL/h.'},
+  SUCCINILCOLINA: {grupo:'Bloqueante neuromuscular despolarizante', pres:'Ampolla 200 mg / 10 mL (20 mg/mL)', conc:20, ud:'mg', dA:[1,1.5], dP:[1.5,2], esc:'TBW'},
+  VECURONIO:      {grupo:'Bloqueante neuromuscular no despolarizante', pres:'Vial 10 mg polvo. Reconstituir en 10 mL → 1 mg/mL', conc:1, ud:'mg', dA:[0.08,0.1], dP:[0.08,0.1], esc:'IBW'},
+  ROCURONIO:      {grupo:'Bloqueante neuromuscular no despolarizante', pres:'Ampolla 50 mg / 5 mL (10 mg/mL)', conc:10, ud:'mg', dA:[0.6,1.2], dP:[0.6,1.2], esc:'IBW', extra:'0.6 mg/kg intubación estándar · 1.2 mg/kg secuencia rápida.'},
+  CISATRACURIO:   {grupo:'Bloqueante neuromuscular no despolarizante', pres:'Ampolla 10 mg / 5 mL (2 mg/mL)', conc:2, ud:'mg', dA:[0.15,0.2], dP:[0.15,0.2], esc:'IBW'},
+  NALOXONA:       {grupo:'Reversor de opioides', pres:'Ampolla 0.4 mg / 1 mL (400 mcg/mL). Diluir 1 ampolla en 10 mL → 40 mcg/mL', conc:40, ud:'mcg', dA:[1,2], dP:[1,2], esc:'TBW', extra:'Titular en bolos (adulto: 40 mcg cada 2–3 min) hasta revertir la depresión respiratoria. Vida media corta: vigilar re-narcotización.'},
+  FLUMAZENIL:     {grupo:'Reversor de benzodiacepinas', pres:'Ampolla 0.5 mg / 5 mL (0.1 mg/mL)', conc:0.1, ud:'mg', fijoA:[0.2,1], dP:[0.01,0.01], maxP:0.2, esc:'TBW', extra:'Adulto: 0.2 mg IV en 15 s, repetir 0.1–0.2 mg cada minuto (máx 1 mg). Pediátrico: 0.01 mg/kg (máx 0.2 mg por dosis).'},
+};
+const INDUCTORES = ['KETAMINA','PROPOFOL','DEXMEDETOMIDINA','TIOPENTAL','MIDAZOLAM','ETOMIDATO'];
+const OPIOIDES_BNM = ['FENTANILO','REMIFENTANILO','SUCCINILCOLINA','VECURONIO','ROCURONIO','CISATRACURIO','FLUMAZENIL','NALOXONA'];
+const ESC_NOMBRE = {TBW:'PESO REAL', IBW:'PESO IDEAL', LBW:'PESO MAGRO'};
+
+function esObeso(c){return !c.pediatrico && calcIMC(c.peso,c.talla)>=30;}
+function pesoPara(c,esc){
+  if(c.pediatrico || !esObeso(c) || esc==='TBW') return {kg:c.peso, nombre:'PESO REAL'};
+  if(esc==='IBW') return {kg:pesoIdeal(c.sexo,c.talla), nombre:'PESO IDEAL'};
+  return {kg:pesoMagro(c.sexo,c.peso,c.talla), nombre:'PESO MAGRO'};
+}
+function fnum(x){return String(+(+x).toFixed(2));}
+function r1(x){return Math.round(x*10)/10;}
+function r2(x){return Math.round(x*100)/100;}
+function rng(a,b,dec){return a===b?fmt(a,dec):`${fmt(a,dec)} – ${fmt(b,dec)}`;}
+
+function claveFarmaco(c,nombre){
+  const f=FARMACOS[nombre];
+  const w=pesoPara(c,f.esc);
+  const dec = f.conc<1 ? 2 : 1;
+  let dosisTxt, mgA, mgB;
+  if(nombre==='FLUMAZENIL' && !c.pediatrico){
+    mgA=0.2; mgB=0.2;
+    dosisTxt='Dosis fija: 0.2 mg IV (repetir hasta máx 1 mg)';
+  } else {
+    const d = c.pediatrico ? f.dP : f.dA;
+    mgA=d[0]*w.kg; mgB=d[1]*w.kg;
+    if(f.maxP && c.pediatrico){mgA=Math.min(mgA,f.maxP); mgB=Math.min(mgB,f.maxP);}
+    dosisTxt=`${d[0]===d[1]?fnum(d[0]):fnum(d[0])+' – '+fnum(d[1])} ${f.ud}/kg × ${fmt(w.kg,1)} kg (${w.nombre})`+(f.maxP&&c.pediatrico?` · máx ${f.maxP} ${f.ud} por dosis`:'');
+  }
+  const decD = mgB<1 ? 2 : 1;
+  let html=`<b>Presentación:</b> ${f.pres}<br>
+    <b>Dosis:</b> ${dosisTxt}<br>
+    <b>Dosis para el paciente:</b> <span class="k-num">${rng(mgA,mgB,decD)} ${f.ud}</span><br>
+    <b>Volumen:</b> <span class="k-num">${rng(mgA/f.conc,mgB/f.conc,2)} mL</span> (a ${f.conc} ${f.ud}/mL)`;
+  if(f.infusion){
+    const a=f.infusion[0]*w.kg*60/f.conc, b=f.infusion[1]*w.kg*60/f.conc;
+    html+=`<br><b>Infusión:</b> ${f.infusion[0]}–${f.infusion[1]} mcg/kg/min × ${fmt(w.kg,1)} kg × 60 ÷ ${f.conc} mcg/mL = <span class="k-num">${rng(a,b,1)} mL/h</span>`;
+  }
+  if(f.extra) html+=`<br><b>Nota:</b> ${f.extra}`;
+  return {html, peso:w};
+}
+
+// ── Pregunta 1: tubo, profundidad, máscara laríngea ──
+function mlNumero(kg){
+  if(kg<5) return '1'; if(kg<10) return '1.5'; if(kg<20) return '2'; if(kg<30) return '2.5';
+  if(kg<50) return '3'; if(kg<70) return '4'; if(kg<100) return '5'; return '6';
+}
+function claveVia(c){
+  let tot, prof;
+  if(c.pediatrico){
+    const cb=Math.floor(((c.edad/4)+3.5)*2)/2, sb=Math.floor(((c.edad/4)+4)*2)/2;
+    tot=`Con balón: (edad/4) + 3.5 = <span class="k-num">${fmt(cb,1)}</span> · sin balón: (edad/4) + 4 = <span class="k-num">${fmt(sb,1)}</span>`;
+    prof=`(edad/2) + 12 = <span class="k-num">${fmt(c.edad/2+12,1)} cm</span> · o 3 × diámetro del TOT = <span class="k-num">${fmt(3*cb,1)} cm</span>`;
+  } else if(c.sexo==='M'){
+    tot='Hombre adulto: <span class="k-num">7.5 – 8.0</span>'; prof='<span class="k-num">22 – 23 cm</span> en la comisura labial';
+  } else {
+    tot='Mujer adulta: <span class="k-num">7.0 – 7.5</span>'; prof='<span class="k-num">20 – 21 cm</span> en la comisura labial';
+  }
+  return `<b>TOT:</b> ${tot}<br><b>Profundidad:</b> ${prof}<br><b>Máscara laríngea</b> (por peso real ${c.peso} kg): <span class="k-num">N.º ${mlNumero(c.peso)}</span>
+    <br><span class="k-mini">Tabla ML: 1 (&lt;5 kg) · 1.5 (5–10) · 2 (10–20) · 2.5 (20–30) · 3 (30–50) · 4 (50–70) · 5 (70–100) · 6 (&gt;100)</span>`;
+}
+
+// ── Pregunta 3: ventilador ──
+function frPorEdad(c){
+  if(!c.pediatrico) return [12,14];
+  if(c.edad<1) return [25,30]; if(c.edad<=5) return [20,25]; if(c.edad<=12) return [16,20]; return [12,16];
+}
+function claveVentilador(c,pplat){
+  const w = c.pediatrico ? {kg:c.peso,nombre:'PESO REAL'} : {kg:pesoIdeal(c.sexo,c.talla),nombre:'PESO IDEAL'};
+  const vtA=6*w.kg, vtB=8*w.kg, fr=frPorEdad(c);
+  const peep = esObeso(c) ? [8,10] : [5,8];
+  const vmA=vtA*fr[0]/1000, vmB=vtB*fr[1]/1000;
+  const dpA=pplat-peep[1], dpB=pplat-peep[0];
+  return `<b>Vt:</b> 6–8 mL/kg × ${fmt(w.kg,1)} kg (${w.nombre}) = <span class="k-num">${Math.round(vtA)} – ${Math.round(vtB)} mL</span><br>
+    <b>PEEP:</b> <span class="k-num">${peep[0]} – ${peep[1]} cmH₂O</span>${esObeso(c)?' (obesidad: PEEP más alta)':''}<br>
+    <b>FR:</b> <span class="k-num">${fr[0]} – ${fr[1]} rpm</span>${c.pediatrico?' (según edad)':''}<br>
+    <b>Volumen minuto:</b> Vt × FR = <span class="k-num">${fmt(vmA,1)} – ${fmt(vmB,1)} L/min</span><br>
+    <b>Driving pressure:</b> Pmeseta − PEEP = ${pplat} − PEEP = <span class="k-num">${dpA} – ${dpB} cmH₂O</span> · objetivo <b>&lt; 15 cmH₂O</b> (mayor valor = mayor estrés pulmonar y riesgo de lesión inducida por ventilación)`;
 }
 
 // ═══════════════════════════════════════════════════════════
-// GENERAR LAS 10 PREGUNTAS DEL CASO
+// GENERAR LAS 5 PREGUNTAS DEL CASO
 // ═══════════════════════════════════════════════════════════
 const TEMAS_VA = [
-  {tema:'INTUBACIÓN DIFÍCIL — Mallampati', txt:'Explique la clasificación de <strong>Mallampati</strong>: cómo se realiza, sus 4 grados, qué estructuras se visualizan en cada uno y su valor predictivo para intubación difícil. ¿Qué grado esperaría en este paciente y por qué?'},
-  {tema:'INTUBACIÓN DIFÍCIL — Distancia tiromentoniana', txt:'Explique la <strong>distancia tiromentoniana</strong>: cómo se mide, punto de corte para predecir intubación difícil e interpretación clínica. Analícela en este paciente.'},
-  {tema:'INTUBACIÓN DIFÍCIL — Apertura oral', txt:'Explique la <strong>apertura oral (distancia interincisiva)</strong>: cómo se mide, valor de corte para vía aérea difícil e implicaciones en la selección de dispositivos. Aplíquelo a este paciente.'},
-  {tema:'INTUBACIÓN DIFÍCIL — Protrusión mandibular', txt:'Explique el <strong>test de protrusión mandibular (Upper Lip Bite Test)</strong>: técnica, grados y su valor como predictor. Estímelo en este paciente.'},
-  {tema:'INTUBACIÓN DIFÍCIL — LEMON', txt:'Explique el <strong>score LEMON</strong> para predicción de intubación difícil: qué evalúa cada letra, cómo se puntúa y su interpretación. Aplíquelo a este paciente.'},
-  {tema:'INTUBACIÓN DIFÍCIL — Cormack-Lehane', txt:'Explique la clasificación de <strong>Cormack-Lehane</strong>: qué es, cómo se determina, sus grados (incluyendo modificación de Cook) y qué grado esperaría en este paciente según sus predictores.'},
-  {tema:'VENTILACIÓN CON MÁSCARA DIFÍCIL — OBESE / MOANS', txt:'Explique los predictores de <strong>ventilación difícil con máscara facial</strong> (nemotecnia OBESE o MOANS). Enumérelos, explique cada uno y aplíquelos a este paciente.'},
-  {tema:'DISPOSITIVO SUPRAGLÓTICO DIFÍCIL — RODS', txt:'Explique la nemotecnia <strong>RODS</strong> para predecir dificultad en la colocación de dispositivo supraglótico. Analícela en este paciente.'},
-  {tema:'FONA DIFÍCIL — SMART / SHORT', txt:'Explique la nemotecnia <strong>SMART</strong> (o SHORT) para predecir dificultad en el acceso frontal del cuello (cricotiroidotomía). Analícela en este paciente.'},
-  {tema:'DAS 2015 — Plan A', txt:'Explique el <strong>Plan A de la guía DAS 2015</strong> para intubación difícil no anticipada: qué incluye, cuántos intentos máximo, uso de bougie/videolaringoscopio y cuándo declarar falla. Aplíquelo hipotéticamente a este paciente.'},
-  {tema:'DAS 2015 — Plan B', txt:'Explique el <strong>Plan B de la guía DAS 2015</strong>: cuál es su objetivo, qué dispositivos supraglóticos de segunda generación se recomiendan, cuántos intentos y qué decisiones se toman después. Aplíquelo a este paciente.'},
-  {tema:'DAS 2015 — Plan C', txt:'Explique el <strong>Plan C de la guía DAS 2015</strong>: cuándo se activa, cómo se ventila con máscara facial, qué maniobras y adyuvantes se utilizan y qué decisión sigue. Discútalo en el contexto de este paciente.'},
-  {tema:'DAS 2015 — Plan D (FONA)', txt:'Explique el <strong>Plan D de la guía DAS 2015 — Front of Neck Access (cricotiroidotomía de emergencia)</strong>: cuándo se declara CICO, técnica de scalpel-bougie-tube, tamaño del tubo y consideraciones postprocedimiento.'},
+  {tema:'Predictores de intubación difícil — Mallampati', txt:'Explique la clasificación de <strong>Mallampati</strong>: cómo se realiza, sus 4 grados, qué estructuras se visualizan en cada uno y su valor predictivo. ¿Qué grado esperaría en este paciente y por qué?'},
+  {tema:'Predictores de intubación difícil — Distancia tiromentoniana', txt:'Explique la <strong>distancia tiromentoniana</strong>: cómo se mide, punto de corte para predecir intubación difícil e interpretación clínica. Analícela en este paciente.'},
+  {tema:'Predictores de intubación difícil — Apertura oral', txt:'Explique la <strong>apertura oral (distancia interincisiva)</strong>: cómo se mide, valor de corte e implicaciones en la selección de dispositivos. Aplíquelo a este paciente.'},
+  {tema:'Predictores de intubación difícil — Protrusión mandibular', txt:'Explique el <strong>test de mordida del labio superior (Upper Lip Bite Test)</strong>: técnica, grados y valor predictivo. Estímelo en este paciente.'},
+  {tema:'Predictores de intubación difícil — LEMON', txt:'Explique el <strong>score LEMON</strong>: qué evalúa cada letra, cómo se puntúa y su interpretación. Aplíquelo a este paciente.'},
+  {tema:'Predictores de intubación difícil — Cormack-Lehane', txt:'Explique la clasificación de <strong>Cormack-Lehane</strong> (incluida la modificación de Cook) y qué grado esperaría en este paciente según sus predictores.'},
+  {tema:'Ventilación difícil con máscara — OBESE / MOANS', txt:'Explique los predictores de <strong>ventilación difícil con máscara facial</strong> (nemotecnia OBESE o MOANS). Enumérelos, explique cada uno y aplíquelos a este paciente.'},
+  {tema:'Dispositivo supraglótico difícil — RODS', txt:'Explique la nemotecnia <strong>RODS</strong> para predecir dificultad con dispositivo supraglótico. Analícela en este paciente.'},
+  {tema:'Guía DAS — Plan A', txt:'Explique el <strong>Plan A de la guía DAS</strong> para intubación difícil no anticipada: qué incluye, número máximo de intentos, uso de bougie/videolaringoscopio y cuándo declarar falla. Aplíquelo a este paciente.'},
+  {tema:'Guía DAS — Plan B', txt:'Explique el <strong>Plan B de la guía DAS</strong>: objetivo, dispositivos supraglóticos de segunda generación recomendados, número de intentos y decisiones posteriores. Aplíquelo a este paciente.'},
+  {tema:'Guía DAS — Plan C', txt:'Explique el <strong>Plan C de la guía DAS</strong>: cuándo se activa, cómo se ventila con máscara facial, qué maniobras y adyuvantes se usan y qué decisión sigue.'},
+  {tema:'Guía DAS — Plan D (FONA)', txt:'Explique el <strong>Plan D de la guía DAS — acceso frontal del cuello</strong>: cuándo se declara CICO, técnica bisturí-bougie-tubo, tamaño del tubo y cuidados posteriores.'},
 ];
+
+const P_COLORES = ['#0EA5E9','#DC2626','#0F766E','#7C3AED','#DB2777'];
 
 function generarPreguntas(caso){
   const esPed=caso.pediatrico;
-  const p_esp=esPed?'No aplica cálculos de peso ideal/magro en pediátricos: usar PESO REAL siempre.':'';
-  const temaVA=TEMAS_VA[Math.floor(Math.random()*TEMAS_VA.length)];
+  const temaVA=pickFromBag('temasVA',TEMAS_VA);
+  const ind=pickFromBag('inductores',INDUCTORES);
+  const obn=pickFromBag('opioidesBNM',OPIOIDES_BNM);
+  const pplat=16+Math.floor(Math.random()*9); // 16–24 cmH2O
+  const kInd=claveFarmaco(caso,ind), kObn=claveFarmaco(caso,obn);
+  const fInd=FARMACOS[ind], fObn=FARMACOS[obn];
+  const notaPeso=(w)=>`Calcular con ${w.nombre} (${fmt(w.kg,1)} kg).${esPed?' Paciente pediátrico: siempre peso real.':''}`;
   return [
-    {n:1, tit:`Vía aérea — ${temaVA.tema}`,
+    {n:1, tit:'Vía aérea — Tubo orotraqueal y máscara laríngea',
+     texto:'Para este paciente calcule: <strong>número de tubo orotraqueal (TOT)</strong>, <strong>profundidad de inserción</strong> (cm en la comisura labial) y <strong>número de máscara laríngea</strong>.',
+     nota:esPed?'Paciente pediátrico: use las fórmulas por edad (TOT con y sin balón, profundidad) y el peso para la máscara laríngea.':'Considere sexo, talla y peso del paciente adulto.',
+     clave:claveVia(caso)},
+
+    {n:2, tit:`Vía aérea difícil — ${temaVA.tema}`,
      texto:temaVA.txt,
-     nota:'Responda dirigido al predictor / plan solicitado; no enumere todos los predictores posibles.'},
+     nota:'Responda sobre el predictor o plan solicitado y aplíquelo al paciente del caso.',
+     clave:`<b>Contexto del paciente para evaluar la respuesta:</b> ${caso.predictores}`},
 
-    {n:2, tit:'Selección de dispositivos de vía aérea',
-     texto:`Para este paciente indique: número de tubo orotraqueal (TOT), profundidad de inserción (cm desde comisura labial) y número de máscara laríngea apropiado.`,
-     nota:esPed?'Considera la edad y el peso pediátrico para la selección de TOT (con o sin balón), profundidad y máscara laríngea.':'Considera sexo, talla y peso del paciente adulto para elección de TOT, profundidad y máscara laríngea.'},
+    {n:3, tit:'Ventilación mecánica — Programación del ventilador',
+     texto:`Programe el ventilador para este paciente y calcule: <strong>volumen corriente (Vt)</strong>, <strong>PEEP</strong>, <strong>frecuencia respiratoria</strong> y <strong>volumen minuto</strong>. Luego, con la PEEP que programó y una <strong>presión meseta medida de ${pplat} cmH₂O</strong>, calcule el <strong>driving pressure</strong> e interprete el valor.`,
+     nota:esPed?'Vt con peso real (pediátrico). FR según la edad.':`Vt con PESO IDEAL (${fmt(pesoIdeal(caso.sexo,caso.talla),1)} kg).`,
+     clave:claveVentilador(caso,pplat)},
 
-    {n:3, tit:`Inductor: ${caso.inductor}`,
-     texto:`El inductor asignado es ${caso.inductor}. Indique presentación farmacológica (ampolla/vial, concentración), y calcule la dosis en mg y en mL para este paciente.`,
-     nota:`Se debe calcular con: ${caso.induc_peso}. ${p_esp}`},
+    {n:4, tit:`Inductor — ${ind}`,
+     texto:`El inductor asignado es <strong>${ind}</strong>. Indique su <strong>presentación farmacológica</strong> (ampolla o vial y concentración), la <strong>dosis</strong> de inducción y calcule la dosis para este paciente en <strong>${fInd.ud}</strong> y en <strong>mL</strong>.${fInd.extra&&ind==='DEXMEDETOMIDINA'?' <em>La dexmedetomidina se dosifica en mcg.</em>':''}`,
+     nota:notaPeso(kInd.peso),
+     clave:kInd.html},
 
-    {n:4, tit:`Relajante neuromuscular: ${caso.rnm}`,
-     texto:`El relajante neuromuscular asignado es ${caso.rnm}. Indique presentación farmacológica (ampolla, concentración), y calcule la dosis en mg y en mL para este paciente.`,
-     nota:`Se debe calcular con: ${caso.rnm_peso}. ${p_esp}`},
-
-    {n:5, tit:`Mantenimiento en infusión: ${caso.mantenimiento}`,
-     texto:`Prepare una infusión de ${caso.mantenimiento} para mantenimiento. <strong>Dilución sugerida: ${getDilucion(caso.mantenimiento)}</strong>. Calcule la concentración resultante (mg/mL o mcg/mL) y, con la dosis indicada, calcule la infusión en mL/hora. Dosis a administrar: ${caso.mant_dosis}.`,
-     nota:`Se debe calcular con: ${caso.mant_peso}. ${p_esp}`},
-
-    {n:6, tit:`Vasopresor/inotrópico: ${caso.vasopresor}`,
-     texto:`Prepare una infusión de ${caso.vasopresor}. <strong>Dilución sugerida: ${getDilucion(caso.vasopresor)}</strong>. Calcule la concentración resultante (mcg/mL) y, con la dosis propuesta, calcule la infusión en mL/hora. Dosis: ${caso.vaso_dosis}.`,
-     nota:`Se debe calcular con: ${caso.vaso_peso}. ${p_esp}`},
-
-    {n:7, tit:`Dosis máxima de anestésico local / AINE`,
-     texto:`Calcule la dosis máxima de ${caso.dosis_max} en mg y en mL para este paciente.`,
-     nota:`Se debe calcular con: ${caso.dosis_max_peso}. ${p_esp}`},
-
-    {n:8, tit:'Parámetros del ventilador',
-     texto:`Programe los parámetros del ventilador para este paciente: <strong>volumen corriente (Vt), PEEP, frecuencia respiratoria y presión meseta (plateau)</strong>. Además, <strong>calcule el driving pressure</strong> que resultaría con esos parámetros y explique qué significa clínicamente el valor obtenido.`,
-     nota:esPed?'Ajuste según peso y edad pediátrica. Explique cómo se calcula el driving pressure y qué implicación tiene el valor obtenido.':`Vt calculado con: ${caso.pediatrico?'peso real':'PESO IDEAL'}. Explique cómo se obtiene el driving pressure a partir de los parámetros programados y qué significa el valor resultante.`},
-
-    {n:9, tit:'Mecanismo de acción',
-     texto:`Explique el mecanismo de acción de ${caso.mecanismo_farmaco}.`,
-     nota:'Detalle receptor, cascada, consecuencia iónica y clínica.'},
-
-    {n:10, tit:`Reversor: ${caso.reversor}`,
-     texto:`Sobre ${caso.reversor}: presentación farmacológica (ampolla, concentración), dosis, cálculo en mg y en mL para este paciente, y mecanismo de acción.`,
-     nota:`Se debe calcular con: ${caso.reversor_peso}. ${p_esp}`},
+    {n:5, tit:`${fObn.grupo} — ${obn}`,
+     texto:`El fármaco asignado es <strong>${obn}</strong> (${fObn.grupo.toLowerCase()}). Indique su <strong>presentación farmacológica</strong> (ampolla o vial y concentración), la <strong>dosis</strong> y calcule la dosis para este paciente en <strong>${fObn.ud}</strong> y en <strong>mL</strong>.${fObn.infusion?' Incluya la infusión de mantenimiento en mL/h.':''}`,
+     nota:notaPeso(kObn.peso),
+     clave:kObn.html},
   ];
 }
 
@@ -1251,6 +1431,7 @@ function abrirCaso(){
 
 function cerrarCaso(){
   document.getElementById('casoContainer').classList.remove('visible');
+  document.body.classList.remove('ver-clave');const bc=document.getElementById('btnClave');if(bc) bc.textContent='🔑 Mostrar clave docente';
   casoActual=null;
   ocultarBanner();
 }
@@ -1273,11 +1454,13 @@ function renderPreguntas(preguntas,conPuntuacion){
           <button class="p-punto-btn ${cls1}" data-val="1" onclick="puntuarPregunta(${i},1)">1</button>
         </div>
       </div>`:'';
-    return `<div class="pregunta ${dest}">
+    const pc=P_COLORES[(p.n-1)%P_COLORES.length];
+    return `<div class="pregunta ${dest}" style="--pc:${pc}">
       <div class="p-num">Pregunta ${p.n}</div>
       <div class="p-titulo">${p.tit}</div>
       <div class="p-texto">${p.texto.replace(/\n/g,'<br>')}</div>
       ${p.nota?`<div class="p-nota">⚖️ ${p.nota}</div>`:''}
+      ${p.clave?`<div class="p-clave"><div class="p-clave-h">🔑 Clave docente</div>${p.clave}</div>`:''}
       ${puntBloque}
     </div>`;
   }).join('');
@@ -1296,6 +1479,10 @@ function renderPreguntas(preguntas,conPuntuacion){
   }
 }
 
+function toggleClave(){
+  const on=document.body.classList.toggle('ver-clave');
+  const b=document.getElementById('btnClave'); if(b) b.textContent=on?'🙈 Ocultar clave docente':'🔑 Mostrar clave docente';
+}
 function mostrarTodasPreguntas(){
   renderPreguntas(preguntasActuales,false);
 }
@@ -1303,8 +1490,8 @@ function mostrarTodasPreguntas(){
 function sortear5Preguntas(){
   if(!preguntasActuales.length) return;
   if(!ultimoSorteado){alert('Primero sortea un estudiante.');return;}
-  const idxs=shuffleArr([0,1,2,3,4,5,6,7,8,9]).slice(0,5).sort((a,b)=>a-b);
-  const sel=idxs.map(i=>preguntasActuales[i]);
+  const idxs=[0,1,2,3,4];
+  const sel=preguntasActuales;
   // Registrar turno (una sola vez)
   marcarTurno(ultimoSorteado,casoActual,idxs);
   renderPreguntas(sel,true);
