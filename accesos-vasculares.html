@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de Accesos Vasculares en Anestesiología — Dr. Andrés Robayo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap');
+
+  :root{
+    --bg:#F4F2EE;--panel:#FFFFFF;--border:#E2DDD6;
+    --txt:#1A1714;--txt2:#565048;--txt3:#98948C;
+    /* Periférico — verde */
+    --vp:#1A5C2E;--vp-m:#228B48;--vp-t:#C8EDD8;--vp-ll:#F0FAF4;
+    /* Central — azul profundo */
+    --vc:#0E2A50;--vc-m:#1B4F8A;--vc-t:#C8DCF5;--vc-ll:#F0F5FD;
+    /* Arterial — rojo */
+    --va:#6C1010;--va-m:#A83020;--va-t:#F8D0CC;--va-ll:#FEF5F4;
+    /* Intraóseo — naranja */
+    --io:#7A3A08;--io-m:#C05A10;--io-t:#FAE0C8;--io-ll:#FDF5EE;
+    /* Medicamentos — lila */
+    --med:#3A1A6C;--med-m:#6030A0;--med-t:#E0D0F8;--med-ll:#F8F4FE;
+    /* Complicaciones — rojo oscuro */
+    --comp:#580808;--comp-m:#8C1818;--comp-t:#F5C8C8;--comp-ll:#FEF3F3;
+    /* Info — teal */
+    --te:#0E4040;--te-m:#1A7070;--te-t:#C0E8E8;--te-ll:#F0FAFA;
+    /* Dorado — evidencia */
+    --do:#604010;--do-m:#9C6818;--do-t:#F5E4B0;--do-ll:#FDFAF0;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;font-size:13.5px;line-height:1.65;color:var(--txt);background:var(--bg);}
+
+  /* ─── PORTADA ─── */
+  .portada{background:linear-gradient(145deg,#0A1828 0%,#0E2A50 45%,#1A4A28 100%);color:#fff;padding:54px 50px 44px;position:relative;overflow:hidden;}
+  .portada::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(52deg,transparent,transparent 55px,rgba(255,255,255,.014) 55px,rgba(255,255,255,.014) 56px);}
+  .portada::after{content:'';position:absolute;bottom:-90px;right:-50px;width:360px;height:360px;border-radius:50%;border:1px solid rgba(255,255,255,.07);}
+  .portada-kicker{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:20px;position:relative;}
+  .portada h1{font-family:'DM Serif Display',serif;font-size:38px;line-height:1.1;margin-bottom:10px;position:relative;}
+  .portada h1 .ac1{color:#7AC4F5;}
+  .portada h1 .ac2{color:#80F0B8;}
+  .portada-sub{font-size:13.5px;color:rgba(255,255,255,.72);margin-bottom:28px;max-width:720px;line-height:1.7;position:relative;}
+  .portada-meta{display:flex;flex-wrap:wrap;gap:24px;border-top:1px solid rgba(255,255,255,.12);padding-top:20px;margin-top:14px;position:relative;}
+  .pm strong{display:block;font-size:10px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace;letter-spacing:.8px;text-transform:uppercase;margin-bottom:3px;}
+  .pm span{font-size:12.5px;color:rgba(255,255,255,.84);}
+
+  /* ─── CONTENEDOR ─── */
+  .cont{max-width:980px;margin:0 auto;padding:36px 20px 80px;}
+
+  /* ─── ÍNDICE ─── */
+  .indice{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:22px 26px;margin-bottom:30px;}
+  .idx-h{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:3px;text-transform:uppercase;color:var(--txt3);margin-bottom:13px;}
+  .indice ol{padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:1px 20px;}
+  .indice li{display:flex;gap:8px;align-items:baseline;padding:4px 0;border-bottom:1px solid var(--border);}
+  .indice li:last-child,.indice li:nth-last-child(2){border-bottom:none;}
+  .idx-n{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--txt3);min-width:22px;}
+  .indice a{color:var(--txt);font-size:12.5px;text-decoration:none;line-height:1.4;}
+  .indice a:hover{color:var(--vc-m);}
+
+  /* ─── SECCIONES ─── */
+  .seccion{background:var(--panel);border-radius:12px;border:1px solid var(--border);margin-bottom:24px;overflow:hidden;}
+  .sec-h{padding:14px 22px;display:flex;align-items:center;gap:11px;}
+  .sec-h.vp{background:linear-gradient(135deg,var(--vp) 0%,var(--vp-m) 100%);}
+  .sec-h.vc{background:linear-gradient(135deg,var(--vc) 0%,var(--vc-m) 100%);}
+  .sec-h.va{background:linear-gradient(135deg,var(--va) 0%,var(--va-m) 100%);}
+  .sec-h.io{background:linear-gradient(135deg,var(--io) 0%,var(--io-m) 100%);}
+  .sec-h.med{background:linear-gradient(135deg,var(--med) 0%,var(--med-m) 100%);}
+  .sec-h.comp{background:linear-gradient(135deg,var(--comp) 0%,var(--comp-m) 100%);}
+  .sec-h.te{background:linear-gradient(135deg,var(--te) 0%,var(--te-m) 100%);}
+  .sec-h.do{background:linear-gradient(135deg,var(--do) 0%,var(--do-m) 100%);}
+  .sec-num{width:27px;height:27px;border-radius:50%;background:rgba(255,255,255,.2);color:#fff;font-family:'DM Mono',monospace;font-size:11.5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .sec-titulo{font-size:15px;font-weight:700;color:#fff;}
+  .sec-b{padding:20px 22px;}
+  .subsec{margin-bottom:20px;}
+  .subsec h3{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding-bottom:7px;border-bottom:2px solid;margin-bottom:10px;}
+  .h3-vp{color:var(--vp-m);border-color:var(--vp-t);}
+  .h3-vc{color:var(--vc-m);border-color:var(--vc-t);}
+  .h3-va{color:var(--va-m);border-color:var(--va-t);}
+  .h3-io{color:var(--io-m);border-color:var(--io-t);}
+  .h3-med{color:var(--med-m);border-color:var(--med-t);}
+  .h3-comp{color:var(--comp-m);border-color:var(--comp-t);}
+  .h3-te{color:var(--te-m);border-color:var(--te-t);}
+  .h3-do{color:var(--do-m);border-color:var(--do-t);}
+  .h3-n{color:var(--txt2);border-color:var(--border);}
+  p.p{font-size:13.5px;margin-bottom:10px;line-height:1.7;}
+
+  /* ─── TABLAS ─── */
+  .tw{overflow-x:auto;margin-bottom:13px;border-radius:8px;border:1px solid var(--border);}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;}
+  thead th{padding:9px 12px;text-align:left;font-size:11px;font-family:'DM Mono',monospace;letter-spacing:.4px;font-weight:600;}
+  .th-vp thead th{background:var(--vp);color:#fff;}
+  .th-vc thead th{background:var(--vc);color:#fff;}
+  .th-va thead th{background:var(--va);color:#fff;}
+  .th-io thead th{background:var(--io);color:#fff;}
+  .th-med thead th{background:var(--med);color:#fff;}
+  .th-comp thead th{background:var(--comp);color:#fff;}
+  .th-te thead th{background:var(--te);color:#fff;}
+  .th-do thead th{background:var(--do);color:#fff;}
+  .th-n thead th{background:#252018;color:#fff;}
+  tbody tr:nth-child(even){background:var(--bg);}
+  tbody tr:hover{background:var(--vc-ll);}
+  tbody td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.5;}
+  tbody td:first-child{font-weight:600;}
+
+  /* ─── CAJAS ─── */
+  .caja{border-radius:8px;padding:12px 15px;margin-bottom:12px;border-left:4px solid;font-size:13px;line-height:1.7;}
+  .c-vp{background:var(--vp-ll);border-color:var(--vp-m);}  .c-vp strong{color:var(--vp);}
+  .c-vc{background:var(--vc-ll);border-color:var(--vc-m);}  .c-vc strong{color:var(--vc-m);}
+  .c-va{background:var(--va-ll);border-color:var(--va-m);}  .c-va strong{color:var(--va-m);}
+  .c-io{background:var(--io-ll);border-color:var(--io-m);}  .c-io strong{color:var(--io-m);}
+  .c-med{background:var(--med-ll);border-color:var(--med-m);}.c-med strong{color:var(--med-m);}
+  .c-comp{background:var(--comp-ll);border-color:var(--comp-m);}.c-comp strong{color:var(--comp-m);}
+  .c-te{background:var(--te-ll);border-color:var(--te-m);}  .c-te strong{color:var(--te);}
+  .c-do{background:var(--do-ll);border-color:var(--do-m);}  .c-do strong{color:var(--do);}
+
+  /* ─── CATÉTER COLOR CARD ─── */
+  .cath-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin-bottom:14px;}
+  .cath-card{border-radius:10px;overflow:hidden;border:2px solid;}
+  .cath-color{height:36px;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:12px;font-weight:700;color:#fff;letter-spacing:.5px;}
+  .cath-body{padding:10px 12px;background:#fff;font-size:12px;line-height:1.55;}
+  .cath-body .g{font-size:20px;font-weight:900;color:var(--txt);display:block;margin-bottom:3px;}
+  .cath-body .fl{color:var(--txt2);}
+  .cath-body .uso{font-size:11px;color:var(--txt3);margin-top:4px;border-top:1px solid var(--border);padding-top:4px;}
+  /* colores reales Colombia ISO */
+  .c-naranja .cath-color{background:#E87B1A;} .c-naranja{border-color:#E87B1A;}
+  .c-gris    .cath-color{background:#8C8C8C;} .c-gris   {border-color:#8C8C8C;}
+  .c-azul    .cath-color{background:#1A70C8;} .c-azul   {border-color:#1A70C8;}
+  .c-negro   .cath-color{background:#222222;} .c-negro  {border-color:#222222;}
+  .c-verde   .cath-color{background:#228A3C;} .c-verde  {border-color:#228A3C;}
+  .c-rosa    .cath-color{background:#D85A88;} .c-rosa   {border-color:#D85A88;}
+  .c-amarillo .cath-color{background:#C8A800;} .c-amarillo{border-color:#C8A800;}
+  .c-morado  .cath-color{background:#7030A0;} .c-morado {border-color:#7030A0;}
+  .c-rojo    .cath-color{background:#D02020;} .c-rojo   {border-color:#D02020;}
+
+  /* ─── TÉCNICA PASOS ─── */
+  .tecnica-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:15px 18px;margin-bottom:12px;}
+  .tecnica-titulo{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;padding-bottom:6px;border-bottom:1px solid var(--border);margin-bottom:10px;}
+  .paso{display:flex;gap:10px;margin-bottom:6px;font-size:13px;align-items:flex-start;}
+  .paso-n{min-width:22px;font-family:'DM Mono',monospace;font-size:11px;color:var(--txt3);margin-top:2px;flex-shrink:0;}
+
+  /* ─── ACCESO CENTRAL CARD ─── */
+  .central-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px;margin-bottom:14px;}
+  .cc-card{border-radius:9px;overflow:hidden;border:1.5px solid var(--border);}
+  .cc-h{padding:10px 14px;color:#fff;font-size:13px;font-weight:700;}
+  .cc-b{padding:12px 14px;background:#fff;font-size:12.5px;line-height:1.65;}
+  .cc-row{display:flex;gap:6px;margin-bottom:5px;}
+  .cc-lbl{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;color:var(--txt3);min-width:78px;flex-shrink:0;margin-top:1px;}
+  .dosis{font-family:'DM Mono',monospace;background:#12100E;color:#D8C870;border-radius:4px;padding:1px 6px;font-size:12px;}
+  .tag{font-family:'DM Mono',monospace;font-size:10px;padding:2px 6px;border-radius:4px;display:inline-block;margin:2px 2px 0 0;}
+  .tag-vp{background:var(--vp-t);color:var(--vp);}
+  .tag-vc{background:var(--vc-t);color:var(--vc-m);}
+  .tag-va{background:var(--va-t);color:var(--va-m);}
+  .tag-comp{background:var(--comp-t);color:var(--comp-m);}
+  .tag-te{background:var(--te-t);color:var(--te-m);}
+  .tag-io{background:var(--io-t);color:var(--io-m);}
+  .tag-do{background:var(--do-t);color:var(--do-m);}
+
+  /* ─── EJERCICIOS ─── */
+  .ej-box{border:1px solid var(--border);border-radius:10px;padding:17px 19px;margin-bottom:13px;background:var(--panel);}
+  .ej-hdr{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .ej-num{width:30px;height:30px;border-radius:50%;background:#12100E;color:#D8C870;font-family:'DM Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .ej-tit{font-weight:700;font-size:14px;flex:1;}
+  .ej-pts{font-family:'DM Mono',monospace;font-size:10.5px;background:var(--vp-t);color:var(--vp);border-radius:20px;padding:3px 10px;}
+  .ej-txt{font-size:13px;line-height:1.75;margin-bottom:8px;}
+  .ej-datos{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:10px 13px;font-size:12.5px;line-height:1.85;margin:8px 0;}
+  .ej-q{margin-top:9px;}
+  .ej-q li{font-size:13px;line-height:1.7;color:var(--txt2);margin-bottom:5px;margin-left:16px;}
+
+  /* ─── FOOTER ─── */
+  .footer{background:#0E1E30;color:rgba(255,255,255,.6);padding:22px 50px;font-size:12px;line-height:1.8;}
+  .footer-g{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:980px;margin:0 auto;}
+  .footer strong{color:rgba(255,255,255,.84);display:block;margin-bottom:3px;}
+  .copyright{background:#060E18;color:rgba(255,255,255,.3);text-align:center;padding:11px;font-size:11px;}
+
+  @media(max-width:640px){
+    .portada{padding:30px 14px 24px;}.portada h1{font-size:26px;}
+    .cont{padding:16px 10px 60px;}
+    .indice ol,.central-grid{grid-template-columns:1fr;}
+    .cath-grid{grid-template-columns:repeat(3,1fr);}
+    .footer-g{grid-template-columns:1fr;}.footer{padding:18px 14px;}
+  }
+  @media print{body{background:#fff;}.seccion{break-inside:avoid;}
+    .portada{background:#0E2A50!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
+</style>
+</head>
+<body>
+
+<!-- PORTADA -->
+<div class="portada">
+  <div class="portada-kicker">Rotación de Anestesiología · Hospital Kennedy · Hospital Bosa · Subred Suroccidente · Bogotá 2025</div>
+  <h1>Guía de <span class="ac1">Accesos</span><br><span class="ac2">Vasculares</span></h1>
+  <p class="portada-sub">Catéteres venosos periféricos, accesos venosos centrales, catéteres arteriales y accesos intraóseos. Técnicas de inserción, selección de dispositivos, administración de medicamentos, complicaciones y manejo actualizado bajo evidencia actual (INS 2021, CDC 2024, ESICM 2024).</p>
+  <div class="portada-meta">
+    <div class="pm"><strong>Docente</strong><span>Dr. Andrés Robayo · Anestesiología y Reanimación</span></div>
+    <div class="pm"><strong>Institución</strong><span>Hospital Kennedy · Hospital Bosa · Bogotá</span></div>
+    <div class="pm"><strong>Evidencia</strong><span>INS 2021 · CDC 2024 · ESICM 2024 · IDSA</span></div>
+    <div class="pm"><strong>Audiencia</strong><span>Estudiantes de medicina · Rotación de Anestesiología</span></div>
+  </div>
+</div>
+
+<div class="cont">
+
+<!-- ÍNDICE -->
+<div class="indice">
+  <div class="idx-h">Contenido de la guía</div>
+  <ol>
+    <li><span class="idx-n">01</span><a href="#s1">Catéteres venosos periféricos — colores, calibres y flujos</a></li>
+    <li><span class="idx-n">02</span><a href="#s2">Técnica de inserción del catéter periférico</a></li>
+    <li><span class="idx-n">03</span><a href="#s3">Sitios de venopuntura — selección y contraindicaciones</a></li>
+    <li><span class="idx-n">04</span><a href="#s4">PICC — catéter central de inserción periférica</a></li>
+    <li><span class="idx-n">05</span><a href="#s5">Acceso venoso central — principios y sitios</a></li>
+    <li><span class="idx-n">06</span><a href="#s6">Técnica de inserción CVC — Seldinger guiado por ECO</a></li>
+    <li><span class="idx-n">07</span><a href="#s7">CVC yugular interna, subclavia y femoral</a></li>
+    <li><span class="idx-n">08</span><a href="#s8">Catéter arterial — línea arterial</a></li>
+    <li><span class="idx-n">09</span><a href="#s9">Acceso intraóseo</a></li>
+    <li><span class="idx-n">10</span><a href="#s10">Vías de administración de medicamentos IV</a></li>
+    <li><span class="idx-n">11</span><a href="#s11">Nutrición parenteral — accesos y administración</a></li>
+    <li><span class="idx-n">12</span><a href="#s12">Complicaciones de los accesos vasculares</a></li>
+    <li><span class="idx-n">13</span><a href="#s13">Mantenimiento, curación y retiro de catéteres</a></li>
+    <li><span class="idx-n">14</span><a href="#s14">Ejercicios para los estudiantes · puntaje sobre 5.0</a></li>
+  </ol>
+</div>
+
+<!-- S1 -->
+<div class="seccion" id="s1">
+  <div class="sec-h vp"><div class="sec-num">01</div><div class="sec-titulo">Catéteres Venosos Periféricos — Colores, Calibres y Flujos (Colombia · ISO 10555)</div></div>
+  <div class="sec-b">
+    <p class="p">Los catéteres venosos periféricos (CVP) están estandarizados internacionalmente según la norma ISO 10555 y codificados por colores según el calibre (gauge). En Colombia se utilizan los mismos colores de la norma internacional. El flujo máximo varía según el calibre y la longitud del catéter.</p>
+
+    <div class="cath-grid">
+      <div class="cath-card c-naranja">
+        <div class="cath-color">NARANJA</div>
+        <div class="cath-body">
+          <span class="g">14 G</span>
+          <span class="fl">⌀ lumen 1.7 mm<br>Flujo ≈ 330 mL/min</span>
+          <div class="uso">Reanimación masiva · Transfusión · Cirugía mayor</div>
+        </div>
+      </div>
+      <div class="cath-card c-gris">
+        <div class="cath-color">GRIS</div>
+        <div class="cath-body">
+          <span class="g">16 G</span>
+          <span class="fl">⌀ lumen 1.3 mm<br>Flujo ≈ 200 mL/min</span>
+          <div class="uso">Cirugía mayor · Trauma · Reanimación</div>
+        </div>
+      </div>
+      <div class="cath-card c-azul">
+        <div class="cath-color">AZUL</div>
+        <div class="cath-body">
+          <span class="g">20 G</span>
+          <span class="fl">⌀ lumen 0.9 mm<br>Flujo ≈ 61 mL/min</span>
+          <div class="uso">Cirugía electiva · Anestesia general · Adulto estándar</div>
+        </div>
+      </div>
+      <div class="cath-card c-rosa">
+        <div class="cath-color">ROSADO</div>
+        <div class="cath-body">
+          <span class="g">18 G</span>
+          <span class="fl">⌀ lumen 1.2 mm<br>Flujo ≈ 96 mL/min</span>
+          <div class="uso">Cirugía moderada · Urgencias · Transfusión</div>
+        </div>
+      </div>
+      <div class="cath-card c-verde">
+        <div class="cath-color">VERDE</div>
+        <div class="cath-body">
+          <span class="g">18 G corto</span>
+          <span class="fl">⌀ lumen 1.1 mm<br>Flujo ≈ 80 mL/min</span>
+          <div class="uso">Variante corta 18G. Algunos fabricantes usan verde para 18G.</div>
+        </div>
+      </div>
+      <div class="cath-card c-amarillo">
+        <div class="cath-color">AMARILLO</div>
+        <div class="cath-body">
+          <span class="g">24 G</span>
+          <span class="fl">⌀ lumen 0.55 mm<br>Flujo ≈ 22 mL/min</span>
+          <div class="uso">Neonatos · Lactantes · Venas pequeñas · Quimioterapia</div>
+        </div>
+      </div>
+      <div class="cath-card c-morado">
+        <div class="cath-color">MORADO</div>
+        <div class="cath-body">
+          <span class="g">26 G</span>
+          <span class="fl">⌀ lumen 0.45 mm<br>Flujo ≈ 15 mL/min</span>
+          <div class="uso">Neonatos prematuros · Cuero cabelludo · Muy pequeños</div>
+        </div>
+      </div>
+      <div class="cath-card c-negro">
+        <div class="cath-color">NEGRO</div>
+        <div class="cath-body">
+          <span class="g">22 G</span>
+          <span class="fl">⌀ lumen 0.7 mm<br>Flujo ≈ 36 mL/min</span>
+          <div class="uso">Pediátrico · Venas finas · Oncología · Paciente anciano</div>
+        </div>
+      </div>
+      <div class="cath-card c-rojo">
+        <div class="cath-color">ROJO</div>
+        <div class="cath-body">
+          <span class="g">12–13 G</span>
+          <span class="fl">⌀ lumen ≥ 2.1 mm<br>Flujo ≈ 500 mL/min</span>
+          <div class="uso">Emergencia extrema · Trauma masivo · Introductor</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="caja c-vp"><strong>✔ Regla práctica — Ley de Hagen-Poiseuille:</strong> El flujo es proporcional al radio⁴ e inversamente proporcional a la longitud. Duplicar el radio aumenta el flujo 16 veces. Por eso un catéter periférico corto de 14G permite mayor flujo que un CVC largo de 7 Fr. En reanimación con líquidos, 2 vías periféricas 16G son superiores a la mayoría de CVC estándar.</div>
+
+    <div class="subsec">
+      <h3 class="h3-vp">1.1 Componentes del Catéter Venoso Periférico</h3>
+      <div class="tw"><table class="th-vp">
+        <thead><tr><th>Componente</th><th>Material</th><th>Función</th><th>Consideración clínica</th></tr></thead>
+        <tbody>
+          <tr><td>Cánula (catéter)</td><td>Poliuretano, PTFE, FEP. Los más nuevos: poliuretano biocompatible</td><td>Permanece en la vena. Transporta el fluido IV.</td><td>Poliuretano: más flexible, menor flebitis. PTFE (teflón): mayor rigidez, mayor flebitis mecánica con movimiento</td></tr>
+          <tr><td>Aguja introductora (estilete)</td><td>Acero inoxidable</td><td>Penetra piel y vena. Se retira una vez canulada la vena.</td><td>Sistemas de seguridad (safety sheath): retracción automática al retirar → ↓ riesgo punción accidental</td></tr>
+          <tr><td>Aleta de fijación</td><td>PVC o polipropileno</td><td>Permite fijar con tela adhesiva a la piel</td><td>Las aletas con recubrimiento antiséptico (clorhexidina) ↓ infecciones del sitio</td></tr>
+          <tr><td>Puerto de inyección lateral</td><td>Goma o membrana de silicona</td><td>Permite inyección directa sin desconectar la línea</td><td>Limpiar con alcohol isopropílico 70% antes de cada uso (técnica "frote-vigoroso-por-15-seg")</td></tr>
+          <tr><td>Tapón de seguridad</td><td>Membrana de silicona (sin aguja)</td><td>Sello del catéter cuando no está en uso. Evita retroceso de sangre.</td><td>Cambiar el tapón con cada acceso en condiciones asépticas</td></tr>
+          <tr><td>Extensión opcional</td><td>PVC o poliuretano</td><td>Prolonga la línea para mayor comodidad. Conexión con equipos de infusión.</td><td>Cada llave de 3 vías = ↑ riesgo de infección. Minimizar las llaves innecesarias.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="subsec">
+      <h3 class="h3-vp">1.2 Selección del Calibre según la Situación Clínica</h3>
+      <div class="tw"><table class="th-vp">
+        <thead><tr><th>Situación clínica</th><th>Calibre mínimo recomendado</th><th>Justificación</th></tr></thead>
+        <tbody>
+          <tr><td>Cirugía electiva de bajo riesgo (laparoscopia, herniorrafía)</td><td>20 G (azul)</td><td>Flujo suficiente para mantenimiento de 1–3 mL/kg/h y medicamentos anestésicos</td></tr>
+          <tr><td>Cirugía electiva de mediano riesgo (colecistectomía abierta, histerectomía)</td><td>18 G (rosado)</td><td>Permite transfusión si necesaria y reposición de volumen moderada</td></tr>
+          <tr><td>Cirugía de alto riesgo (vascular, colorrectal mayor, trauma moderado)</td><td>16 G (gris) × 2 vías</td><td>Dos accesos independientes: uno para drogas, uno para fluidos/sangre</td></tr>
+          <tr><td>Trauma mayor / reanimación hemorrágica aguda</td><td>14 G (naranja) × 2 ó 16 G × 2</td><td>Maximizar flujo para reanimación masiva. Activar protocolo TM.</td></tr>
+          <tr><td>Paciente pediátrico (escolar, preescolar)</td><td>22–24 G (negro/amarillo)</td><td>Venas pequeñas. Minimizar daño mecánico. El flujo es suficiente para el peso.</td></tr>
+          <tr><td>Neonato / lactante menor</td><td>24–26 G (amarillo/morado)</td><td>Acceso muy fino. Sitios: dorso de la mano, pie, cuero cabelludo (temporal superficial)</td></tr>
+          <tr><td>Quimioterapia (vesicantes)</td><td>22–24 G + posición fija</td><td>Menor presión de infusión → menor riesgo de extravasación. Preferir PICC o port</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+
+<!-- S2 -->
+<div class="seccion" id="s2">
+  <div class="sec-h vp"><div class="sec-num">02</div><div class="sec-titulo">Técnica de Inserción del Catéter Venoso Periférico</div></div>
+  <div class="sec-b">
+    <div class="subsec">
+      <h3 class="h3-vp">2.1 Procedimiento Paso a Paso</h3>
+      <div class="tecnica-box">
+        <div class="tecnica-titulo" style="color:var(--vp-m);">Inserción de CVP — Técnica estándar aséptica</div>
+        <div class="paso"><span class="paso-n">Prep.</span><span>Reunir material: catéter del calibre seleccionado · torundas con alcohol isopropílico 70% · ligadura (torniquete) · guantes (no necesariamente estériles, pero higiene de manos obligatoria) · gasas · esparadrapo o apósito transparente · solución de heparina-salina (opcional) · equipo de venoclisis si se usará infusión continua.</span></div>
+        <div class="paso"><span class="paso-n">1</span><span><strong>Higiene de manos:</strong> lavado con agua y jabón antiséptico ≥ 15 seg OR gel alcohólico. Colocación de guantes limpios (INS 2021: guantes limpios son suficientes para CVP — guantes estériles NO son requeridos para periferia).</span></div>
+        <div class="paso"><span class="paso-n">2</span><span><strong>Colocar el torniquete</strong> 10–15 cm proximal al sitio de punción. Pedir al paciente que cierre el puño 3–4 veces para ingurgitar la vena. Tiempo máximo con torniquete: 1 min (mayor tiempo → hemoconcentración → valores alterados en laboratorio).</span></div>
+        <div class="paso"><span class="paso-n">3</span><span><strong>Seleccionar la vena</strong> por palpación y visualización. Ver S3 para criterios de selección. Vena ideal: recta, firme, palpable, sin válvulas en el sitio, >5 cm de longitud disponible.</span></div>
+        <div class="paso"><span class="paso-n">4</span><span><strong>Antisepsia de piel:</strong> aplicar torunda con alcohol isopropílico 70% en movimiento circular del centro hacia la periferia, diámetro ≥ 6 cm. Dejar secar completamente ≥ 30 seg antes de puncionar (antisepsia eficaz requiere tiempo de contacto + secado). Alternativa: clorhexidina 0.5–2% en alcohol → mayor espectro y persistencia.</span></div>
+        <div class="paso"><span class="paso-n">5</span><span><strong>Tracción de piel:</strong> con la mano no dominante, estirar la piel distalmente al sitio de punción para estabilizar la vena (evita que "ruede").</span></div>
+        <div class="paso"><span class="paso-n">6</span><span><strong>Punción:</strong> introducir el catéter con el bisel hacia arriba, ángulo 15–30° con respecto a la piel, en dirección al flujo venoso (hacia el corazón). Avanzar hasta ver destello de sangre en la cámara transparente.</span></div>
+        <div class="paso"><span class="paso-n">7</span><span><strong>Avance de la cánula:</strong> al ver el destello, reducir el ángulo a casi 0°, avanzar el catéter 2–3 mm más con aguja+cánula para asegurarse de que la punta de la cánula esté en la luz venosa. Luego deslizar la cánula sobre la aguja mientras se retiene la aguja (hacer avanzar la cánula de plástico, no la aguja).</span></div>
+        <div class="paso"><span class="paso-n">8</span><span><strong>Liberar torniquete → retirar aguja:</strong> liberar el torniquete antes de retirar la aguja para evitar sangrado. Presionar suavemente sobre la vena distal a la punta del catéter durante el retiro de la aguja.</span></div>
+        <div class="paso"><span class="paso-n">9</span><span><strong>Verificar permeabilidad:</strong> conectar equipo de venoclisis O jeringa con SS 0.9% y pasar 3–5 mL. Debe fluir sin resistencia ni dolor. Observar zona de inserción: sin palidez, sin induración → catéter bien posicionado intravascular.</span></div>
+        <div class="paso"><span class="paso-n">10</span><span><strong>Fijación:</strong> apósito transparente semipermeable (TSM) de preferencia sobre esparadrapo opaco (permite observar el sitio sin manipular). Escribir fecha, hora y calibre en el apósito o en la etiqueta. Asegurar sin comprimir la zona de inserción.</span></div>
+        <div class="paso"><span class="paso-n">Doc.</span><span>Registrar en HC: calibre, sitio de inserción (ej: "AVP 20G antebrazo derecho cara anterior"), fecha y hora de inserción, nombre del operador. La documentación es requisito legal e institucional.</span></div>
+      </div>
+    </div>
+    <div class="subsec">
+      <h3 class="h3-vp">2.2 Técnicas Especiales para Acceso Difícil</h3>
+      <div class="tw"><table class="th-vp">
+        <thead><tr><th>Técnica</th><th>Indicación</th><th>Procedimiento</th><th>Evidencia / Comentario</th></tr></thead>
+        <tbody>
+          <tr><td>Ecografía para CVP (POCUS)</td><td>DAIVD (acceso intravenoso difícil): 2+ intentos fallidos, obesidad, adicción IV, edema, venas no visibles ni palpables</td><td>Sonda lineal 7–12 MHz. Vista transversal para localizar vena (circular anecoica, compresible, sin pulsación). Vista longitudinal para guiar la aguja en tiempo real. Profundidad máxima CVP periférico: 1.5–2 cm.</td><td>↑ éxito 90% vs. 60% sin ECO en acceso difícil (Heinrichs 2013). Recomendado INS 2021 en DAIVD.</td></tr>
+          <tr><td>Transiluminación (veinviewer)</td><td>Pediatría, neonatos, paciente obeso</td><td>Dispositivo de luz infrarroja proyecta mapa de venas en la piel. Útil en pediatría donde POCUS puede ser difícil.</td><td>↑ éxito en primer intento en pediátrico. Disponibilidad variable en Colombia.</td></tr>
+          <tr><td>Calentamiento local</td><td>Venas vasoconstreñidas (frío, ansiedad, shock periférico)</td><td>Compresas calientes 40–45°C sobre el sitio 5–10 min antes de la punción → vasodilatación → mejor llenado venoso.</td><td>Simple, gratuito, efectivo. Siempre intentar antes de ECO.</td></tr>
+          <tr><td>Maniobra de Valsalva</td><td>Acceso yugular externo, yugular interna superficial</td><td>Paciente realiza espiración forzada contra glotis cerrada → ↑ presión venosa central → distensión yugular.</td><td>Útil combinada con posición de Trendelenburg leve.</td></tr>
+          <tr><td>Vena mediana del antebrazo (punción retrógrada)</td><td>Vena visible pero tortuosa</td><td>Punción en dirección distal (alejándose del corazón) — flujo retrógrado aceptable para fluidos lentos.</td><td>Solo para casos extremos. Menor flujo y mayor tasa de flebitis.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+
+<!-- S3 -->
+<div class="seccion" id="s3">
+  <div class="sec-h vp"><div class="sec-num">03</div><div class="sec-titulo">Sitios de Venopuntura — Selección y Contraindicaciones</div></div>
+  <div class="sec-b">
+    <div class="tw"><table class="th-vp">
+      <thead><tr><th>Sitio</th><th>Venas disponibles</th><th>Ventajas</th><th>Desventajas / Contraindicaciones</th><th>Preferencia</th></tr></thead>
+      <tbody>
+        <tr><td>Dorso de la mano</td><td>Red venosa dorsal: metacarpianas dorsales, arco dorsal</td><td>Visible y palpable fácilmente · Sin estructuras nobles adyacentes · Inmovilización fácil con tablilla</td><td>Mayor incomodidad al mover la muñeca · Riesgo de flebitis mecánica · Extravasación más frecuente · Muy dolorosa en piel sensible</td><td>Primera opción en adultos mayores y pacientes sin buenas venas en antebrazo</td></tr>
+        <tr><td>Antebrazo cara anterior</td><td>Cefálica accesoria, mediana antebrazo, basílica antebrazo</td><td>Mejor tolerancia · Menos movimiento · Puede usarse 20G o 18G fácilmente</td><td>Venas más profundas en obesos · Puede afectar arteria radial si se profundiza demasiado</td><td><strong>Primera opción</strong> para anestesia general en adultos. Máxima comodidad y funcionalidad.</td></tr>
+        <tr><td>Fosa antecubital (codo)</td><td>Mediana cubital, basílica mediana, cefálica</td><td>Venas grandes y superficiales · Flujo alto · Fácil punción</td><td>Flebitis más frecuente · Se "abriga" con flexión del codo → obstrucción de flujo · Próxima a arteria braquial y nervio mediano → riesgo punción accidental</td><td>Uso en urgencias/emergencias o cuando no hay otro acceso. Evitar como vía de mantenimiento crónico.</td></tr>
+        <tr><td>Brazo (tercio distal)</td><td>Basílica, cefálica</td><td>Calibre moderado · Estable</td><td>Profundas en pacientes con sobrepeso · Más difícil palpación</td><td>Segunda opción tras antebrazo anterior</td></tr>
+        <tr><td>Pie y tobillo</td><td>Safena mayor (maleolo interno), red dorsal del pie</td><td>Acceso cuando MMSS no disponibles</td><td>Mayor riesgo de trombosis venosa profunda (TVP) · Tromboflebitis · Distal → flujo más lento · Contraindicado en vasculopatía periférica, DM con pie diabético, linfedema</td><td>Última opción en adultos. Más frecuente en pediatría (vena safena en maleolo).</td></tr>
+        <tr><td>Cuero cabelludo (pediátrico)</td><td>Temporal superficial, frontal, occipital</td><td>Venas finas pero fijas · Útil en lactantes cuando MMSS y pie no disponibles</td><td>Solo en neonatos y lactantes pequeños · Rasurado necesario · Conforta menos a los padres · Limita el campo quirúrgico en neurocirugía</td><td>Exclusivo pediatría ≤ 6 meses si no hay otra opción</td></tr>
+        <tr><td>Yugular externa</td><td>Vena yugular externa</td><td>Gran calibre · Visible en cuello · Permite flujo alto</td><td>Difícil de mantener fija · Se colapsa con llanto o Valsalva brusco · No permite posicionar fácilmente en sedación · Riesgo de punción carotídea si se profundiza</td><td>Urgencias adultos cuando brazo no disponible. Requiere experiencia.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="caja c-comp"><strong>⚠ Contraindicaciones absolutas de venopuntura periférica en un miembro:</strong><br>
+      · Miembro con fístula arteriovenosa (FAV) para hemodiálisis — riesgo de trombosis de la FAV y pérdida del acceso.<br>
+      · Miembro con linfedema (mastectomía, linfadenectomía) — riesgo de linfangitis y celulitis.<br>
+      · Miembro con injerto vascular en curso.<br>
+      · Zona con quemadura, infección cutánea activa o celulitis.<br>
+      · Miembro ipsilateral a ganglio centinela positivo o con disección radical.<br>
+      En estos casos: usar el miembro contralateral o acceso central.</div>
+  </div>
+</div>
+
+<!-- S4 -->
+<div class="seccion" id="s4">
+  <div class="sec-h te"><div class="sec-num">04</div><div class="sec-titulo">PICC — Catéter Central de Inserción Periférica</div></div>
+  <div class="sec-b">
+    <div class="tw"><table class="th-te">
+      <thead><tr><th>Parámetro</th><th>Detalle</th></tr></thead>
+      <tbody>
+        <tr><td>Definición</td><td>Catéter largo (40–60 cm) insertado en vena periférica del brazo (basílica, braquial, cefálica) cuya punta llega a la vena cava superior (VCS), unión cavoatrial o AD derecha. Técnicamente es un <strong>catéter central</strong> a pesar de insertarse periféricamente.</td></tr>
+        <tr><td>Calibre / lúmenes</td><td>3 Fr a 6 Fr (French). Un lumen, dos lúmenes o tres lúmenes. Diámetro externo 1–2 mm.</td></tr>
+        <tr><td>Venas de elección</td><td>Basílica (primera elección — mayor calibre, trayecto más directo) · Braquial (segunda) · Cefálica (tercera — ángulo difícil en vena subclavia)</td></tr>
+        <tr><td>Guía para inserción</td><td>Ecografía OBLIGATORIA para ubicar la vena braquial o basílica (venas profundas). No visible externamente. Técnica de Seldinger modificada con microrreticulado.</td></tr>
+        <tr><td>Confirmación de posición</td><td>Rx de tórax obligatoria post-inserción: punta en VCS distal / unión cavoatrial. ECG intravascular puede guiar la posición en tiempo real.</td></tr>
+        <tr><td>Indicaciones</td><td>Tratamiento IV prolongado (&gt;7–10 días) · Antibióticos IV en domicilio · Quimioterapia · Nutrición parenteral total (NPT) · Medicamentos vesicantes o irritantes que dañan venas periféricas</td></tr>
+        <tr><td>Ventajas vs. CVC</td><td>Menor tasa de complicaciones mecánicas (sin riesgo de neumotórax) · Inserción más segura · Puede insertar enfermería entrenada · Posible en pacientes ambulatorios · Menor costo que CVC con tunelización</td></tr>
+        <tr><td>Desventajas vs. CVC</td><td>Flujo limitado por longitud (no para reanimación masiva) · Trombosis venosa de MMSS (riesgo 2–5%) · Difícil de avanzar en pacientes con venas tortuosas · No permite medición de PVC fiable</td></tr>
+        <tr><td>Duración máxima</td><td>Pueden permanecer hasta 1 año con cuidados adecuados. Reemplazar si infección o mal funcionamiento.</td></tr>
+        <tr><td>Cuidados</td><td>Heparinización de lúmenes (heparina 10 UI/mL en 2–3 mL) después de cada uso o semanalmente · Curación con CHX + apósito estéril c/7 días o si está mojado o despegado</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</div>
+
+<!-- S5 -->
+<div class="seccion" id="s5">
+  <div class="sec-h vc"><div class="sec-num">05</div><div class="sec-titulo">Acceso Venoso Central — Principios, Indicaciones y Sitios</div></div>
+  <div class="sec-b">
+    <div class="subsec">
+      <h3 class="h3-vc">5.1 Definición y Diferencia con Catéter Periférico</h3>
+      <p class="p">Un catéter venoso central (CVC) es cualquier catéter cuya punta está ubicada en un vaso de gran calibre: vena cava superior (VCS), vena cava inferior (VCI) o aurícula derecha. La diferencia fundamental con un CVP es la posición de la punta, no el sitio de inserción (por eso el PICC también es un CVC).</p>
+      <div class="caja c-vc"><strong>ℹ Definición CDC 2024:</strong> Se considera CVC a cualquier catéter intravascular cuya punta termina en vena cava superior, vena cava inferior o aurícula derecha, sin importar el sitio de inserción o el tipo de catéter. Esto incluye PICC, catéteres de hemodiálisis y catéteres tunelizados (Hickman, Broviac).</div>
+    </div>
+    <div class="subsec">
+      <h3 class="h3-vc">5.2 Indicaciones para Colocación de CVC</h3>
+      <div class="tw"><table class="th-vc">
+        <thead><tr><th>Categoría</th><th>Indicaciones específicas</th></tr></thead>
+        <tbody>
+          <tr><td>Administración de medicamentos</td><td>Vasopresores (norepinefrina, dopamina, adrenalina) — pueden dañar venas periféricas · Soluciones hiperosmolares (NPT, dextrosa &gt;10%, KCl concentrado) · Medicamentos muy irritantes (amiodarona IV, vancomicina, cefepime a altas dosis) · pH &lt;5 o &gt;9 · Vesicantes (quimioterapia — mejor PICC o port)</td></tr>
+          <tr><td>Monitoreo hemodinámico</td><td>Medición de PVC · Acceso para catéter de Swan-Ganz · Oximetría venosa central (SvcO₂) · Dilución transpulmonar (PiCCO)</td></tr>
+          <tr><td>Sin acceso periférico disponible</td><td>DAIVD fallido · Obesidad mórbida · Quemaduras extensas · Adicción IV crónica · Venotomía previa con esclerosis</td></tr>
+          <tr><td>Hemodiálisis / plasmaféresis</td><td>Catéter de doble lumen de alto flujo (Mahurkar, Quinton) para TRR · Acceso temporal mientras madura la FAV</td></tr>
+          <tr><td>Marcapasos transvenoso temporal</td><td>Acceso para colocación de electrodo de marcapasos intracavitario en urgencias</td></tr>
+          <tr><td>Nutrición parenteral total (NPT)</td><td>Osmolaridad &gt;900 mOsm/L requiere acceso central para no dañar venas periféricas</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="subsec">
+      <h3 class="h3-vc">5.3 Tipos de CVC según Duración y Estructura</h3>
+      <div class="central-grid">
+        <div class="cc-card">
+          <div class="cc-h" style="background:var(--vc-m);">CVC No Tunelizado (temporal)</div>
+          <div class="cc-b">
+            <div class="cc-row"><span class="cc-lbl">Duración</span><span>≤ 14 días (máx 4–6 semanas en ausencia de infección)</span></div>
+            <div class="cc-row"><span class="cc-lbl">Material</span><span>Poliuretano o silicona. 1, 2 o 3 lúmenes. 7–8 Fr.</span></div>
+            <div class="cc-row"><span class="cc-lbl">Sitios</span><span>Yugular interna, subclavia, femoral</span></div>
+            <div class="cc-row"><span class="cc-lbl">Uso</span><span>UCI, quirófano, emergencias. El más común en hospitales.</span></div>
+            <div style="margin-top:6px;"><span class="tag tag-vc">Rápido de colocar</span><span class="tag tag-comp">Mayor riesgo IPPCS</span></div>
+          </div>
+        </div>
+        <div class="cc-card">
+          <div class="cc-h" style="background:var(--te-m);">CVC Tunelizado (Hickman, Broviac, Groshong)</div>
+          <div class="cc-b">
+            <div class="cc-row"><span class="cc-lbl">Duración</span><span>Semanas a años. Para terapia IV prolongada.</span></div>
+            <div class="cc-row"><span class="cc-lbl">Estructura</span><span>Catéter de silicona tunelizado bajo la piel + manguito de Dacron (cojín de poliéster) a 1–2 cm de la salida cutánea. El tejido fibroso crece alrededor → fija el catéter + barrera antibacteriana.</span></div>
+            <div class="cc-row"><span class="cc-lbl">Uso</span><span>Quimioterapia, hemodiálisis crónica, NPT domiciliaria, enfermedades oncohematológicas</span></div>
+            <div style="margin-top:6px;"><span class="tag tag-te">Menor infección</span><span class="tag tag-do">Requiere quirófano</span></div>
+          </div>
+        </div>
+        <div class="cc-card">
+          <div class="cc-h" style="background:var(--med-m);">Port-a-Cath (catéter con reservorio subcutáneo)</div>
+          <div class="cc-b">
+            <div class="cc-row"><span class="cc-lbl">Estructura</span><span>Reservorio metálico o plástico implantado SC con septum de silicona autosellante. Conectado a catéter que llega a VCS. Acceso con aguja de Huber (no corta el septum).</span></div>
+            <div class="cc-row"><span class="cc-lbl">Duración</span><span>Años. El septum aguanta ~2000 punciones.</span></div>
+            <div class="cc-row"><span class="cc-lbl">Ventaja</span><span>Totalmente implantado → menor riesgo de infección · No visible externamente · Paciente puede bañarse y nadar · Mantenimiento mínimo (heparina 1 vez/mes)</span></div>
+            <div style="margin-top:6px;"><span class="tag tag-med">Mínima infección</span><span class="tag tag-vc">Oncología</span></div>
+          </div>
+        </div>
+        <div class="cc-card">
+          <div class="cc-h" style="background:var(--va-m);">Catéter de Hemodiálisis (Mahurkar, Quinton)</div>
+          <div class="cc-b">
+            <div class="cc-row"><span class="cc-lbl">Características</span><span>Doble lumen (rojo = arterial, azul = venoso según la hemodiálisis). 11–13 Fr. Longitud 15–20 cm. Diseñado para flujos &gt;200 mL/min.</span></div>
+            <div class="cc-row"><span class="cc-lbl">Sitios</span><span>Yugular interna derecha (primera elección) · Femoral · Subclavia (evitar — trombosis subclavia compromete futura FAV)</span></div>
+            <div class="cc-row"><span class="cc-lbl">Sellado</span><span>Heparina 1000–5000 UI/lumen después de cada sesión de HD para mantener permeabilidad</span></div>
+            <div style="margin-top:6px;"><span class="tag tag-va">Nefrología / UCI</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S6 -->
+<div class="seccion" id="s6">
+  <div class="sec-h vc"><div class="sec-num">06</div><div class="sec-titulo">Técnica de Inserción CVC — Seldinger Guiado por Ecografía</div></div>
+  <div class="sec-b">
+    <div class="subsec">
+      <h3 class="h3-vc">6.1 Técnica de Seldinger — Principio</h3>
+      <p class="p">La técnica de Seldinger (Sven-Ivar Seldinger, 1953) es el método estándar para todos los accesos centrales. Principio: punción de la vena con aguja fina → paso de guía metálica → retiro de aguja → dilatación del trayecto → paso del catéter sobre la guía → retiro de la guía → confirmación de posición.</p>
+    </div>
+    <div class="subsec">
+      <h3 class="h3-vc">6.2 Material Estéril Necesario (Todo en un Kit CVC)</h3>
+      <div class="tw"><table class="th-vc">
+        <thead><tr><th>Elemento</th><th>Especificación</th><th>Función</th></tr></thead>
+        <tbody>
+          <tr><td>Aguja introductora (introducer needle)</td><td>18 G, 7 cm. Metálica. Con jeringa de 5–10 mL.</td><td>Puncionar la vena. Confirmar acceso con aspiración de sangre venosa.</td></tr>
+          <tr><td>Guía metálica (guidewire)</td><td>J-wire 0.035 pulgadas, 45–60 cm, punta en J flexible</td><td>Mantener el acceso a la vena mientras se retira la aguja y se introduce el dilatador/catéter. La punta en J evita perforar la pared venosa.</td></tr>
+          <tr><td>Dilatador</td><td>Plástico, 1–2 cm más largo que el catéter</td><td>Ampliar el orificio cutáneo y subcutáneo para facilitar el paso del catéter. Retirar antes de insertar el catéter.</td></tr>
+          <tr><td>Catéter CVC</td><td>7–8 Fr, 15–20 cm (yugular/subclavia) · 20–25 cm (femoral)</td><td>El dispositivo final que permanece en el paciente.</td></tr>
+          <tr><td>Bisturí № 11</td><td>Hoja corta</td><td>Pequeña incisión cutánea (2–3 mm) para facilitar el paso del dilatador.</td></tr>
+          <tr><td>Jeringa 10 mL + SS 0.9%</td><td>Para aspiración y verificación</td><td>Aspirar sangre para confirmar posición venosa. Lavar el catéter.</td></tr>
+          <tr><td>Campo estéril grande, bata, guantes estériles</td><td>—</td><td>Barrera máxima estéril (MBS) — reducción de infecciones demostrada (EB nivel I)</td></tr>
+          <tr><td>Antiséptico</td><td>Clorhexidina 2% en alcohol isopropílico 70% (CHX-IPA)</td><td>Antisepsia del campo. Superior a povidona yodada (menor IPPCS — nivel IA CDC 2011).</td></tr>
+          <tr><td>Apósito para fijación</td><td>Apósito transparente semipermeable (TSM) o dispositivo de fijación sin sutura (StatLock®)</td><td>Fijación del catéter. TSM permite inspección visual del sitio.</td></tr>
+          <tr><td>Sonda de ECO + cubierta estéril</td><td>Sonda lineal 7–12 MHz (CVC superficiales) o curvilínea</td><td>Guiar la punción en tiempo real. Estándar de cuidado desde NICE 2002 y ESICM 2024.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="subsec">
+      <h3 class="h3-vc">6.3 Técnica Seldinger Guiada por ECO — Paso a Paso</h3>
+      <div class="tecnica-box">
+        <div class="tecnica-titulo" style="color:var(--vc-m);">Inserción de CVC — Barrera Máxima Estéril + Ecografía</div>
+        <div class="paso"><span class="paso-n">Pre</span><span><strong>Preparación:</strong> Consentimiento informado (electivo). Verificar parámetros de coagulación (TP, plaquetas). Posición óptima del paciente. Verificar equipo de ECO disponible y funcional. Preparar TODO el material sobre campo estéril antes de iniciar.</span></div>
+        <div class="paso"><span class="paso-n">1</span><span><strong>Barrera máxima estéril (MBS):</strong> operador con gorro, tapabocas, bata estéril y guantes estériles. Campo estéril grande (cubre todo el paciente). MBS demostrada en ↓ 50% de IPPCS (O'Grady CDC 2011).</span></div>
+        <div class="paso"><span class="paso-n">2</span><span><strong>Antisepsia:</strong> CHX 2%/IPA sobre zona de punción. Movimiento circular amplio ≥ 15 cm diámetro. Dejar secar 30 seg mínimo. Colocar campo estéril.</span></div>
+        <div class="paso"><span class="paso-n">3</span><span><strong>Anestesia local:</strong> lidocaína 1–2% sin epinefrina, 3–5 mL, infiltración subcutánea y profunda (al tejido que rodea la vena). En paciente bajo anestesia general omitir.</span></div>
+        <div class="paso"><span class="paso-n">4</span><span><strong>Localización ecográfica:</strong> identificar la vena (compresible, anecoica, sin pulsación, color azul en Doppler). Diferenciación vena/arteria: vena colapsa con presión leve de la sonda. Identificar estructuras adyacentes (arteria, nervio, pleura).</span></div>
+        <div class="paso"><span class="paso-n">5</span><span><strong>Punción guiada por ECO:</strong> técnica "out-of-plane" (sonda transversal — visión de aguja como punto hiperecogénico) O "in-plane" (sección longitudinal — visualización completa del trayecto de la aguja). Aspirar sangre oscura, no pulsátil = confirmación venosa.</span></div>
+        <div class="paso"><span class="paso-n">6</span><span><strong>Paso de la guía:</strong> introducir la guía J-wire por la aguja. Observar ECO: la guía debe verse en la luz de la vena (hiperecogénica). Avanzar 15–20 cm (no introducir toda la guía — riesgo de arco en VD → arritmias). Retirar la aguja manteniendo la guía fija.</span></div>
+        <div class="paso"><span class="paso-n">7</span><span><strong>Incisión + dilatación:</strong> pequeña incisión con bisturí № 11 en la piel junto a la guía. Pasar el dilatador con movimiento de rosca suave sobre la guía. Retirar el dilatador.</span></div>
+        <div class="paso"><span class="paso-n">8</span><span><strong>Inserción del catéter:</strong> pasar el catéter sobre la guía (siempre tener la guía visible en el extremo externo — nunca perder la guía). Avanzar la profundidad establecida. Retirar la guía. Aspirar todos los lúmenes (sangre fácil = posición correcta). Lavar con SS y ocluir.</span></div>
+        <div class="paso"><span class="paso-n">9</span><span><strong>Fijación:</strong> suturar el catéter a la piel (puntos seda 0) O usar dispositivo de fijación sin sutura (menor manipulación = menor infección). Apósito TSM estéril. Registrar profundidad de inserción.</span></div>
+        <div class="paso"><span class="paso-n">10</span><span><strong>Confirmación:</strong> Rx de tórax obligatoria post-CVC en yugular/subclavia. Verificar: punta en VCS distal (unión cavoatrial) · No neumotórax · No hemotórax · No posición intracardiaca. ECG de telemetría continua durante 30 min post-inserción (detectar arritmias por guía).</span></div>
+      </div>
+      <div class="caja c-comp"><strong>⚠ NUNCA avanzar si hay resistencia a la guía o al catéter:</strong> Resistencia = mal posicionamiento o perforación. Retirar y reempezar. Nunca forzar la guía. Si hay duda sobre posición arterial vs. venosa: gasometría de la sangre aspirada (PO₂ &gt;70 mmHg = arterial), transductor de presión (PA pulsátil = arterial), Doppler o ECO.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S7 -->
+<div class="seccion" id="s7">
+  <div class="sec-h vc"><div class="sec-num">07</div><div class="sec-titulo">CVC por Sitio — Yugular Interna, Subclavia y Femoral</div></div>
+  <div class="sec-b">
+    <div class="central-grid">
+      <!-- YUGULAR INTERNA -->
+      <div class="cc-card">
+        <div class="cc-h" style="background:var(--vc);">Yugular Interna (YI) — Primera Elección General</div>
+        <div class="cc-b">
+          <div class="cc-row"><span class="cc-lbl">Anatomía</span><span>Medial o posterolateral a la arteria carótida. Corre en el triángulo cervical posterior → ángulo esternal.</span></div>
+          <div class="cc-row"><span class="cc-lbl">Posición</span><span>Trendelenburg 15–20°. Cabeza girada 30–45° al lado contralateral (mayor rotación → YI más profunda y se superpone más a la carótida).</span></div>
+          <div class="cc-row"><span class="cc-lbl">Acceso</span><span>Abordaje anterior: triángulo de Sedillot (entre cabeza esternal y clavicular del ECM). Punto de punción: vértice del triángulo. Ángulo 45° hacia el pezón ipsilateral. Profundidad: 2–5 cm.</span></div>
+          <div class="cc-row"><span class="cc-lbl">Profundidad CVC</span><span>Derecho: 12–15 cm. Izquierdo: 15–18 cm.</span></div>
+          <div class="cc-row"><span class="cc-lbl">Ventajas</span><span>Mayor tasa de éxito guiado por ECO · Menor neumotórax vs. subclavia · Compresible si punción arterial accidental · Acceso natural para HD (yug. derecha)</span></div>
+          <div class="cc-row"><span class="cc-lbl">Desventajas</span><span>Mayor tasa IPPCS que subclavia · Incomoda en paciente despierto · Limitada movilidad cervical · Dificultad en edema cervical, traqueotomía</span></div>
+          <div style="margin-top:7px;"><span class="tag tag-vc">Adulto estándar</span><span class="tag tag-te">Hemodiálisis (YI Dcha.)</span><span class="tag tag-comp">Neumotórax 0.1–0.2%</span></div>
+        </div>
+      </div>
+
+      <!-- SUBCLAVIA -->
+      <div class="cc-card">
+        <div class="cc-h" style="background:var(--te-m);">Subclavia (SC) — Menor Infección, Mayor Neumotórax</div>
+        <div class="cc-b">
+          <div class="cc-row"><span class="cc-lbl">Anatomía</span><span>Posterior a la clavícula, anterior al plexo braquial y arteria subclavia. Pasa sobre la primera costilla y se fusiona con la yugular interna → tronco braquiocefálico.</span></div>
+          <div class="cc-row"><span class="cc-lbl">Posición</span><span>Trendelenburg 15°. Hombro ipsilateral levemente hacia atrás (toalla bajo la columna). Cabeza girada al lado contralateral.</span></div>
+          <div class="cc-row"><span class="cc-lbl">Acceso infraclavicular</span><span>1 cm inferomedial al punto de unión 1/3 externo y 2/3 internos de la clavícula. Avanzar horizontalmente paralelo a la clavícula, hacia la escotadura esternal. Profundidad: 3–5 cm.</span></div>
+          <div class="cc-row"><span class="cc-lbl">Profundidad CVC</span><span>Derecho: 13–16 cm. Izquierdo: 17–20 cm.</span></div>
+          <div class="cc-row"><span class="cc-lbl">Ventajas</span><span><strong>Menor IPPCS</strong> (el sitio más bajo de infección — por menor flora cutánea) · Mayor confort del paciente · Catéter más estable · Ideal para CVC de larga duración</span></div>
+          <div class="cc-row"><span class="cc-lbl">Desventajas</span><span>Mayor tasa de neumotórax (1–3%) · Hemotórax posible · Si punción arterial: NO compresible (arteria subclavia posterior a clavícula) → cirugía vascular · Dificultad en ventilación mecánica y EPOC con hiperinsuflación · ECO más difícil (sombra acústica de clavícula)</span></div>
+          <div style="margin-top:7px;"><span class="tag tag-te">Menor infección</span><span class="tag tag-comp">Neumotórax 1–3%</span><span class="tag tag-do">CVC largo plazo</span></div>
+        </div>
+      </div>
+
+      <!-- FEMORAL -->
+      <div class="cc-card">
+        <div class="cc-h" style="background:var(--io-m);">Femoral — Emergencias y Sin Alternativa</div>
+        <div class="cc-b">
+          <div class="cc-row"><span class="cc-lbl">Anatomía</span><span>Vena femoral medial a la arteria femoral en el triángulo de Scarpa (mnemotécnica NAVe: Nervio-Arteria-Vena de lateral a medial bajo el ligamento inguinal).</span></div>
+          <div class="cc-row"><span class="cc-lbl">Posición</span><span>Decúbito supino. Ligera abducción y rotación externa del miembro inferior. Punto de punción: 2–3 cm distales al ligamento inguinal, 1 cm medial al pulso femoral.</span></div>
+          <div class="cc-row"><span class="cc-lbl">Profundidad CVC</span><span>20–25 cm para llegar a VCI infrarrenal. Verificar con Rx.</span></div>
+          <div class="cc-row"><span class="cc-lbl">Ventajas</span><span>Menor riesgo de neumotórax o hemotórax · Ideal en coagulopatía severa (compresible con presión manual) · Reanimación cardiopulmonar (sin interrumpir masaje) · Rápido acceso en emergencias</span></div>
+          <div class="cc-row"><span class="cc-lbl">Desventajas</span><span><strong>Mayor IPPCS</strong> de todos los sitios (flora inguinal) · Mayor trombosis venosa profunda (5–10%) · Difícil mantenimiento de asepsia (ingle) · No en trauma abdominal (↑ PIA comprime VCI) · No en pacientes que caminarán pronto</span></div>
+          <div style="margin-top:7px;"><span class="tag tag-io">Emergencias</span><span class="tag tag-comp">Mayor IPPCS</span><span class="tag tag-vc">Coagulopatía</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsec">
+      <h3 class="h3-vc">7.1 Comparativa Rápida de Sitios para CVC</h3>
+      <div class="tw"><table class="th-vc">
+        <thead><tr><th>Criterio</th><th>Yugular interna</th><th>Subclavia</th><th>Femoral</th></tr></thead>
+        <tbody>
+          <tr><td>Tasa de IPPCS</td><td>Media (1–3/1000 días)</td><td><strong>Menor (0.5–2/1000 días)</strong></td><td>Mayor (3–6/1000 días)</td></tr>
+          <tr><td>Neumotórax</td><td>Bajo (0.1–0.3%)</td><td>Mayor (1–3%)</td><td>Ninguno</td></tr>
+          <tr><td>Punción arterial</td><td>2–5% (compresible)</td><td>0.5–1% (NO compresible)</td><td>3–5% (compresible)</td></tr>
+          <tr><td>Trombosis venosa</td><td>Baja-media</td><td>Media</td><td><strong>Alta (5–10%)</strong></td></tr>
+          <tr><td>Éxito con ECO</td><td>Muy alto (&gt;95%)</td><td>Moderado (clavícula)</td><td>Alto</td></tr>
+          <tr><td>Posición punta CVC</td><td>VCS alta → unión cavoatrial</td><td>VCS → unión cavoatrial</td><td>VCI infrarrenal</td></tr>
+          <tr><td>Medir PVC confiable</td><td>Sí</td><td>Sí</td><td>No (presión VCI variable con abdomen)</td></tr>
+          <tr><td>Preferencia HD</td><td><strong>YI derecha (primera elección)</strong></td><td>Evitar (compromete futura FAV)</td><td>Segunda opción HD temporal</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+
+<!-- S8 -->
+<div class="seccion" id="s8">
+  <div class="sec-h va"><div class="sec-num">08</div><div class="sec-titulo">Catéter Arterial — Línea Arterial</div></div>
+  <div class="sec-b">
+    <div class="subsec">
+      <h3 class="h3-va">8.1 Indicaciones y Sitios</h3>
+      <div class="tw"><table class="th-va">
+        <thead><tr><th>Indicación</th><th>Justificación</th></tr></thead>
+        <tbody>
+          <tr><td>Monitoreo continuo de PA en tiempo real</td><td>Cirugía mayor (cardíaca, vascular, neurocirugía, trasplante) · Inestabilidad hemodinámica · Necesidad de ajuste fino de vasopresores/inotrópicos</td></tr>
+          <tr><td>Hipotensión controlada intraoperatoria</td><td>Cirugía de columna en prono, cirugía maxilofacial, tumores vasculares</td></tr>
+          <tr><td>Muestras de sangre arterial frecuentes</td><td>Cirugía prolongada (&gt;4 h) · Ventilación mecánica con ajustes frecuentes · Gasometrías seriadas · Monitoreo de electrolitos, lactato, glucemia frecuente</td></tr>
+          <tr><td>Monitoreo del VPP/SVV</td><td>GDT intraoperatorio — FloTrac-Vigileo, PiCCO (requiere línea arterial radial o femoral)</td></tr>
+          <tr><td>Dificultad para tomar PA no invasiva</td><td>Obesidad mórbida, arritmias frecuentes, calcificación vascular severa</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="subsec">
+      <h3 class="h3-va">8.2 Sitios de Canalización Arterial</h3>
+      <div class="tw"><table class="th-va">
+        <thead><tr><th>Arteria</th><th>Calibre (catéter)</th><th>Ventajas</th><th>Desventajas</th><th>Prueba previa</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Radial (primera elección)</strong></td><td>20G en adulto · 22–24G en pediatría</td><td>Superficial · Fácilmente palpable · Circulación colateral via arco palmar (arteria cubital)</td><td>Puede ocluirse temporalmente con catéter (flujo distal mantenido por cubital si arco completo)</td><td><strong>Test de Allen:</strong> comprimir ambas arterias 15 seg, liberar cubital → relleno palmar &lt;5 seg = Allen positivo = circulación colateral adecuada. (Controversia: evidencia limitada de valor predictivo — en urgencias no es obligatorio)</td></tr>
+          <tr><td>Femoral</td><td>18–20G</td><td>Gran calibre · Palpable fácilmente · Alternativa cuando radial falla · Buena onda de presión</td><td>Difícil asepsia · Riesgo isquemia de miembro inferior (rara con catéter 18G) · Mayor IPPCA · Limitada movilidad del paciente</td><td>Doppler si hay enfermedad vascular periférica</td></tr>
+          <tr><td>Braquial</td><td>18–20G</td><td>Calibre moderado · Visible en fosa antecubital</td><td><strong>Arteria terminal</strong> (sin circulación colateral) → trombosis → isquemia del antebrazo y mano. Mayor riesgo.</td><td>No recomendada como primera línea. Evitar si hay otra opción.</td></tr>
+          <tr><td>Dorsal del pie (pedia)</td><td>20–22G</td><td>Alternativa cuando radial no disponible</td><td>Onda de presión menos fiel que la radial · Vasospasmo frecuente en frío</td><td>Test de Allen modificado para pie</td></tr>
+          <tr><td>Axilar</td><td>18–20G</td><td>Acceso en grandes vasos sin riesgo de isquemia de mano</td><td>Complicaciones neurológicas (plexo braquial adyacente) · Requiere ECO · Técnica avanzada</td><td>Doppler + ECO</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="subsec">
+      <h3 class="h3-va">8.3 Técnica de Cateterización de Arteria Radial</h3>
+      <div class="tecnica-box">
+        <div class="tecnica-titulo" style="color:var(--va-m);">Línea Arterial Radial — Técnica Seldinger o Directa</div>
+        <div class="paso"><span class="paso-n">Prep.</span><span>Catéter 20G · Guía corta 0.018 pulgadas (si técnica Seldinger) · Transductor de presión armado y zerado · Solución de heparinización (SS con 1–4 UI/mL heparina en flush continuo 2–4 mL/h) · Tablilla de madera para extensión de la muñeca 30–60°</span></div>
+        <div class="paso"><span class="paso-n">1</span><span>Colocar muñeca en hiperextensión 30–60° sobre tablilla. Identificar el pulso radial en el punto de Lister (lateral al tendón del flexor radial del carpo).</span></div>
+        <div class="paso"><span class="paso-n">2</span><span>Antisepsia con CHX/IPA. Anestesia local con lidocaína 1% 0.5 mL subcutáneo (el paciente despierto agradece esto).</span></div>
+        <div class="paso"><span class="paso-n">3</span><span><strong>Técnica directa:</strong> insertar el catéter 30–45° hasta ver destello de sangre pulsátil y brillante. Reducir ángulo. Avanzar la cánula. Retirar la aguja. Si no fluye bien → técnica de transfixión o Seldinger.</span></div>
+        <div class="paso"><span class="paso-n">4</span><span><strong>Técnica de transfixión:</strong> avanzar catéter hasta traspasar la arteria (pierde sangre). Retirar la aguja. Retirar lentamente la cánula hasta ver flujo → avanzar. Útil en pacientes en shock con arterias pequeñas.</span></div>
+        <div class="paso"><span class="paso-n">5</span><span><strong>Técnica Seldinger:</strong> punción con aguja corta 22G hasta destello. Introducir guía 0.018". Retirar aguja. Pasar catéter 20G sobre la guía. Retirar guía. Conectar transductor.</span></div>
+        <div class="paso"><span class="paso-n">6</span><span>Conectar al transductor de presión. Verificar onda arterial: debe ser pulsátil con forma característica (pico sistólico, muesca dícrota, cola diastólica). Onda amortiguada = doblez de catéter, coágulo o burbujas.</span></div>
+        <div class="paso"><span class="paso-n">7</span><span>Fijar con apósito TSM o sutura. Proteger con tablilla si el paciente está despierto. Registrar fecha y sitio en el apósito.</span></div>
+      </div>
+    </div>
+    <div class="subsec">
+      <h3 class="h3-va">8.4 Cuidados y Complicaciones del Catéter Arterial</h3>
+      <div class="tw"><table class="th-va">
+        <thead><tr><th>Complicación</th><th>Incidencia</th><th>Prevención</th><th>Manejo</th></tr></thead>
+        <tbody>
+          <tr><td>Oclusión/trombosis arterial</td><td>5–25% (mayoría asintomáticas)</td><td>Flush continuo con SS heparinizado (1–4 UI/mL a 2–4 mL/h) · Catéter 20G en adultos (no mayor) · Retirar tan pronto como sea posible</td><td>Retirar catéter. Circulación colateral generalmente suficiente (Allen+). Si isquemia: heparina IV, trombectomía quirúrgica vascular.</td></tr>
+          <tr><td>Hematoma local</td><td>15–20%</td><td>Técnica atraumática · Compresión 5 min al retirar el catéter</td><td>Compresión manual 5–10 min. Si grande: comprimir 20–30 min. Vigilar pulso distal.</td></tr>
+          <tr><td>Isquemia distal</td><td>&lt;0.1% (clínica)</td><td>Evitar catéteres muy gruesos · Tiempo de permanencia mínimo · Retirar si hay palidez, frialdad o parestesias distales</td><td>Retirar catéter inmediatamente. Calor local. Nitroglicerina tópica 2% en caso de vasoespasmo. Heparina IV. Vascular.</td></tr>
+          <tr><td>Embolia aérea</td><td>Rara pero grave</td><td>Evitar burbujas al conectar · Orientar las llaves correctamente · Flush LENTO</td><td>Si embolia arterial cerebral: Trendelenburg · O₂ 100% · Heparina · Considerar HBO</td></tr>
+          <tr><td>Infección del sitio / bacteriemia</td><td>1–3%</td><td>Técnica aséptica · Apósito estéril · Cambio c/96 h si no complicado (CDC 2011)</td><td>Retirar catéter. Hemocultivos. Antibióticos según cultivo de punta.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+
+<!-- S9 -->
+<div class="seccion" id="s9">
+  <div class="sec-h io"><div class="sec-num">09</div><div class="sec-titulo">Acceso Intraóseo — Vía de Emergencia Vital</div></div>
+  <div class="sec-b">
+    <p class="p">El acceso intraóseo (IO) establece comunicación directa con la médula ósea, que a su vez conecta con el sistema venoso a través de los sinusoides medulares y las venas nutricias. Todos los medicamentos y fluidos que pueden administrarse IV pueden administrarse IO con la misma eficacia y prácticamente la misma farmacocinética.</p>
+    <div class="subsec">
+      <h3 class="h3-io">9.1 Indicaciones y Sitios</h3>
+      <div class="tw"><table class="th-io">
+        <thead><tr><th>Parámetro</th><th>Detalle</th></tr></thead>
+        <tbody>
+          <tr><td>Indicaciones</td><td>Paro cardiorrespiratorio sin acceso IV disponible en ≤ 2 min · DAIVD en emergencia (trauma, quemados, síndrome de aplastamiento) · Pediatría en colapso cardiovascular · Paciente en shock donde cada segundo cuenta</td></tr>
+          <tr><td>Contraindicaciones</td><td>Fractura del hueso en el sitio de punción · Infección local (osteomielitis, celulitis) · Cirugía ortopédica previa con prótesis en ese hueso · Osteopetrosis · Osteogénesis imperfecta · Acceso IO previo en el mismo sitio las últimas 24 h</td></tr>
+          <tr><td>Sitio 1ª elección adulto</td><td><strong>Tibia proximal:</strong> 2 cm distal y medial a la tuberosidad tibial anterior (superficie plana, lejos de epífisis en adulto)</td></tr>
+          <tr><td>Sitio 1ª elección pediatría</td><td><strong>Tibia proximal:</strong> igual que adulto. En neonatos: tibia distal (maleolo medial)</td></tr>
+          <tr><td>Sitios alternativos</td><td>Húmero proximal (tuberosidad mayor) — mayor flujo, tolera infusiones rápidas · Fémur distal (niños &lt;2 años) · Esternón (dispositivo FAST1®, adultos) · Radio distal · Maléolo tibial</td></tr>
+          <tr><td>Dispositivos</td><td>EZ-IO® (semiprofesional, batería — PREFERIDO) · FAST1® (esternal) · Bone Injection Gun (BIG) · Aguja de IO manual (Cook) — económica, disponible en emergencias</td></tr>
+          <tr><td>Tiempo de inserción</td><td>EZ-IO®: &lt;30 seg. Manual: 1–2 min. Objetivo: IO antes de 2 min en paro.</td></tr>
+          <tr><td>Confirmación</td><td>Aspiración de médula ósea (líquido rojo oscuro — puede analizarse para electrolitos, grupo sanguíneo, glucemia) · Ausencia de extravasación al infundir SS 10 mL · Sensación de haber atravesado cortical + pérdida de resistencia</td></tr>
+          <tr><td>Medicamentos por IO</td><td>Adrenalina · Amiodarona · Atropina · Fluidos de reanimación · Hemoderivados · Todos los medicamentos ACLS · Anestésicos IV · Antibióticos</td></tr>
+          <tr><td>Limitaciones</td><td>Duración máxima: 24 h (idealmente reemplazar por IV en &lt;4–6 h una vez logrado el acceso venoso) · Flujo máximo por gravedad: 10 mL/min · Con presurización (manguito en 300 mmHg): hasta 80–125 mL/min · Dolor con infusión en paciente consciente (lidocaína IO 0.5 mL/kg de lidocaína 2%, máx 3 mL en adulto)</td></tr>
+          <tr><td>Retiro</td><td>Rotar el estilete 90° mientras se retira perpendicularmente. Comprimir el sitio 5 min. Apósito estéril. No usar el mismo sitio en 24 h.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="caja c-io"><strong>ℹ Regla de oro:</strong> Si el acceso venoso periférico no se obtiene en 2 intentos o en 90 segundos durante una emergencia → inmediatamente IO. No perder más tiempo. El IO salva vidas cuando el IV falla. ILCOR 2020, AHA 2020 y PALS lo incluyen como acceso de primera línea en paro pediátrico y alternativa inmediata en adultos.</div>
+  </div>
+</div>
+
+<!-- S10 -->
+<div class="seccion" id="s10">
+  <div class="sec-h med"><div class="sec-num">10</div><div class="sec-titulo">Vías de Administración de Medicamentos IV — Técnicas y Compatibilidad</div></div>
+  <div class="sec-b">
+    <div class="subsec">
+      <h3 class="h3-med">10.1 Métodos de Administración IV</h3>
+      <div class="tw"><table class="th-med">
+        <thead><tr><th>Método</th><th>Descripción</th><th>Usos</th><th>Consideraciones técnicas</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Bolo IV directo (push)</strong></td><td>Medicamento inyectado directamente en la línea IV en 30 seg a 5 min</td><td>Inducción anestésica · ACLS · Antídotos · Bolos de opioide · Emergencias hemodinámicas</td><td>Lavar la línea con SS antes y después (5 mL) · Velocidad de inyección crítica (propofol muy rápido → dolor, apnea · adenosina: bolo + flush RÁPIDO) · Confirmar permeabilidad antes del bolo</td></tr>
+          <tr><td><strong>Infusión IV continua (PVCC)</strong></td><td>Administración sostenida mediante bomba de infusión volumétrica o jeringa impulsora (syringe pump)</td><td>Vasopresores · Sedoanalgesia · Insulina · Oxitocina · Heparina · Nutrición parenteral</td><td>Bomba volumétrica obligatoria para fármacos de margen terapéutico estrecho · Programar alarmas de sobrepresión · Diluir correctamente · Rotular: fármaco, dosis, concentración, velocidad, fecha</td></tr>
+          <tr><td><strong>Minibag / Piggyback</strong></td><td>Solución de 50–250 mL con medicamento diluido, conectada al Y de la línea principal durante 15–60 min</td><td>Antibióticos IV · Antivirales · Anticonvulsivantes IV · Hierro IV · Furosemida</td><td>Verificar compatibilidad con la solución primaria · Velocidad de infusión según ficha técnica del fármaco · Lavar la línea antes y después si hay incompatibilidad potencial</td></tr>
+          <tr><td><strong>Perfusión TCI (target-controlled infusion)</strong></td><td>Bomba computarizada que calcula la velocidad de infusión para alcanzar y mantener una concentración plasmática o efecto seleccionada</td><td>Propofol (modelo Marsh o Schnider) · Remifentanilo (modelo Minto) · TIVA (anestesia total IV)</td><td>Requiere bomba TCI específica programada con el modelo farmacocinético · El "efecto" depende del modelo y la edad del paciente · No apto en pediatría con algunos modelos</td></tr>
+          <tr><td><strong>Sello/lavado de catéter (flush)</strong></td><td>Administración de SS 0.9% o solución heparinizada para mantener la permeabilidad del catéter</td><td>Después de cada medicamento · CVP no utilizado · CVC en reposo · PICC semanal</td><td>CVP: SS 0.9% 3–5 mL c/6–8 h o después de cada uso · CVC: SS 10 mL + heparina 2–3 mL (100 UI/mL) · PICC: heparina 10 UI/mL · Técnica de presión positiva al retirar (último 0.5 mL mientras cierra)</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="subsec">
+      <h3 class="h3-med">10.2 Incompatibilidades Farmacológicas Críticas en la Línea IV</h3>
+      <div class="caja c-comp"><strong>⚠ Principio:</strong> Siempre verificar la compatibilidad antes de mezclar medicamentos en la misma línea. La incompatibilidad puede producir precipitados, inactivación del fármaco, o reacciones adversas. Ante la duda: usar lúmenes separados o lavar la línea.</div>
+      <div class="tw"><table class="th-comp">
+        <thead><tr><th>Medicamento</th><th>Incompatible con</th><th>Manifestación</th><th>Solución</th></tr></thead>
+        <tbody>
+          <tr><td>Bicarbonato de sodio (NaHCO₃)</td><td>Calcio (gluconato/cloruro), dopamina, dobutamina, amiodarona, atropina</td><td>Precipitado blanco (CaCO₃) · Inactivación de catecolaminas</td><td>Línea separada. Lavar entre administraciones.</td></tr>
+          <tr><td>Furosemida</td><td>Midazolam, gentamicina, diazepam, amiodarona, esmolol</td><td>Precipitado turbio</td><td>Lúmenes separados. Lavar entre fármacos.</td></tr>
+          <tr><td>Propofol (emulsión lipídica)</td><td>Solución de Ringer lactato, ceftriaxona, diazepam, aminofilina</td><td>Coalescencia de la emulsión · ↑ tamaño de partícula → embolia</td><td>Línea dedicada exclusiva para propofol. No mezclar en Y con otros fármacos en el punto de inyección distal.</td></tr>
+          <tr><td>Ceftriaxona</td><td>Calcio (Ringer lactato, gluconato de Ca) — <strong>FATAL en neonatos</strong></td><td>Precipitado de ceftriaxona cálcica → embolismo pulmonar y renal (reportes de muerte neonatal)</td><td>NUNCA administrar ceftriaxona por la misma línea que soluciones con calcio en neonatos. Adultos: separar por al menos 48 h si transfusión de GRE (citrato) o usar línea diferente.</td></tr>
+          <tr><td>Amiodarona</td><td>Bicarbonato, furosemida, aminofilina, heparina</td><td>Precipitado. pH-dependiente.</td><td>Línea dedicada. Filtro de 0.22 µm recomendado en infusión prolongada (evita precipitados).</td></tr>
+          <tr><td>Vancomicina</td><td>Piperacilina-tazobactam, heparina, nafcilina</td><td>Precipitado. Inactivación de penicilinas.</td><td>Lúmenes separados. Intervalo de ≥ 1 h si se usan las mismas líneas.</td></tr>
+          <tr><td>Insulina regular</td><td>Aminofilina, benzodiacepinas, barbituricos, diazepam</td><td>Inactivación de insulina · Degradación</td><td>Línea dedicada. La insulina también se adsorbe al PVC de la tubería (pierde 10–30% de la dosis en la primera hora).</td></tr>
+          <tr><td>KCl concentrado (&gt;40 mEq/L)</td><td>Administración directa sin dilución</td><td><strong>PARO CARDÍACO INMEDIATO</strong></td><td>Siempre diluir. Nunca bolo directo. Ver guía de diskalemias.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="subsec">
+      <h3 class="h3-med">10.3 Velocidades de Administración de Medicamentos Críticos</h3>
+      <div class="tw"><table class="th-med">
+        <thead><tr><th>Medicamento</th><th>Velocidad segura de infusión IV</th><th>Riesgo de velocidad excesiva</th></tr></thead>
+        <tbody>
+          <tr><td>Vancomicina</td><td>Máx 10 mg/min (500 mg en mín 60 min, 1 g en mín 90–100 min)</td><td>Síndrome del hombre rojo (rubor, hipotensión, angioedema) — relacionado con velocidad, no con alergia</td></tr>
+          <tr><td>Metronidazol 500 mg</td><td>30–60 min en 100 mL</td><td>Convulsiones, tromboflebitis con infusión rápida</td></tr>
+          <tr><td>Amiodarona IV</td><td>Carga 150 mg en 10 min. Mantenimiento 1 mg/min × 6 h</td><td>Hipotensión severa, bloqueo AV, flebitis periférica (usar vena gruesa o vía central)</td></tr>
+          <tr><td>Difenilhidantoína (fenitoína)</td><td>Máx 50 mg/min. Preferir fosfenitoína 150 mg PE/min</td><td>Hipotensión, bradiarritmias, necrosis tisular local (purple glove syndrome)</td></tr>
+          <tr><td>Sulfato de magnesio</td><td>2 g en 15 min (convulsión), 1 g en 1 min (torsades)</td><td>Parada cardiorrespiratoria si bolo rápido (supersatura bloqueo de canales)</td></tr>
+          <tr><td>Adenosina</td><td>6 mg en bolo MUY rápido (&lt;2 seg) + flush rápido 20 mL SS</td><td>Si se da lento: inactiva antes de llegar al nodo AV. Éxito &lt;10% si no se da correctamente.</td></tr>
+          <tr><td>Gluconato de calcio 10%</td><td>1 g (10 mL) en 5–10 min</td><td>Bradicardia, hipotensión, paro si muy rápido. En digitálicos: arritmias graves.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+
+<!-- S11 -->
+<div class="seccion" id="s11">
+  <div class="sec-h do"><div class="sec-num">11</div><div class="sec-titulo">Nutrición Parenteral — Accesos y Administración</div></div>
+  <div class="sec-b">
+    <div class="tw"><table class="th-do">
+      <thead><tr><th>Tipo</th><th>Osmolaridad</th><th>Vía de acceso</th><th>Composición</th><th>Indicaciones</th></tr></thead>
+      <tbody>
+        <tr><td><strong>NPT periférica (NPP)</strong></td><td>≤ 900 mOsm/L</td><td>CVP 18–20G en vena de buen calibre. Cambio c/72 h de sitio.</td><td>Aminoácidos 3–4% + dextrosa 5–10% + lípidos 10–20% + electrolitos + vitaminas + oligoelementos</td><td>Nutrición complementaria a corto plazo (&lt;7 días) cuando no es posible NP central. Aporte calórico limitado.</td></tr>
+        <tr><td><strong>NPT central</strong></td><td>1200–2500 mOsm/L</td><td>CVC (YI, SC) o PICC en VCS. La osmolaridad elevada destruye las venas periféricas.</td><td>Dextrosa 20–40% + aminoácidos 8–15% + lípidos 10–20% + electrolitos completos + vitaminas + oligoelementos + insulina</td><td>Nutrición total cuando vía enteral es imposible (&gt;7 días) · Cirugía gastrointestinal mayor · Pancreatitis grave · Intestino corto · Fístulas entéricas</td></tr>
+        <tr><td><strong>Lípidos IV (emulsión de lípidos)</strong></td><td>~300 mOsm/L</td><td>CVP si se administra solo. CVC en mezcla total.</td><td>Triglicéridos LCT/MCT: soja + coco + oliva + pescado (omega-3). Nutriflex lipid®, SMOFlipid®</td><td>Fuente calórica esencial en NPT. También: antídoto de toxicidad por anestésicos locales (Intralipid 20% para LAST)</td></tr>
+      </tbody>
+    </table></div>
+    <div class="caja c-do"><strong>✔ Reglas de oro en NPT:</strong><br>
+      · Línea dedicada exclusiva para la NPT — no mezclar con medicamentos, sangre o fluidos.<br>
+      · Vigilar glucemia c/4–6 h: meta 140–180 mg/dL durante la NPT (insulina en sliding scale o en la bolsa).<br>
+      · La bolsa de NPT debe prepararse en condiciones estériles en farmacia hospitalaria (no en el piso).<br>
+      · Temperatura: a 4°C hasta 24 h antes de usar. A temperatura ambiente máximo 24 h.<br>
+      · No utilizar la misma bolsa si hay separación de fases (lipemia visible), cambios de color o precipitados.<br>
+      · Síndrome de realimentación: al iniciar NPT en pacientes con desnutrición severa → monitoreo de PO₄³⁻, K⁺, Mg²⁺ (caen por efecto insulínico). Iniciar con 25% de la meta calórica los primeros 3 días.</div>
+  </div>
+</div>
+
+<!-- S12 -->
+<div class="seccion" id="s12">
+  <div class="sec-h comp"><div class="sec-num">12</div><div class="sec-titulo">Complicaciones de los Accesos Vasculares</div></div>
+  <div class="sec-b">
+    <div class="subsec">
+      <h3 class="h3-comp">12.1 Complicaciones del Catéter Venoso Periférico</h3>
+      <div class="tw"><table class="th-comp">
+        <thead><tr><th>Complicación</th><th>Incidencia</th><th>Mecanismo</th><th>Prevención</th><th>Tratamiento</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Flebitis</strong></td><td>30–75% si &gt;72 h</td><td>Mecánica (catéter en movimiento), química (medicamento irritante, pH extremo), infecciosa (contaminación)</td><td>CVP 22–24G en venas pequeñas · Cambio c/96 h (CDC 2011) · Medicamentos irritantes por vía central · CHX en inserción</td><td>Escala VIP 2–3: cambiar catéter de sitio + calor local. VIP 4–5: antibióticos si purulenta. Tromboflebitis séptica: antibióticos IV + anticoagulación.</td></tr>
+          <tr><td><strong>Infiltración (extravascular)</strong></td><td>20–70%</td><td>La cánula sale o perfora la vena → fluido va al tejido subcutáneo</td><td>Verificar permeabilidad antes de infundir · Monitoreo horario del sitio · Fijación adecuada · Evitar zonas de flexión</td><td>Retirar catéter inmediatamente. Elevar el miembro. Compresas frías. Si vesicante: antídoto específico (hialuronidasa, dimetilsulfóxido).</td></tr>
+          <tr><td><strong>Extravasación de vesicantes</strong></td><td>Rara pero grave</td><td>Igual a infiltración pero con medicamento tisular-destructivo: quimioterapia (doxorrubicina, vincristina), cloruro de calcio, KCl concentrado, norepinefrina, diazepam</td><td>Vesicantes SOLO por vía central o PICC · Verificar reflujo antes · Monitoreo muy frecuente durante infusión</td><td>DETENER infusión inmediatamente. Aspirar por el catéter antes de retirar. Marcar la zona. Antídotos: dexrazoxano IV para antraciclinas; hialuronidasa SC para alcaloides de la vinca; dimetilsulfóxido tópico para antraciclinas. Consultar oncología.</td></tr>
+          <tr><td><strong>Obstrucción del catéter</strong></td><td>10–30%</td><td>Coágulo intraluminal, acodamiento, precipitado de fármaco</td><td>Flush regular (SS c/6–8 h) · Técnica de presión positiva al retirar jeringas · Evitar mezclas incompatibles</td><td>Intentar aspirar (nunca empujar hacia adentro — riesgo de embolismo). Si persiste: TPA (alteplasa) 1 mg/lumen por 1 h. Si falla: cambiar catéter.</td></tr>
+          <tr><td><strong>Hematoma local</strong></td><td>15–20%</td><td>Punción fallida, coagulopatía</td><td>Compresión inmediata post-punción fallida</td><td>Compresión 5 min. Si grande → 20 min. Frío local. Vigilar.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="subsec">
+      <h3 class="h3-comp">12.2 Complicaciones del CVC — Mecánicas (Inserción)</h3>
+      <div class="tw"><table class="th-comp">
+        <thead><tr><th>Complicación</th><th>Sitio de mayor riesgo</th><th>Prevención</th><th>Diagnóstico</th><th>Tratamiento</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Neumotórax</strong></td><td>Subclavia (1–3%), YI (0.1–0.3%)</td><td>ECO para guiar punción · Técnica adecuada · Rx post-inserción obligatoria</td><td>Rx de tórax post-CVC · Asimetría del murmullo vesicular · Desaturación · SatO₂ &lt;94%</td><td>Pequeño (&lt;2 cm): O₂ 100% + observación 4 h. Grande o sintomático: tubo de tórax. Neumotórax a tensión: descompresión urgente con aguja 14G en 2° EIC LMC.</td></tr>
+          <tr><td><strong>Punción arterial accidental</strong></td><td>YI (carotídea), femoral (femoral), subclavia (NO compresible)</td><td>ECO tiempo real · Identificar arteria antes de puncionar · Confirmar color y presión de la sangre</td><td>Sangre pulsátil y brillante roja · Transductor: onda arterial · Gasometría: PO₂ &gt;70 · Eco post-inserción</td><td>YI y femoral: retirar aguja/catéter + compresión manual 10–20 min. Subclavia (NO compresible): dejar el catéter, llamar a cirugía vascular urgente, NO retirar hasta evaluar por el cirujano. Stent endovascular puede ser necesario.</td></tr>
+          <tr><td><strong>Hemotórax</strong></td><td>Subclavia, YI</td><td>ECO · Técnica correcta · Rx post</td><td>Rx tórax: opacidad + desviación mediastinal. Disminución de RS en base.</td><td>Tubo de tórax ≥ 32 Fr. Reposición de volumen. Cirugía si sangrado activo &gt;200 mL/h.</td></tr>
+          <tr><td><strong>Embolia aérea</strong></td><td>Cualquier CVC</td><td>Trendelenburg al conectar/desconectar · Técnica oclusiva · Cabeza baja al retirar</td><td>Hipoxia súbita · Molino de viento en auscultación cardiaca · ECO: burbujas en AD</td><td>Posición de Durant (decúbito lateral izquierdo) · Trendelenburg · O₂ 100% · Aspirar por el CVC · HBO si disponible</td></tr>
+          <tr><td><strong>Malposición del catéter</strong></td><td>YI izquierda (angulación a la VCI), PICC (no llega a VCS)</td><td>Confirmación con ECO de la guía · Rx tórax obligatoria</td><td>Rx tórax: punta fuera de VCS · No aspiración de sangre correcta · Arritmias</td><td>Reposicionar bajo Rx o ECO. Si no posible: retirar y recolocar.</td></tr>
+          <tr><td><strong>Perforación cardíaca / taponamiento</strong></td><td>Posición muy distal en AD</td><td>No avanzar el catéter más de 15 cm en yugular derecha · Verificar posición</td><td>Hipotensión súbita · Ingurgitación yugular · Pulso paradójico · ECO: derrame pericárdico</td><td>Pericardiocentesis urgente. Llamar a cardiología/cirugía cardíaca.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="subsec">
+      <h3 class="h3-comp">12.3 Infección Asociada al Catéter — IPPCS / IPACS</h3>
+      <div class="caja c-comp"><strong>⚠ Definiciones CDC 2024:</strong><br>
+        <strong>IPPCS (Infección del Torrente Sanguíneo Primaria asociada a Catéter Venoso Central):</strong> bacteriemia/fungemia confirmada por laboratorio en paciente con CVC sin foco infeccioso identificado en otro sitio.<br>
+        <strong>IPACS (Infección del Sitio de Acceso):</strong> infección limitada al sitio de inserción (enrojecimiento, calor, pus, con o sin bacteriemia).<br>
+        Incidencia IPPCS: 0.5–2 por 1000 días-catéter en UCI (meta &lt;1 con bundling completo).</div>
+      <div class="tw"><table class="th-comp">
+        <thead><tr><th>Agente etiológico</th><th>Fuente</th><th>% de los casos</th></tr></thead>
+        <tbody>
+          <tr><td>Staphylococcus epidermidis</td><td>Flora cutánea del operador y del paciente</td><td>30–35%</td></tr>
+          <tr><td>Staphylococcus aureus (SASM y SARM)</td><td>Flora cutánea y nasal</td><td>20–25%</td></tr>
+          <tr><td>Candida sp.</td><td>Flora endógena GI/mucocutánea en inmunosuprimidos</td><td>10–15%</td></tr>
+          <tr><td>Gram negativos (Klebsiella, Pseudomonas, E. coli)</td><td>Contaminación de la línea, soluciones</td><td>15–25%</td></tr>
+          <tr><td>Enterococcus sp.</td><td>Flora GI</td><td>5–10%</td></tr>
+        </tbody>
+      </table></div>
+      <div class="tw"><table class="th-comp">
+        <thead><tr><th>Componente del "Bundle" de prevención de IPPCS (CDC/IHI)</th><th>Nivel de evidencia</th></tr></thead>
+        <tbody>
+          <tr><td>1. Higiene de manos antes de la inserción y manipulación</td><td>IA</td></tr>
+          <tr><td>2. Barrera máxima estéril (bata + guantes + gorro + tapabocas + campo grande) durante inserción</td><td>IA</td></tr>
+          <tr><td>3. Antisepsia con CHX 2% en alcohol isopropílico (superior a povidona)</td><td>IA</td></tr>
+          <tr><td>4. Selección del sitio óptimo (subclavia &gt; YI &gt; femoral en adultos no críticos)</td><td>IB</td></tr>
+          <tr><td>5. Revisión diaria de la necesidad del catéter — retirar tan pronto no sea necesario</td><td>IA</td></tr>
+          <tr><td>6. Apósito transparente semipermeable + cambio c/7 días (o si mojado/despegado)</td><td>IA</td></tr>
+          <tr><td>7. Desinfectar los hubs/conectores con alcohol 70% por ≥ 15 seg antes de acceder ("scrub the hub")</td><td>IA</td></tr>
+          <tr><td>8. Usar conectores sin aguja de baja resistencia (needleless connectors)</td><td>II</td></tr>
+          <tr><td>9. Catéteres impregnados con CHX/sulfadiazina de plata si IPPCS &gt;3/1000 días con medidas anteriores</td><td>IA</td></tr>
+          <tr><td>10. No cambio rutinario programado de CVC (sin evidencia de beneficio vs. infección por nueva inserción)</td><td>IA</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</div>
+
+<!-- S13 -->
+<div class="seccion" id="s13">
+  <div class="sec-h te"><div class="sec-num">13</div><div class="sec-titulo">Mantenimiento, Curación y Retiro de Catéteres</div></div>
+  <div class="sec-b">
+    <div class="tw"><table class="th-te">
+      <thead><tr><th>Tipo de catéter</th><th>Frecuencia de curación</th><th>Material de la curación</th><th>Criterios de cambio de catéter</th><th>Criterios de retiro</th></tr></thead>
+      <tbody>
+        <tr><td>CVP (catéter periférico)</td><td>C/96 h o si suciedad/despegamiento · No cambio rutinario si sin signos de complicación (INS 2021)</td><td>Apósito TSM o gasa estéril + esparadrapo</td><td>Cambio c/96 h (adultos) · Flebitis VIP ≥ 3 · No funciona · Cambio de sitio de infusión · Movilización del catéter &gt;0.5 cm</td><td>Alta hospitalaria · Fin del tratamiento IV · Flebitis · Infiltración · Extravasación</td></tr>
+        <tr><td>CVC no tunelizado</td><td>C/7 días o si apósito mojado/sucio/despegado · Curación del hub c/72–96 h</td><td>CHX 2% para antisepsia del sitio · Apósito TSM · O gasa estéril si hay sangrado activo</td><td>No cambio rutinario por tiempo (sin evidencia de beneficio) · Sospecha de infección: hemocultivos → retirar si positivo · Guía reemplazar si deterioro del catéter</td><td>Ya no indica · Bacteriemia confirmada · Punta positiva con clínica · Salida del catéter &gt;2 cm</td></tr>
+        <tr><td>PICC</td><td>C/7 días o si apósito despegado/mojado</td><td>Igual que CVC. CHX + TSM. Usar dispositivo de fijación sin sutura para reducir tracción.</td><td>No cambio rutinario. Reemplazar si disfunción (oclusión con TPA, ruptura)</td><td>Fin del tratamiento · Infección · Trombosis venosa MMSS sintomática</td></tr>
+        <tr><td>Línea arterial</td><td>C/96 h o si sangrado/despegamiento</td><td>CHX + TSM + tablilla de muñeca</td><td>No cambio rutinario de sitio. Reemplazar si infección, mal funcionamiento o onda amortiguada intratable</td><td>Ya no indica · IHO (&gt;5 días aumenta complicaciones) · Isquemia distal · Infección</td></tr>
+        <tr><td>Catéter de HD</td><td>Post cada sesión: desinfección del hub + sellado con heparina 5000 UI/lumen. Curación c/7 días.</td><td>CHX + apósito estéril. Nunca mojar.</td><td>No cambio rutinario. Cambiar a FAV tan pronto como sea posible.</td><td>FAV madura · Infección · Trombosis</td></tr>
+      </tbody>
+    </table></div>
+    <div class="caja c-te"><strong>✔ Técnica correcta de retiro de CVC — Prevención de embolia aérea:</strong><br>
+      1. Posición de Trendelenburg o decúbito supino (no sentado — riesgo de embolia aérea al retirar).<br>
+      2. Paciente en espiración o Valsalva (aumenta presión venosa → aire no puede entrar).<br>
+      3. Retirar el catéter en un solo movimiento continuo.<br>
+      4. Comprimir inmediatamente con gasa estéril × 3–5 min (o más si coagulopatía).<br>
+      5. Apósito oclusivo con vaselina gauze o gasa + esparadrapo × 24–48 h.<br>
+      6. En pacientes bajo VM: retirar durante la espiración del ventilador.<br>
+      7. Opcional: enviar punta del catéter a cultivo (para CVC con sospecha de infección).</div>
+  </div>
+</div>
+
+<!-- S14 — EJERCICIOS -->
+<div class="seccion" id="s14">
+  <div class="sec-h vp"><div class="sec-num">14</div><div class="sec-titulo">Ejercicios para los Estudiantes · Puntaje sobre 5.0</div></div>
+  <div class="sec-b">
+    <div class="caja c-vc"><strong>ℹ Instrucciones:</strong> Desarrolle cada ejercicio con razonamiento clínico completo. Justifique cada decisión con evidencia actualizada (INS 2021, CDC 2024, ESICM 2024). Cuando haya cálculos, muestre todos los pasos. Cada ejercicio vale <strong>5.0 puntos</strong> independientemente. Las respuestas NO se incluyen en este documento.</div>
+
+    <!-- EJ 1 -->
+    <div class="ej-box">
+      <div class="ej-hdr"><div class="ej-num">1</div><div class="ej-tit">Selección del acceso vascular en el perioperatorio</div><div class="ej-pts">5.0 pts</div></div>
+      <div class="ej-txt">Usted recibe en quirófano a 3 pacientes seguidos. Para cada uno, justifique completamente la selección del tipo, calibre, sitio y número de accesos vasculares necesarios.</div>
+      <div class="ej-datos">
+        <strong>Caso A:</strong> Mujer 45 años, 62 kg, mastectomía derecha radical modificada con linfadenectomía. ASA II. Sin comorbilidades. Sin accesos previos. Hb 11 g/dL.<br><br>
+        <strong>Caso B:</strong> Hombre 70 años, IRC estadio 4 (FAV radial-cefálica derecha funcional para HD), bypass femoropoplíteo izquierdo bajo anestesia general. ASA III. Sin alergias. Hb 10.2 g/dL. Plaquetas 90,000/µL.<br><br>
+        <strong>Caso C:</strong> Niña 4 años, 16 kg, corrección de cardiopatía congénita (CIA tipo ostium secundum) bajo CEC. Hb 10 g/dL. Sin acceso venoso previo.
+      </div>
+      <div class="ej-q"><ol>
+        <li><strong>(1.5 pts — Caso A)</strong> ¿En cuál miembro colocará el catéter periférico y por qué? ¿Qué calibre mínimo necesita para esta cirugía? ¿Necesita también un CVC? Justifique con base en el riesgo quirúrgico, la complejidad y las posibles complicaciones intraoperatorias.</li>
+        <li><strong>(1.5 pts — Caso B)</strong> Señale todos los miembros y sitios contraindicados para acceso vascular periférico y central, explicando el motivo. ¿Cuál sería la mejor opción de acceso periférico y de acceso central en este paciente? ¿Qué tipo de CVC elegiría y qué sitio específico?</li>
+        <li><strong>(2.0 pts — Caso C)</strong> Proponga el plan completo de accesos vasculares para cirugía de CEC en esta niña: calibre del CVP, tipo y sitio del CVC, necesidad de línea arterial (sitio, calibre), acceso para monitoreo de PVC. Explique las particularidades de la técnica en un paciente pediátrico de 4 años en comparación con el adulto.</li>
+      </ol></div>
+    </div>
+
+    <!-- EJ 2 -->
+    <div class="ej-box">
+      <div class="ej-hdr"><div class="ej-num">2</div><div class="ej-tit">Complicaciones y manejo de emergencias vasculares</div><div class="ej-pts">5.0 pts</div></div>
+      <div class="ej-txt">Durante su guardia de anestesia se presentan 3 complicaciones diferentes. Describa el diagnóstico, mecanismo y manejo paso a paso de cada una:</div>
+      <div class="ej-q"><ol>
+        <li><strong>(2.0 pts)</strong> Al insertar un CVC en vena subclavia izquierda, a los 2 minutos el paciente (despierto bajo sedación) presenta disnea súbita, desaturación (SatO₂ 88%), ausencia del murmullo vesicular izquierdo y desviación traqueal a la derecha. ¿Cuál es el diagnóstico? ¿Cómo lo confirma en menos de 1 minuto al lado de la cama? ¿Cuál es el manejo inmediato si hay compromiso hemodinámico?</li>
+        <li><strong>(1.5 pts)</strong> Durante la infusión de norepinefrina por un CVP en antebrazo izquierdo (puesto por urgencias hace 8 h), nota zona pálida y tensa de 4×3 cm alrededor del sitio de inserción. El monitor muestra que la infusión de norepinefrina ha estado corriendo a 0.15 mcg/kg/min por los últimos 30 minutos. ¿Qué ocurrió? ¿Por qué la norepinefrina es especialmente peligrosa en extravasación? Describa el manejo de esta complicación específica, incluyendo el antídoto y dosis.</li>
+        <li><strong>(1.5 pts)</strong> Al retirar un CVC yugular interno derecho en un paciente sentado a 45°, nota que el paciente súbitamente desatura a 80%, pierde el conocimiento y presenta hipotensión 60/30 mmHg. La auscultación cardiaca muestra un soplo de "molino de viento". ¿Cuál es el diagnóstico? ¿Cuál fue el error técnico? Describa el manejo inmediato y las posiciones que debe adoptar con el paciente.</li>
+      </ol></div>
+    </div>
+
+    <!-- EJ 3 -->
+    <div class="ej-box">
+      <div class="ej-hdr"><div class="ej-num">3</div><div class="ej-tit">Técnica de Seldinger y ecografía para CVC</div><div class="ej-pts">5.0 pts</div></div>
+      <div class="ej-txt">Un paciente de 55 años, 80 kg, obeso (IMC 38), es admitido en UCI por sepsis abdominal severa. K⁺ 6.2 mEq/L, requiere norepinefrina y NPT. No tiene acceso venoso periférico funcional. Usted es el residente de anestesia y debe colocar un CVC en yugular interna derecha guiado por ecografía.</div>
+      <div class="ej-q"><ol>
+        <li><strong>(1.0 pt)</strong> ¿Por qué la norepinefrina requiere obligatoriamente un acceso central y no puede administrarse por vía periférica? Explique el riesgo específico con el mecanismo fisiopatológico de la extravasación de vasopresores.</li>
+        <li><strong>(1.5 pts)</strong> Describa la preparación completa del procedimiento (material, posición del paciente, antisepsia, barrera estéril) y explique por qué cada elemento del "bundle" de prevención de infecciones es obligatorio. ¿Qué ocurre si no se usa la barrera máxima estéril?</li>
+        <li><strong>(1.5 pts)</strong> Describa la técnica de Seldinger paso a paso para este paciente (desde la punción hasta la confirmación final), incluyendo: cómo diferencia ecográficamente la vena yugular interna de la arteria carótida, cuántos centímetros avanza la guía y por qué no debe avanzarla toda, y qué confirma usted en la Rx de tórax post-inserción.</li>
+        <li><strong>(1.0 pt)</strong> Al aspirar el catéter tras la inserción, sale sangre pulsátil brillante. ¿Qué ocurrió? ¿Cuál es el error más probable en este paciente? ¿Qué hace inmediatamente y por qué NO retira el catéter de inmediato?</li>
+      </ol></div>
+    </div>
+
+    <!-- EJ 4 -->
+    <div class="ej-box">
+      <div class="ej-hdr"><div class="ej-num">4</div><div class="ej-tit">Acceso intraóseo y farmacología de la línea IV</div><div class="ej-pts">5.0 pts</div></div>
+      <div class="ej-txt">Dos casos independientes:</div>
+      <p class="ej-txt"><strong>Caso A:</strong> Niño de 3 años, 14 kg, llega a urgencias en paro cardiorrespiratorio por ahogamiento. El equipo lleva 90 segundos sin lograr acceso venoso periférico (3 intentos fallidos).</p>
+      <p class="ej-txt"><strong>Caso B:</strong> En el quirófano, el residente conecta la misma línea IV para pasar simultáneamente furosemida y midazolam, y nota que inmediatamente se forma un precipitado blanco turbio en el equipo de venoclisis.</p>
+      <div class="ej-q"><ol>
+        <li><strong>(2.0 pts — Caso A)</strong> ¿Cuál es la conducta según las guías ILCOR 2020 ante este escenario? Describa la técnica de inserción del acceso intraóseo en tibia proximal paso a paso: sitio anatómico exacto, ángulo de inserción, cómo confirma la posición correcta y cómo administra adrenalina por esta vía. ¿Qué diferencia hay entre la administración IO y la IV en términos de inicio de acción y dosis?</li>
+        <li><strong>(1.0 pt — Caso A)</strong> Una vez estabilizado, el niño tiene vía IO en tibia. El equipo de trauma quiere pasar 200 mL de sangre O- urgente por la vía IO. ¿Es posible? ¿Qué dispositivo necesitan para lograr un flujo adecuado? ¿Cuánto tiempo máximo puede permanecer esta vía IO antes de que deba ser reemplazada por IV?</li>
+        <li><strong>(2.0 pts — Caso B)</strong> Identifique la incompatibilidad farmacológica y explique el mecanismo por el cual se forma el precipitado. ¿Qué riesgo representa para el paciente si este precipitado ya fue administrado parcialmente? Proponga la solución correcta para administrar ambos medicamentos de forma segura. Mencione otras 3 incompatibilidades farmacológicas críticas que el anestesiólogo debe conocer y cómo prevenirlas.</li>
+      </ol></div>
+    </div>
+
+    <!-- EJ 5 -->
+    <div class="ej-box">
+      <div class="ej-hdr"><div class="ej-num">5</div><div class="ej-tit">Prevención de IPPCS y manejo de infección del catéter</div><div class="ej-pts">5.0 pts</div></div>
+      <div class="ej-txt">Paciente de 65 años en UCI, con CVC yugular interna derecho colocado hace 9 días. El equipo de enfermería reporta que el apósito estaba manchado de secreción amarillenta esta mañana y el paciente tiene fiebre de 38.8°C. Los hemocultivos de ayer son positivos para Staphylococcus aureus SARM en las dos muestras.</div>
+      <div class="ej-datos">
+        Leucocitos 18,200/µL · Lactato 2.1 mEq/L · PA 105/65 mmHg · FC 108 lpm · No tiene otro foco infeccioso identificado
+      </div>
+      <div class="ej-q"><ol>
+        <li><strong>(1.5 pts)</strong> ¿Cómo se llama esta complicación según la definición CDC 2024? ¿Cuáles son los criterios diagnósticos específicos que se cumplen en este caso? ¿Cuál es el agente más frecuente de IPPCS en UCI y cómo llega a colonizar el catéter (mencione las 4 vías de colonización)?</li>
+        <li><strong>(1.5 pts)</strong> ¿Debe retirar el CVC inmediatamente? Fundamente su respuesta según las guías IDSA 2023. ¿Qué antibiótico elegiría para cubrir SARM, con qué dosis y duración mínima? ¿En qué caso NO se retira el CVC a pesar de una IPPCS?</li>
+        <li><strong>(1.0 pt)</strong> Si este paciente hubiera tenido el CVC por subclavia en lugar de yugular interna, ¿la incidencia de IPPCS habría sido diferente? ¿Por qué la tasa de infección varía según el sitio? Cite las incidencias aproximadas en días-catéter para cada sitio.</li>
+        <li><strong>(1.0 pt)</strong> Reflexionando sobre los 9 días del catéter, mencione cuáles de los 10 componentes del "bundle" de prevención de IPPCS probablemente fallaron en este caso y qué medidas específicas del protocolo de mantenimiento debieron aplicarse para haberlo prevenido.</li>
+      </ol></div>
+    </div>
+
+    <!-- EJ 6 -->
+    <div class="ej-box">
+      <div class="ej-hdr"><div class="ej-num">6</div><div class="ej-tit">Preguntas integradas — Conceptos clave</div><div class="ej-pts">5.0 pts</div></div>
+      <div class="ej-txt">Responda de forma concisa y precisa:</div>
+      <div class="ej-q"><ol>
+        <li><strong>(1.0 pt)</strong> Un médico decide usar un catéter venoso central de acceso subclavio izquierdo para pasar una transfusión de 3 unidades de glóbulos rojos. El tipo de solución para diluir los GRE disponible en el servicio es Ringer Lactato. ¿Es adecuado esto? ¿Qué ocurriría bioquímicamente y qué solución debe usarse? Justifique con la composición de los fluidos.</li>
+        <li><strong>(1.0 pt)</strong> ¿Cuáles son los colores estándar ISO de los catéteres venosos periféricos de 14G, 18G, 20G y 22G según la normativa utilizada en Colombia? Si llega a urgencias un paciente con trauma y trae dos catéteres azules, ¿qué flujo máximo puede esperar y es suficiente para una reanimación de alto volumen? ¿Qué cambiaría?</li>
+        <li><strong>(1.0 pt)</strong> Explique el principio de la Ley de Hagen-Poiseuille aplicado a los accesos vasculares. ¿Por qué un catéter periférico 14G corto puede ser superior a un CVC de 7 French largo en términos de flujo para reanimación aguda? Proporcione los datos de flujo aproximado de cada uno.</li>
+        <li><strong>(1.0 pt)</strong> ¿Cuándo está indicado el Test de Allen antes de colocar una línea arterial radial? ¿Cuál es su interpretación y su principal limitación como prueba diagnóstica según la evidencia actual? ¿En qué escenario de urgencias absoluta podría omitirse?</li>
+        <li><strong>(1.0 pt)</strong> Un paciente con diagnóstico de sepsis necesita ampicilina-sulbactam + vancomicina + norepinefrina + furosemida infusión continua. Usted tiene disponible un CVC de doble lumen (lumen proximal y lumen distal). ¿Cómo distribuiría estos 4 medicamentos en las dos luces disponibles para evitar incompatibilidades? ¿Qué ocurriría si mezcla vancomicina y furosemida en el mismo lumen?</li>
+      </ol></div>
+    </div>
+
+    <div class="caja c-vp"><strong>📊 Criterios de evaluación:</strong> Cada ejercicio vale 5.0 puntos. La calificación considera exactitud científica y actualización (40%) · razonamiento clínico aplicado (35%) · detalle técnico-procedimental correcto (25%). Las respuestas parciales tienen puntaje proporcional al criterio del docente.</div>
+  </div>
+</div>
+
+</div><!-- /cont -->
+
+<div class="footer">
+  <div class="footer-g">
+    <div>
+      <strong>Autor y Docente Responsable</strong>
+      Dr. Andrés Robayo · Médico Especialista en Anestesiología y Reanimación<br>
+      Docente de Pregrado – Rotación de Anestesiología<br>
+      Hospital de Kennedy · Hospital de Bosa · Subred Suroccidente E.S.E. · Bogotá D.C., 2025
+    </div>
+    <div>
+      <strong>Referencias y Evidencia</strong>
+      Infusion Nurses Society (INS) Standards of Practice, 8th ed. (2021)<br>
+      CDC: Guidelines for Prevention of CRBSI (O'Grady 2011 + Update 2024)<br>
+      ESICM: Vascular Access Guidelines (2024) · NICE Guideline CG49 (Ultrasound for CVL)<br>
+      IDSA: CRBSI Guidelines (2023) · ILCOR / AHA ACLS (2020)<br>
+      Miller's Anesthesia 9th ed. (2024) · Morgan & Mikhail 7th ed. (2023) · Actualizado 2025
+    </div>
+  </div>
+</div>
+<div class="copyright">
+  © 2025 Dr. Andrés Robayo – Subred Suroccidente (Hospitales de Kennedy y Bosa), Bogotá, Colombia.<br>
+  Material de uso exclusivo para fines académicos en la Rotación de Anestesiología. Prohibida su reproducción sin autorización escrita del autor.<br>
+  Este documento no reemplaza los protocolos institucionales vigentes ni el juicio clínico individual.
+</div>
+
+</body>
+</html>
