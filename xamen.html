@@ -1341,8 +1341,8 @@ body { font-family: var(--sans); background: var(--bg); color: #000; min-height:
 
 <script>
 // ═══ CONEXIÓN CON GOOGLE SHEETS: pegue la misma URL /exec de la app de calificaciones ═══
-const SHEETS_URL = 'PEGUE_AQUI_LA_URL_DE_LA_APLICACION_WEB';
-const CLAVE_EXAMEN = 'examen-anestesia-2026'; // debe ser IGUAL a CLAVE_EXAMEN en Code.gs
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz1a0UhMA1WdJeyUk3npQxNpyuaXJJxSwmtBLvJNfGBehg_1htyoiOZ4u9_F2LfFvSg/exec';
+const CLAVE_EXAMEN = 'examenanestesia2026'; // debe ser IGUAL a CLAVE_EXAMEN en Code.gs
 // ═══════════════════════════════════════════════════════
 //  BANCO DE PREGUNTAS — contenido exclusivo de los 6 talleres de la rotación
 // ═══════════════════════════════════════════════════════
@@ -11189,7 +11189,7 @@ function renderPrintSheet(final, hasCase) {
 }
 
 // ═══════════════════════════════════════════════════════
-//  ENVÍO DE LA NOTA TEÓRICA FINAL AL GOOGLE SHEET (pestaña «Notas»)
+//  ENVÍO DE LA NOTA DEL EXAMEN AL GOOGLE SHEET (pestaña «Notas de examen»: Examen 1 / Examen 2)
 // ═══════════════════════════════════════════════════════
 async function enviarNotaSheet(final, hasCase) {
   const box = document.getElementById('sheet-status');
@@ -11205,12 +11205,12 @@ async function enviarNotaSheet(final, hasCase) {
     universidad: state.university, tipo: TIPO_LABEL[state.examType],
     final: Number(final.toFixed(2))
   };
-  set('⏳ Guardando la nota teórica en el Sheet…', '#E65100');
+  set('⏳ Guardando la nota en el Sheet…', '#E65100');
   try {
     const r = await fetch(SHEETS_URL, { method: 'POST', body: JSON.stringify(payload) });
     const d = await r.json();
     if (!d.ok) throw new Error(d.error || 'Error del servidor');
-    set('✓ Nota guardada en el Sheet' + (d.revisar ? ' · ⚠ el docente revisará el nombre' : ''), '#1B5E20');
+    set('✓ Nota guardada en el Sheet' + (d.examen ? ' como EXAMEN ' + d.examen : '') + (d.revisar ? ' · ⚠ el docente revisará el nombre' : ''), '#1B5E20');
   } catch (e) {
     set('✗ No se pudo guardar en el Sheet (' + e.message + ')', '#C62828', true);
   }
