@@ -20,6 +20,12 @@ button,input,select{font:inherit;color:inherit}
   border-bottom:4px solid var(--yel);position:sticky;top:0;z-index:30;flex-wrap:wrap}
 .brand{font-weight:700;font-size:17px;letter-spacing:-.3px;margin-right:auto;line-height:1.15}
 .brand small{display:block;font-size:11px;color:var(--yel);font-weight:600;letter-spacing:.3px}
+.modo{display:flex;border:2px solid var(--yel);border-radius:9px;overflow:hidden;margin-right:6px}
+.modo button{border:0;background:transparent;color:#fff;padding:7px 14px;font-weight:700;font-size:13.5px;cursor:pointer}
+.modo button.on{background:var(--yel);color:var(--ink)}
+.modo button:not(.on):hover{background:var(--ink2)}
+.chip.int{background:var(--magenta);color:#fff}
+th.ex2{background:var(--magenta)} .g.k-expo{border-color:var(--magenta)}
 .status{font-size:12px;font-weight:700;padding:6px 10px;border-radius:6px;color:#fff}
 .status.ok{background:var(--green)} .status.dirty{background:var(--orange)}
 .btn{border:2px solid var(--ink);background:#fff;color:var(--ink);padding:7px 12px;border-radius:7px;
@@ -209,10 +215,11 @@ dialog input,dialog select{display:block;width:100%;margin-top:4px;border:2px so
 
 <header class="top">
   <div class="brand">Notas · Anestesiología<small>Dr. Andrés Robayo · Subred Suroccidente · Bogotá</small></div>
+  <div class="modo" id="modo"><button data-modo="pre">🎓 Estudiantes</button><button data-modo="int">🩺 Internos</button></div>
   <span id="status" class="status ok">✓ Sin cambios pendientes</span>
   <button class="btn" onclick="document.getElementById('imp').click()">⬆ Importar JSON</button>
-  <button class="btn pri" onclick="exportarJSON()">⬇ Exportar JSON (todo)</button>
-  <button class="btn green" onclick="imprimirTodo()">🖨 Notas de todos (PDF)</button>
+  <button class="btn pri" onclick="exportarJSON()" title="Un solo archivo con estudiantes e internos de todas las universidades">⬇ Exportar JSON (estudiantes + internos)</button>
+  <button class="btn green" id="btn-pdf" onclick="imprimirTodo()">🖨 Notas de todos (PDF)</button>
   <input type="file" id="imp" accept=".json,application/json" hidden onchange="importarJSON(event)">
 </header>
 
@@ -225,7 +232,7 @@ dialog input,dialog select{display:block;width:100%;margin-top:4px;border:2px so
 
 <dialog id="dlg">
   <form id="fnew">
-    <h2>Nueva rotación</h2>
+    <h2 id="n-tit">Nueva rotación</h2>
     <label>Universidad<select id="n-uni"></select></label>
     <div class="two">
       <label>Inicio<input type="date" id="n-ini" required></label>
@@ -247,9 +254,15 @@ dialog input,dialog select{display:block;width:100%;margin-top:4px;border:2px so
 //   1–3 semanas: Promedio de talleres 30% + Examen final 70%
 //   4–6 semanas: Promedio de talleres 30% + Parcial 30% + Examen final 40%
 // NOTA FINAL: formato propio de cada universidad (teórica + práctica + conductual).
+// INTERNOS: nota teórica final = talleres 30% + exposiciones 10% + exámenes 60%
+//   (2 exámenes: parcial 30% + final 30% · 1 examen: final 60%). Rotación de 1 o 2 meses.
 // ══════════════════════════════════════════════════
 const PLAN = ['Vía Aérea y Ventilador','Farmacología Anestésica 1','Dolor y Anestésicos Locales',
               'Farmacología Anestésica 2','Líquidos y NVPO','Valoración Preanestésica'];
+// Talleres de los internos: uno por semana (rotación de 4–5 u 8–9 semanas)
+const PLAN_INT = ['Vía Aérea y Ventilador','Farmacología Anestésica 1','Dolor y Anestésicos Locales',
+              'Farmacología Anestésica 2','Líquidos y NVPO','Valoración Preanestésica',
+              'Anestesia Regional y Neuroaxial','Anestesia Obstétrica y Cesárea','Reanimación Cardiopulmonar'];
 const UNIS = [
   {key:'bosque',  label:'Universidad El Bosque',            short:'El Bosque',  color:'#00A152', est:2,
    formato:{tipo:'bosque', titulo:'Nota final El Bosque (sobre 50 puntos)',
@@ -268,6 +281,9 @@ const UNIS = [
   {key:'udca',    label:'UDCA',                             short:'UDCA',       color:'#E00000', est:2,
    formato:{tipo:'pct', titulo:'Nota final UDCA (sobre 5.0)', regla:'40% teórica + 50% práctica + 10% conductual',
             comp:[['Teórica','T',40],['Práctica','P',50],['Conductual','C',10]]}},
+  // Solo internos
+  {key:'nacional',label:'Universidad Nacional de Colombia',  short:'U. Nacional',color:'#AD1457', est:2, formato:null, soloInt:true},
+  {key:'militar', label:'Universidad Militar Nueva Granada', short:'U. Militar', color:'#33691E', est:2, formato:null, soloInt:true},
 ];
 const ROSARIO = [
   ['Elaboración de la historia clínica','P'],['Examen físico','P'],['Habilidades de diagnóstico','P'],
@@ -281,22 +297,36 @@ const LS_KEY = 'notas-anestesia-v3';
 
 // DATA[universidad][idRotación] = {inicio, fin, etiqueta, talleres:[nombre], examenes:1|2,
 //   estudiantes:[{nombre, tal, par, ex, practica, conductual, autoevaluacion}]}
-let DATA = {}, SEL = {u:'', r:''}, OPEN = {}, DIRTY = false;
+//   Rotaciones de internos: prog:'int' y cada estudiante con expo (exposiciones).
+let DATA = {}, SEL = {u:'', r:''}, OPEN = {}, DIRTY = false, MODO = 'pre';  // MODO: 'pre' estudiantes · 'int' internos
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const MES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 const hoyISO = () => { const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; };
 function fmtF(iso){ if(!iso) return '—'; const [y,m,d]=iso.split('-'); return `${+d} ${MES[+m-1]} ${y}`; }
-function semanas(a,b){
+function semanas(a,b,max=6){
   if(!a||!b) return null;
   const dias = Math.round((new Date(b+'T12:00')-new Date(a+'T12:00'))/86400000)+1;
-  return dias>0 ? Math.min(6, Math.max(1, Math.ceil(dias/7))) : null;
+  return dias>0 ? Math.min(max, Math.max(1, Math.ceil(dias/7))) : null;
 }
+const esInt = r => !!r && r.prog==='int';
+const maxSem = int => int ? 9 : 6;
+const semR = r => semanas(r.inicio, r.fin, maxSem(esInt(r)));
+const planDe = int => int ? PLAN_INT : PLAN;
+const progDe = r => esInt(r) ? 'int' : 'pre';
+const unisModo = () => UNIS.filter(u => MODO==='int' || !u.soloInt);
+const fmDe = (ukey, r) => esInt(r) ? null : uniBy(ukey).formato;
 function semestre(iso){ if(!iso) return 'Sin fecha'; const [y,m]=iso.split('-'); return `${y}-${+m<=6?1:2}`; }
 const uniBy = k => UNIS.find(u => u.key===k);
 const rot = () => (SEL.u && SEL.r && DATA[SEL.u]) ? DATA[SEL.u][SEL.r] || null : null;
-const pesos = r => r.examenes===2 ? {par:30, ex:40} : {par:0, ex:70};
+function pesos(r){
+  if(esInt(r)) return r.examenes===2 ? {tal:30, expo:10, par:30, ex:30} : {tal:30, expo:10, par:0, ex:60};
+  return r.examenes===2 ? {tal:30, expo:0, par:30, ex:40} : {tal:30, expo:0, par:0, ex:70};
+}
+const exDefault = (int, n) => int ? 2 : (n>=4 ? 2 : 1);
+const exLabel = (int, n) => int ? (n===2 ? '2 exámenes (parcial 30% + final 30%)' : '1 examen (final 60%)')
+                                : (n===2 ? '2 exámenes (parcial 30% + final 40%)' : '1 examen (final 70%)');
 const rotLabel = r => (r.inicio && r.fin) ? `${fmtF(r.inicio)} → ${fmtF(r.fin)}` : (r.etiqueta || 'Rotación sin fechas');
 const num = (n,d=2) => n===null||n===undefined ? '' : n.toFixed(d).replace('.',',');
 const f2 = n => n===null||n===undefined ? '—' : n.toFixed(2);
@@ -305,7 +335,7 @@ function val(v){
   const n = parseFloat(String(v).replace(',','.'));
   return Number.isFinite(n) && n>=0 && n<=5 ? n : null;
 }
-const nuevoEst = () => ({nombre:'', tal:'', par:'', ex:'', practica:'', conductual:'', autoevaluacion:''});
+const nuevoEst = () => ({nombre:'', tal:'', expo:'', par:'', ex:'', practica:'', conductual:'', autoevaluacion:''});
 const nuevoId = () => 'r' + Date.now().toString(36) + Math.random().toString(36).slice(2,5);
 
 // ── NOTA TEÓRICA ──
@@ -313,7 +343,8 @@ const nuevoId = () => 'r' + Date.now().toString(36) + Math.random().toString(36)
 function calc(st, r){
   const P=pesos(r); let s=0, w=0, faltan=0;
   const add=(v,p)=>{ const x=val(v); if(x!==null){ s+=x*p; w+=p; } else faltan++; };
-  add(st.tal, PESO_T);
+  add(st.tal, P.tal);
+  if(P.expo) add(st.expo, P.expo);
   if(P.par) add(st.par, P.par);
   add(st.ex, P.ex);
   return {nota: w ? s/w : null, completa: faltan===0, faltan};
@@ -322,7 +353,7 @@ function calc(st, r){
 // ── NOTA FINAL SEGÚN EL FORMATO DE CADA UNIVERSIDAD ──
 // Se calcula cuando están todos los componentes que pide el formato.
 function notaFinal(ukey, st, r){
-  const fm=uniBy(ukey).formato; if(!fm) return null;
+  const fm=fmDe(ukey,r); if(!fm) return null;
   const nf=notaFinalBase(fm,st,r);
   nf.min = es50(fm) ? 30 : MIN(ukey);
   return nf;
@@ -349,7 +380,7 @@ function finalHTML(nf, big){
 // ══════════════════════════════════════════════════
 // GUARDADO AUTOMÁTICO (navegador) + ESTADO DE EXPORTACIÓN
 // ══════════════════════════════════════════════════
-function persist(){ try{ localStorage.setItem(LS_KEY, JSON.stringify({data:DATA, sel:SEL, open:OPEN, dirty:DIRTY})); }catch(e){} }
+function persist(){ try{ localStorage.setItem(LS_KEY, JSON.stringify({data:DATA, sel:SEL, open:OPEN, dirty:DIRTY, modo:MODO})); }catch(e){} }
 function touch(){ DIRTY=true; status(); clearTimeout(touch.t); touch.t=setTimeout(persist,250); }
 function status(){
   const el=$('#status');
@@ -359,7 +390,7 @@ function status(){
 function load(){
   try{
     const o = JSON.parse(localStorage.getItem(LS_KEY)||'null');
-    if(o && o.data){ DATA=o.data; SEL=o.sel||SEL; OPEN=o.open||{}; DIRTY=!!o.dirty; }
+    if(o && o.data){ DATA=o.data; SEL=o.sel||SEL; OPEN=o.open||{}; DIRTY=!!o.dirty; MODO=o.modo==='int'?'int':'pre'; }
   }catch(e){}
   Object.keys(DATA).forEach(u=>Object.keys(DATA[u]||{}).forEach(id=>normRot(DATA[u][id])));
 }
@@ -370,26 +401,27 @@ window.addEventListener('beforeunload', e=>{ persist(); if(DIRTY){ e.preventDefa
 // ══════════════════════════════════════════════════
 function idsOrdenados(u){
   const recs=DATA[u]||{};
-  return Object.keys(recs).sort((a,b)=>String(recs[b].inicio||'').localeCompare(String(recs[a].inicio||'')));
+  return Object.keys(recs).filter(id=>progDe(recs[id])===MODO)
+    .sort((a,b)=>String(recs[b].inicio||'').localeCompare(String(recs[a].inicio||'')));
 }
 function renderSide(){
-  let h='<h3>Universidades · rotaciones</h3>';
-  UNIS.forEach(u=>{
+  let h=`<h3>${MODO==='int'?'Internos · por universidad':'Estudiantes · por universidad'}</h3>`;
+  unisModo().forEach(u=>{
     const recs=DATA[u.key]||{}, ids=idsOrdenados(u.key);
     const nEst=ids.reduce((s,id)=>s+recs[id].estudiantes.length,0);
     let b='', last=null;
     ids.forEach(id=>{
       const r=recs[id], sm=semestre(r.inicio);
       if(sm!==last){ b+=`<div class="sem">${sm==='Sin fecha'?'SIN FECHA':'PERIODO '+sm}</div>`; last=sm; }
-      const n=r.estudiantes.length, s=semanas(r.inicio,r.fin);
+      const n=r.estudiantes.length, s=semR(r);
       b+=`<button class="rot ${SEL.u===u.key&&SEL.r===id?'on':''}" data-go="${u.key}|${id}">${esc(rotLabel(r))}
-          <small>${n} estudiante${n===1?'':'s'}${s?' · '+s+' sem':''}</small></button>`;
+          <small>${n} ${MODO==='int'?'interno':'estudiante'}${n===1?'':'s'}${s?' · '+s+' sem':''}</small></button>`;
     });
     if(!ids.length) b+='<div class="empty-f">Sin rotaciones todavía</div>';
-    b+=`<button class="add-rot" data-new="${u.key}">+ Nueva rotación</button>`;
+    b+=`<button class="add-rot" data-new="${u.key}">+ ${MODO==='int'?'Nuevo grupo de internos':'Nueva rotación'}</button>`;
     h+=`<div class="fold ${OPEN[u.key]?'open':''}" style="--uc:${u.color}">
           <div class="fold-h" data-fold="${u.key}"><span class="car">▶</span><span class="dot"></span>${u.short}
-            <span class="cnt">${ids.length} rot · ${nEst} est</span></div>
+            <span class="cnt">${ids.length} ${MODO==='int'?'grupo'+(ids.length===1?'':'s')+' · '+nEst+' int':'rot · '+nEst+' est'}</span></div>
           <div class="fold-b">${b}</div></div>`;
   });
   $('#side').innerHTML=h;
@@ -400,8 +432,9 @@ function renderSide(){
 // ══════════════════════════════════════════════════
 function renderOverview(){
   let cards='';
-  UNIS.forEach(u=>{
-    const recs=DATA[u.key]||{}, ids=Object.keys(recs);
+  const INT=MODO==='int';
+  unisModo().forEach(u=>{
+    const recs=DATA[u.key]||{}, ids=idsOrdenados(u.key);
     let nEst=0, ap=0, rp=0;
     ids.forEach(id=>recs[id].estudiantes.forEach(st=>{
       nEst++;
@@ -411,19 +444,22 @@ function renderOverview(){
     }));
     cards+=`<div class="ov-card" style="--uc:${u.color}"><h4>${u.label}</h4>
       <div class="b"><div><div class="n">${ids.length}</div><div class="l">Rotaciones</div></div>
-      <div><div class="n">${nEst}</div><div class="l">Estudiantes</div></div>
+      <div><div class="n">${nEst}</div><div class="l">${INT?'Internos':'Estudiantes'}</div></div>
       <div><div class="n" style="color:var(--green)">${ap}</div><div class="l">Aprueban</div></div>
       <div><div class="n" style="color:var(--red)">${rp}</div><div class="l">Reprueban</div></div></div>
-      <button class="add-rot" data-new="${u.key}">+ Nueva rotación</button></div>`;
+      <button class="add-rot" data-new="${u.key}">+ ${INT?'Nuevo grupo de internos':'Nueva rotación'}</button></div>`;
   });
   $('#main').innerHTML=`<div class="ov">
-    <h2>Semestre completo · todas las universidades</h2>
-    <p class="lead">Abra una carpeta a la izquierda para ver sus rotaciones, o cree una nueva. Todo queda en un solo archivo JSON que se va alimentando grupo a grupo.</p>
+    <h2>${INT?'🩺 Internos · todas las universidades':'🎓 Estudiantes · todas las universidades'}</h2>
+    <p class="lead">${INT
+      ? 'Nota teórica final de los internos = <b>talleres 30% + exposiciones 10% + exámenes 60%</b> (parcial 30% + final 30%). Rotación de 1 o 2 meses, un taller por semana.'
+      : 'Abra una carpeta a la izquierda para ver sus rotaciones, o cree una nueva.'}
+      Estudiantes e internos quedan en el MISMO archivo JSON, que se va alimentando grupo a grupo.</p>
     <div class="ov-grid">${cards}</div>
     <div class="howto">
       <b>1.</b> Al iniciar la sesión: <b>Importar JSON</b> (el archivo del semestre).<br>
       <b>2.</b> Cree la rotación en la carpeta de la universidad (fechas → talleres y exámenes automáticos).<br>
-      <b>3.</b> Digite: promedio de talleres, exámenes, práctica y conductual. <b>Enter</b> o <b>↓ ↑</b> pasan al siguiente estudiante; acepta 3,8 o 3.8.<br>
+      <b>3.</b> Digite: ${INT?'promedio de talleres, exposiciones, parcial y final':'promedio de talleres, exámenes, práctica y conductual'}. <b>Enter</b> o <b>↓ ↑</b> pasan al siguiente estudiante; acepta 3,8 o 3.8.<br>
       <b>4.</b> Al terminar: <b>Exportar JSON (todo)</b> — incluye todas las universidades y rotaciones.<br>
       Los cambios también se guardan solos en este navegador; el JSON es el respaldo oficial.
     </div></div>`;
@@ -435,7 +471,7 @@ function outHTML(st,r){
   return `<span class="res ${c.nota>=MIN(SEL.u)?'pass':'fail'}">${c.nota.toFixed(2)}</span>${c.completa?'':`<span class="inc">faltan ${c.faltan}</span>`}`;
 }
 function statsHTML(r){
-  const fm=uniBy(SEL.u).formato;
+  const fm=fmDe(SEL.u,r);
   let nT=0,sT=0,nF=0,sF=0,ap=0,rp=0;
   r.estudiantes.forEach(st=>{
     const c=calc(st,r); if(c.nota!==null){ nT++; sT+=c.nota; }
@@ -443,7 +479,7 @@ function statsHTML(r){
     else if(c.nota!==null){ c.nota>=MIN(SEL.u)?ap++:rp++; }
   });
   const esc50 = fm && es50(fm);
-  return `<div class="stat">Promedio teórica<span>${nT?(sT/nT).toFixed(2):'—'}</span></div>
+  return `<div class="stat">Promedio ${esInt(r)?'nota teórica final':'teórica'}<span>${nT?(sT/nT).toFixed(2):'—'}</span></div>
     ${fm?`<div class="stat">Promedio nota final<span>${nF?(sF/nF).toFixed(esc50?1:2):'—'}</span></div>`:''}
     <div class="stat g1">Aprueban<span>${ap}</span></div>
     <div class="stat r1">Reprueban<span>${rp}</span></div>`;
@@ -453,8 +489,8 @@ const gIn = (k,i,v) => `<input class="g k-${k} ${String(v??'').trim()!==''&&val(
 
 // Tabla con el formato de nota final de la universidad (para copiar al formato oficial)
 function formatoHTML(ukey, r, imprimir){
-  const fm=uniBy(ukey).formato;
-  if(!fm) return imprimir ? '' : `<div class="fmt none">El Bosque no tiene un formato de nota final en esta herramienta: se registran la nota teórica, la práctica y la conductual.</div>`;
+  const fm=fmDe(ukey,r);
+  if(!fm) return '';
   let th='<th style="text-align:left">Estudiante</th>';
   if(fm.tipo==='pct') fm.comp.forEach(([l,,p])=>{ th+=`<th>${l}<small>${p}%</small></th>`; });
   if(fm.tipo==='sabana') th+='<th>Teórica<small>40%</small></th><th>Práctica + Conductual<small>60% del promedio</small></th>';
@@ -485,35 +521,44 @@ function formatoHTML(ukey, r, imprimir){
 function renderMain(){
   const r=rot();
   if(!r){ renderOverview(); return; }
-  const u=uniBy(SEL.u), P=pesos(r), nT=r.talleres.length, fm=u.formato, ros=fm&&fm.tipo==='rosario';
-  const s=semanas(r.inicio,r.fin);
+  const u=uniBy(SEL.u), P=pesos(r), nT=r.talleres.length, INT=esInt(r), fm=fmDe(SEL.u,r), ros=fm&&fm.tipo==='rosario';
+  const s=semR(r);
 
   const chips=r.talleres.map((t,j)=>`<span class="tchip"><input data-k="tname" data-j="${j}" value="${esc(t)}"
       placeholder="Nombre del taller" size="${Math.max(10,t.length)}"><button class="x" title="Quitar taller" data-a="delt" data-j="${j}">×</button></span>`).join('');
 
-  let th=`<th>#</th><th style="text-align:left">Estudiante</th>
+  let th=`<th>#</th><th style="text-align:left">${INT?'Interno':'Estudiante'}</th>
     <th class="t">Talleres<small>promedio · 30%</small></th>`;
+  if(P.expo) th+=`<th class="ex2">Exposiciones<small>${P.expo}%</small></th>`;
   if(P.par) th+=`<th class="p">Parcial<small>30%</small></th>`;
-  th+=`<th class="e">Examen final<small>${P.ex}%</small></th><th class="n">Nota teórica<small>automática</small></th>
+  th+=`<th class="e">Examen final<small>${P.ex}%</small></th>`;
+  if(INT) th+=`<th class="f">Nota teórica final<small>/ 5.0</small></th><th></th>`;
+  else {
+    th+=`<th class="n">Nota teórica<small>automática</small></th>
     <th class="pr">Práctica<small>/ 5.0</small></th><th class="co">Conductual<small>/ 5.0</small></th>`;
-  if(ros) th+=`<th class="ae">Autoevaluación<small>/ 5.0</small></th>`;
-  th+=`<th class="f">Nota final<small>${fm?(es50(fm)?'sobre 50':'sobre 5.0'):'—'}</small></th><th></th>`;
+    if(ros) th+=`<th class="ae">Autoevaluación<small>/ 5.0</small></th>`;
+    th+=`<th class="f">Nota final<small>${fm?(es50(fm)?'sobre 50':'sobre 5.0'):'—'}</small></th><th></th>`;
+  }
 
   const rows=r.estudiantes.map((st,i)=>{
     let c=`<td class="idx">${i+1}</td><td><input class="nm" data-k="nombre" data-i="${i}" value="${esc(st.nombre)}" placeholder="Nombre completo" autocomplete="off"></td>
       <td>${gIn('tal',i,st.tal)}</td>`;
+    if(P.expo) c+=`<td>${gIn('expo',i,st.expo)}</td>`;
     if(P.par) c+=`<td>${gIn('par',i,st.par)}</td>`;
-    c+=`<td>${gIn('ex',i,st.ex)}</td><td id="o${i}">${outHTML(st,r)}</td>
-      <td class="sep">${gIn('practica',i,st.practica)}</td><td>${gIn('conductual',i,st.conductual)}</td>`;
-    if(ros) c+=`<td>${gIn('autoevaluacion',i,st.autoevaluacion)}</td>`;
-    c+=`<td id="f${i}" class="sep">${finalHTML(notaFinal(SEL.u,st,r))}</td>
-        <td><button class="x" title="Quitar estudiante" data-a="delst" data-i="${i}">×</button></td>`;
+    c+=`<td>${gIn('ex',i,st.ex)}</td><td id="o${i}" class="${INT?'sep':''}">${outHTML(st,r)}</td>`;
+    if(!INT){
+      c+=`<td class="sep">${gIn('practica',i,st.practica)}</td><td>${gIn('conductual',i,st.conductual)}</td>`;
+      if(ros) c+=`<td>${gIn('autoevaluacion',i,st.autoevaluacion)}</td>`;
+      c+=`<td id="f${i}" class="sep">${finalHTML(notaFinal(SEL.u,st,r))}</td>`;
+    }
+    c+=`<td><button class="x" title="Quitar" data-a="delst" data-i="${i}">×</button></td>`;
     return `<tr>${c}</tr>`;
   }).join('');
 
   $('#main').innerHTML=`<div style="--uc:${u.color}">
     <div class="rhead">
       <h2>${u.short}</h2>
+      ${INT?'<span class="chip int">🩺 INTERNOS</span>':''}
       <span class="chip y">${s?s+' semana'+(s>1?'s':''):'Sin fechas'}</span>
       <span class="chip">Periodo ${semestre(r.inicio)}</span>
       <div class="dates">
@@ -521,7 +566,7 @@ function renderMain(){
         <label>Fin <input type="date" data-k="fin" value="${r.fin||''}"></label>
       </div>
       <div class="racts">
-        <button class="btn sm" data-a="addst">+ Estudiante</button>
+        <button class="btn sm" data-a="addst">+ ${INT?'Interno':'Estudiante'}</button>
         <button class="btn sm" data-a="print">🖨 Imprimir</button>
         <button class="btn sm red" data-a="delrot">Eliminar rotación</button>
       </div>
@@ -531,22 +576,27 @@ function renderMain(){
         <button class="btn sm blue" data-a="addt">+ Taller</button>
         <button class="btn sm" data-a="rest">↺ Según semanas</button></div>
       <div class="cfg-row"><span class="lbl">Exámenes</span>
-        <div class="seg"><button data-ex="1" class="${P.par?'':'on'}">1 examen · Final 70%</button>
-        <button data-ex="2" class="${P.par?'on':''}">2 exámenes · Parcial 30% + Final 40%</button></div></div>
+        <div class="seg"><button data-ex="1" class="${P.par?'':'on'}">${INT?'1 examen · Final 60%':'1 examen · Final 70%'}</button>
+        <button data-ex="2" class="${P.par?'on':''}">${INT?'2 exámenes · Parcial 30% + Final 30%':'2 exámenes · Parcial 30% + Final 40%'}</button></div></div>
+      ${INT?'<div class="cfg-row"><span class="lbl">Nota teórica final</span><b>Talleres 30% + Exposiciones 10% + Exámenes 60%</b> · aprueba con '+MIN(SEL.u).toFixed(1)+'</div>':''}
     </div>
     <div class="tw"><table><thead><tr>${th}</tr></thead><tbody>${rows}</tbody></table></div>
     <div id="fmt">${formatoHTML(SEL.u,r)}</div>
     <div class="stats" id="stats">${statsHTML(r)}</div>
-    <div class="hint">Enter o ↓ ↑ para moverse entre estudiantes. Notas de 0 a 5 — los valores fuera de rango se marcan en rojo y no se cuentan. La nota final aparece cuando están todos sus componentes.</div>
+    <div class="hint">Enter o ↓ ↑ para moverse entre estudiantes. Notas de 0 a 5 — los valores fuera de rango se marcan en rojo y no se cuentan. ${INT?'La nota teórica final se va calculando con lo ingresado; dice «faltan N» hasta completar todas las notas.':'La nota final aparece cuando están todos sus componentes.'}</div>
   </div>`;
 }
-function renderAll(){ renderSide(); renderMain(); persist(); }
+function renderAll(){
+  document.querySelectorAll('#modo button').forEach(b=>b.classList.toggle('on', b.dataset.modo===MODO));
+  $('#btn-pdf').textContent = MODO==='int' ? '🖨 Notas de todos los internos (PDF)' : '🖨 Notas de todos los estudiantes (PDF)';
+  renderSide(); renderMain(); persist();
+}
 
 // Actualiza solo lo calculado (sin redibujar los campos)
 let fmtT;
 function refrescar(i){
   const r=rot(), st=r.estudiantes[i];
-  if(st){ $('#o'+i).innerHTML=outHTML(st,r); $('#f'+i).innerHTML=finalHTML(notaFinal(SEL.u,st,r)); }
+  if(st){ $('#o'+i).innerHTML=outHTML(st,r); const f=$('#f'+i); if(f) f.innerHTML=finalHTML(notaFinal(SEL.u,st,r)); }
   $('#stats').innerHTML=statsHTML(r);
   clearTimeout(fmtT); fmtT=setTimeout(()=>{ const box=$('#fmt'); if(box&&rot()) box.innerHTML=formatoHTML(SEL.u,rot()); },120);
 }
@@ -554,7 +604,7 @@ function refrescar(i){
 // ══════════════════════════════════════════════════
 // EVENTOS
 // ══════════════════════════════════════════════════
-const CAMPOS_NOTA=['tal','par','ex','practica','conductual','autoevaluacion'];
+const CAMPOS_NOTA=['tal','expo','par','ex','practica','conductual','autoevaluacion'];
 $('#main').addEventListener('input', e=>{
   const el=e.target, k=el.dataset.k, r=rot();
   if(!k || !r) return;
@@ -581,8 +631,9 @@ $('#main').addEventListener('keydown', e=>{
 });
 
 document.addEventListener('click', e=>{
-  const t=e.target.closest('[data-fold],[data-go],[data-new],[data-a],[data-ex]');
+  const t=e.target.closest('[data-fold],[data-go],[data-new],[data-a],[data-ex],[data-modo]');
   if(!t) return;
+  if(t.dataset.modo){ cambiarModo(t.dataset.modo); return; }
   const r=rot();
   if(t.dataset.fold){ OPEN[t.dataset.fold]=!OPEN[t.dataset.fold]; renderSide(); persist(); return; }
   if(t.dataset.go){ const [u,id]=t.dataset.go.split('|'); SEL={u,r:id}; renderAll(); window.scrollTo(0,0); return; }
@@ -608,9 +659,9 @@ document.addEventListener('click', e=>{
     r.talleres.splice(j,1); touch(); renderMain();
   }
   else if(a==='rest'){
-    const n=semanas(r.inicio,r.fin);
+    const n=semR(r);
     if(!n){ alert('Escriba primero las fechas de inicio y fin.'); return; }
-    r.talleres=PLAN.slice(0,n); touch(); renderMain();
+    r.talleres=planDe(esInt(r)).slice(0,n); touch(); renderMain();
   }
   else if(a==='delrot'){
     if(!confirm(`¿Eliminar la rotación ${uniBy(SEL.u).short} · ${rotLabel(r)} con todas sus notas?`)) return;
@@ -624,27 +675,39 @@ function cambiarFechas(k,v){
   const ini=k==='ini'?v:r.inicio, fin=k==='fin'?v:r.fin;
   if(ini && fin && fin<ini){ alert('La fecha de fin no puede ser anterior a la de inicio.'); renderMain(); return; }
   r.inicio=ini; r.fin=fin; if(ini&&fin) r.etiqueta='';
-  const n=semanas(ini,fin);
+  const INT=esInt(r), n=semanas(ini,fin,maxSem(INT));
   if(n){
-    const exN=n>=4?2:1;
+    const exN=exDefault(INT,n);
     if((n!==r.talleres.length || exN!==r.examenes) &&
-       confirm(`La rotación ahora es de ${n} semana${n>1?'s':''}.\n¿Ajustar a ${n} taller${n>1?'es':''} asignado${n>1?'s':''} y ${exN===2?'2 exámenes (parcial 30% + final 40%)':'1 examen (final 70%)'}?`)){
-      r.talleres=PLAN.slice(0,n); r.examenes=exN;
+       confirm(`La rotación ahora es de ${n} semana${n>1?'s':''}.\n¿Ajustar a ${n} taller${n>1?'es':''} asignado${n>1?'s':''} y ${exLabel(INT,exN)}?`)){
+      r.talleres=planDe(INT).slice(0,n); r.examenes=exN;
     }
   }
   touch(); renderAll();
+}
+
+function cambiarModo(m){
+  MODO = m==='int' ? 'int' : 'pre';
+  const r=rot(); if(r && progDe(r)!==MODO) SEL.r='';
+  if(SEL.u && MODO==='pre' && uniBy(SEL.u)?.soloInt) SEL={u:'',r:''};
+  renderAll(); window.scrollTo(0,0);
 }
 
 // ══════════════════════════════════════════════════
 // NUEVA ROTACIÓN
 // ══════════════════════════════════════════════════
 const dlg=$('#dlg');
-$('#n-uni').innerHTML=UNIS.map(u=>`<option value="${u.key}">${u.label}</option>`).join('');
 function infoNueva(){
-  const n=semanas($('#n-ini').value,$('#n-fin').value);
-  $('#n-info').textContent = n ? `${n} semana${n>1?'s':''} → ${n} taller${n>1?'es':''} (promedio 30%) + ${n>=4?'parcial 30% + final 40%':'examen final 70%'}` : '';
+  const INT=MODO==='int', n=semanas($('#n-ini').value,$('#n-fin').value,maxSem(INT));
+  $('#n-info').textContent = !n ? '' : INT
+    ? `${n} semana${n>1?'s':''} → ${n} taller${n>1?'es':''} (30%) + exposiciones (10%) + parcial 30% + final 30%`
+    : `${n} semana${n>1?'s':''} → ${n} taller${n>1?'es':''} (promedio 30%) + ${n>=4?'parcial 30% + final 40%':'examen final 70%'}`;
 }
 function abrirNueva(ukey){
+  const INT=MODO==='int';
+  $('#n-tit').textContent = INT ? 'Nuevo grupo de internos' : 'Nueva rotación';
+  $('#n-uni').innerHTML=unisModo().map(u=>`<option value="${u.key}">${u.label}</option>`).join('');
+  $('#n-est').previousSibling.textContent = INT ? 'Número de internos' : 'Número de estudiantes';
   $('#n-uni').value=ukey; $('#n-est').value=uniBy(ukey).est;
   $('#n-ini').value=''; $('#n-fin').value=''; infoNueva();
   dlg.showModal(); $('#n-ini').focus();
@@ -658,11 +721,13 @@ $('#fnew').addEventListener('submit', e=>{
   const nE=Math.max(1,Math.min(40,parseInt($('#n-est').value,10)||1));
   if(fin<ini){ alert('La fecha de fin no puede ser anterior a la de inicio.'); return; }
   const recs=DATA[u]=DATA[u]||{};
-  const dup=Object.keys(recs).find(id=>recs[id].inicio===ini && recs[id].fin===fin);
+  const INT=MODO==='int';
+  const dup=Object.keys(recs).find(id=>recs[id].inicio===ini && recs[id].fin===fin && progDe(recs[id])===MODO);
   if(dup && !confirm('Ya existe una rotación de esta universidad con esas mismas fechas. ¿Crear otra de todas formas?')){ dlg.close(); SEL={u,r:dup}; OPEN[u]=true; renderAll(); return; }
-  const n=semanas(ini,fin)||1, id=nuevoId();
-  recs[id]={inicio:ini, fin, etiqueta:'', talleres:PLAN.slice(0,n), examenes:n>=4?2:1,
+  const n=semanas(ini,fin,maxSem(INT))||1, id=nuevoId();
+  recs[id]={inicio:ini, fin, etiqueta:'', talleres:planDe(INT).slice(0,n), examenes:exDefault(INT,n),
             estudiantes:Array.from({length:nE},nuevoEst)};
+  if(INT) recs[id].prog='int';
   SEL={u,r:id}; OPEN[u]=true; dlg.close(); touch(); renderAll();
   document.querySelector('#main .nm')?.focus();
 });
@@ -678,8 +743,13 @@ function descargar(contenido,tipo,nombre){
 function totalRot(){ return UNIS.reduce((s,u)=>s+Object.keys(DATA[u.key]||{}).length,0); }
 function exportarJSON(){
   if(!totalRot()){ alert('Todavía no hay rotaciones para exportar.'); return; }
-  const payload={tipo:'notas-anestesiologia', version:4, exportadoEn:new Date().toISOString(), data:DATA};
-  descargar(JSON.stringify(payload,null,1),'application/json',`Notas Anestesiología - todas las universidades (${fmtF(hoyISO())}).json`);
+  // UN SOLO archivo: estudiantes e internos de todas las universidades
+  const C={pre:{g:0,n:0}, int:{g:0,n:0}};
+  Object.keys(DATA).forEach(u=>Object.keys(DATA[u]||{}).forEach(id=>{ const r=DATA[u][id], k=progDe(r); C[k].g++; C[k].n+=r.estudiantes.length; }));
+  const payload={tipo:'notas-anestesiologia', version:5, exportadoEn:new Date().toISOString(),
+    contenido:{estudiantes:{rotaciones:C.pre.g, personas:C.pre.n}, internos:{grupos:C.int.g, personas:C.int.n}}, data:DATA};
+  descargar(JSON.stringify(payload,null,1),'application/json',`Notas Anestesiología - estudiantes e internos (${fmtF(hoyISO())}).json`);
+  setTimeout(()=>alert(`JSON descargado (un solo archivo):\n• Estudiantes: ${C.pre.g} rotación(es), ${C.pre.n} estudiante(s)\n• Internos: ${C.int.g} grupo(s), ${C.int.n} interno(s)`),50);
   DIRTY=false; status(); persist();
 }
 
@@ -692,13 +762,14 @@ function normSt(st){
     const v=st.t.map(val).filter(x=>x!==null);
     tal=v.length?(v.reduce((a,b)=>a+b,0)/v.length).toFixed(2):'';
   }
-  return {nombre:st.nombre||'', tal:tal??'', par:st.par??'', ex:st.ex??'',
+  return {nombre:st.nombre||'', tal:tal??'', expo:st.expo??'', par:st.par??'', ex:st.ex??'',
           practica:st.practica??'', conductual:st.conductual??'', autoevaluacion:st.autoevaluacion??''};
 }
 function normRot(r){
   r.talleres=(r.talleres||[]).map(t=>typeof t==='string'?t:((t&&t.nombre)||''));
   r.examenes=r.examenes===2?2:1;
   r.inicio=r.inicio||''; r.fin=r.fin||''; r.etiqueta=r.etiqueta||'';
+  if(r.prog!=='int') delete r.prog;
   r.estudiantes=(r.estudiantes||[]).map(normSt);
   return r;
 }
@@ -752,7 +823,8 @@ function importarJSON(ev){
     // Si lo cargado es exactamente el archivo del semestre, no hay nada pendiente por exportar
     if(p && p.tipo==='notas-anestesiologia' && totalRot()===entrantes.length && nuevas+act===entrantes.length){ DIRTY=false; status(); persist(); }
     renderAll();
-    alert(`Importación lista: ${nuevas} rotación(es) nueva(s)${act?`, ${act} actualizada(s)`:''}.`);
+    const nInt=entrantes.filter(([,,r])=>esInt(r)).length;
+    alert(`Importación lista: ${nuevas} nueva(s)${act?`, ${act} actualizada(s)`:''}.\nEl archivo trae ${entrantes.length-nInt} rotación(es) de estudiantes y ${nInt} grupo(s) de internos.`);
   };
   rd.readAsText(f);
 }
@@ -771,20 +843,23 @@ function estadoDe(ukey, st, r){
 const ESTADO={ok:'Aprueba',no:'Reprueba',pend:'Pendiente'};
 function construirReporte(){
   const box=$('#print');
+  const INT=MODO==='int';
   let resumen='', secciones='', TOT={rot:0,est:0,ok:0,no:0,pend:0};
-  UNIS.forEach(u=>{
-    const recs=DATA[u.key]||{}, fm=u.formato, ros=fm&&fm.tipo==='rosario';
-    const ids=Object.keys(recs).sort((a,b)=>String(recs[a].inicio).localeCompare(String(recs[b].inicio)));
+  unisModo().forEach(u=>{
+    const recs=DATA[u.key]||{}, fm=INT?null:u.formato, ros=fm&&fm.tipo==='rosario';
+    const ids=idsOrdenados(u.key).reverse();
     const C={rot:0,est:0,ok:0,no:0,pend:0};
     const bloques=ids.map(id=>{
       const r=recs[id], P=pesos(r);
       const sts=r.estudiantes.filter(st=>(st.nombre||'').trim() || calc(st,r).nota!==null);
       if(!sts.length) return '';
       C.rot++;
-      const s=semanas(r.inicio,r.fin);
-      let th='<th>#</th><th class="l">Estudiante</th><th class="t">Talleres<small>30%</small></th>';
+      const s=semR(r);
+      let th=`<th>#</th><th class="l">${INT?'Interno':'Estudiante'}</th><th class="t">Talleres<small>30%</small></th>`;
+      if(P.expo) th+=`<th class="ex2">Exposic.<small>${P.expo}%</small></th>`;
       if(P.par) th+='<th class="p">Parcial<small>30%</small></th>';
-      th+=`<th class="e">Final<small>${P.ex}%</small></th><th class="n">Teórica</th><th class="pr">Práctica</th><th class="co">Conductual</th>`;
+      th+=`<th class="e">Final<small>${P.ex}%</small></th>`;
+      th+= INT ? '<th class="f">Nota teórica final</th>' : '<th class="n">Teórica</th><th class="pr">Práctica</th><th class="co">Conductual</th>';
       if(ros) th+='<th class="ae">Autoeval.</th>';
       if(fm) th+=`<th class="f">Nota final<small>${es50(fm)?'/50':'/5.0'}</small></th>`;
       th+='<th>Estado</th>';
@@ -792,15 +867,17 @@ function construirReporte(){
         const c=calc(st,r), nf=notaFinal(u.key,st,r), e=estadoDe(u.key,st,r);
         C.est++; C[e]++;
         let td=`<td>${i+1}</td><td class="l">${esc(st.nombre||'(sin nombre)')}</td><td>${f2(val(st.tal))}</td>`;
+        if(P.expo) td+=`<td>${f2(val(st.expo))}</td>`;
         if(P.par) td+=`<td>${f2(val(st.par))}</td>`;
-        td+=`<td>${f2(val(st.ex))}</td><td class="b">${f2(c.nota)}</td><td>${f2(val(st.practica))}</td><td>${f2(val(st.conductual))}</td>`;
+        td+=`<td>${f2(val(st.ex))}</td>`;
+        td+= INT ? `<td class="b ${e}">${f2(c.nota)}</td>` : `<td class="b">${f2(c.nota)}</td><td>${f2(val(st.practica))}</td><td>${f2(val(st.conductual))}</td>`;
         if(ros) td+=`<td>${f2(val(st.autoevaluacion))}</td>`;
         if(fm) td+=`<td class="b ${e}">${nf.val===null?'—':nf.val.toFixed(nf.escala===50?1:2)}</td>`;
         td+=`<td class="st ${e}">${ESTADO[e]}</td>`;
         return `<tr>${td}</tr>`;
       }).join('');
       return `<div class="rb"><div class="rh">${esc(rotLabel(r))}${s?` · ${s} sem`:''} · Periodo ${semestre(r.inicio)}
-        <span>Teórica = talleres 30%${P.par?' + parcial 30%':''} + final ${P.ex}%</span></div>
+        <span>${INT?'Nota teórica final':'Teórica'} = talleres 30%${P.expo?' + exposiciones '+P.expo+'%':''}${P.par?' + parcial 30%':''} + final ${P.ex}%</span></div>
         <table><thead><tr>${th}</tr></thead><tbody>${filas}</tbody></table></div>`;
     }).join('');
     if(!C.rot) return;
@@ -809,22 +886,22 @@ function construirReporte(){
     resumen+=`<tr><td class="l"><i style="background:${u.color}"></i>${u.label}</td><td>${C.rot}</td><td>${C.est}</td>
       <td class="ok">${C.ok}</td><td class="no">${C.no}</td><td>${C.pend}</td><td>${minTxt}</td></tr>`;
     secciones+=`<section class="rs" style="--uc:${u.color}"><h2>${u.label}
-      <span>${fm?fm.regla:'Teórica, práctica y conductual (sin formato de nota final)'} · Mínimo ${minTxt}</span></h2>${bloques}</section>`;
+      <span>${INT?'Internos · talleres 30% + exposiciones 10% + exámenes 60%':(fm?fm.regla:'Teórica, práctica y conductual')} · Mínimo ${minTxt}</span></h2>${bloques}</section>`;
   });
   if(!TOT.est){ box.innerHTML=''; return false; }
   box.className='rep';
   box.style.removeProperty('--uc');
-  box.innerHTML=`<header class="rt"><div><h1>Notas · Rotación de Anestesiología</h1>
-      <div class="meta">Consolidado de todas las universidades · Subred Suroccidente · ${fmtF(hoyISO())}</div></div>
-      <div class="kp"><b>${TOT.est}</b>estudiantes<b class="ok">${TOT.ok}</b>aprueban<b class="no">${TOT.no}</b>reprueban<b>${TOT.pend}</b>pendientes</div></header>
-    <table class="sum"><thead><tr><th class="l">Universidad</th><th>Rotaciones</th><th>Estudiantes</th><th>Aprueban</th><th>Reprueban</th><th>Pendientes</th><th>Mínimo</th></tr></thead>
+  box.innerHTML=`<header class="rt"><div><h1>${INT?'Notas · Internado · Anestesiología':'Notas · Rotación de Anestesiología'}</h1>
+      <div class="meta">${INT?'Internos':'Estudiantes'} · consolidado de todas las universidades · Subred Suroccidente · ${fmtF(hoyISO())}</div></div>
+      <div class="kp"><b>${TOT.est}</b>${INT?'internos':'estudiantes'}<b class="ok">${TOT.ok}</b>aprueban<b class="no">${TOT.no}</b>reprueban<b>${TOT.pend}</b>pendientes</div></header>
+    <table class="sum"><thead><tr><th class="l">Universidad</th><th>${INT?'Grupos':'Rotaciones'}</th><th>${INT?'Internos':'Estudiantes'}</th><th>Aprueban</th><th>Reprueban</th><th>Pendientes</th><th>Mínimo</th></tr></thead>
       <tbody>${resumen}</tbody></table>
     ${secciones}
     <div class="foot">Dr. Andrés Robayo C. · Coordinador académico de Anestesiología · Subred Suroccidente</div>`;
   return true;
 }
 function imprimirTodo(){
-  if(!construirReporte()){ alert('No hay estudiantes guardados todavía.'); return; }
+  if(!construirReporte()){ alert(MODO==='int'?'No hay internos guardados todavía.':'No hay estudiantes guardados todavía.'); return; }
   PRINT_REP=true; window.print();
 }
 window.addEventListener('afterprint',()=>{ PRINT_REP=false; });
@@ -837,24 +914,28 @@ function construirImpresion(){
   if(PRINT_REP) return true;
   if(!r){ box.innerHTML=''; return false; }
   box.className='';
-  const u=uniBy(SEL.u), P=pesos(r), ros=u.formato&&u.formato.tipo==='rosario';
-  let th='<th style="text-align:left">Estudiante</th><th class="t">Talleres<small>promedio · 30%</small></th>';
+  const u=uniBy(SEL.u), P=pesos(r), INT=esInt(r), fm=fmDe(SEL.u,r), ros=fm&&fm.tipo==='rosario';
+  let th=`<th style="text-align:left">${INT?'Interno':'Estudiante'}</th><th class="t">Talleres<small>promedio · 30%</small></th>`;
+  if(P.expo) th+=`<th class="ex2">Exposiciones<small>${P.expo}%</small></th>`;
   if(P.par) th+='<th class="p">Parcial<small>30%</small></th>';
-  th+=`<th class="e">Examen final<small>${P.ex}%</small></th><th class="n">Nota teórica</th><th class="pr">Práctica</th><th class="co">Conductual</th>`;
+  th+=`<th class="e">Examen final<small>${P.ex}%</small></th>`;
+  th+= INT ? '<th class="f">Nota teórica final</th>' : '<th class="n">Nota teórica</th><th class="pr">Práctica</th><th class="co">Conductual</th>';
   if(ros) th+='<th class="ae">Autoevaluación</th>';
   const rows=r.estudiantes.map(st=>{
     const c=calc(st,r), f=v=>f2(val(v));
     let td=`<td class="name">${esc(st.nombre||'—')}</td><td>${f(st.tal)}</td>`;
+    if(P.expo) td+=`<td>${f(st.expo)}</td>`;
     if(P.par) td+=`<td>${f(st.par)}</td>`;
-    td+=`<td>${f(st.ex)}</td><td><b class="res ${c.nota===null?'':c.nota>=MIN(SEL.u)?'pass':'fail'}">${f2(c.nota)}</b></td><td>${f(st.practica)}</td><td>${f(st.conductual)}</td>`;
+    td+=`<td>${f(st.ex)}</td><td><b class="res ${c.nota===null?'':c.nota>=MIN(SEL.u)?'pass':'fail'}">${f2(c.nota)}</b></td>`;
+    if(!INT) td+=`<td>${f(st.practica)}</td><td>${f(st.conductual)}</td>`;
     if(ros) td+=`<td>${f(st.autoevaluacion)}</td>`;
     return `<tr>${td}</tr>`;
   }).join('');
-  const s=semanas(r.inicio,r.fin);
+  const s=semR(r);
   box.style.setProperty('--uc',u.color);
-  box.innerHTML=`<h1>${u.label} · Anestesiología</h1>
+  box.innerHTML=`<h1>${u.label} · ${INT?'Internado · ':''}Anestesiología</h1>
     <div class="meta">Rotación: ${esc(rotLabel(r))}${s?` · ${s} semana${s>1?'s':''}`:''} · Talleres asignados: ${esc(r.talleres.filter(Boolean).join(', ')||'—')}<br>
-    Nota teórica = promedio de talleres 30%${P.par?' + parcial 30%':''} + examen final ${P.ex}%</div>
+    ${INT?'Nota teórica final':'Nota teórica'} = promedio de talleres 30%${P.expo?' + exposiciones '+P.expo+'%':''}${P.par?' + parcial 30%':''} + examen final ${P.ex}% · mínimo ${MIN(SEL.u).toFixed(1)}</div>
     <table><thead><tr>${th}</tr></thead><tbody>${rows}</tbody></table>
     ${formatoHTML(SEL.u,r,true)}
     <div class="foot">Dr. Andrés Robayo C. · Coordinador académico de Anestesiología · Subred Suroccidente · Impreso ${fmtF(hoyISO())}</div>`;
@@ -868,6 +949,7 @@ window.addEventListener('beforeprint',construirImpresion);
 // ══════════════════════════════════════════════════
 load();
 if(SEL.u && !rot()) SEL.r='';
+if(rot() && progDe(rot())!==MODO) SEL.r='';
 status();
 renderAll();
 </script>
