@@ -139,16 +139,16 @@
 
   .grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
-    gap:20px;
+    grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+    gap:24px;
   }
 
   /* ── TARJETAS ── */
   .card{
     position:relative;
     display:flex;flex-direction:column;
-    min-height:190px;
-    padding:20px 20px 18px;
+    min-height:260px;
+    padding:24px 24px 22px;
     border:2.5px solid var(--navy);
     border-radius:14px;
     background:#fff;
@@ -178,30 +178,32 @@
     margin:16px 0 6px;
     font-family:'Bricolage Grotesque',sans-serif;
     font-weight:800;
-    font-size:20px;
+    font-size:23px;
     line-height:1.12;
     letter-spacing:-.015em;
     color:var(--ink);
   }
   .card p{
-    margin:0 0 18px;
+    margin:0 0 14px;
     color:var(--ink);
-    font-size:13.5px;
+    font-size:15px;
     font-weight:500;
     line-height:1.5;
   }
+  .chips{list-style:none;margin:0 0 20px;padding:0;display:flex;flex-wrap:wrap;gap:7px;}
+  .chips li{font-size:12.5px;font-weight:800;color:var(--accent);border:2px solid var(--accent);border-radius:999px;padding:3px 11px;background:#fff;}
   .open{
     margin-top:auto;
     display:flex;align-items:center;justify-content:space-between;
     width:100%;
-    padding:11px 14px;
+    padding:13px 16px;
     border-radius:9px;
     color:#fff;
     background:var(--accent);
     border:2.5px solid var(--navy);
     text-decoration:none;
     font-weight:800;
-    font-size:13.5px;
+    font-size:15px;
     letter-spacing:.02em;
   }
   .open b{font-size:17px;transition:transform .18s;}
@@ -248,7 +250,7 @@
   <div class="hero-inner">
     <div class="eyebrow">🩺 Material académico · Anestesiología</div>
     <h1>Centro <span>Académico</span></h1>
-    <p>Acceso rápido a notas, cronogramas, rotaciones, exámenes y guías académicas de la rotación de anestesiología.</p>
+    <p>Acceso rápido a notas, rotación y cronograma, exámenes y guías académicas de anestesiología.</p>
   </div>
 </header>
 
@@ -274,35 +276,29 @@
       <article class="card" data-name="bienvenida inicio rotación primer día estudiantes whatsapp" style="--accent:#00875A">
         <div class="card-top"><div class="icon">👋</div><span class="tag">Inicio</span></div>
         <h3>Bienvenida</h3>
-        <p>Guía de inicio de la rotación para los estudiantes. Se puede descargar y enviar por WhatsApp.</p>
+        <p>Guía de inicio de la rotación para los estudiantes, lista para descargar y enviar por WhatsApp.</p>
+        <ul class="chips"><li>Primer día</li><li>Horarios</li><li>Normas</li></ul>
         <a class="open" href="bienvenida.html">Abrir bienvenida <b>→</b></a>
       </article>
-
       <article class="card" data-name="notas calificaciones notas académicas" style="--accent:#0057FF">
         <div class="card-top"><div class="icon">📊</div><span class="tag">Herramienta</span></div>
         <h3>Notas</h3>
-        <p>Gestión y cálculo de calificaciones académicas.</p>
+        <p>Registro y cálculo de las calificaciones de los estudiantes por universidad y rotación.</p>
+        <ul class="chips"><li>Talleres</li><li>Parcial</li><li>Examen final</li></ul>
         <a class="open" href="notas.html">Abrir notas <b>→</b></a>
       </article>
-
-      <article class="card" data-name="cronograma programación calendario" style="--accent:#007C89">
+      <article class="card" data-name="rotación rotacion cronograma distribución salas programación calendario generador talleres exámenes" style="--accent:#E35A00">
         <div class="card-top"><div class="icon">📅</div><span class="tag">Herramienta</span></div>
-        <h3>Cronograma</h3>
-        <p>Generador y organización del cronograma académico.</p>
-        <a class="open" href="cronograma.html">Abrir cronograma <b>→</b></a>
+        <h3>Rotación y cronograma</h3>
+        <p>Un solo generador para la distribución diaria de salas y el cronograma de talleres y exámenes de todas las universidades. Exporta el archivo <b>rotacion-y-cronograma.html</b> para el portal.</p>
+        <ul class="chips"><li>Salas Kennedy · Bosa · Tintal</li><li>Turnos noche y urgencias</li><li>Talleres y exámenes</li></ul>
+        <a class="open" href="generador-rotacion-y-cronograma.html">Abrir generador <b>→</b></a>
       </article>
-
-      <article class="card" data-name="rotación rotacion distribución" style="--accent:#E35A00">
-        <div class="card-top"><div class="icon">🔄</div><span class="tag">Herramienta</span></div>
-        <h3>Rotación</h3>
-        <p>Herramienta para organizar la distribución de rotaciones.</p>
-        <a class="open" href="rotacion.html">Abrir rotación <b>→</b></a>
-      </article>
-
       <article class="card" data-name="examen xamen evaluación prueba" style="--accent:#D7002E">
         <div class="card-top"><div class="icon">📝</div><span class="tag">Evaluación</span></div>
         <h3>Examen</h3>
-        <p>Acceso al módulo de evaluación académica.</p>
+        <p>Módulo de evaluación académica de la rotación.</p>
+        <ul class="chips"><li>Selección múltiple</li><li>Caso práctico</li></ul>
         <a class="open" href="xamen.html">Abrir examen <b>→</b></a>
       </article>
 
@@ -312,87 +308,149 @@
   <section>
     <div class="section-title">
       <div class="num">02</div>
-      <h2>🧠 Guías académicas</h2>
+      <h2>🩺 Anestesia por especialidad</h2>
       <div class="line"></div>
     </div>
 
     <div class="grid">
 
-      <article class="card" data-name="diseño experimental diseño-experimental investigación" style="--accent:#007C89">
-        <div class="card-top"><div class="icon">🔬</div><span class="tag">Guía</span></div>
-        <h3>Diseño Experimental</h3>
-        <p>Guía académica de diseño experimental.</p>
-        <a class="open" href="diseño-experimental.html">Abrir guía <b>→</b></a>
+      <article class="card" data-name="anestesia cesárea cesarea anestesia-cesarea obstetricia raquídea parto" style="--accent:#6A1BE0">
+        <div class="card-top"><div class="icon">🤰</div><span class="tag">Obstetricia</span></div>
+        <h3>Anestesia para Cesárea</h3>
+        <p>Manejo anestésico de la cesárea: técnica neuroaxial, anestesia general y complicaciones maternas.</p>
+        <ul class="chips"><li>Raquídea</li><li>Hipotensión</li><li>Vía aérea obstétrica</li></ul>
+        <a class="open" href="anestesia-cesarea.html">Abrir guía <b>→</b></a>
       </article>
-
-      <article class="card" data-name="craneotomía despierto craneotomiadespierto neuroanestesia" style="--accent:#C2006B">
-        <div class="card-top"><div class="icon">🧠</div><span class="tag">Guía</span></div>
-        <h3>Craneotomía Despierto</h3>
-        <p>Guía de manejo anestésico en craneotomía con paciente despierto.</p>
-        <a class="open" href="craneotomiadespierto.html">Abrir guía <b>→</b></a>
-      </article>
-
-      <article class="card" data-name="ucpa recuperación postanestésica" style="--accent:#00875A">
-        <div class="card-top"><div class="icon">🏥</div><span class="tag">Guía</span></div>
-        <h3>UCPA</h3>
-        <p>Guía académica de la unidad de cuidados postanestésicos.</p>
-        <a class="open" href="ucpa.html">Abrir guía <b>→</b></a>
-      </article>
-
-      <article class="card" data-name="fetal exit fetal-exit vía aérea obstetricia" style="--accent:#D98E00">
-        <div class="card-top"><div class="icon">👶</div><span class="tag">Guía</span></div>
+      <article class="card" data-name="fetal exit fetal-exit vía aérea obstetricia ex utero" style="--accent:#D98E00">
+        <div class="card-top"><div class="icon">👶</div><span class="tag">Obstetricia</span></div>
         <h3>Fetal EXIT</h3>
-        <p>Guía académica sobre procedimiento EXIT y manejo anestésico.</p>
+        <p>Procedimiento EXIT (tratamiento intraparto ex útero): planeación, relajación uterina y vía aérea fetal.</p>
+        <ul class="chips"><li>Relajación uterina</li><li>Circulación placentaria</li><li>Vía aérea fetal</li></ul>
         <a class="open" href="fetal-exit.html">Abrir guía <b>→</b></a>
       </article>
+      <article class="card" data-name="anestesia neonatal anestesia-neonatal neonatos neonatal" style="--accent:#007C89">
+        <div class="card-top"><div class="icon">🍼</div><span class="tag">Pediatría</span></div>
+        <h3>Anestesia Neonatal</h3>
+        <p>Fisiología del neonato y manejo anestésico perioperatorio.</p>
+        <ul class="chips"><li>Fisiología neonatal</li><li>Vía aérea</li><li>Termorregulación</li></ul>
+        <a class="open" href="anestesia-neonatal.html">Abrir guía <b>→</b></a>
+      </article>
+      <article class="card" data-name="analgesia pediátrica analgesia-pediatrica pediatría dolor" style="--accent:#C2006B">
+        <div class="card-top"><div class="icon">🧒</div><span class="tag">Pediatría</span></div>
+        <h3>Analgesia Pediátrica</h3>
+        <p>Valoración y manejo del dolor en pediatría, con dosificación por peso.</p>
+        <ul class="chips"><li>Escalas de dolor</li><li>Dosis por kg</li><li>Analgesia multimodal</li></ul>
+        <a class="open" href="analgesia-pediatrica.html">Abrir guía <b>→</b></a>
+      </article>
+      <article class="card" data-name="craneotomía despierto craneotomiadespierto neuroanestesia" style="--accent:#C2006B">
+        <div class="card-top"><div class="icon">🧠</div><span class="tag">Neuroanestesia</span></div>
+        <h3>Craneotomía Despierto</h3>
+        <p>Manejo anestésico de la craneotomía con paciente despierto para el mapeo cortical.</p>
+        <ul class="chips"><li>Asleep–awake–asleep</li><li>Sedación consciente</li><li>Bloqueo de escalpe</li></ul>
+        <a class="open" href="craneotomiadespierto.html">Abrir guía <b>→</b></a>
+      </article>
+      <article class="card" data-name="ventilación unipulmonar ventilacion-unipulmonar ventilación pulmonar tórax tubo doble luz" style="--accent:#0057FF">
+        <div class="card-top"><div class="icon">🫁</div><span class="tag">Tórax</span></div>
+        <h3>Ventilación Unipulmonar</h3>
+        <p>Aislamiento pulmonar y ventilación unipulmonar en cirugía de tórax.</p>
+        <ul class="chips"><li>Tubo de doble luz</li><li>Bloqueadores</li><li>Manejo de la hipoxemia</li></ul>
+        <a class="open" href="ventilacion-unipulmonar.html">Abrir guía <b>→</b></a>
+      </article>
+      <article class="card" data-name="anestesia imágenes anestesia-imagenes imagenes radiología resonancia" style="--accent:#6A1BE0">
+        <div class="card-top"><div class="icon">🖥️</div><span class="tag">Fuera de quirófano</span></div>
+        <h3>Anestesia en Imágenes</h3>
+        <p>Anestesia y sedación para procedimientos e imágenes diagnósticas fuera del quirófano.</p>
+        <ul class="chips"><li>Resonancia magnética</li><li>Sedación</li><li>Seguridad</li></ul>
+        <a class="open" href="anestesia-imagenes.html">Abrir guía <b>→</b></a>
+      </article>
+      <article class="card" data-name="accesos vasculares accesos-vasculares catéter venoso central arterial ecografía canalización" style="--accent:#D7002E">
+        <div class="card-top"><div class="icon">💉</div><span class="tag">Procedimientos</span></div>
+        <h3>Accesos Vasculares</h3>
+        <p>Accesos vasculares periféricos, centrales y arteriales, con guía ecográfica.</p>
+        <ul class="chips"><li>Catéter venoso central</li><li>Línea arterial</li><li>Ecografía</li></ul>
+        <a class="open" href="accesos-vasculares.html">Abrir guía <b>→</b></a>
+      </article>
+      <article class="card" data-name="ucpa guia_ucpa recuperación postanestésica" style="--accent:#00875A">
+        <div class="card-top"><div class="icon">🏥</div><span class="tag">Postoperatorio</span></div>
+        <h3>UCPA</h3>
+        <p>Unidad de cuidados postanestésicos: vigilancia, complicaciones y criterios de egreso.</p>
+        <ul class="chips"><li>Monitorización</li><li>Complicaciones</li><li>Criterios de egreso</li></ul>
+        <a class="open" href="guia_ucpa.html">Abrir guía <b>→</b></a>
+      </article>
 
-      <article class="card" data-name="glucosa perioperatoria glucosa-perioperatoria diabetes metabolismo" style="--accent:#E35A00">
-        <div class="card-top"><div class="icon">🩸</div><span class="tag">Guía</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title">
+      <div class="num">03</div>
+      <h2>⚗️ Fisiología y medicina perioperatoria</h2>
+      <div class="line"></div>
+    </div>
+
+    <div class="grid">
+
+      <article class="card" data-name="fisiología ecg fisiologia-ecg electrocardiograma cardiovascular" style="--accent:#D7002E">
+        <div class="card-top"><div class="icon">❤️</div><span class="tag">Fisiología</span></div>
+        <h3>Fisiología y ECG</h3>
+        <p>Fisiología cardiovascular y lectura del electrocardiograma aplicadas a la anestesia.</p>
+        <ul class="chips"><li>Ciclo cardíaco</li><li>Lectura del ECG</li><li>Arritmias</li></ul>
+        <a class="open" href="fisiologia-ecg.html">Abrir guía <b>→</b></a>
+      </article>
+      <article class="card" data-name="gases arteriales gases.html ácido base acido base" style="--accent:#0057FF">
+        <div class="card-top"><div class="icon">🧪</div><span class="tag">Fisiología</span></div>
+        <h3>Gases Arteriales</h3>
+        <p>Interpretación de los gases arteriales y de los trastornos ácido-base.</p>
+        <ul class="chips"><li>pH · PaCO₂ · HCO₃⁻</li><li>Anión gap</li><li>Compensación</li></ul>
+        <a class="open" href="gases.html">Abrir guía <b>→</b></a>
+      </article>
+      <article class="card" data-name="diskalemias potasio hipokalemia hiperkalemia hipopotasemia hiperpotasemia electrolitos" style="--accent:#E35A00">
+        <div class="card-top"><div class="icon">⚡</div><span class="tag">Medicina perioperatoria</span></div>
+        <h3>Diskalemias</h3>
+        <p>Hipo e hiperpotasemia en el perioperatorio: causas, cambios en el ECG y tratamiento.</p>
+        <ul class="chips"><li>Hipopotasemia</li><li>Hiperpotasemia</li><li>Cambios en el ECG</li></ul>
+        <a class="open" href="diskalemias.html">Abrir guía <b>→</b></a>
+      </article>
+      <article class="card" data-name="glucosa perioperatoria glucosa-perioperatoria diabetes metabolismo insulina" style="--accent:#00875A">
+        <div class="card-top"><div class="icon">🩸</div><span class="tag">Medicina perioperatoria</span></div>
         <h3>Glucosa Perioperatoria</h3>
-        <p>Guía académica sobre manejo de la glucosa en el período perioperatorio.</p>
+        <p>Control de la glucosa en el período perioperatorio del paciente diabético y no diabético.</p>
+        <ul class="chips"><li>Metas de glucemia</li><li>Insulina</li><li>Hipoglucemia</li></ul>
         <a class="open" href="glucosa-perioperatoria.html">Abrir guía <b>→</b></a>
       </article>
 
-      <article class="card" data-name="ventilación unipulmonar ventilacion-unipulmonar ventilación pulmonar" style="--accent:#0057FF">
-        <div class="card-top"><div class="icon">🫁</div><span class="tag">Guía</span></div>
-        <h3>Ventilación Unipulmonar</h3>
-        <p>Guía académica sobre ventilación unipulmonar y manejo anestésico.</p>
-        <a class="open" href="ventilacion-unipulmonar.html">Abrir guía <b>→</b></a>
-      </article>
+    </div>
+  </section>
 
-      <article class="card" data-name="analgesia pediátrica analgesia-pediatrica pediatría dolor" style="--accent:#C2006B">
-        <div class="card-top"><div class="icon">🧒</div><span class="tag">Guía</span></div>
-        <h3>Analgesia Pediátrica</h3>
-        <p>Guía académica de manejo del dolor y analgesia en pediatría.</p>
-        <a class="open" href="analgesia-pediatrica.html">Abrir guía <b>→</b></a>
-      </article>
+  <section>
+    <div class="section-title">
+      <div class="num">04</div>
+      <h2>📐 Investigación y bioestadística</h2>
+      <div class="line"></div>
+    </div>
 
-      <article class="card" data-name="anestesia imágenes anestesia-imagenes imagenes radiología" style="--accent:#6A1BE0">
-        <div class="card-top"><div class="icon">🖥️</div><span class="tag">Guía</span></div>
-        <h3>Anestesia en Imágenes</h3>
-        <p>Guía académica sobre anestesia para procedimientos e imágenes diagnósticas.</p>
-        <a class="open" href="anestesia-imagenes.html">Abrir guía <b>→</b></a>
-      </article>
+    <div class="grid">
 
-      <article class="card" data-name="anestesia neonatal anestesia-neonatal neonatos neonatal" style="--accent:#007C89">
-        <div class="card-top"><div class="icon">🍼</div><span class="tag">Guía</span></div>
-        <h3>Anestesia Neonatal</h3>
-        <p>Guía académica de anestesia y manejo perioperatorio neonatal.</p>
-        <a class="open" href="anestesia-neonatal.html">Abrir guía <b>→</b></a>
+      <article class="card" data-name="investigación investigacion guia_investigacion_anestesiologia protocolo metodología" style="--accent:#007C89">
+        <div class="card-top"><div class="icon">🔎</div><span class="tag">Investigación</span></div>
+        <h3>Guía de Investigación en Anestesiología</h3>
+        <p>Cómo plantear y desarrollar un proyecto de investigación en anestesiología.</p>
+        <ul class="chips"><li>Pregunta de investigación</li><li>Protocolo</li><li>Metodología</li></ul>
+        <a class="open" href="guia_investigacion_anestesiologia_1.html">Abrir guía <b>→</b></a>
       </article>
-
-      <article class="card" data-name="accesos vasculares accesos-vasculares catéter venoso central arterial ecografía canalización" style="--accent:#D7002E">
-        <div class="card-top"><div class="icon">💉</div><span class="tag">Guía</span></div>
-        <h3>Accesos Vasculares</h3>
-        <p>Guía académica de accesos vasculares periféricos, centrales y arteriales.</p>
-        <a class="open" href="accesos-vasculares.html">Abrir guía <b>→</b></a>
+      <article class="card" data-name="diseño experimental diseño-experimental investigación experimentos" style="--accent:#6A1BE0">
+        <div class="card-top"><div class="icon">🔬</div><span class="tag">Bioestadística</span></div>
+        <h3>Diseño Experimental</h3>
+        <p>Principios del diseño de experimentos aplicados a la investigación clínica.</p>
+        <ul class="chips"><li>Aleatorización</li><li>Grupos control</li><li>Tamaño de muestra</li></ul>
+        <a class="open" href="diseño-experimental.html">Abrir guía <b>→</b></a>
       </article>
-
-      <article class="card" data-name="anestesia cesárea cesarea anestesia-cesarea obstetricia raquídea parto" style="--accent:#6A1BE0">
-        <div class="card-top"><div class="icon">🤰</div><span class="tag">Guía</span></div>
-        <h3>Anestesia para Cesárea</h3>
-        <p>Guía académica de manejo anestésico en cesárea.</p>
-        <a class="open" href="anestesia-cesarea.html">Abrir guía <b>→</b></a>
+      <article class="card" data-name="probabilidad estadística estadistica distribuciones" style="--accent:#D98E00">
+        <div class="card-top"><div class="icon">🎲</div><span class="tag">Bioestadística</span></div>
+        <h3>Probabilidad</h3>
+        <p>Conceptos de probabilidad y distribuciones para el análisis de datos clínicos.</p>
+        <ul class="chips"><li>Reglas de probabilidad</li><li>Distribuciones</li><li>Probabilidad condicional</li></ul>
+        <a class="open" href="probabilidad.html">Abrir guía <b>→</b></a>
       </article>
 
     </div>
