@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Evaluación Anestesiología — Hospital de Kennedy</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500;600&display=swap');
 
@@ -119,6 +120,12 @@ body { font-family: var(--sans); background: var(--bg); color: #000; min-height:
 .field label.no-ap2 { display:flex; align-items:center; gap:6px; margin-top:7px; font-size:12.5px; font-weight:700; text-transform:none; letter-spacing:0; cursor:pointer; color:#0D47A1; }
 .field label.no-ap2 input { width:auto; margin:0; }
 .field input:disabled { background:#fff; border-style:dashed; }
+.grp-sw { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.grp-b { border:2.5px solid #0D47A1; background:#fff; color:#0D47A1; border-radius:12px; padding:13px 10px; font:inherit; font-size:16px; font-weight:800; cursor:pointer; min-height:50px; }
+.grp-b.on { background:#0D47A1; color:#fff; box-shadow:0 4px 0 #061A40; }
+.grp-b[data-g="interno"] { border-color:#B71C1C; color:#B71C1C; }
+.grp-b[data-g="interno"].on { background:#B71C1C; border-color:#B71C1C; color:#fff; box-shadow:0 4px 0 #5C0A0A; }
+.topics-grid.no-week .topic-week { display:none; }
 .topics-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -934,6 +941,256 @@ body { font-family: var(--sans); background: var(--bg); color: #000; min-height:
 #calc-fab.visible { display: block; }
 
 
+
+/* ── Revisión del caso clínico ── */
+.rv-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin:4px 0 14px;}
+.rv-t{font-size:20px;font-weight:800;color:#0A2463;}
+.rv-sum{display:flex;gap:8px;flex-wrap:wrap;}
+.rv-sum span{font-weight:800;font-size:14px;color:#fff;border-radius:999px;padding:5px 12px;}
+.rv-ok{background:#00A050;} .rv-bad{background:#D7002E;}
+.rv-item{background:#fff;border:2.5px solid;border-left-width:8px;border-radius:12px;padding:12px 14px;margin-bottom:10px;color:#000;}
+.rv-item.ok{border-color:#00A050;} .rv-item.bad{border-color:#D7002E;}
+.rv-top{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.rv-n{background:#0A2463;color:#fff;font-weight:800;font-size:12.5px;border-radius:6px;padding:2px 8px;}
+.rv-mark{font-weight:800;font-size:14px;}
+.rv-item.ok .rv-mark{color:#00A050;} .rv-item.bad .rv-mark{color:#D7002E;}
+.rv-q{font-weight:700;font-size:15.5px;line-height:1.45;margin-bottom:6px;}
+.rv-row{font-size:15px;line-height:1.45;margin:3px 0;}
+.rv-right{background:#00A050;color:#fff;border-radius:8px;padding:6px 10px;}
+.rv-right b{color:#fff;}
+.rv-f{font-size:13px;font-weight:600;}
+.rv-exp{font-size:14px;line-height:1.5;margin-top:6px;padding-top:6px;border-top:2px dashed #0A2463;font-style:italic;}
+.rv-go{margin-top:8px;background:#00A050!important;font-size:17px;}
+
+/* ═══════════════════════════════════════════════════════════════
+   TEMA 2026 — mismo lenguaje visual del Centro Académico:
+   papel blanco, bordes azul marino, sombras desplazadas de color,
+   tipografía Bricolage Grotesque + DM Sans + DM Mono.
+   (Solo pantalla: la hoja de impresión conserva su formato.)
+═══════════════════════════════════════════════════════════════ */
+@media screen {
+:root{
+  --nv:#0A2463; --nv2:#061642; --bl:#0057FF; --vi:#6A1BE0; --rd:#D7002E; --gr:#00875A;
+  --tl:#007C89; --or:#E35A00; --mg:#C2006B; --am:#D98E00; --yl:#FFB800;
+  --acc:var(--bl);
+}
+body{background:#fff!important;color:#000;font-family:'DM Sans',system-ui,sans-serif!important;}
+#screen-setup,#screen-results{--acc:var(--bl);}
+#screen-instructions{--acc:var(--rd);}
+#screen-theory,#screen-transition{--acc:var(--bl);}
+#screen-case-transition,#screen-case{--acc:var(--gr);}
+#screen-case-results{--acc:var(--vi);}
+
+/* ── Barra superior ── */
+.top-bar{background:var(--nv)!important;padding:14px 24px!important;border-bottom:0!important;box-shadow:none!important;}
+.top-bar::before{display:none!important;}
+.top-bar::after{content:"";position:absolute;left:0!important;right:0!important;bottom:0!important;top:auto!important;width:auto!important;height:6px!important;border-radius:0!important;opacity:1!important;transform:none!important;display:block!important;
+  background:linear-gradient(90deg,var(--bl) 0 25%,var(--vi) 25% 50%,var(--rd) 50% 75%,var(--or) 75% 100%)!important;}
+.top-bar-title{font-family:'Bricolage Grotesque',sans-serif!important;font-weight:800!important;font-size:21px!important;letter-spacing:-.01em!important;color:#fff!important;}
+.top-bar-sub{color:#fff!important;font-weight:600!important;font-size:13.5px!important;opacity:1!important;}
+.top-bar-badge{background:var(--acc)!important;color:#fff!important;border:2px solid #fff!important;border-radius:8px!important;
+  font-family:'DM Mono',monospace!important;font-weight:600!important;padding:5px 12px!important;}
+
+/* ── Contenedor y tarjetas ── */
+.main{padding:28px 16px 48px!important;background:#fff!important;}
+.card{background:#fff!important;border:2.5px solid var(--nv)!important;border-radius:18px!important;
+  box-shadow:8px 8px 0 var(--acc)!important;padding:28px!important;}
+.card::before{display:none!important;}
+.section-label{color:var(--acc)!important;font-weight:800!important;letter-spacing:.14em!important;}
+.section-label::before{background:var(--acc)!important;}
+.screen-title{font-family:'Bricolage Grotesque',sans-serif!important;font-weight:800!important;color:var(--nv)!important;
+  font-size:30px!important;letter-spacing:-.025em!important;line-height:1.1!important;}
+.screen-sub{color:#000!important;font-size:16px!important;}
+.divider{border:0!important;height:3px!important;background:var(--nv)!important;opacity:1!important;margin:22px 0!important;}
+
+/* ── Portada del formulario ── */
+.setup-hero{background:var(--nv)!important;border-radius:14px!important;border:2.5px solid var(--nv)!important;margin:-6px -6px 22px!important;}
+.setup-hero::before,.setup-hero::after{display:none!important;}
+.setup-hero-icon{background:var(--yl)!important;border:2.5px solid #fff!important;border-radius:14px!important;}
+.setup-hero-title{font-family:'Bricolage Grotesque',sans-serif!important;font-weight:800!important;letter-spacing:-.02em!important;color:#fff!important;}
+.setup-hero-title::first-letter{color:inherit;}
+.setup-hero-sub{color:#fff!important;font-weight:600!important;}
+.setup-chip{background:#fff!important;color:var(--nv)!important;border:2px solid #fff!important;font-weight:800!important;}
+
+/* ── Formularios ── */
+.field label{color:var(--nv)!important;font-weight:800!important;letter-spacing:.06em!important;}
+.field input,.field select,.select-input,.calc-input{border:2.5px solid var(--nv)!important;border-radius:10px!important;
+  background:#fff!important;color:#000!important;font-weight:600!important;box-shadow:none!important;}
+.field input:focus,.field select:focus,.select-input:focus,.calc-input:focus{border-color:var(--bl)!important;box-shadow:4px 4px 0 var(--bl)!important;outline:none!important;}
+.field input:disabled{border-style:dashed!important;}
+.field label.no-ap2{color:var(--bl)!important;letter-spacing:0!important;}
+.grp-b{border-width:2.5px!important;box-shadow:4px 4px 0 var(--nv)!important;}
+.grp-b.on{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--nv)!important;}
+.auto-info{background:#fff!important;border:2.5px solid var(--bl)!important;border-left-width:8px!important;border-radius:12px!important;color:#000!important;}
+.auto-info.warn{border-color:var(--or)!important;}
+.auto-info strong{color:var(--bl)!important;} .auto-info.warn strong{color:var(--or)!important;}
+
+/* ── Talleres a evaluar ── */
+.topics-grid{gap:10px!important;}
+.topic-item{--tc:var(--bl);background:#fff!important;border:2.5px solid var(--nv)!important;border-left:10px solid var(--tc)!important;
+  border-radius:12px!important;box-shadow:4px 4px 0 var(--tc)!important;transition:transform .12s,box-shadow .12s!important;}
+.topic-item:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--tc)!important;}
+.topic-item::before{background:var(--tc)!important;}
+.topic-item span{color:#000!important;font-weight:700!important;}
+.topic-item.selected{background:var(--tc)!important;border-color:var(--nv)!important;}
+.topic-item.selected span{color:#fff!important;}
+.topic-item.selected::before{background:#fff!important;}
+.topic-week{background:var(--nv)!important;color:#fff!important;border-radius:5px!important;padding:1px 6px!important;opacity:1!important;}
+.topic-item .topic-week{color:#fff!important;}
+.topics-grid .topic-item.selected span{color:#fff!important;}
+.topics-grid .topic-item.selected span.topic-week{color:#0A2463!important;background:#fff!important;}
+.topics-grid .topic-item:not(.selected) span:not(.topic-week){color:#000!important;}
+.topics-grid .topic-item span.topic-week{color:#fff!important;background:#0A2463!important;}
+.topics-grid .topic-item.selected span.topic-week{color:#0A2463!important;background:#fff!important;}
+.setup-hero-icon{background:#fff!important;color:#0A2463!important;}
+.topic-item.selected .topic-week{background:#fff!important;color:var(--nv)!important;}
+.tp-c0{--tc:#0057FF}.tp-c1{--tc:#00875A}.tp-c2{--tc:#6A1BE0}.tp-c3{--tc:#E35A00}.tp-c4{--tc:#C2006B}.tp-c5{--tc:#007C89}
+.tp-c6{--tc:#D7002E}.tp-c7{--tc:#D98E00}.tp-c8{--tc:#0A2463}.tp-c9{--tc:#5B12D6}.tp-c10{--tc:#00A3D9}.tp-c11{--tc:#B34700}.tp-c12{--tc:#2E7D00}
+
+/* ── Botones ── */
+.btn{border:2.5px solid var(--nv)!important;border-radius:11px!important;font-family:'DM Sans',sans-serif!important;font-weight:800!important;
+  letter-spacing:.01em!important;box-shadow:4px 4px 0 var(--nv)!important;transition:transform .12s,box-shadow .12s!important;}
+.btn:hover:not(:disabled){transform:translate(-2px,-2px)!important;box-shadow:6px 6px 0 var(--nv)!important;}
+.btn:active:not(:disabled){transform:translate(2px,2px)!important;box-shadow:1px 1px 0 var(--nv)!important;}
+.btn-primary{background:var(--bl)!important;color:#fff!important;}
+.btn-teal{background:var(--tl)!important;color:#fff!important;}
+.btn-green{background:var(--gr)!important;color:#fff!important;}
+.btn-outline{background:#fff!important;color:var(--nv)!important;}
+.btn:disabled,.btn[disabled]{background:#fff!important;color:var(--nv)!important;border-style:dashed!important;box-shadow:none!important;opacity:1!important;cursor:not-allowed;}
+.btn-lg{font-size:18px!important;padding:16px 22px!important;}
+.top-bar .btn,.top-bar .print-btn{background:#fff!important;color:var(--nv)!important;border-color:#fff!important;box-shadow:none!important;}
+#screen-instructions .btn-primary{background:var(--rd)!important;}
+#screen-case-transition .btn-primary{background:var(--gr)!important;}
+#case-next-btn{background:var(--mg)!important;color:#fff!important;border:2.5px solid var(--nv)!important;box-shadow:4px 4px 0 var(--nv)!important;border-radius:11px!important;}
+.case-submit-btn{background:var(--gr)!important;color:#fff!important;border:2.5px solid var(--nv)!important;border-radius:12px!important;
+  box-shadow:5px 5px 0 var(--nv)!important;font-weight:800!important;font-family:'DM Sans',sans-serif!important;letter-spacing:.01em!important;}
+.case-submit-btn:disabled{background:var(--nv)!important;}
+
+/* ── Instrucciones ── */
+.ins-part{display:flex;gap:14px;align-items:flex-start;padding:16px;background:#fff;border:2.5px solid var(--nv);border-left:10px solid var(--pc);border-radius:14px;box-shadow:5px 5px 0 var(--pc);}
+.ins-tag{background:var(--pc);color:#fff;font-family:'DM Mono',monospace;font-size:15px;font-weight:700;padding:6px 12px;border-radius:8px;white-space:nowrap;flex-shrink:0;border:2px solid var(--nv);}
+.ins-title{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;color:var(--nv);font-size:18px;margin-bottom:4px;}
+.ins-body{color:#000;font-size:15px;line-height:1.55;}
+.ins-w{color:var(--pc);font-weight:800;}
+.ins-weight{background:var(--nv);border-radius:14px;padding:16px 18px;margin-bottom:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;color:#fff;}
+.ins-weight .k{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--yl);margin-bottom:3px;}
+.ins-weight strong{color:var(--yl);}
+.ins-warn{background:#fff;border:2.5px solid var(--rd);border-left:10px solid var(--rd);border-radius:12px;padding:12px 15px;margin-bottom:22px;font-size:15px;color:#000;line-height:1.6;}
+.ins-warn strong{color:var(--rd);}
+.ins-sum{background:#fff;border:2.5px dashed var(--nv);border-radius:12px;padding:14px 16px;margin-bottom:22px;font-size:15px;color:#000;}
+.ins-sum .t{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;color:var(--nv);margin-bottom:8px;font-size:17px;}
+
+/* ── Temporizadores y progreso ── */
+.timer-wrap,.case-timer-wrap{background:var(--nv)!important;border:2.5px solid #fff!important;border-radius:14px!important;
+  box-shadow:5px 5px 0 var(--yl)!important;color:#fff!important;}
+.timer-wrap .timer-val,.case-timer-wrap .timer-val{font-family:'DM Mono',monospace!important;color:var(--yl)!important;font-weight:600!important;}
+.timer-wrap .timer-label{color:#fff!important;font-weight:700!important;}
+.progress-strip{gap:5px!important;}
+.progress-pip{background:#fff!important;border:2px solid var(--nv)!important;height:10px!important;border-radius:999px!important;}
+.progress-pip.done{background:var(--gr)!important;}
+.progress-pip.active{background:var(--bl)!important;}
+
+/* ── Preguntas teóricas ── */
+.q-num{background:var(--nv)!important;color:#fff!important;border-radius:8px!important;font-family:'DM Mono',monospace!important;box-shadow:3px 3px 0 var(--acc)!important;}
+.q-source{color:var(--bl)!important;font-weight:700!important;font-style:normal!important;}
+.q-text{font-family:'DM Sans',sans-serif!important;color:#000!important;font-weight:800!important;font-size:20px!important;line-height:1.45!important;}
+.option-item,.option-card{background:#fff!important;border:2.5px solid var(--nv)!important;border-radius:12px!important;
+  box-shadow:3px 3px 0 var(--nv)!important;transition:transform .1s,box-shadow .1s!important;}
+.option-item:hover:not(.locked){transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--bl)!important;border-color:var(--nv)!important;background:#fff!important;}
+.opt-letter{background:#fff!important;color:var(--nv)!important;border:2px solid var(--nv)!important;border-radius:8px!important;font-family:'DM Mono',monospace!important;font-weight:700!important;}
+.opt-text{color:#000!important;font-weight:600!important;}
+.option-item.selected{background:var(--bl)!important;box-shadow:3px 3px 0 var(--nv)!important;}
+.option-item.selected .opt-text{color:#fff!important;}
+.option-item.selected .opt-letter{background:#fff!important;color:var(--bl)!important;border-color:#fff!important;}
+.option-item.correct{background:var(--gr)!important;}
+.option-item.correct .opt-text{color:#fff!important;}
+.option-item.correct .opt-letter{background:#fff!important;color:var(--gr)!important;border-color:#fff!important;}
+.option-item.incorrect{background:var(--rd)!important;}
+.option-item.incorrect .opt-text{color:#fff!important;}
+.option-item.incorrect .opt-letter{background:#fff!important;color:var(--rd)!important;border-color:#fff!important;}
+.feedback-box{border-radius:12px!important;border:2.5px solid!important;border-left-width:10px!important;background:#fff!important;color:#000!important;font-size:15px!important;}
+.feedback-box.correct{border-color:var(--gr)!important;} .feedback-box.incorrect{border-color:var(--rd)!important;}
+
+/* ── Caso clínico ── */
+.case-banner{background:#fff!important;border:2.5px solid var(--nv)!important;border-radius:16px!important;box-shadow:6px 6px 0 var(--gr)!important;color:#000!important;}
+.case-banner-header{background:var(--nv)!important;color:#fff!important;}
+.case-banner-tag{color:#fff!important;}
+.case-banner-title{color:var(--nv)!important;font-family:'Bricolage Grotesque',sans-serif!important;font-weight:800!important;}
+.case-banner-body,.case-banner-body *{color:#000;}
+.case-banner-header *{color:#fff!important;}
+.case-datum{background:#fff!important;border:2px solid var(--nv)!important;border-left:6px solid var(--gr)!important;border-radius:8px!important;color:#000!important;}
+.case-datum *{color:#000!important;}
+.case-datum b,.case-datum strong,.case-datum div:first-child{color:var(--gr)!important;}
+.section-block{border:2.5px solid var(--nv)!important;border-radius:14px!important;box-shadow:5px 5px 0 var(--nv)!important;overflow:hidden;}
+.section-block:hover{transform:none!important;}
+.section-block-header{border-bottom:2.5px solid var(--nv)!important;}
+.section-block-body{background:#fff!important;border-top:0!important;}
+.section-block.sb-c0 .section-block-header{background:var(--bl)!important;}
+.section-block.sb-c1 .section-block-header{background:var(--tl)!important;}
+.section-block.sb-c2 .section-block-header{background:var(--vi)!important;}
+.section-block.sb-c3 .section-block-header{background:var(--or)!important;}
+.section-block.sb-c4 .section-block-header{background:var(--mg)!important;}
+.section-block-time{background:#fff!important;color:var(--nv)!important;font-weight:800!important;}
+.calc-label{color:#000!important;font-weight:700!important;}
+.calc-hint{color:var(--nv)!important;}
+.calc-input.correct,.select-input.correct{border-color:var(--gr)!important;background:#fff!important;box-shadow:4px 4px 0 var(--gr)!important;color:#000!important;}
+.calc-input.incorrect,.select-input.incorrect{border-color:var(--rd)!important;background:#fff!important;box-shadow:4px 4px 0 var(--rd)!important;color:#000!important;}
+
+/* ── Resultados ── */
+.case-result-card,.final-score-card,.result-header{background:var(--nv)!important;border:2.5px solid var(--nv)!important;border-radius:16px!important;
+  box-shadow:6px 6px 0 var(--yl)!important;}
+.case-result-card::before,.final-score-card::before,.result-header::before,.case-result-card::after,.final-score-card::after,.result-header::after{display:none!important;}
+.final-score-val,.case-result-val{font-family:'DM Mono',monospace!important;font-weight:600!important;color:var(--yl)!important;}
+.final-score-label,.final-score-sub,.result-uni,.case-result-sub{color:#fff!important;}
+.result-student{font-family:'Bricolage Grotesque',sans-serif!important;font-weight:800!important;color:#fff!important;letter-spacing:-.02em!important;}
+.score-card{background:#fff!important;border:2.5px solid var(--nv)!important;border-radius:14px!important;box-shadow:5px 5px 0 var(--bl)!important;}
+.score-card + .score-card{box-shadow:5px 5px 0 var(--gr)!important;}
+.score-card-val{font-family:'DM Mono',monospace!important;color:var(--nv)!important;}
+.score-card-label,.score-card-max{color:#000!important;}
+.topic-chip{background:#fff!important;color:var(--nv)!important;border:2px solid var(--nv)!important;font-weight:800!important;border-radius:999px!important;}
+.rv-item{box-shadow:4px 4px 0 var(--nv);}
+.rv-t{font-family:'Bricolage Grotesque',sans-serif;}
+
+/* ── Calculadora flotante ── */
+#calc-widget{border:2.5px solid var(--nv)!important;border-radius:16px!important;box-shadow:6px 6px 0 var(--yl)!important;background:#fff!important;}
+.calc-header{background:var(--nv)!important;}
+.calc-display{background:var(--nv)!important;color:var(--yl)!important;font-family:'DM Mono',monospace!important;border-radius:10px!important;}
+.calc-key{border:2px solid var(--nv)!important;border-radius:9px!important;box-shadow:2px 2px 0 var(--nv)!important;font-family:'DM Mono',monospace!important;font-weight:700!important;}
+.calc-key{background:#fff!important;color:var(--nv)!important;}
+.calc-key.op{background:var(--bl)!important;color:#fff!important;}
+.calc-key.clear{background:var(--rd)!important;color:#fff!important;}
+.calc-key.back{background:var(--or)!important;color:#fff!important;}
+.calc-key.eq{background:var(--nv)!important;color:var(--yl)!important;}
+.calc-key:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--nv)!important;}
+.num-warn{display:none;margin:6px 0 0 8px;background:#D7002E;color:#fff;border-radius:8px;padding:5px 10px;font-size:13.5px;font-weight:700;}
+.num-warn.show{display:block;}
+.calc-input.bad-format{border-color:#D7002E!important;box-shadow:4px 4px 0 #D7002E!important;}
+.papel-box{margin-top:22px;border:2.5px dashed #0A2463;border-radius:14px;padding:14px 16px;background:#fff;}
+.papel-t{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:19px;color:#0A2463;margin-bottom:4px;}
+.papel-s{font-size:14.5px;color:#000;margin-bottom:12px;line-height:1.5;}
+.btn-papel{background:#B34700!important;color:#fff!important;font-size:16px!important;padding:13px 16px!important;}
+.btn-docente{background:#D7002E!important;color:#fff!important;font-size:16px!important;padding:13px 16px!important;}
+.doc-modal{position:fixed;inset:0;background:rgba(10,36,99,.75);z-index:9999;align-items:center;justify-content:center;padding:16px;}
+.doc-card{background:#fff;border:2.5px solid #0A2463;border-radius:16px;box-shadow:8px 8px 0 #D7002E;padding:22px;width:100%;max-width:480px;}
+.doc-t{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:21px;color:#0A2463;margin-bottom:4px;}
+.doc-s{font-size:14.5px;color:#000;margin-bottom:12px;}
+.doc-l{display:block;font-size:12.5px;font-weight:800;color:#0A2463;letter-spacing:.06em;text-transform:uppercase;margin:10px 0 5px;}
+.doc-in{width:100%;border:2.5px solid #0A2463;border-radius:10px;padding:10px 12px;font:inherit;font-size:15px;font-weight:600;background:#fff;color:#000;}
+.doc-msg{margin-top:10px;font-weight:800;font-size:14.5px;color:#D7002E;min-height:20px;}
+.timeout-banner{background:#D7002E;color:#fff;border:2.5px solid #0A2463;border-radius:12px;padding:12px 16px;margin:0 0 16px;font-size:15.5px;line-height:1.5;text-align:left;box-shadow:4px 4px 0 #0A2463;}
+.timeout-banner b{color:#fff;}
+#calc-fab{background:var(--yl)!important;border:2.5px solid var(--nv)!important;box-shadow:4px 4px 0 var(--nv)!important;}
+
+@media (max-width:600px){
+  .card{padding:20px 16px!important;box-shadow:5px 5px 0 var(--acc)!important;}
+  .screen-title{font-size:25px!important;}
+  .top-bar{padding:12px 16px!important;}
+  .top-bar-title{font-size:18px!important;}
+  .q-text{font-size:18px!important;}
+  .ins-part{flex-direction:column;gap:8px;}
+}
+}
+
 </style>
 </head>
 <body>
@@ -951,7 +1208,7 @@ body { font-family: var(--sans); background: var(--bg); color: #000; min-height:
       <div class="setup-hero">
         <div class="setup-hero-icon">🩺</div>
         <div class="setup-hero-title">Evaluación de Anestesiología</div>
-        <div class="setup-hero-sub">Rotación de pregrado · Dr. Andrés Robayo C.</div>
+        <div class="setup-hero-sub">Estudiantes e internos · Dr. Andrés Robayo C.</div>
         <div class="setup-chips">
           <span class="setup-chip"><span class="chip-dot chip-blue"></span>Teórico</span>
                     <span class="setup-chip"><span class="chip-dot chip-green"></span>Caso clínico</span>
@@ -959,8 +1216,17 @@ body { font-family: var(--sans); background: var(--bg); color: #000; min-height:
       </div>
 
       <span class="section-label">Inicio de evaluación</span>
-      <div class="screen-title">Datos del Estudiante</div>
-      <div class="screen-sub">Seleccione la universidad y el tipo de examen: los talleres a evaluar se marcan <strong>automáticamente</strong>. Puede ajustarlos a mano si es necesario.</div>
+      <div class="screen-title">Datos del evaluado</div>
+      <div class="screen-sub">Elija si es <strong>estudiante</strong> o <strong>interno</strong>. Para estudiantes los talleres se marcan <strong>automáticamente</strong> según la universidad y el tipo de examen; para internos se marcan a mano.</div>
+
+      <div class="field">
+        <label>Grupo *</label>
+        <div class="grp-sw" id="grp-sw">
+          <button type="button" class="grp-b on" data-g="estudiante" onclick="setGrupo('estudiante')">🎓 Estudiante</button>
+          <button type="button" class="grp-b" data-g="interno" onclick="setGrupo('interno')">🩺 Interno</button>
+        </div>
+        <input type="hidden" id="inp-grupo" value="estudiante">
+      </div>
 
       <div class="name-grid">
         <div class="field">
@@ -1009,7 +1275,7 @@ body { font-family: var(--sans); background: var(--bg); color: #000; min-height:
       </div>
 
       <div style="display:flex;gap:10px;margin-bottom:16px;">
-        <button class="btn btn-outline" onclick="applyAutoSelection()" style="font-size: 14px;padding:8px 14px;">↺ Selección automática</button>
+        <button class="btn btn-outline" id="btn-auto" onclick="applyAutoSelection()" style="font-size: 14px;padding:8px 14px;">↺ Selección automática</button>
         <button class="btn btn-outline" onclick="selectAllTopics()" style="font-size: 14px;padding:8px 14px;">Seleccionar todos</button>
         <button class="btn btn-outline" onclick="clearTopics()" style="font-size: 14px;padding:8px 14px;">Limpiar</button>
       </div>
@@ -1018,6 +1284,27 @@ body { font-family: var(--sans); background: var(--bg); color: #000; min-height:
         <span>Iniciar Evaluación</span> <span>→</span>
       </button>
       <div id="setup-error" style="color:var(--red);font-size: 15px;margin-top:10px;text-align:center;display:none;"></div>
+      <div class="papel-box">
+        <div class="papel-t">📄 ¿Examen en papel?</div>
+        <div class="papel-s">Solo docente (con clave). Elija el grupo, la universidad, el tipo de examen y los talleres (arriba) y descargue un examen <b>NUEVO Y ALEATORIO</b> cada vez: 10 preguntas de selección múltiple + 5 de caso clínico (selección múltiple, aparear o abiertas), La guía de respuestas se descarga aparte, solo con la clave del docente.</div>
+        <button type="button" class="btn btn-papel btn-full" onclick="abrirDocente('examen')">🔒 Descargar examen en papel (15 preguntas al azar)</button>
+        <button type="button" class="btn btn-docente btn-full" onclick="abrirDocente('guia')" style="margin-top:10px;">🔑 Docente: descargar guía de respuestas</button>
+      </div>
+      <div id="doc-modal" class="doc-modal" style="display:none;" onclick="if(event.target===this)cerrarDocente()">
+        <div class="doc-card">
+          <div class="doc-t" id="doc-tt">🔑 Guía de respuestas — Docente</div>
+          <div class="doc-s" id="doc-ss">Elija el examen descargado (por su código) e ingrese la clave del docente.</div>
+          <div id="doc-selwrap"><label class="doc-l">Examen</label>
+          <select id="doc-sel" class="doc-in"></select></div>
+          <label class="doc-l">Clave</label>
+          <input id="doc-pass" class="doc-in" type="password" autocomplete="off" onkeydown="if(event.key==='Enter')accionDocente()">
+          <div id="doc-msg" class="doc-msg"></div>
+          <div style="display:flex;gap:10px;margin-top:12px;">
+            <button type="button" class="btn btn-docente" style="flex:1;" onclick="accionDocente()" id="doc-go">⬇ Descargar guía</button>
+            <button type="button" class="btn btn-outline" onclick="cerrarDocente()">Cancelar</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -1064,6 +1351,7 @@ body { font-family: var(--sans); background: var(--bg); color: #000; min-height:
   <div class="main" style="align-items:center;">
     <div class="card" style="text-align:center;">
       <div style="font-size:56px;margin-bottom:12px;">📋</div>
+      <div id="theory-timeout-banner" class="timeout-banner" style="display:none;">⏰ <b>Se acabó el tiempo de la Parte A.</b> La sección se cerró automáticamente: las preguntas sin responder cuentan como incorrectas.</div>
       <div class="screen-title">Teoría completada</div>
       <div id="theory-score-display" style="font-family:var(--mono);font-size:40px;font-weight:800;color:var(--navy);margin:16px 0;"></div>
       <div style="font-size: 16px;color:#000;margin-bottom:28px;">A continuación pasará al <strong>Caso Clínico</strong>.</div>
@@ -1098,28 +1386,28 @@ body { font-family: var(--sans); background: var(--bg); color: #000; min-height:
       </div>
 
       <!-- Partes del examen -->
-      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
+      <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:26px;">
 
-        <div style="display:flex;gap:14px;align-items:flex-start;padding:14px 16px;background:var(--teal-light);border:1.5px solid var(--teal);border-radius:10px;">
-          <div style="background:var(--teal);color:white;font-family:var(--mono);font-size: 15px;font-weight:700;padding:6px 12px;border-radius:7px;white-space:nowrap;flex-shrink:0;">Parte A</div>
+        <div class="ins-part" style="--pc:#0057FF;">
+          <div class="ins-tag">Parte A</div>
           <div>
-            <div style="font-weight:700;color:var(--navy);font-size: 16px;margin-bottom:3px;">Examen Teórico — Selección múltiple</div>
-            <div style="color:#000;font-size: 15px;line-height:1.55;">
+            <div class="ins-title">Examen Teórico — Selección múltiple</div>
+            <div class="ins-body">
               <strong>15 preguntas</strong> repartidas en partes iguales entre los talleres evaluados · <strong>⏱ 20 minutos</strong><br>
               Cada pregunta tiene 4 opciones (A–D). Solo una es correcta. Se muestra retroalimentación inmediata al responder.<br>
-              <span style="color:var(--teal);font-weight:600;">Peso: 50% de la nota final.</span>
+              <span class="ins-w">Peso: 50% de la nota final.</span>
             </div>
           </div>
         </div>
 
-        <div style="display:flex;gap:14px;align-items:flex-start;padding:14px 16px;background:#f3e8ff;border:1.5px solid #7c3aed;border-radius:10px;">
-          <div style="background:#7c3aed;color:white;font-family:var(--mono);font-size: 15px;font-weight:700;padding:6px 12px;border-radius:7px;white-space:nowrap;flex-shrink:0;">Parte B</div>
+        <div class="ins-part" style="--pc:#00875A;">
+          <div class="ins-tag">Parte B</div>
           <div>
-            <div style="font-weight:700;color:var(--navy);font-size: 16px;margin-bottom:3px;">Caso Clínico — Cálculos y decisiones</div>
-            <div style="color:#000;font-size: 15px;line-height:1.55;" id="instr-case-detail">
+            <div class="ins-title">Caso Clínico — Cálculos y decisiones</div>
+            <div class="ins-body" id="instr-case-detail">
               <strong>1 caso clínico INTEGRADOR</strong>: un mismo paciente con preguntas de TODOS los talleres evaluados, repartidas por igual · <strong>10 preguntas</strong> (cálculo y selección) · <strong>⏱ 35 minutos</strong><br>
-              Las dosis NO se sugieren: el estudiante propone la dosis y se acepta el rango de la guía. Cada pregunta indica si se usa el peso real, ideal o magro (ya calculados en el caso).<br>
-              <span style="color:#7c3aed;font-weight:600;">Peso: 50% de la nota final.</span>
+              Las dosis NO se sugieren: el estudiante propone y escribe <b>UN SOLO NÚMERO</b> (no un rango); es correcto si está dentro de lo que acepta la guía. Cada pregunta indica si se usa el peso real, ideal o magro (ya calculados en el caso).<br>
+              <span class="ins-w">Peso: 50% de la nota final.</span>
             </div>
           </div>
         </div>
@@ -1127,22 +1415,22 @@ body { font-family: var(--sans); background: var(--bg); color: #000; min-height:
       </div>
 
       <!-- Nota final -->
-      <div style="background:var(--navy);border-radius:10px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+      <div class="ins-weight">
         <div style="font-size:22px;">📊</div>
         <div>
-          <div style="color:rgba(255,255,255,.92);font-size: 12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;">Ponderación final</div>
-          <div style="color:white;font-size: 15px;">Teórico <strong style="color:#7dd3c8;">50%</strong> &nbsp;+&nbsp; Caso clínico <strong style="color:#7dd3c8;">50%</strong> &nbsp;=&nbsp; <strong style="color:#7dd3c8;">Nota sobre 5.0</strong></div>
+          <div class="k">Ponderación final</div>
+          <div style="font-size:16px;">Teórico <strong>50%</strong> &nbsp;+&nbsp; Caso clínico <strong>50%</strong> &nbsp;=&nbsp; <strong>Nota sobre 5.0</strong></div>
         </div>
       </div>
 
       <!-- Advertencia -->
-      <div style="background:var(--red-light);border:1.5px solid var(--red);border-radius:8px;padding:12px 15px;margin-bottom:22px;font-size: 14.5px;color:var(--red);line-height:1.6;">
+      <div class="ins-warn">
         <strong>⚠️ Importante:</strong> Una vez que inicie cada sección, el tiempo corre sin pausa. Asegúrese de estar listo antes de presionar el botón. El examen no puede reiniciarse una vez comenzado.
       </div>
 
       <!-- Temas y tiempo del caso -->
-      <div style="background:var(--gray-50);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:22px;font-size: 15px;color:#000;">
-        <div style="font-weight:700;color:var(--navy);margin-bottom:8px;">📋 Resumen de su sesión</div>
+      <div class="ins-sum">
+        <div class="t">📋 Resumen de su sesión</div>
         <div id="instr-summary" style="line-height:1.8;"></div>
       </div>
 
@@ -1530,12 +1818,12 @@ const THEORY_BANK = {
    "q": "Tras una preoxigenación completa con FiO₂ 1.0, ¿cuál es la composición alveolar y la reserva aproximada de O₂?",
    "opts": [
     "N₂ ≈ 79%, O₂ ≈ 21%, reserva ≈ 450–500 mL",
-    "N₂ <5%, O₂ >90%, reserva ≈ 2.500–3.000 mL",
+    "N₂ <5%, O₂ >90%, reserva ≈ 2.500 mL",
     "N₂ ≈ 50%, O₂ ≈ 50%, reserva ≈ 1.000 mL",
     "N₂ <5%, O₂ >90%, reserva ≈ 5.000–6.000 mL"
    ],
    "ans": 1,
-   "exp": "Preoxigenación completa: N₂ <5%, O₂ >90% (≈ 2.500–3.000 mL), reserva ~6 veces mayor que en aire ambiente."
+   "exp": "Guía, preoxigenación: con FiO₂ 100% durante 3–5 min (u 8 respiraciones profundas en 60 s) el N₂ alveolar baja de 79% a < 5% y la reserva de O₂ sube de ≈ 450 a ≈ 2.500 mL. Meta: FeO₂ ≥ 0.9."
   },
   {
    "q": "Según DAS 2025, ¿cómo debe hacerse la oxigenación apneica?",
@@ -2641,7 +2929,7 @@ const THEORY_BANK = {
     "Es un gas a temperatura ambiente, como el óxido nitroso"
    ],
    "ans": 1,
-   "exp": "El desflurano ebulle a ≈ 23 °C (presión de vapor 669 mmHg): el vaporizador lo calienta a 39 °C y lo presuriza a ≈ 2 atm."
+   "exp": "Guía: el desflurano hierve a ≈ 23 °C, por eso necesita un vaporizador calentado (39 °C) y presurizado; el sevoflurano y el isoflurano usan vaporizadores convencionales."
   },
   {
    "q": "¿Qué agente es de elección para la inducción inhalatoria y por qué?",
@@ -2891,12 +3179,12 @@ const THEORY_BANK = {
    "q": "¿Dónde se localiza la zona gatillo quimiorreceptora (ZGQ) y por qué responde a opioides y toxinas circulantes?",
    "opts": [
     "Núcleo del tracto solitario, con BHE muy permeable",
-    "Área postrema, sin BHE (capilares fenestrados)",
+    "Área postrema, sin barrera hematoencefálica",
     "Hipotálamo lateral, con receptores μ en la BHE",
     "Cerebelo, por su conexión directa con el vestíbulo"
    ],
    "ans": 1,
-   "exp": "La ZGQ está en el área postrema (piso del IV ventrículo), que carece de barrera hematoencefálica: sus capilares fenestrados le permiten detectar fármacos y toxinas."
+   "exp": "Guía: el área postrema (donde está la ZGQ) carece de barrera hematoencefálica y «detecta» tóxicos en la sangre; opioides y agentes inhalados la activan directamente. Sus receptores D₂, 5-HT₃ y NK-1 son los blancos de los antieméticos."
   },
   {
    "q": "¿Cuál es el receptor principal de la NVPO por agentes inhalados y qué fármacos lo bloquean?",
@@ -3341,7 +3629,7 @@ const THEORY_BANK = {
    "exp": "Insulina basal: dar el <strong>75–80 %<\/strong> de la dosis la noche anterior (30 × 0.75–0.80 = 22.5–24 U)."
   },
   {
-   "q": "Paciente con prednisolona 10 mg/día hace 1 año, para cirugía mayor. Según la Association of Anaesthetists 2020, la cobertura de estrés es:",
+   "q": "Paciente con prednisolona 10 mg/día hace 1 año, para cirugía mayor. Según la guía (glucocorticoides perioperatorios, Anaesthesia 2020), la cobertura de estrés es:",
    "opts": [
     "Hidrocortisona 50 mg IV y luego 100 mg/24 h",
     "Dexametasona 4 mg IV y luego 8 mg en 24 h",
@@ -6353,6 +6641,2260 @@ const CASE_BANK = {
   }
  ]
 };
+
+// ─── TALLERES ADICIONALES SOLO PARA INTERNOS ───
+TOPICS.push(...[{"id": "reg", "label": "Anestesia Regional y Neuroaxial", "week": 0, "interno": true}, {"id": "obs", "label": "Anestesia Obstétrica y Cesárea", "week": 0, "interno": true}, {"id": "rcp", "label": "Reanimación Cardiopulmonar", "week": 0, "interno": true}, {"id": "fcv", "label": "Fisiología Cardiovascular", "week": 0, "interno": true}]);
+Object.assign(THEORY_BANK, {
+ "reg": [
+  {
+   "q": "¿En qué nivel termina habitualmente la médula espinal (cono medular) en el adulto?",
+   "opts": [
+    "Entre T10 y T11",
+    "Entre L1 y L2",
+    "Entre L4 y L5",
+    "A nivel de S2"
+   ],
+   "ans": 1,
+   "exp": "En el adulto el cono medular termina en L1–L2 (en el neonato, alrededor de L3); por eso la punción raquídea se hace por debajo de L2–L3. El saco dural termina en S2."
+  },
+  {
+   "q": "La línea que une las crestas ilíacas (línea de Tuffier) cruza la columna aproximadamente en:",
+   "opts": [
+    "El espacio T12–L1",
+    "La apófisis espinosa de L1",
+    "L4 o el espacio L4–L5",
+    "El hiato sacro (S4–S5)"
+   ],
+   "ans": 2,
+   "exp": "La línea de Tuffier cruza L4 o el espacio L4–L5; es un reparo útil pero impreciso: con frecuencia el nivel real es uno más alto que el estimado."
+  },
+  {
+   "q": "Durante una punción raquídea por la línea media, ¿en qué orden atraviesa la aguja las estructuras?",
+   "opts": [
+    "Piel, ligamento amarillo, supraespinoso, interespinoso, duramadre",
+    "Piel, supraespinoso, interespinoso, ligamento amarillo, espacio epidural, duramadre",
+    "Piel, interespinoso, supraespinoso, espacio epidural, ligamento amarillo",
+    "Piel, ligamento longitudinal posterior, ligamento amarillo, duramadre"
+   ],
+   "ans": 1,
+   "exp": "Orden por la línea media: piel → tejido subcutáneo → ligamento supraespinoso → interespinoso → ligamento amarillo → espacio epidural → duramadre-aracnoides → LCR."
+  },
+  {
+   "q": "¿Cuál es la única contraindicación ABSOLUTA para la anestesia neuroaxial entre estas opciones?",
+   "opts": [
+    "Estenosis aórtica leve",
+    "Cirugía previa de columna",
+    "Rechazo del paciente",
+    "Cefalea pospunción en un parto anterior"
+   ],
+   "ans": 2,
+   "exp": "El rechazo del paciente es contraindicación absoluta, igual que la infección en el sitio de punción. Las demás son relativas y se individualizan."
+  },
+  {
+   "q": "¿Cuál es el primer efecto fisiológico que explica la hipotensión tras una anestesia raquídea?",
+   "opts": [
+    "Depresión miocárdica directa por el anestésico local",
+    "Bloqueo simpático: vasodilatación y menor retorno",
+    "Liberación de histamina inducida por el anestésico",
+    "Bloqueo vagal con taquicardia compensadora inicial"
+   ],
+   "ans": 1,
+   "exp": "El bloqueo simpático produce vasodilatación arterial y, sobre todo, venosa → cae el retorno venoso y el gasto cardíaco. Si el bloqueo alcanza T1–T4 se bloquean además las fibras cardioaceleradoras (bradicardia)."
+  },
+  {
+   "q": "Un bloqueo que alcanza el dermatoma T4 corresponde, en la superficie, a:",
+   "opts": [
+    "El ombligo",
+    "La apófisis xifoides",
+    "La línea de los pezones",
+    "La clavícula"
+   ],
+   "ans": 2,
+   "exp": "Reparos: T4 pezones, T6 xifoides, T10 ombligo, L1 ligamento inguinal. La cesárea requiere bloqueo sensitivo hasta T4."
+  },
+  {
+   "q": "La raquianestesia con bupivacaína hiperbara se distribuye principalmente según:",
+   "opts": [
+    "Gravedad, posición y volumen de LCR",
+    "Peso corporal y talla del paciente",
+    "Velocidad de inyección exclusivamente",
+    "Proteínas plasmáticas y albúmina"
+   ],
+   "ans": 0,
+   "exp": "La solución hiperbara (más densa que el LCR) se desplaza por gravedad: la posición del paciente y las curvas de la columna determinan la altura del bloqueo, junto con la dosis y el volumen de LCR."
+  },
+  {
+   "q": "¿Qué se pretende detectar con la dosis de prueba epidural (lidocaína 1.5% 3 mL + epinefrina 1:200.000)?",
+   "opts": [
+    "La altura exacta del bloqueo sensitivo",
+    "Catéter intravascular o intratecal",
+    "Una alergia verdadera al anestésico",
+    "La respuesta individual al vasopresor"
+   ],
+   "ans": 1,
+   "exp": "Guía, Sección 13: intratecal → bloqueo sensitivo y motor evidente en 3–5 min (45 mg de lidocaína); intravascular → ↑ FC ≥ 20 lpm o ↑ PAS ≥ 15 mmHg en < 1 min (15 µg de epinefrina)."
+  },
+  {
+   "q": "Cefalea postural incapacitante 2 días después de una punción dural, que no mejora con analgesia y cafeína. ¿Tratamiento indicado?",
+   "opts": [
+    "Punción lumbar diagnóstica",
+    "Parche hemático epidural de 15–20 mL",
+    "Bloqueo del ganglio esfenopalatino",
+    "Hidrocortisona y gabapentina"
+   ],
+   "ans": 1,
+   "exp": "Guía, Sección 18 (multisociedad 2023): parche hemático si limita las actividades o hay síntomas neurológicos; más eficaz después de 24–48 h. El bloqueo esfenopalatino, la hidrocortisona y la gabapentina no se recomiendan de rutina."
+  },
+  {
+   "q": "¿Qué tipo de aguja raquídea reduce más la cefalea pospunción?",
+   "opts": [
+    "Bisel cortante (Quincke) de calibre grueso 18–20 G",
+    "Punta de lápiz (Whitacre) de calibre fino",
+    "Aguja epidural Tuohy 16 G sin estilete",
+    "El tipo de aguja no influye en la incidencia"
+   ],
+   "ans": 1,
+   "exp": "Las agujas atraumáticas de punta de lápiz y de calibre fino (25–27 G) separan las fibras durales en vez de cortarlas y reducen la cefalea."
+  },
+  {
+   "q": "Según ASRA 2025, ¿cuánto debe pasar entre la última dosis BAJA de enoxaparina (40 mg/día) y la punción neuroaxial?",
+   "opts": [
+    "4–6 horas",
+    "12 horas",
+    "24 horas",
+    "72 horas"
+   ],
+   "ans": 1,
+   "exp": "Guía, Sección 17 (ASRA 2025): HBPM dosis baja 12 h; dosis alta (1 mg/kg c/12 h) 24 h. La 5.ª edición cambia «profiláctica/terapéutica» por «dosis baja/dosis alta»."
+  },
+  {
+   "q": "Paciente con apixabán o rivaroxabán en DOSIS ALTA (anticoagulación plena). Según ASRA 2025, ¿cuánto se suspende antes del neuroeje?",
+   "opts": [
+    "12 horas",
+    "24 horas",
+    "72 horas",
+    "No requiere suspensión"
+   ],
+   "ans": 2,
+   "exp": "Guía, Sección 17: apixabán/rivaroxabán/edoxabán dosis alta → 72 h y no mantener catéter. En dosis baja: apixabán 36 h, rivaroxabán 24 h."
+  },
+  {
+   "q": "¿Cuál de estos antiagregantes NO obliga a suspender antes de una anestesia raquídea si se usa solo?",
+   "opts": [
+    "Clopidogrel",
+    "Ticagrelor",
+    "Ácido acetilsalicílico",
+    "Prasugrel"
+   ],
+   "ans": 2,
+   "exp": "La aspirina sola no aumenta de forma significativa el riesgo de hematoma espinal. Clopidogrel se suspende 5–7 días, ticagrelor 5 días y prasugrel 7–10 días."
+  },
+  {
+   "q": "¿Cuál es la dosis máxima habitual de bupivacaína SIN epinefrina?",
+   "opts": [
+    "1 mg/kg",
+    "2.5 mg/kg",
+    "4.5 mg/kg",
+    "7 mg/kg"
+   ],
+   "ans": 1,
+   "exp": "Bupivacaína: máximo ≈ 2.5 mg/kg sin epinefrina (≈ 3 mg/kg con epinefrina). Lidocaína: 4.5 mg/kg sin epinefrina y 7 mg/kg con epinefrina."
+  },
+  {
+   "q": "Primeros signos de toxicidad sistémica por anestésicos locales (LAST) en el paciente despierto:",
+   "opts": [
+    "Bradicardia extrema seguida de asistolia",
+    "Sabor metálico, tinnitus y parestesias",
+    "Broncoespasmo, urticaria y prurito generalizado",
+    "Hipertermia, rigidez muscular y taquicardia"
+   ],
+   "ans": 1,
+   "exp": "Los síntomas neurológicos (sabor metálico, tinnitus, adormecimiento peribucal, agitación) suelen preceder a las convulsiones y a la toxicidad cardiovascular. Con bupivacaína el colapso cardiovascular puede ser la primera manifestación."
+  },
+  {
+   "q": "Tratamiento específico de la toxicidad sistémica grave por anestésicos locales en un adulto de 80 kg:",
+   "opts": [
+    "Emulsión lipídica 20%: bolo de 100 mL e infusión",
+    "Naloxona 0.4 mg IV repetida cada 2 minutos",
+    "Flumazenil 0.2 mg IV repetido cada minuto",
+    "Dantroleno 2.5 mg/kg IV repetido hasta 10 mg/kg"
+   ],
+   "ans": 0,
+   "exp": "Guía, Sección 20 (ASRA 2020): > 70 kg → bolo de 100 mL en 2–3 min + 200–250 mL en 15–20 min; ≤ 70 kg → 1.5 mL/kg (peso magro) + 0.25 mL/kg/min. Dosis máxima ≈ 12 mL/kg."
+  },
+  {
+   "q": "En la reanimación de un paro por toxicidad de anestésicos locales, la epinefrina se usa:",
+   "opts": [
+    "En dosis altas: 5 mg cada 2 minutos",
+    "En dosis reducidas: ≤ 1 mcg/kg",
+    "Nunca, está contraindicada",
+    "Solo en infusión de vasopresina"
+   ],
+   "ans": 1,
+   "exp": "ASRA recomienda bolos pequeños de epinefrina (≤ 1 mcg/kg) y evitar vasopresina, bloqueadores de calcio, betabloqueadores y otros anestésicos locales; la emulsión lipídica es la base del tratamiento."
+  },
+  {
+   "q": "Bloqueo diferencial: respecto al nivel sensitivo, el bloqueo simpático suele quedar:",
+   "opts": [
+    "2–6 segmentos por ENCIMA del sensitivo",
+    "Exactamente al mismo nivel del sensitivo",
+    "2 segmentos por DEBAJO del sensitivo",
+    "Solo en los dermatomas sacros"
+   ],
+   "ans": 0,
+   "exp": "Guía, Sección 4: las fibras B (simpáticas) se bloquean primero; el simpático llega 2–6 segmentos por encima del sensitivo y el motor queda ≈ 2 por debajo. Por eso puede haber hipotensión con un nivel sensitivo «aparentemente» bajo."
+  },
+  {
+   "q": "¿Cuál es el principal determinante INDIVIDUAL (no modificable) de la altura de una espinal?",
+   "opts": [
+    "El peso corporal del paciente",
+    "El volumen de LCR lumbosacro",
+    "La velocidad de inyección",
+    "El barbotaje de la solución"
+   ],
+   "ans": 1,
+   "exp": "Guía, Secciones 3 y 7: el volumen de LCR lumbosacro es el principal determinante individual; menor volumen (embarazo, obesidad, ↑ presión abdominal) → bloqueo más alto. Junto con baricidad/posición y dosis, son los factores mayores."
+  },
+  {
+   "q": "Epidural lumbar para bloquear 10 segmentos (T10 a S2). Con la regla de 1–2 mL por segmento, ¿qué volumen es razonable?",
+   "opts": [
+    "3–5 mL en un solo bolo rápido",
+    "≈ 15 mL en bolos de 5 mL",
+    "40 mL en un solo bolo lento",
+    "1 mL por cada 10 kg de peso real"
+   ],
+   "ans": 1,
+   "exp": "Guía, Sección 14: volumen ≈ segmentos × 1–2 mL (lumbar): 10 × 1.5 = 15 mL, en bolos de 5 mL aspirando antes. Reducir en ancianos, embarazadas y obesos."
+  },
+  {
+   "q": "Paciente con raquídea alta: náuseas, dificultad para hablar y manos débiles. ¿Qué nivel sugiere la debilidad en las manos?",
+   "opts": [
+    "Bloqueo sacro con retención urinaria",
+    "Bloqueo cervical bajo (C6–C8)",
+    "Bloqueo lumbar aislado sin nivel torácico",
+    "Bloqueo simpático exclusivo sin motor"
+   ],
+   "ans": 1,
+   "exp": "La debilidad de manos y brazos indica bloqueo cervical bajo (C6–C8); el siguiente paso puede ser el compromiso frénico (C3–C5) con insuficiencia respiratoria: soporte de vía aérea y vasopresores."
+  },
+  {
+   "q": "Escala de Bromage: un paciente que solo puede mover los pies (no flexiona rodillas) tiene:",
+   "opts": [
+    "Bromage 0",
+    "Bromage 1",
+    "Bromage 2",
+    "Bromage 3"
+   ],
+   "ans": 2,
+   "exp": "Bromage: 0 sin bloqueo motor; 1 no eleva la pierna extendida pero flexiona rodillas; 2 no flexiona rodillas, mueve pies; 3 bloqueo motor completo."
+  },
+  {
+   "q": "Concentración de epinefrina 1:200.000 equivale a:",
+   "opts": [
+    "5 mcg/mL",
+    "10 mcg/mL",
+    "50 mcg/mL",
+    "200 mcg/mL"
+   ],
+   "ans": 0,
+   "exp": "1:200.000 = 1 g en 200.000 mL = 5 mcg/mL. Se usa en la dosis de prueba y para prolongar el bloqueo y reducir la absorción sistémica."
+  },
+  {
+   "q": "¿Qué diferencia principal hay entre la anestesia raquídea y la epidural?",
+   "opts": [
+    "La raquídea usa más volumen y tarda más en actuar",
+    "Raquídea: poca dosis, inicio rápido; epidural titulable",
+    "La epidural siempre produce bloqueo motor completo y denso",
+    "La epidural solo se puede aplicar por debajo de L3–L4"
+   ],
+   "ans": 1,
+   "exp": "Raquídea: dosis pequeña intratecal, inicio en minutos, bloqueo denso. Epidural: mayor volumen, inicio más lento, segmentaria y titulable por catéter (analgesia prolongada)."
+  }
+ ],
+ "obs": [
+  {
+   "q": "¿Cuál de estos cambios respiratorios es propio del embarazo a término?",
+   "opts": [
+    "Aumento de la CRF por elevación diafragmática",
+    "CRF ≈ 20% menor y consumo de O₂ aumentado",
+    "Ventilación minuto disminuida por la progesterona",
+    "PaCO₂ normal de 45 mmHg por retención de CO₂"
+   ],
+   "ans": 1,
+   "exp": "La CRF cae ≈ 20% y el consumo de O₂ aumenta: la embarazada se desatura muy rápido en apnea. La ventilación minuto aumenta ≈ 45% y la PaCO₂ normal es ≈ 30 mmHg."
+  },
+  {
+   "q": "La compresión aortocava se previene durante la cesárea con:",
+   "opts": [
+    "Trendelenburg con elevación de piernas",
+    "Útero desplazado a la izquierda (≈ 15°)",
+    "Decúbito prono durante la cirugía",
+    "Piernas elevadas a 90° desde el inicio"
+   ],
+   "ans": 1,
+   "exp": "Desde la semana 20 el útero comprime la vena cava (y la aorta) en supino. Se desplaza el útero hacia la izquierda con una cuña bajo la cadera derecha."
+  },
+  {
+   "q": "Para la cesárea, el bloqueo sensitivo debe alcanzar:",
+   "opts": [
+    "T10",
+    "T8",
+    "T6",
+    "T4"
+   ],
+   "ans": 3,
+   "exp": "Se requiere un nivel T4 (pezones) para evitar el dolor visceral durante la exteriorización y la manipulación peritoneal."
+  },
+  {
+   "q": "Dosis habitual de bupivacaína hiperbara 0.5% intratecal para cesárea en una paciente de talla promedio:",
+   "opts": [
+    "2–4 mg",
+    "10–12 mg",
+    "20–25 mg",
+    "40 mg"
+   ],
+   "ans": 1,
+   "exp": "Para cesárea se usan ≈ 10–12 mg de bupivacaína hiperbara 0.5% (2–2.4 mL), habitualmente con fentanilo 10–25 mcg y morfina 50–150 mcg intratecal."
+  },
+  {
+   "q": "¿Por qué se agrega morfina intratecal (≈ 100 mcg) en la raquídea para cesárea?",
+   "opts": [
+    "Para prolongar el bloqueo motor de las piernas",
+    "Para analgesia posoperatoria de 12–24 h",
+    "Para prevenir la hipotensión tras la punción",
+    "Para acelerar el inicio del bloqueo sensitivo"
+   ],
+   "ans": 1,
+   "exp": "La morfina intratecal da analgesia posoperatoria prolongada (12–24 h). Requiere vigilancia de la frecuencia respiratoria y la sedación por el riesgo de depresión respiratoria tardía."
+  },
+  {
+   "q": "Según el consenso internacional, ¿cuál es el vasopresor de primera línea para la hipotensión por raquídea en cesárea?",
+   "opts": [
+    "Efedrina en bolos de dosis alta repetidos",
+    "Fenilefrina en infusión profiláctica",
+    "Dopamina en infusión continua a 10 mcg/kg/min",
+    "Vasopresina en bolo único al iniciar"
+   ],
+   "ans": 1,
+   "exp": "Consenso internacional (Kinsella, 2018): fenilefrina en infusión profiláctica (inicio 25–50 mcg/min) titulada para mantener la PAS ≥ 90% de la basal; la norepinefrina es una alternativa. La efedrina se asocia a acidosis fetal."
+  },
+  {
+   "q": "Meta de presión arterial tras la raquídea para cesárea:",
+   "opts": [
+    "PAS ≥ 90% de la basal, evitando < 80%",
+    "PAS < 80 mmHg es aceptable",
+    "PAM > 120 mmHg",
+    "No hay meta: se trata solo si hay síntomas"
+   ],
+   "ans": 0,
+   "exp": "Se busca mantener la PAS ≥ 90% de la basal y tratar cualquier caída por debajo del 80%; la hipotensión reduce el flujo uteroplacentario, que no tiene autorregulación."
+  },
+  {
+   "q": "Profilaxis de aspiración antes de una cesárea de urgencia con anestesia general:",
+   "opts": [
+    "Citrato de sodio, anti-H₂ y metoclopramida",
+    "Solo ayuno de 2 horas para líquidos claros",
+    "Atropina IM para reducir las secreciones",
+    "Ondansetrón IV como único medicamento"
+   ],
+   "ans": 0,
+   "exp": "Se usa un antiácido no particulado (citrato de sodio 0.3 M, 30 mL), un antagonista H₂ (ranitidina/famotidina) y metoclopramida para aumentar el pH y vaciar el estómago."
+  },
+  {
+   "q": "Anestesia general para cesárea: ¿qué técnica de inducción se usa?",
+   "opts": [
+    "Inducción inhalatoria con sevoflurano al 8%",
+    "Secuencia rápida tras preoxigenación",
+    "Máscara laríngea sin relajante muscular",
+    "Inducción lenta con opioide en dosis altas"
+   ],
+   "ans": 1,
+   "exp": "La gestante es estómago lleno y vía aérea difícil potencial: preoxigenación (meta EtO₂ ≥ 0.9), inductor (propofol 2–2.5 mg/kg) y rocuronio 1–1.2 mg/kg o succinilcolina, con tubo de menor calibre (6.0–7.0)."
+  },
+  {
+   "q": "Cesárea electiva: dosis de oxitocina recomendada tras el nacimiento:",
+   "opts": [
+    "10 UI en bolo rápido y repetir a los 5 min",
+    "1 UI lento y luego 2.5–7.5 UI/h",
+    "40 UI en bolo único al extraer al bebé",
+    "No se usa oxitocina en la cesárea electiva"
+   ],
+   "ans": 1,
+   "exp": "Consenso internacional (Heesen, 2019): en cesárea electiva 1 UI en bolo lento y luego infusión de 2.5–7.5 UI/h; en cesárea intraparto 3 UI. Bolos grandes y rápidos causan hipotensión y taquicardia."
+  },
+  {
+   "q": "Hemorragia posparto: ¿cuál es la dosis de ácido tranexámico y su ventana?",
+   "opts": [
+    "1 g IV antes de 3 h; repetir si sigue",
+    "100 mg IV en cualquier momento del día",
+    "4 g IV, solo después de las 24 horas",
+    "10 mg/kg vía oral cada 8 horas"
+   ],
+   "ans": 0,
+   "exp": "WOMAN y OMS: ácido tranexámico 1 g IV en 10 min dentro de las 3 h del parto; segunda dosis de 1 g si el sangrado continúa a los 30 min. Después de 3 h no hay beneficio."
+  },
+  {
+   "q": "¿Qué uterotónico está contraindicado en la paciente con preeclampsia?",
+   "opts": [
+    "Oxitocina",
+    "Metilergonovina",
+    "Misoprostol",
+    "Carbetocina"
+   ],
+   "ans": 1,
+   "exp": "La metilergonovina (0.2 mg IM) produce vasoconstricción e hipertensión: contraindicada en preeclampsia e hipertensión. El carboprost está contraindicado en asma."
+  },
+  {
+   "q": "Dosis de impregnación del sulfato de magnesio en preeclampsia severa:",
+   "opts": [
+    "4–6 g IV en 20 minutos",
+    "0.5 g IV en bolo rápido",
+    "20 g IV pasados en 1 hora",
+    "2 g IM en dosis única diaria"
+   ],
+   "ans": 0,
+   "exp": "Impregnación de 4–6 g IV en 15–20 min y mantenimiento de 1–2 g/h, vigilando reflejos rotulianos, frecuencia respiratoria y diuresis."
+  },
+  {
+   "q": "Signo de alarma de intoxicación por magnesio que aparece ANTES de la depresión respiratoria:",
+   "opts": [
+    "Pérdida del reflejo rotuliano",
+    "Taquicardia sinusal sostenida",
+    "Hipertermia mayor de 39 °C",
+    "Midriasis bilateral reactiva"
+   ],
+   "ans": 0,
+   "exp": "La pérdida del reflejo rotuliano aparece antes que la depresión respiratoria y el paro. El antídoto es el gluconato de calcio al 10%, 10 mL (1 g) IV."
+  },
+  {
+   "q": "Efecto anestésico importante del sulfato de magnesio:",
+   "opts": [
+    "Antagoniza a los relajantes musculares (más dosis)",
+    "Potencia los relajantes no despolarizantes",
+    "Aumenta la CAM de los halogenados inhalados",
+    "Desencadena hipertermia maligna en susceptibles"
+   ],
+   "ans": 1,
+   "exp": "El magnesio potencia los relajantes no despolarizantes: dosificar con monitoreo neuromuscular (TOF) y reversión adecuada."
+  },
+  {
+   "q": "Crisis hipertensiva en preeclampsia (≥ 160/110 mmHg sostenida). Fármaco de primera línea:",
+   "opts": [
+    "Labetalol IV o nifedipino oral",
+    "Nitroprusiato como primera opción",
+    "Enalapril IV",
+    "Furosemida en bolo"
+   ],
+   "ans": 0,
+   "exp": "Se trata en 30–60 min con labetalol IV (20 mg, escalando), nifedipino oral de liberación inmediata o hidralazina IV. Los IECA están contraindicados en el embarazo."
+  },
+  {
+   "q": "Recuento de plaquetas por encima del cual la neuroaxial en obstetricia se considera de bajo riesgo (consenso SOAP):",
+   "opts": [
+    "≥ 20.000/mm³",
+    "≥ 50.000/mm³",
+    "≥ 70.000/mm³",
+    "≥ 150.000/mm³"
+   ],
+   "ans": 2,
+   "exp": "Consenso SOAP 2021: con plaquetas ≥ 70.000/mm³ estables, sin otra coagulopatía ni antiagregantes, el riesgo de hematoma epidural es bajo."
+  },
+  {
+   "q": "Cesárea categoría 1 (bradicardia fetal sostenida). ¿Cuál es el tiempo objetivo decisión–nacimiento?",
+   "opts": [
+    "≤ 30 minutos",
+    "≤ 75 minutos",
+    "≤ 2 horas",
+    "Según disponibilidad de quirófano"
+   ],
+   "ans": 0,
+   "exp": "Guía, Sección 4 (NICE/RCOG): categoría 1 ≤ 30 min (extender la epidural que funciona, espinal rápida o general si no hay tiempo); categoría 2 ≤ 75 min."
+  },
+  {
+   "q": "¿Cuál de estos cambios hematológicos es normal en el embarazo?",
+   "opts": [
+    "Disminución de los factores de coagulación",
+    "Hipercoagulabilidad y anemia dilucional",
+    "Volumen sanguíneo sin cambios significativos",
+    "Trombocitosis marcada por encima de 600.000"
+   ],
+   "ans": 1,
+   "exp": "El volumen plasmático aumenta ≈ 40–50% más que la masa eritrocitaria (anemia dilucional) y aumentan el fibrinógeno y varios factores: estado de hipercoagulabilidad."
+  },
+  {
+   "q": "La CAM de los halogenados en la gestante a término:",
+   "opts": [
+    "Aumenta cerca de 40%",
+    "Disminuye ≈ 25–40%",
+    "No cambia en el embarazo",
+    "Se duplica al término"
+   ],
+   "ans": 1,
+   "exp": "Guía, Sección 3: la CAM disminuye ≈ 25–40% (progesterona, endorfinas) y los requerimientos de anestésico local neuroaxial ≈ 25%."
+  },
+  {
+   "q": "Paro cardíaco materno con útero a la altura del ombligo o por encima. Además de RCP de alta calidad, se debe:",
+   "opts": [
+    "Esperar 15 min antes de pensar en cesárea",
+    "Desplazar el útero y cesárea a los 4–5 min",
+    "Trendelenburg y elevar las piernas",
+    "Pausar compresiones para monitoreo fetal"
+   ],
+   "ans": 1,
+   "exp": "AHA: desplazamiento uterino manual a la izquierda durante la RCP y cesárea perimortem (histerotomía de reanimación) si no hay retorno de la circulación en ≈ 4 min, con extracción idealmente a los 5 min."
+  },
+  {
+   "q": "Según la definición OMS/FIGO de octubre de 2025, ¿cuándo se inicia el tratamiento de primera respuesta de la HPP?",
+   "opts": [
+    "Solo con pérdida ≥ 1000 mL en cesárea",
+    "Pérdida ≥ 300 mL con signo anormal o ≥ 500 mL",
+    "Cuando la Hb baje de 11 g/dL",
+    "Cuando la PAS sea < 70 mmHg"
+   ],
+   "ans": 1,
+   "exp": "Guía, Sección 15: pérdida ≥ 300 mL con FC > 100, IC > 1, PAS < 100 o PAD < 60, o pérdida ≥ 500 mL, lo que ocurra primero, en las 24 h; medición objetiva."
+  },
+  {
+   "q": "Puérpera con FC 120 lpm y PAS 80 mmHg. ¿Cuál es su índice de choque y qué indica?",
+   "opts": [
+    "0.67: normal en el posparto inmediato",
+    "1.5: HPP con signos; transfundir",
+    "0.9: límite superior de lo normal",
+    "2.5: solo refleja dolor y ansiedad"
+   ],
+   "ans": 1,
+   "exp": "Guía, Sección 16: IC = FC ÷ PAS = 120 ÷ 80 = 1.5. Normal 0.7–0.9; IC > 1 → criterio de HPP e indicación de transfundir; ≥ 1.4 se asocia a transfusión masiva."
+  },
+  {
+   "q": "Vía aérea en la gestante: ¿por qué es más difícil?",
+   "opts": [
+    "Menor edema de mucosas y glotis más amplia",
+    "Edema de mucosa, menor CRF y aspiración",
+    "Mayor tiempo de apnea segura que la no gestante",
+    "Menor consumo de O₂ y desaturación lenta"
+   ],
+   "ans": 1,
+   "exp": "Edema y friabilidad de mucosas (sangrado), aumento de mamas, aumento de peso, menor CRF y mayor consumo de O₂ (desaturación rápida) y riesgo de aspiración: guía OAA/DAS de vía aérea difícil obstétrica."
+  }
+ ],
+ "rcp": [
+  {
+   "q": "En el adulto, ¿qué frecuencia y profundidad de compresiones recomienda la AHA?",
+   "opts": [
+    "80–100/min y 3–4 cm",
+    "100–120/min y 5–6 cm",
+    "120–140/min y 7 cm",
+    "60/min y 5 cm"
+   ],
+   "ans": 1,
+   "exp": "Compresiones de 100–120 por minuto, profundidad de 5–6 cm, permitiendo la expansión completa del tórax y minimizando las interrupciones (< 10 s)."
+  },
+  {
+   "q": "Relación compresión-ventilación en el adulto SIN vía aérea avanzada:",
+   "opts": [
+    "15:2",
+    "30:2",
+    "5:1",
+    "Ventilación continua sin pausas"
+   ],
+   "ans": 1,
+   "exp": "Sin vía aérea avanzada: 30 compresiones por 2 ventilaciones. Con vía aérea avanzada: compresiones continuas y 1 ventilación cada 6 s (10/min)."
+  },
+  {
+   "q": "¿Qué ritmos son desfibrilables?",
+   "opts": [
+    "Asistolia y actividad eléctrica sin pulso",
+    "Fibrilación y TV sin pulso",
+    "Bradicardia sinusal y bloqueo AV completo",
+    "Todos los ritmos de paro por igual"
+   ],
+   "ans": 1,
+   "exp": "Solo la FV y la TV sin pulso son desfibrilables. La asistolia y la AESP se tratan con RCP, epinefrina temprana y búsqueda de causas reversibles (H y T)."
+  },
+  {
+   "q": "Dosis de epinefrina en el paro cardíaco del adulto:",
+   "opts": [
+    "0.1 mg IV cada 10 minutos",
+    "1 mg IV/IO cada 3–5 minutos",
+    "5 mg IV en un bolo único",
+    "1 mg IM cada 15 minutos"
+   ],
+   "ans": 1,
+   "exp": "Epinefrina 1 mg IV/IO cada 3–5 min. En ritmos no desfibrilables se administra lo antes posible; en FV/TV sin pulso, después de las primeras descargas."
+  },
+  {
+   "q": "Antiarrítmico de primera dosis en FV/TV sin pulso refractaria a la desfibrilación:",
+   "opts": [
+    "Adenosina 6 mg y luego 12 mg IV rápida",
+    "Amiodarona 300 mg, luego 150 mg",
+    "Atropina 1 mg cada 3–5 min hasta 3 mg",
+    "Verapamilo 5 mg IV lento en 2 minutos"
+   ],
+   "ans": 1,
+   "exp": "Amiodarona 300 mg IV/IO y luego 150 mg; alternativa: lidocaína 1–1.5 mg/kg y luego 0.5–0.75 mg/kg."
+  },
+  {
+   "q": "Energía inicial de desfibrilación con un desfibrilador bifásico en el adulto:",
+   "opts": [
+    "2 J/kg como en el niño",
+    "50 J para no lesionar el miocardio",
+    "120–200 J según el fabricante",
+    "360 J siempre, sin importar el equipo"
+   ],
+   "ans": 2,
+   "exp": "Bifásico: 120–200 J según el fabricante (si se desconoce, usar la energía máxima disponible). Monofásico: 360 J."
+  },
+  {
+   "q": "Durante la RCP, una EtCO₂ que sube bruscamente de 12 a 40 mmHg sugiere:",
+   "opts": [
+    "Intubación esofágica no detectada",
+    "Retorno de la circulación espontánea",
+    "Hiperventilación por el reanimador",
+    "Fallo o desconexión del capnógrafo"
+   ],
+   "ans": 1,
+   "exp": "La EtCO₂ refleja el gasto cardíaco durante la RCP; un aumento brusco y sostenido (≈ > 35–40 mmHg) sugiere RCE. Una EtCO₂ < 10 mmHg indica compresiones de mala calidad."
+  },
+  {
+   "q": "¿Cuál NO es una de las causas reversibles (H y T) del paro?",
+   "opts": [
+    "Hipovolemia",
+    "Hipopotasemia/hiperpotasemia",
+    "Hiperglucemia",
+    "Neumotórax a tensión"
+   ],
+   "ans": 2,
+   "exp": "H: hipovolemia, hipoxia, hidrogeniones (acidosis), hipo/hiperpotasemia, hipotermia. T: neumotórax a tensión, taponamiento, tóxicos, trombosis pulmonar y coronaria."
+  },
+  {
+   "q": "Bradicardia sintomática con hipotensión en el adulto. Primer fármaco:",
+   "opts": [
+    "Adenosina 6 mg en bolo rápido con flush",
+    "Atropina 1 mg, repetir hasta 3 mg",
+    "Amiodarona 150 mg IV en 10 minutos",
+    "Metoprolol 5 mg IV lento cada 5 min"
+   ],
+   "ans": 1,
+   "exp": "AHA: atropina 1 mg IV cada 3–5 min hasta 3 mg. Si no responde: marcapasos transcutáneo o infusión de dopamina (5–20 mcg/kg/min) o epinefrina (2–10 mcg/min)."
+  },
+  {
+   "q": "Taquicardia de complejo estrecho, regular, en un paciente ESTABLE. Tras las maniobras vagales:",
+   "opts": [
+    "Cardioversión eléctrica de inmediato",
+    "Adenosina 6 mg rápida; luego 12 mg",
+    "Amiodarona 300 mg en bolo directo",
+    "Desfibrilación no sincronizada"
+   ],
+   "ans": 1,
+   "exp": "Guía, Sección 7: adenosina 6 mg IV rápida con bolo de 20 mL de SSN; si no cede, 12 mg. Inestable → cardioversión sincronizada (QRS estrecho regular 50–100 J)."
+  },
+  {
+   "q": "Taquicardia con pulso e INESTABILIDAD (hipotensión, alteración de conciencia). Tratamiento:",
+   "opts": [
+    "Adenosina 6 mg IV rápida",
+    "Cardioversión sincronizada",
+    "Observación y monitoreo",
+    "Betabloqueador por vía oral"
+   ],
+   "ans": 1,
+   "exp": "Una taquiarritmia con pulso e inestabilidad se trata con cardioversión sincronizada (sedación si el tiempo lo permite)."
+  },
+  {
+   "q": "RCP pediátrica con 2 reanimadores: relación compresión-ventilación:",
+   "opts": [
+    "30:2",
+    "15:2",
+    "3:1",
+    "5:1"
+   ],
+   "ans": 1,
+   "exp": "Pediatría: 30:2 con un reanimador y 15:2 con dos reanimadores. La profundidad es al menos 1/3 del diámetro anteroposterior del tórax (≈ 4 cm lactante, 5 cm niño)."
+  },
+  {
+   "q": "Dosis de epinefrina en el paro pediátrico:",
+   "opts": [
+    "0.01 mg/kg (0.1 mL/kg de 0.1 mg/mL)",
+    "0.1 mg/kg de la solución de 1 mg/mL",
+    "1 mg sin importar el peso del niño",
+    "0.001 mg/kg diluido en 10 mL"
+   ],
+   "ans": 0,
+   "exp": "Epinefrina 0.01 mg/kg IV/IO (máx. 1 mg) cada 3–5 min = 0.1 mL/kg de la concentración 0.1 mg/mL."
+  },
+  {
+   "q": "Energía de desfibrilación en el niño:",
+   "opts": [
+    "2 J/kg, luego 4 J/kg (máx. 10 J/kg)",
+    "Siempre 200 J desde la primera",
+    "0.5 J/kg y aumentar de a 0.5 J/kg",
+    "360 J en todas las descargas"
+   ],
+   "ans": 0,
+   "exp": "Pediatría: 2 J/kg la primera descarga, 4 J/kg la segunda y siguientes, hasta 10 J/kg o la dosis de adulto."
+  },
+  {
+   "q": "Tras el retorno de la circulación espontánea, ¿qué meta de oxigenación recomienda la AHA 2025?",
+   "opts": [
+    "SpO₂ 100% con FiO₂ 1.0 todo el tiempo",
+    "SpO₂ 90–98% (evitar la hiperoxia)",
+    "SpO₂ 85–88% para proteger el pulmón",
+    "PaO₂ mayor de 300 mmHg"
+   ],
+   "ans": 1,
+   "exp": "Guía, Sección 8: FiO₂ 1.0 hasta medir SpO₂ y luego titular a 90–98% (PaO₂ 60–105); PaCO₂ 35–45 y PAM ≥ 65 mmHg."
+  },
+  {
+   "q": "Control de temperatura posparo en el adulto que no obedece órdenes (AHA 2025):",
+   "opts": [
+    "No es necesario si recupera el pulso",
+    "32–37.5 °C al menos 36 h, sin fiebre",
+    "Calentar activamente hasta 39 °C",
+    "Solo antipiréticos si pasa de 40 °C"
+   ],
+   "ans": 1,
+   "exp": "Guía, Sección 8: temperatura entre 32 y 37.5 °C mantenida al menos 36 h y prevención activa de la fiebre."
+  },
+  {
+   "q": "Paro por hiperpotasemia. ¿Qué afirma la guía sobre el calcio IV?",
+   "opts": [
+    "Está contraindicado en todos los casos",
+    "Estabiliza la membrana; eficacia incierta",
+    "Es el único tratamiento necesario",
+    "Se administra solo por el tubo endotraqueal"
+   ],
+   "ans": 1,
+   "exp": "Guía, Sección 15 (AHA 2025): insulina con dextrosa, bicarbonato si hay acidosis, salbutamol y diálisis; el calcio estabiliza la membrana, aunque su efectividad en el paro no está bien establecida."
+  },
+  {
+   "q": "Anafilaxia en el adulto (sin paro). ¿Dosis y vía inicial de adrenalina según la guía?",
+   "opts": [
+    "1 mg IV en bolo, como en el paro",
+    "0.01 mg/kg IM en el muslo (máx. 0.5 mg)",
+    "10 mg IV en bolo único",
+    "Nunca adrenalina si hay pulso"
+   ],
+   "ans": 1,
+   "exp": "Guía, Sección 15: adrenalina IM 0.01 mg/kg (máx. 0.5 mg adulto, 0.3 mg niño) en el muslo, repetible cada 5–15 min; si hay paro, algoritmo estándar."
+  },
+  {
+   "q": "Fracción de compresiones torácicas recomendada en la RCP de alta calidad:",
+   "opts": [
+    "Mayor de 80%, con pausas < 10 s",
+    "Alrededor del 30%",
+    "Menos del 50% del tiempo",
+    "No importa si se ventila bien"
+   ],
+   "ans": 0,
+   "exp": "Guía, Sección 1: fracción de compresión > 80% y pausas < 10 s; cada pausa hace caer la presión de perfusión coronaria."
+  },
+  {
+   "q": "¿Cada cuánto debe rotarse quien hace las compresiones?",
+   "opts": [
+    "Cada 10 minutos de reanimación continua",
+    "Cada 2 minutos (o antes si se cansa)",
+    "Solo cuando se logre el retorno de circulación",
+    "Cada 30 segundos sin ninguna excepción"
+   ],
+   "ans": 1,
+   "exp": "Se cambia de compresor cada 2 minutos, aprovechando la pausa del análisis del ritmo, para mantener la calidad."
+  },
+  {
+   "q": "Durante el paro en un paciente intubado, la ventilación debe ser:",
+   "opts": [
+    "10/min (1 cada 6 s), sin pausar",
+    "30 ventilaciones por minuto",
+    "Volúmenes de 15 mL/kg por ventilación",
+    "Solo en las pausas del ciclo 30:2"
+   ],
+   "ans": 0,
+   "exp": "Con vía aérea avanzada: 1 ventilación cada 6 s (10/min) con compresiones continuas; la hiperventilación aumenta la presión intratorácica y reduce el retorno venoso."
+  },
+  {
+   "q": "En la reanimación neonatal, ¿cuál es la intervención más importante?",
+   "opts": [
+    "Adrenalina IV temprana por vía umbilical",
+    "Ventilación con presión positiva eficaz",
+    "Expansión de volumen a 10 mL/kg",
+    "Aspiración de rutina de boca y nariz"
+   ],
+   "ans": 1,
+   "exp": "Guía, Sección 12: solo 3–5% requiere VPP y < 1% compresiones o adrenalina; la ventilación es la intervención más importante. El aumento de la FC es el indicador de ventilación eficaz."
+  },
+  {
+   "q": "Paciente en AESP. ¿Qué acción es INCORRECTA?",
+   "opts": [
+    "Iniciar RCP de alta calidad",
+    "Dar epinefrina lo antes posible",
+    "Desfibrilar a 200 J",
+    "Buscar causas reversibles (H y T)"
+   ],
+   "ans": 2,
+   "exp": "La AESP no es un ritmo desfibrilable: RCP, epinefrina temprana y tratamiento de la causa."
+  },
+  {
+   "q": "La primera prioridad cuando un adulto colapsa y no respira normalmente ni tiene pulso:",
+   "opts": [
+    "Buscar una vía venosa antes de comprimir",
+    "Pedir ayuda y comprimir de inmediato",
+    "Intubar antes de iniciar las compresiones",
+    "Tomar un electrocardiograma de 12 derivaciones"
+   ],
+   "ans": 1,
+   "exp": "La cadena de supervivencia empieza con el reconocimiento, la activación del sistema y las compresiones inmediatas; la desfibrilación temprana sigue en cuanto llega el desfibrilador."
+  }
+ ],
+ "fcv": [
+  {
+   "q": "El gasto cardíaco es igual a:",
+   "opts": [
+    "Frecuencia cardíaca × volumen sistólico",
+    "PAM × resistencia vascular",
+    "Volumen sistólico / frecuencia cardíaca",
+    "Presión de pulso × frecuencia"
+   ],
+   "ans": 0,
+   "exp": "GC = FC × VS (≈ 5 L/min en el adulto). El índice cardíaco normaliza por superficie corporal (2.5–4 L/min/m²)."
+  },
+  {
+   "q": "Fórmula aproximada de la presión arterial media:",
+   "opts": [
+    "(PAS + PAD) / 2",
+    "PAD + (PAS − PAD) / 3",
+    "PAS − PAD (presión de pulso)",
+    "(2 × PAS + PAD) / 3"
+   ],
+   "ans": 1,
+   "exp": "PAM ≈ PAD + (PAS − PAD)/3, porque la diástole dura más que la sístole a frecuencias normales."
+  },
+  {
+   "q": "Según la ley de Poiseuille, si el radio de un vaso se reduce a la mitad, la resistencia:",
+   "opts": [
+    "Se duplica",
+    "Aumenta 4 veces",
+    "Aumenta 16 veces",
+    "No cambia"
+   ],
+   "ans": 2,
+   "exp": "La resistencia es inversamente proporcional al radio a la cuarta potencia (r⁴): (1/2)⁴ = 1/16 → la resistencia aumenta 16 veces."
+  },
+  {
+   "q": "La ley de Frank-Starling establece que:",
+   "opts": [
+    "A mayor poscarga, mayor volumen sistólico",
+    "Más precarga, más fuerza (hasta un límite)",
+    "La frecuencia cardíaca fija la contractilidad",
+    "El corazón expulsa siempre el mismo volumen"
+   ],
+   "ans": 1,
+   "exp": "Al aumentar el volumen telediastólico (precarga), aumenta la fuerza de contracción y el volumen sistólico, hasta la meseta de la curva."
+  },
+  {
+   "q": "La perfusión del ventrículo izquierdo ocurre principalmente durante:",
+   "opts": [
+    "La sístole",
+    "La diástole",
+    "La contracción isovolumétrica",
+    "Por igual en ambas fases"
+   ],
+   "ans": 1,
+   "exp": "El VI se perfunde sobre todo en diástole (la contracción comprime los vasos intramurales). Presión de perfusión coronaria ≈ PAD − PFDVI; la taquicardia acorta la diástole y reduce la perfusión."
+  },
+  {
+   "q": "Fórmula del contenido arterial de oxígeno (CaO₂):",
+   "opts": [
+    "Hb × SaO₂ × 10 + 0.03 × PaO₂",
+    "1.34 × Hb × SaO₂ + 0.003 × PaO₂",
+    "0.003 × PaO₂ (solo O₂ disuelto)",
+    "1.34 × Hb × PaO₂ + 0.003 × SaO₂"
+   ],
+   "ans": 1,
+   "exp": "CaO₂ = 1.34 × Hb × SaO₂ + 0.003 × PaO₂ (mL O₂/dL). La fracción disuelta es mínima; la hemoglobina y su saturación son lo determinante."
+  },
+  {
+   "q": "El transporte de oxígeno (DO₂) es:",
+   "opts": [
+    "GC × CaO₂ × 10",
+    "PAM × FC × 10",
+    "SaO₂ × FiO₂ × Hb",
+    "VO₂ ÷ GC × 10"
+   ],
+   "ans": 0,
+   "exp": "DO₂ = GC (L/min) × CaO₂ (mL/dL) × 10 ≈ 1000 mL/min en reposo. Mejorarlo: optimizar gasto, hemoglobina y saturación."
+  },
+  {
+   "q": "Resistencia vascular sistémica: fórmula y valor normal según la guía:",
+   "opts": [
+    "(PAM − PVC) / GC × 80; 900–1200",
+    "PAM × GC × 80; 100–200 dyn·s·cm⁻⁵",
+    "PVC / GC × 80; 4000–5000 dyn·s·cm⁻⁵",
+    "PAS / FC × 80; 20–40"
+   ],
+   "ans": 0,
+   "exp": "Guía, Sección 1.4: RVS = (PAM − PVC) / GC × 80; normal 900–1200 dinas·s/cm⁵. En shock séptico cae (p. ej., 629)."
+  },
+  {
+   "q": "¿Qué es la poscarga?",
+   "opts": [
+    "El volumen al final de la diástole",
+    "La tensión de pared para eyectar",
+    "La fuerza intrínseca de contracción",
+    "La presión venosa central medida"
+   ],
+   "ans": 1,
+   "exp": "Poscarga = tensión de la pared durante la eyección; según Laplace, T = P × r / 2h. Aumenta con la presión, el radio ventricular y la RVS."
+  },
+  {
+   "q": "El barorreflejo ante una caída brusca de la presión arterial produce:",
+   "opts": [
+    "Bradicardia y vasodilatación periférica",
+    "Taquicardia y vasoconstricción",
+    "Aumento del tono vagal y bradicardia",
+    "Ningún cambio hemodinámico reflejo"
+   ],
+   "ans": 1,
+   "exp": "Los barorreceptores del seno carotídeo y del arco aórtico disminuyen su descarga → menor tono vagal y mayor simpático → taquicardia, vasoconstricción y mayor contractilidad."
+  },
+  {
+   "q": "¿Por qué el propofol en la inducción produce hipotensión?",
+   "opts": [
+    "Aumenta la RVS y la poscarga",
+    "Baja la RVS y el tono venoso",
+    "Produce taquicardia refleja intensa",
+    "Libera catecolaminas endógenas"
+   ],
+   "ans": 1,
+   "exp": "El propofol causa vasodilatación arterial y venosa, depresión miocárdica leve y atenúa el barorreflejo: hipotensión dependiente de dosis, mayor en hipovolémicos y ancianos."
+  },
+  {
+   "q": "¿Qué inductor tiende a mantener o aumentar la presión arterial por estimulación simpática?",
+   "opts": [
+    "Propofol",
+    "Ketamina",
+    "Tiopental",
+    "Midazolam en dosis altas"
+   ],
+   "ans": 1,
+   "exp": "La ketamina estimula el sistema simpático (aumenta FC, PA y GC); en pacientes con catecolaminas agotadas puede deprimir el miocardio."
+  },
+  {
+   "q": "Variación de presión de pulso (VPP) > 13% en un paciente ventilado con volumen corriente de 8 mL/kg, ritmo sinusal y tórax cerrado indica:",
+   "opts": [
+    "Sobrecarga de volumen: dar diurético",
+    "Probable respuesta a líquidos",
+    "Falla ventricular derecha aguda",
+    "No tiene ningún valor diagnóstico"
+   ],
+   "ans": 1,
+   "exp": "Guía, Sección 9.1: VPP > 12–13% predice respuesta a volumen si hay ventilación controlada, ritmo sinusal, tórax cerrado y Vt ≈ 8 mL/kg; 9–13% es zona gris."
+  },
+  {
+   "q": "Umbral de hipotensión intraoperatoria asociado a lesión miocárdica y renal en el adulto:",
+   "opts": [
+    "PAM < 65 mmHg (o caída > 20–30%)",
+    "PAM < 90 mmHg en cualquier paciente",
+    "PAS < 120 mmHg sostenida por 5 minutos",
+    "No hay relación con el daño de órganos"
+   ],
+   "ans": 0,
+   "exp": "La PAM < 65 mmHg, sobre todo sostenida, se asocia a lesión miocárdica, renal y mayor mortalidad; se individualiza según la presión basal."
+  },
+  {
+   "q": "Rango clásico de autorregulación del flujo sanguíneo cerebral (con sus límites actualizados):",
+   "opts": [
+    "PAM ≈ 60–150 (límite inferior variable)",
+    "PAM entre 20 y 40 mmHg en el adulto",
+    "PAM entre 150 y 250 mmHg en el adulto",
+    "No existe autorregulación en el cerebro"
+   ],
+   "ans": 0,
+   "exp": "El rango 60–150 mmHg es una simplificación; en adultos la meseta es más estrecha y se desplaza a la derecha en la hipertensión crónica."
+  },
+  {
+   "q": "Umbral de transfusión de glóbulos rojos en la mayoría de los adultos hospitalizados estables (AABB 2023):",
+   "opts": [
+    "Hb < 10 g/dL en todos los adultos",
+    "Hb < 7 (8 si enfermedad CV)",
+    "Hb < 5 g/dL en todos los casos",
+    "Transfundir siempre que sangre"
+   ],
+   "ans": 1,
+   "exp": "Guía, Sección 10 (AABB 2023): Hb < 7 g/dL en el adulto estable; < 8 en cirugía cardíaca u ortopédica o enfermedad cardiovascular. MINT 2023: en IAM con anemia la estrategia liberal no fue significativamente mejor."
+  },
+  {
+   "q": "La anestesia neuroaxial alta (≥ T4) puede causar bradicardia porque:",
+   "opts": [
+    "Estimula las fibras simpáticas cardíacas",
+    "Bloquea las fibras T1–T4 y el retorno",
+    "Aumenta la poscarga del ventrículo",
+    "Produce liberación de histamina"
+   ],
+   "ans": 1,
+   "exp": "Bloqueo de las fibras cardioaceleradoras T1–T4 y caída del retorno venoso (reflejo de Bezold-Jarisch y reflejos de estiramiento auricular) → bradicardia e incluso asistolia."
+  },
+  {
+   "q": "¿Qué efecto tiene la ventilación con presión positiva sobre el retorno venoso?",
+   "opts": [
+    "Lo aumenta al subir la presión torácica",
+    "Lo disminuye (sube la P intratorácica)",
+    "No lo modifica en ningún caso",
+    "Lo aumenta solo si la PEEP es alta"
+   ],
+   "ans": 1,
+   "exp": "La presión positiva aumenta la presión intratorácica y la presión auricular derecha, reduce el gradiente de retorno venoso y el gasto, sobre todo en el hipovolémico y con PEEP alta."
+  },
+  {
+   "q": "Fracción de eyección normal del VI según la guía:",
+   "opts": [
+    "20–30%",
+    "55–70%",
+    "80–90%",
+    "Cercana al 100%"
+   ],
+   "ans": 1,
+   "exp": "Guía, Sección 3.2: FE normal 55–70%. ≤ 40% = IC con FE reducida; 41–49% = ligeramente reducida; ≥ 50% = conservada."
+  },
+  {
+   "q": "El consumo de O₂ miocárdico (MVO₂) es proporcional al:",
+   "opts": [
+    "Doble producto (FC × PAS)",
+    "Valor de la hemoglobina arterial",
+    "Valor de la presión venosa central",
+    "Volumen del ventrículo derecho"
+   ],
+   "ans": 0,
+   "exp": "Guía, Sección 6.2: MVO₂ ∝ doble producto (FC × PAS); el trabajo de presión es más costoso que el de volumen. HTA y taquicardia precipitan isquemia."
+  },
+  {
+   "q": "Durante el ciclo cardíaco, el primer ruido (S1) corresponde a:",
+   "opts": [
+    "Cierre de las válvulas aórtica y pulmonar",
+    "Cierre de las válvulas mitral y tricúspide",
+    "Llenado ventricular rápido en diástole",
+    "Contracción auricular al final de la diástole"
+   ],
+   "ans": 1,
+   "exp": "S1: cierre de las válvulas auriculoventriculares (inicio de la contracción isovolumétrica). S2: cierre de las semilunares (inicio de la relajación isovolumétrica)."
+  },
+  {
+   "q": "En la estenosis aórtica grave, la meta hemodinámica durante la anestesia es:",
+   "opts": [
+    "Taquicardia y vasodilatación periférica",
+    "Ritmo sinusal, FC baja y RVS mantenida",
+    "Hipotensión controlada durante la cirugía",
+    "Reducir la precarga con diuréticos de asa"
+   ],
+   "ans": 1,
+   "exp": "El gasto está fijo por la obstrucción: se necesita la contracción auricular (ritmo sinusal), tiempo diastólico suficiente y mantener la RVS para la perfusión coronaria; tratar la hipotensión con fenilefrina."
+  },
+  {
+   "q": "El retorno venoso depende del gradiente entre:",
+   "opts": [
+    "La PAM y la presión arterial diastólica",
+    "Presión media de llenado y presión de AD",
+    "La presión pulmonar y la presión capilar",
+    "La presión arterial y la intracraneal"
+   ],
+   "ans": 1,
+   "exp": "Retorno venoso = (presión media de llenado sistémico − presión de la AD) / resistencia al retorno venoso (modelo de Guyton)."
+  },
+  {
+   "q": "Hipertensión intensa, bradicardia y respiración irregular en un paciente con hipertensión endocraneana sugieren:",
+   "opts": [
+    "Reflejo de Bezold-Jarisch benigno",
+    "Tríada de Cushing: herniación inminente",
+    "Hipotensión ortostática",
+    "Efecto normal del propofol"
+   ],
+   "ans": 1,
+   "exp": "Guía, Sección 13.6: la isquemia del centro vasomotor por ↑ PIC produce HTA + bradicardia refleja + bradipnea (tríada de Cushing) = herniación inminente, urgencia neuroquirúrgica."
+  }
+ ]
+});
+Object.assign(CASE_BANK, {
+ "reg": [
+  {
+   "titulo": "Artroplastia de rodilla — raquídea con morfina intratecal",
+   "descripcion": "Hombre de 68 años, 70 kg, con fibrilación auricular anticoagulado con apixabán. Programado para artroplastia total de rodilla con torniquete en el Hospital de Kennedy. Plan: raquídea con bupivacaína isobárica 0.5% y morfina intratecal para analgesia posoperatoria.",
+   "datos": [
+    {
+     "label": "Edad / peso",
+     "valor": "68 años · 70 kg"
+    },
+    {
+     "label": "Anticoagulante",
+     "valor": "Apixabán 5 mg c/12 h (dosis alta) · última dosis hace 80 horas"
+    },
+    {
+     "label": "Función renal",
+     "valor": "Creatinina normal"
+    },
+    {
+     "label": "PA / FC basal",
+     "valor": "135/80 mmHg · 72 lpm"
+    },
+    {
+     "label": "Bupivacaína isobárica",
+     "valor": "0.5% (5 mg/mL)"
+    },
+    {
+     "label": "Morfina",
+     "valor": "Ampolla 10 mg/mL (sin preservantes)"
+    }
+   ],
+   "preguntas": [
+    {
+     "q": "¿Puede realizarse la raquídea hoy según ASRA 2025?",
+     "tipo": "select",
+     "opciones": [
+      "Sí: pasaron más de 72 h desde la última dosis",
+      "No: el apixabán debe suspenderse 7 días antes",
+      "No: se necesita un INR normal antes de puncionar",
+      "Sí, pero solo si antes se pasa plasma fresco"
+     ],
+     "ans": 0,
+     "exp": "Guía, Sección 17: apixabán dosis alta → suspender 72 h; con 80 h y función renal normal se puede puncionar."
+    },
+    {
+     "q": "¿En qué espacio es más seguro puncionar?",
+     "tipo": "select",
+     "opciones": [
+      "T11–T12 o T12–L1",
+      "L1–L2 (a nivel del cono)",
+      "L3–L4 o L4–L5",
+      "S1–S2 o S2–S3"
+     ],
+     "ans": 2,
+     "exp": "Guía, Sección 3: el cono medular termina en L1–L2; se punciona en L3–L4 o L4–L5, donde solo hay raíces de la cola de caballo."
+    },
+    {
+     "q": "¿Qué nivel sensitivo mínimo necesita para una rodilla CON torniquete?",
+     "tipo": "select",
+     "opciones": [
+      "L1–L2",
+      "T10",
+      "T4",
+      "S1"
+     ],
+     "ans": 1,
+     "exp": "Guía, Sección 4: rodilla o pierna con torniquete → T10 (el dolor por torniquete requiere un nivel alto). Pie sin torniquete: L1–L2."
+    },
+    {
+     "q": "Usará 12 mg de bupivacaína isobárica 0.5%. ¿Cuántos mL inyecta?",
+     "tipo": "calculo",
+     "formula": "12 mg ÷ 5 mg/mL",
+     "rango": [
+      2.4,
+      2.4
+     ],
+     "unidad": "mL",
+     "exp": "0.5% = 5 mg/mL → 12 ÷ 5 = 2.4 mL (rango de la guía para rodilla: 10–15 mg)."
+    },
+    {
+     "q": "Prepara la morfina con doble dilución (1 mL + 9 mL → 1 mg/mL; luego 1 mL + 9 mL → 100 µg/mL). ¿Cuántos mL de la segunda dilución contienen 100 µg?",
+     "tipo": "calculo",
+     "formula": "100 µg ÷ 100 µg/mL",
+     "rango": [
+      1,
+      1
+     ],
+     "unidad": "mL",
+     "exp": "Guía, Sección 2: 100 µg ÷ 100 µg/mL = 1 mL. En el neuroeje se manejan microgramos: rotule y haga doble chequeo."
+    },
+    {
+     "q": "Calcule la dosis máxima de bupivacaína sin epinefrina (mg) — referencia para infiltración o epidural.",
+     "tipo": "calculo",
+     "formula": "2.5 mg/kg × 70 kg (máx. ≈ 175 mg)",
+     "rango": [
+      170,
+      180
+     ],
+     "unidad": "mg",
+     "exp": "Guía, Sección 6: bupivacaína 2.5 mg/kg sin epinefrina (máx. ≈ 175 mg): 2.5 × 70 = 175 mg."
+    },
+    {
+     "q": "A los 10 min la PA es 82/45 mmHg y la FC 52 lpm. ¿Qué vasopresor es más apropiado?",
+     "tipo": "select",
+     "opciones": [
+      "Fenilefrina en bolo para subir la FC",
+      "Efedrina 5–10 mg IV (± atropina)",
+      "Nitroglicerina en infusión lenta",
+      "Ninguno: esperar que mejore sola"
+     ],
+     "ans": 1,
+     "exp": "Guía, Sección 12: hipotensión con bradicardia → efedrina (5–10 mg) o anticolinérgico; la fenilefrina causa bradicardia refleja."
+    },
+    {
+     "q": "A los 20 min no flexiona la rodilla pero sí mueve los pies. ¿Qué grado de Bromage tiene?",
+     "tipo": "select",
+     "opciones": [
+      "Bromage 0",
+      "Bromage 1",
+      "Bromage 2",
+      "Bromage 3"
+     ],
+     "ans": 2,
+     "exp": "Guía, Sección 4: 2 (66%) = no flexiona la rodilla, solo mueve el pie."
+    },
+    {
+     "q": "¿Qué vigilancia requiere por la morfina intratecal (guía de la ASA)?",
+     "tipo": "select",
+     "opciones": [
+      "Ninguna vigilancia adicional",
+      "Ventilación, oxigenación y sedación ≥ 24 h",
+      "Solo glucometrías cada 6 horas",
+      "Reflejos osteotendinosos cada hora"
+     ],
+     "ans": 1,
+     "exp": "Guía, Sección 8: vigilar ventilación, oxigenación y nivel de sedación al menos 24 h (más en las primeras 12 h); la depresión respiratoria es tardía (6–12 h). La sedación es el mejor signo de alarma."
+    },
+    {
+     "q": "Al día siguiente reaparece debilidad progresiva de las piernas después de que el bloqueo había regresado. ¿Conducta?",
+     "tipo": "select",
+     "opciones": [
+      "Observar 24 h más: efecto residual",
+      "Hematoma: RM urgente y neurocirugía",
+      "Iniciar AINE y fisioterapia temprana",
+      "Repetir la dosis de morfina intratecal"
+     ],
+     "ans": 1,
+     "exp": "Guía, Sección 19: un déficit que reaparece o progresa es un hematoma hasta demostrar lo contrario; RM urgente y descompresión dentro de las primeras 8 h."
+    }
+   ]
+  },
+  {
+   "titulo": "Epidural de parto — dosis de prueba, mezcla, conversión y LAST",
+   "descripcion": "Mujer de 29 años, 68 kg, en trabajo de parto, solicita analgesia. Se coloca un catéter epidural lumbar. Horas después se decide cesárea urgente por la epidural ya funcionante.",
+   "datos": [
+    {
+     "label": "Edad / peso",
+     "valor": "29 años · 68 kg"
+    },
+    {
+     "label": "Dosis de prueba",
+     "valor": "3 mL de lidocaína 1.5% + epinefrina 1:200.000"
+    },
+    {
+     "label": "Bupivacaína",
+     "valor": "0.5% (5 mg/mL)"
+    },
+    {
+     "label": "Fentanilo",
+     "valor": "50 µg/mL"
+    },
+    {
+     "label": "Bicarbonato",
+     "valor": "8.4%"
+    },
+    {
+     "label": "Emulsión lipídica",
+     "valor": "20%"
+    }
+   ],
+   "preguntas": [
+    {
+     "q": "¿Cuántos mg de lidocaína contiene la dosis de prueba?",
+     "tipo": "calculo",
+     "formula": "3 mL × 15 mg/mL",
+     "rango": [
+      45,
+      45
+     ],
+     "unidad": "mg",
+     "exp": "Guía, Sección 2: 1.5% = 15 mg/mL → 3 × 15 = 45 mg."
+    },
+    {
+     "q": "¿Cuántos µg de epinefrina contiene la dosis de prueba?",
+     "tipo": "calculo",
+     "formula": "3 mL × 5 µg/mL",
+     "rango": [
+      15,
+      15
+     ],
+     "unidad": "µg",
+     "exp": "1:200.000 = 5 µg/mL → 3 × 5 = 15 µg."
+    },
+    {
+     "q": "A los 40 segundos de la dosis de prueba la FC sube de 85 a 115 lpm. ¿Qué indica?",
+     "tipo": "select",
+     "opciones": [
+      "Catéter intratecal: bajar la dosis",
+      "Catéter intravascular: no usarlo y recolocar",
+      "Respuesta normal al dolor de la contracción",
+      "Bloqueo epidural correcto"
+     ],
+     "ans": 1,
+     "exp": "Guía, Sección 13: ↑ FC ≥ 20 lpm en < 1 min = intravascular (menos fiable durante la contracción); retirar y recolocar. Intratecal = bloqueo motor evidente en 3–5 min."
+    },
+    {
+     "q": "Prepara 100 mL de bupivacaína 0.1% a partir de bupivacaína 0.5%. ¿Cuántos mL de bupivacaína 0.5% necesita?",
+     "tipo": "calculo",
+     "formula": "(1 mg/mL × 100 mL) ÷ 5 mg/mL",
+     "rango": [
+      20,
+      20
+     ],
+     "unidad": "mL",
+     "exp": "Guía, Sección 2 (C₁V₁ = C₂V₂): (1 × 100) ÷ 5 = 20 mL."
+    },
+    {
+     "q": "A esa mezcla le agrega fentanilo 2 µg/mL. ¿Cuántos mL de fentanilo (50 µg/mL) añade a los 100 mL?",
+     "tipo": "calculo",
+     "formula": "(2 µg/mL × 100 mL) ÷ 50 µg/mL",
+     "rango": [
+      4,
+      4
+     ],
+     "unidad": "mL",
+     "exp": "2 × 100 = 200 µg ÷ 50 = 4 mL; el resto (76 mL) es SSN."
+    },
+    {
+     "q": "¿Qué esquema de mantenimiento recomienda la guía?",
+     "tipo": "select",
+     "opciones": [
+      "Infusión continua de bupivacaína 0.5%",
+      "Bolos programados (PIEB) + PCEA",
+      "Bolos manuales solo cuando haya dolor",
+      "Morfina epidural cada 4 horas"
+     ],
+     "ans": 1,
+     "exp": "Guía, Sección 15: PIEB + PCEA → mejor dispersión, menos anestésico, menos dolor irruptivo y menos bloqueo motor que la infusión continua."
+    },
+    {
+     "q": "Para extender la epidural a anestesia de cesárea urgente, ¿qué solución es la más usada?",
+     "tipo": "select",
+     "opciones": [
+      "Bupivacaína 0.5% (inicio 15–20 min)",
+      "Lidocaína 2% + epinefrina + bicarbonato",
+      "Ropivacaína 0.1% en infusión",
+      "SSN para probar el catéter"
+     ],
+     "ans": 1,
+     "exp": "Guía, Sección 16: lidocaína 2% + epinefrina 1:200.000 + bicarbonato (1 mL por 10 mL) ± fentanilo; inicio ≈ 5–10 min. La bupivacaína 0.5% es demasiado lenta."
+    },
+    {
+     "q": "Va a usar 20 mL de lidocaína 2%. ¿Cuántos mL de bicarbonato 8.4% agrega?",
+     "tipo": "calculo",
+     "formula": "1 mL por cada 10 mL de lidocaína",
+     "rango": [
+      2,
+      2
+     ],
+     "unidad": "mL",
+     "exp": "1 mL por cada 10 mL → 20 mL de lidocaína = 2 mL de bicarbonato (no se añade a la bupivacaína: precipita)."
+    },
+    {
+     "q": "Tras 15 mL refiere sabor metálico y tinnitus y luego convulsiona. ¿Cuál es la secuencia correcta?",
+     "tipo": "select",
+     "opciones": [
+      "Seguir inyectando para completar",
+      "Detener, O₂, benzodiacepina y lípidos",
+      "Dar 1 mg de epinefrina IV de inmediato",
+      "Propofol en dosis altas y continuar"
+     ],
+     "ans": 1,
+     "exp": "Guía, Sección 20 (ASRA 2020): detener la inyección, pedir ayuda, vía aérea con O₂ 100%, benzodiacepina para la convulsión y emulsión lipídica 20%."
+    },
+    {
+     "q": "Calcule el bolo de emulsión lipídica 20% para esta paciente de 68 kg (mL).",
+     "tipo": "calculo",
+     "formula": "≤ 70 kg: 1.5 mL/kg × 68 kg",
+     "rango": [
+      100,
+      104
+     ],
+     "unidad": "mL",
+     "exp": "Guía: ≤ 70 kg → 1.5 mL/kg (peso magro): 1.5 × 68 = 102 mL; luego 0.25 mL/kg/min = 17 mL/min."
+    }
+   ]
+  }
+ ],
+ "obs": [
+  {
+   "titulo": "Cesárea electiva — raquídea, vasopresor y oxitocina",
+   "descripcion": "Mujer de 32 años, G2P1 (cesárea anterior), 39 semanas, 70 kg, 160 cm, sin comorbilidades. Programada para cesárea electiva en el Hospital de Bosa. Plan: raquídea con bupivacaína hiperbara, fentanilo y morfina intratecal; profilaxis de hipotensión con fenilefrina.",
+   "datos": [
+    {
+     "label": "Edad / peso / talla",
+     "valor": "32 años · 70 kg · 160 cm"
+    },
+    {
+     "label": "PA basal",
+     "valor": "120/70 mmHg · FC 85 lpm"
+    },
+    {
+     "label": "Bupivacaína hiperbara",
+     "valor": "0.5% (5 mg/mL)"
+    },
+    {
+     "label": "Morfina",
+     "valor": "Ampolla 10 mg/mL"
+    },
+    {
+     "label": "Fenilefrina (infusión)",
+     "valor": "100 mcg/mL"
+    },
+    {
+     "label": "Oxitocina (infusión)",
+     "valor": "20 UI en 500 mL de lactato de Ringer"
+    },
+    {
+     "label": "Ácido tranexámico",
+     "valor": "Ampollas 500 mg / 5 mL"
+    }
+   ],
+   "preguntas": [
+    {
+     "q": "¿Cuál es la técnica anestésica de elección para esta cesárea electiva?",
+     "tipo": "select",
+     "opciones": [
+      "Anestesia general con secuencia rápida",
+      "Anestesia raquídea",
+      "Sedación con ketamina",
+      "Bloqueo paracervical"
+     ],
+     "ans": 1,
+     "exp": "La neuroaxial es de elección en la cesárea: evita la vía aérea difícil obstétrica y la aspiración y permite el contacto madre-hijo."
+    },
+    {
+     "q": "Si usa 11 mg de bupivacaína hiperbara 0.5%, ¿cuántos mL inyecta?",
+     "tipo": "calculo",
+     "formula": "11 mg ÷ 5 mg/mL",
+     "rango": [
+      2.2,
+      2.2
+     ],
+     "unidad": "mL",
+     "exp": "11 ÷ 5 = 2.2 mL."
+    },
+    {
+     "q": "Prepara la morfina con la doble dilución de la guía (10 mg/mL → 1 mg/mL → 100 µg/mL). ¿Cuántos mL de la segunda dilución contienen 100 µg?",
+     "tipo": "calculo",
+     "formula": "100 µg ÷ 100 µg/mL",
+     "rango": [
+      1,
+      1
+     ],
+     "unidad": "mL",
+     "exp": "Guía (regional, Sección 2): 1 mL + 9 mL = 1 mg/mL; 1 mL + 9 mL = 100 µg/mL → 100 µg = 1 mL."
+    },
+    {
+     "q": "¿Qué nivel sensitivo necesita antes de la incisión?",
+     "tipo": "select",
+     "opciones": [
+      "T10 (ombligo)",
+      "T8",
+      "T4 (pezones)",
+      "C8"
+     ],
+     "ans": 2,
+     "exp": "Se requiere T4 para evitar el dolor visceral por la tracción peritoneal."
+    },
+    {
+     "q": "Calcule el umbral de presión arterial sistólica por debajo del cual debe aumentar el vasopresor (90% de la basal), en mmHg.",
+     "tipo": "calculo",
+     "formula": "120 × 0.9",
+     "rango": [
+      108,
+      108
+     ],
+     "unidad": "mmHg",
+     "exp": "Meta: PAS ≥ 90% de la basal → 120 × 0.9 = 108 mmHg."
+    },
+    {
+     "q": "Inicia fenilefrina a 50 mcg/min con la dilución de 100 mcg/mL. ¿A cuántos mL/h programa la bomba?",
+     "tipo": "calculo",
+     "formula": "(50 mcg/min × 60) ÷ 100 mcg/mL",
+     "rango": [
+      30,
+      30
+     ],
+     "unidad": "mL/h",
+     "exp": "50 × 60 = 3000 mcg/h ÷ 100 = 30 mL/h."
+    },
+    {
+     "q": "A los 5 min refiere náuseas y la PA es 85/50 mmHg. ¿Cuál es la conducta?",
+     "tipo": "select",
+     "opciones": [
+      "Dar ondansetrón y esperar 10 minutos",
+      "Tratar la hipotensión (vasopresor)",
+      "Pasar a anestesia general",
+      "Dar metoclopramida IV lenta"
+     ],
+     "ans": 1,
+     "exp": "Las náuseas tras la raquídea suelen ser el primer síntoma de hipotensión (hipoperfusión cerebral): se trata la presión."
+    },
+    {
+     "q": "Tras el nacimiento, quiere infundir oxitocina a 5 UI/h con la dilución de 20 UI en 500 mL. ¿A cuántos mL/h?",
+     "tipo": "calculo",
+     "formula": "5 UI/h ÷ (20 UI / 500 mL)",
+     "rango": [
+      125,
+      125
+     ],
+     "unidad": "mL/h",
+     "exp": "20 UI / 500 mL = 0.04 UI/mL → 5 ÷ 0.04 = 125 mL/h (el bolo inicial en cesárea electiva es de 1 UI lento)."
+    },
+    {
+     "q": "El sangrado llega a 1200 mL y se indica ácido tranexámico 1 g. ¿Cuántos mL de las ampollas de 500 mg/5 mL administra?",
+     "tipo": "calculo",
+     "formula": "1000 mg ÷ 100 mg/mL",
+     "rango": [
+      10,
+      10
+     ],
+     "unidad": "mL",
+     "exp": "500 mg / 5 mL = 100 mg/mL → 1000 ÷ 100 = 10 mL, en 10 min (WOMAN)."
+    },
+    {
+     "q": "Con morfina intratecal 100 µg en una paciente sin factores de riesgo, ¿qué vigilancia recomienda la SOAP 2019?",
+     "tipo": "select",
+     "opciones": [
+      "Ninguna vigilancia adicional",
+      "FR y sedación cada 2 h durante 12 h",
+      "Solo glucometrías cada 6 horas",
+      "Reflejos osteotendinosos cada hora"
+     ],
+     "ans": 1,
+     "exp": "Guía, Sección 7 (SOAP 2019): dosis bajas sin factores de riesgo → frecuencia respiratoria y sedación al menos cada 2 h durante 12 h; con factores de riesgo, más frecuente y con oximetría continua."
+    }
+   ]
+  },
+  {
+   "titulo": "Preeclampsia con signos de severidad — cesárea urgente",
+   "descripcion": "Mujer de 28 años, primigestante, 36 semanas, 75 kg. Ingresa con cefalea y PA 168/112 mmHg sostenida. Plaquetas 85.000/mm³ estables, sin otras alteraciones de la coagulación. Se decide cesárea urgente.",
+   "datos": [
+    {
+     "label": "Edad / peso",
+     "valor": "28 años · 75 kg"
+    },
+    {
+     "label": "PA",
+     "valor": "168/112 mmHg (sostenida > 15 min)"
+    },
+    {
+     "label": "Plaquetas",
+     "valor": "85.000/mm³ · TP y TTP normales"
+    },
+    {
+     "label": "Sulfato de magnesio",
+     "valor": "Ampollas al 20%: 2 g / 10 mL"
+    },
+    {
+     "label": "Mantenimiento de magnesio",
+     "valor": "20 g en 500 mL"
+    },
+    {
+     "label": "Gluconato de calcio",
+     "valor": "10% (1 g / 10 mL)"
+    },
+    {
+     "label": "Rocuronio",
+     "valor": "Ampolla 50 mg / 5 mL"
+    }
+   ],
+   "preguntas": [
+    {
+     "q": "¿Cuál es el primer tratamiento de la crisis hipertensiva?",
+     "tipo": "select",
+     "opciones": [
+      "Labetalol IV o nifedipino oral",
+      "Enalapril IV en bolo lento de 1.25 mg",
+      "Furosemida 40 mg IV en bolo directo",
+      "Esperar a que nazca el bebé y ver"
+     ],
+     "ans": 0,
+     "exp": "PA ≥ 160/110 sostenida: tratar con labetalol IV, nifedipino oral o hidralazina; los IECA están contraindicados en el embarazo."
+    },
+    {
+     "q": "Impregnación de magnesio de 4 g con ampollas al 20% (2 g/10 mL). ¿Cuántos mL?",
+     "tipo": "calculo",
+     "formula": "4 g ÷ 0.2 g/mL",
+     "rango": [
+      20,
+      20
+     ],
+     "unidad": "mL",
+     "exp": "20% = 0.2 g/mL → 4 ÷ 0.2 = 20 mL, diluidos y pasados en 15–20 min."
+    },
+    {
+     "q": "Mantenimiento a 1 g/h con 20 g en 500 mL. ¿A cuántos mL/h?",
+     "tipo": "calculo",
+     "formula": "1 g/h ÷ (20 g / 500 mL)",
+     "rango": [
+      25,
+      25
+     ],
+     "unidad": "mL/h",
+     "exp": "20 g / 500 mL = 0.04 g/mL → 1 ÷ 0.04 = 25 mL/h."
+    },
+    {
+     "q": "Con plaquetas de 85.000/mm³ estables y coagulación normal, ¿se puede hacer raquídea?",
+     "tipo": "select",
+     "opciones": [
+      "Sí: ≥ 70.000/mm³ estables, riesgo bajo (SOAP)",
+      "No: se requieren al menos 150.000/mm³",
+      "Solo después de transfundir plaquetas de aféresis",
+      "No: la preeclampsia contraindica la neuroaxial"
+     ],
+     "ans": 0,
+     "exp": "Consenso SOAP: ≥ 70.000/mm³ sin tendencia a la baja ni otra coagulopatía → riesgo bajo; la neuroaxial es preferible a la general en preeclampsia."
+    },
+    {
+     "q": "Durante el mantenimiento con magnesio pierde el reflejo rotuliano y la FR es 10/min. ¿Qué hace?",
+     "tipo": "select",
+     "opciones": [
+      "Aumentar la infusión de magnesio a 2 g/h",
+      "Suspenderlo y dar gluconato de calcio",
+      "Dar naloxona 0.4 mg IV y repetir",
+      "Iniciar furosemida en bolo de 40 mg"
+     ],
+     "ans": 1,
+     "exp": "Signos de intoxicación: suspender la infusión, dar gluconato de calcio al 10% 1 g IV, apoyar la ventilación y medir el nivel sérico."
+    },
+    {
+     "q": "¿Cuántos mL de gluconato de calcio al 10% contienen 1 g?",
+     "tipo": "calculo",
+     "formula": "1 g ÷ 0.1 g/mL",
+     "rango": [
+      10,
+      10
+     ],
+     "unidad": "mL",
+     "exp": "10% = 0.1 g/mL → 1 ÷ 0.1 = 10 mL, en 5–10 min."
+    },
+    {
+     "q": "Tras el nacimiento hay atonía uterina. ¿Qué uterotónico NO debe usar en esta paciente?",
+     "tipo": "select",
+     "opciones": [
+      "Oxitocina",
+      "Metilergonovina",
+      "Misoprostol",
+      "Carbetocina"
+     ],
+     "ans": 1,
+     "exp": "La metilergonovina causa vasoconstricción e hipertensión: contraindicada en preeclampsia."
+    },
+    {
+     "q": "Si requiriera anestesia general, ¿cómo influye el magnesio sobre el rocuronio?",
+     "tipo": "select",
+     "opciones": [
+      "Lo antagoniza: duplicar la dosis",
+      "Lo potencia: monitorizar con TOF",
+      "No hay interacción conocida",
+      "Desencadena hipertermia maligna"
+     ],
+     "ans": 1,
+     "exp": "El magnesio potencia los relajantes no despolarizantes; el bloqueo debe monitorizarse y revertirse (sugammadex)."
+    },
+    {
+     "q": "¿Qué riesgo especial tiene la laringoscopia en esta paciente si recibe anestesia general?",
+     "tipo": "select",
+     "opciones": [
+      "Hipotensión profunda y prolongada",
+      "Pico hipertensivo: hemorragia cerebral",
+      "Bradicardia aislada sin hipotensión",
+      "Ninguno, si la paciente está sedada"
+     ],
+     "ans": 1,
+     "exp": "La respuesta hipertensiva a la laringoscopia puede causar hemorragia intracraneal o edema pulmonar: se atenúa con opioide de acción corta o antihipertensivo."
+    },
+    {
+     "q": "Si la paciente (75 kg, volemia 90 mL/kg) pierde 1 600 mL, ¿qué porcentaje de su volemia perdió?",
+     "tipo": "calculo",
+     "formula": "1600 ÷ (75 × 90) × 100",
+     "rango": [
+      23.5,
+      24
+     ],
+     "unidad": "%",
+     "exp": "Guía, Sección 16: volemia = 75 × 90 = 6 750 mL → 1 600 ÷ 6 750 × 100 = 23.7% → choque leve (16–25%); se clasifica por el peor parámetro."
+    }
+   ]
+  }
+ ],
+ "rcp": [
+  {
+   "titulo": "Fibrilación ventricular en recuperación",
+   "descripcion": "Hombre de 60 años, 80 kg, en la unidad de recuperación tras una colecistectomía. De pronto pierde la conciencia; el monitor muestra fibrilación ventricular y no tiene pulso. Está con oxígeno por cánula y tiene una vena periférica permeable.",
+   "datos": [
+    {
+     "label": "Edad / peso",
+     "valor": "60 años · 80 kg"
+    },
+    {
+     "label": "Ritmo",
+     "valor": "Fibrilación ventricular"
+    },
+    {
+     "label": "Desfibrilador",
+     "valor": "Bifásico"
+    },
+    {
+     "label": "Amiodarona",
+     "valor": "Ampollas 150 mg / 3 mL"
+    },
+    {
+     "label": "Lidocaína",
+     "valor": "2% (20 mg/mL)"
+    }
+   ],
+   "preguntas": [
+    {
+     "q": "¿Cuál es la conducta inmediata?",
+     "tipo": "select",
+     "opciones": [
+      "Buscar una segunda vía venosa",
+      "Compresiones y desfibrilar ya",
+      "Intubar antes de cualquier acción",
+      "Dar adenosina 6 mg en bolo"
+     ],
+     "ans": 1,
+     "exp": "En FV presenciada: compresiones de alta calidad y desfibrilación lo más pronto posible; cada minuto sin descarga reduce la supervivencia."
+    },
+    {
+     "q": "¿Con qué energía hace la primera descarga bifásica?",
+     "tipo": "select",
+     "opciones": [
+      "2 J/kg, como en pediatría",
+      "50 J para proteger el miocardio",
+      "120–200 J según el fabricante",
+      "360 J con cualquier equipo"
+     ],
+     "ans": 2,
+     "exp": "Bifásico: 120–200 J según el fabricante; si no se conoce, la energía máxima disponible."
+    },
+    {
+     "q": "En un ciclo de 2 minutos a la frecuencia mínima recomendada, ¿cuántas compresiones debe hacer como mínimo?",
+     "tipo": "calculo",
+     "formula": "100/min × 2 min",
+     "rango": [
+      200,
+      200
+     ],
+     "unidad": "compresiones",
+     "exp": "100–120/min → mínimo 200 en 2 min."
+    },
+    {
+     "q": "Tras la segunda descarga persiste la FV. ¿Cuándo da la epinefrina?",
+     "tipo": "select",
+     "opciones": [
+      "Antes de la primera descarga",
+      "Tras la 2.ª descarga, c/3–5 min",
+      "Solo si el ritmo pasa a asistolia",
+      "Nunca: no se usa en FV"
+     ],
+     "ans": 1,
+     "exp": "En ritmos desfibrilables, la epinefrina se administra después de la segunda descarga y luego cada 3–5 min."
+    },
+    {
+     "q": "Tras la tercera descarga indica amiodarona 300 mg. ¿Cuántos mL de las ampollas de 150 mg/3 mL?",
+     "tipo": "calculo",
+     "formula": "300 mg ÷ 50 mg/mL",
+     "rango": [
+      6,
+      6
+     ],
+     "unidad": "mL",
+     "exp": "150 mg/3 mL = 50 mg/mL → 300 ÷ 50 = 6 mL (2 ampollas)."
+    },
+    {
+     "q": "Si no hubiera amiodarona, calcule la dosis de lidocaína en mg (1–1.5 mg/kg).",
+     "tipo": "calculo",
+     "formula": "1–1.5 mg/kg × 80 kg",
+     "rango": [
+      80,
+      120
+     ],
+     "unidad": "mg",
+     "exp": "1–1.5 × 80 = 80–120 mg; luego 0.5–0.75 mg/kg."
+    },
+    {
+     "q": "Lo intuban durante la RCP. ¿Cómo ventila?",
+     "tipo": "select",
+     "opciones": [
+      "30:2 pausando las compresiones",
+      "10/min sin detener compresiones",
+      "30 ventilaciones por minuto",
+      "Volúmenes de 15 mL/kg"
+     ],
+     "ans": 1,
+     "exp": "Con vía aérea avanzada: 10 ventilaciones por minuto con compresiones continuas; evitar la hiperventilación."
+    },
+    {
+     "q": "La EtCO₂ durante la RCP es de 8 mmHg. ¿Qué indica?",
+     "tipo": "select",
+     "opciones": [
+      "Excelente calidad de la RCP",
+      "Compresiones de mala calidad",
+      "Retorno de la circulación",
+      "Hiperventilación adecuada"
+     ],
+     "ans": 1,
+     "exp": "Guía, Sección 1: EtCO₂ < 10 mmHg sugiere compresiones de mala calidad; un ascenso brusco a 35–45 mmHg sugiere RCE."
+    },
+    {
+     "q": "Logra RCE. ¿Cuál es la meta de oxigenación?",
+     "tipo": "select",
+     "opciones": [
+      "SpO₂ 100% con FiO₂ 1.0",
+      "SpO₂ 90–98%",
+      "SpO₂ 85–88%",
+      "PaO₂ > 300 mmHg"
+     ],
+     "ans": 1,
+     "exp": "Guía, Sección 8 (AHA 2025): titular a SpO₂ 90–98% (PaO₂ 60–105 mmHg), evitando la hiperoxia."
+    },
+    {
+     "q": "Tras el RCE la PA es 100/50 mmHg. Calcule la PAM (mmHg) y compárela con la meta ≥ 65.",
+     "tipo": "calculo",
+     "formula": "50 + (100 − 50) / 3",
+     "rango": [
+      66,
+      67
+     ],
+     "unidad": "mmHg",
+     "exp": "PAM = 50 + 50/3 ≈ 66.7 mmHg: justo en la meta (≥ 65); vigilar y apoyar con vasopresor si cae."
+    }
+   ]
+  },
+  {
+   "titulo": "Paro pediátrico en quirófano",
+   "descripcion": "Niño de 4 años, 20 kg, en cirugía de hernia inguinal bajo anestesia general con tubo endotraqueal. Presenta bradicardia progresiva y luego paro en asistolia; tras 2 minutos de RCP, el ritmo cambia a fibrilación ventricular.",
+   "datos": [
+    {
+     "label": "Edad / peso",
+     "valor": "4 años · 20 kg"
+    },
+    {
+     "label": "Vía aérea",
+     "valor": "Intubado"
+    },
+    {
+     "label": "Epinefrina",
+     "valor": "Solución 0.1 mg/mL"
+    },
+    {
+     "label": "Amiodarona",
+     "valor": "Ampollas 150 mg / 3 mL"
+    },
+    {
+     "label": "Desfibrilador",
+     "valor": "Bifásico con parches pediátricos"
+    }
+   ],
+   "preguntas": [
+    {
+     "q": "¿Cuál es la causa más frecuente de paro en pediatría que debe descartar de inmediato?",
+     "tipo": "select",
+     "opciones": [
+      "Fibrilación ventricular primaria",
+      "Hipoxia por vía aérea o ventilación",
+      "Infarto agudo de miocardio silente",
+      "Hipertermia maligna fulminante"
+     ],
+     "ans": 1,
+     "exp": "En pediatría la mayoría de los paros son secundarios a hipoxia: verificar tubo, ventilación y oxigenación (DOPE)."
+    },
+    {
+     "q": "¿Qué profundidad de compresión es adecuada en este niño?",
+     "tipo": "select",
+     "opciones": [
+      "1–2 cm, para no lesionar",
+      "≥ 1/3 del diámetro AP (≈ 5 cm)",
+      "8 cm, igual que un adulto grande",
+      "2 cm, como en el lactante"
+     ],
+     "ans": 1,
+     "exp": "En niños: al menos 1/3 del diámetro anteroposterior del tórax (≈ 5 cm); lactantes ≈ 4 cm."
+    },
+    {
+     "q": "Calcule la dosis de epinefrina (mg).",
+     "tipo": "calculo",
+     "formula": "0.01 mg/kg × 20 kg",
+     "rango": [
+      0.2,
+      0.2
+     ],
+     "unidad": "mg",
+     "exp": "0.01 × 20 = 0.2 mg."
+    },
+    {
+     "q": "¿Cuántos mL de la solución de 0.1 mg/mL son?",
+     "tipo": "calculo",
+     "formula": "0.2 mg ÷ 0.1 mg/mL",
+     "rango": [
+      2,
+      2
+     ],
+     "unidad": "mL",
+     "exp": "0.2 ÷ 0.1 = 2 mL (= 0.1 mL/kg)."
+    },
+    {
+     "q": "Pasa a FV. Calcule la energía de la PRIMERA descarga (J).",
+     "tipo": "calculo",
+     "formula": "2 J/kg × 20 kg",
+     "rango": [
+      40,
+      40
+     ],
+     "unidad": "J",
+     "exp": "2 J/kg × 20 = 40 J."
+    },
+    {
+     "q": "Persiste la FV. Calcule la energía de la SEGUNDA descarga (J).",
+     "tipo": "calculo",
+     "formula": "4 J/kg × 20 kg",
+     "rango": [
+      80,
+      80
+     ],
+     "unidad": "J",
+     "exp": "4 J/kg × 20 = 80 J (máximo 10 J/kg o dosis de adulto)."
+    },
+    {
+     "q": "FV refractaria: calcule la dosis de amiodarona (mg).",
+     "tipo": "calculo",
+     "formula": "5 mg/kg × 20 kg (máx. 300 mg)",
+     "rango": [
+      100,
+      100
+     ],
+     "unidad": "mg",
+     "exp": "Guía, Sección 10: 5 mg/kg (máx. 300 mg), hasta 3 dosis → 5 × 20 = 100 mg."
+    },
+    {
+     "q": "Como está intubado, ¿con qué frecuencia lo ventila durante la RCP?",
+     "tipo": "select",
+     "opciones": [
+      "1 ventilación cada 6 s",
+      "1 cada 2–3 s, sin pausas",
+      "30:2 con pausas para ventilar",
+      "60 ventilaciones por minuto"
+     ],
+     "ans": 1,
+     "exp": "AHA pediátrica: con vía aérea avanzada, 1 ventilación cada 2–3 s (20–30/min) con compresiones continuas."
+    },
+    {
+     "q": "¿Qué relación compresión-ventilación se usaría con 2 reanimadores si NO estuviera intubado?",
+     "tipo": "select",
+     "opciones": [
+      "30:2",
+      "15:2",
+      "5:1",
+      "3:1"
+     ],
+     "ans": 1,
+     "exp": "Dos reanimadores en pediatría: 15:2. Un reanimador: 30:2."
+    },
+    {
+     "q": "Calcule el diámetro interno del tubo CON balón para este niño de 4 años.",
+     "tipo": "calculo",
+     "formula": "(edad ÷ 4) + 3.5",
+     "rango": [
+      4.5,
+      4.5
+     ],
+     "unidad": "mm",
+     "exp": "Guía, Sección 10: tubo con balón ≈ (edad ÷ 4) + 3.5 = 1 + 3.5 = 4.5 mm."
+    }
+   ]
+  }
+ ],
+ "fcv": [
+  {
+   "titulo": "Laparotomía — gasto, resistencias y transporte de oxígeno",
+   "descripcion": "Hombre de 65 años, 80 kg, hipertenso, programado para laparotomía por obstrucción intestinal. Tiene línea arterial y catéter venoso central. Antes de la inducción se obtienen los datos de la tabla.",
+   "datos": [
+    {
+     "label": "Edad / peso",
+     "valor": "65 años · 80 kg"
+    },
+    {
+     "label": "FC / volumen sistólico",
+     "valor": "90 lpm · 60 mL"
+    },
+    {
+     "label": "PA",
+     "valor": "110/60 mmHg"
+    },
+    {
+     "label": "PVC",
+     "valor": "8 mmHg"
+    },
+    {
+     "label": "Hemoglobina",
+     "valor": "12 g/dL"
+    },
+    {
+     "label": "SaO₂ / PaO₂",
+     "valor": "98% · 95 mmHg"
+    }
+   ],
+   "preguntas": [
+    {
+     "q": "Calcule el gasto cardíaco (L/min).",
+     "tipo": "calculo",
+     "formula": "90 lpm × 0.060 L",
+     "rango": [
+      5.3,
+      5.5
+     ],
+     "unidad": "L/min",
+     "exp": "GC = FC × VS = 90 × 0.060 = 5.4 L/min."
+    },
+    {
+     "q": "Calcule la PAM (mmHg).",
+     "tipo": "calculo",
+     "formula": "60 + (110 − 60) / 3",
+     "rango": [
+      76,
+      77
+     ],
+     "unidad": "mmHg",
+     "exp": "PAM = 60 + 50/3 ≈ 76.7 mmHg."
+    },
+    {
+     "q": "Calcule la resistencia vascular sistémica (dyn·s·cm⁻⁵).",
+     "tipo": "calculo",
+     "formula": "80 × (76.7 − 8) ÷ 5.4",
+     "rango": [
+      990,
+      1040
+     ],
+     "unidad": "dyn·s·cm⁻⁵",
+     "exp": "RVS = 80 × 68.7 / 5.4 ≈ 1017 dinas·s/cm⁵ (normal según la guía: 900–1200)."
+    },
+    {
+     "q": "Calcule el contenido arterial de O₂ (mL/dL).",
+     "tipo": "calculo",
+     "formula": "1.34 × 12 × 0.98 + 0.003 × 95",
+     "rango": [
+      15.8,
+      16.3
+     ],
+     "unidad": "mL/dL",
+     "exp": "1.34 × 12 × 0.98 = 15.76; + 0.003 × 95 = 0.29 → ≈ 16.0 mL/dL."
+    },
+    {
+     "q": "Calcule el transporte de oxígeno DO₂ (mL/min).",
+     "tipo": "calculo",
+     "formula": "5.4 × 16.0 × 10",
+     "rango": [
+      850,
+      885
+     ],
+     "unidad": "mL/min",
+     "exp": "DO₂ = GC × CaO₂ × 10 = 5.4 × 16.0 × 10 ≈ 866 mL/min."
+    },
+    {
+     "q": "Tras inducir con propofol la PA cae a 78/40 mmHg con FC 88 lpm. ¿Cuál es el mecanismo principal?",
+     "tipo": "select",
+     "opciones": [
+      "Aumento brusco de la RVS",
+      "Caída de la RVS y del retorno venoso",
+      "Bradicardia extrema por el propofol",
+      "Taponamiento cardíaco agudo"
+     ],
+     "ans": 1,
+     "exp": "El propofol reduce la RVS y el tono venoso y atenúa el barorreflejo: hipotensión dependiente de la dosis."
+    },
+    {
+     "q": "Calcule la PAM con esa presión (mmHg).",
+     "tipo": "calculo",
+     "formula": "40 + (78 − 40) / 3",
+     "rango": [
+      52,
+      53
+     ],
+     "unidad": "mmHg",
+     "exp": "PAM = 40 + 38/3 ≈ 52.7 mmHg, por debajo de 65: tratar de inmediato."
+    },
+    {
+     "q": "Con ventilación controlada (Vt 8 mL/kg), ritmo sinusal y abdomen cerrado, la VPP es 18%. ¿Qué indica?",
+     "tipo": "select",
+     "opciones": [
+      "Sobrecarga hídrica: dar diurético en bolo",
+      "Responde a volumen: bolo + vasopresor",
+      "Falla aguda del ventrículo derecho por la PEEP",
+      "La VPP no sirve en esta situación clínica"
+     ],
+     "ans": 1,
+     "exp": "VPP > 13% en condiciones válidas predice respuesta a líquidos; se da volumen titulado y vasopresor para la PAM."
+    },
+    {
+     "q": "Durante la cirugía sangra y la Hb baja a 7.5 g/dL; tiene enfermedad coronaria conocida. Según AABB 2023:",
+     "tipo": "select",
+     "opciones": [
+      "No transfundir hasta que la Hb sea < 5 g/dL",
+      "Considerarla: umbral 8 g/dL en enf. CV",
+      "Transfundir hasta llevar la Hb a 14 g/dL",
+      "Dar solo eritropoyetina subcutánea diaria"
+     ],
+     "ans": 1,
+     "exp": "AABB 2023: umbral de 7 g/dL en la mayoría; 8 g/dL con enfermedad cardiovascular, cirugía cardíaca u ortopédica."
+    },
+    {
+     "q": "La FC sube a 130 lpm. ¿Por qué es peligroso en este paciente coronario?",
+     "tipo": "select",
+     "opciones": [
+      "Aumenta el tiempo diastólico de llenado",
+      "Acorta la diástole y sube el MVO₂",
+      "Disminuye el consumo de O₂ del miocardio",
+      "Aumenta la presión de perfusión coronaria"
+     ],
+     "ans": 1,
+     "exp": "La taquicardia reduce el tiempo de perfusión del VI y aumenta la demanda: desequilibrio oferta-demanda e isquemia."
+    }
+   ]
+  },
+  {
+   "titulo": "Estenosis aórtica grave — cirugía de cadera",
+   "descripcion": "Mujer de 75 años, 70 kg, con fractura de cadera. Ecocardiograma: estenosis aórtica grave (área valvular 0.8 cm²), FEVI 55%, ritmo sinusal. VTD 120 mL y VTS 54 mL. PA 130/70 mmHg, FC 70 lpm.",
+   "datos": [
+    {
+     "label": "Edad / peso",
+     "valor": "75 años · 70 kg"
+    },
+    {
+     "label": "Área valvular aórtica",
+     "valor": "0.8 cm² (grave)"
+    },
+    {
+     "label": "VTD / VTS",
+     "valor": "120 mL / 54 mL"
+    },
+    {
+     "label": "PA / FC",
+     "valor": "130/70 mmHg · 70 lpm"
+    },
+    {
+     "label": "PFDVI estimada",
+     "valor": "20 mmHg"
+    },
+    {
+     "label": "Fenilefrina",
+     "valor": "10 mg diluidos en 100 mL"
+    }
+   ],
+   "preguntas": [
+    {
+     "q": "¿Qué técnica evitaría por el riesgo de caída brusca de la RVS?",
+     "tipo": "select",
+     "opciones": [
+      "Anestesia general titulada con inducción cuidadosa",
+      "Raquídea en dosis única con dosis alta",
+      "Bloqueo de nervios periféricos de la cadera como complemento",
+      "Epidural o raquídea continua con titulación lenta"
+     ],
+     "ans": 1,
+     "exp": "La raquídea en dosis única con dosis alta puede producir simpatectomía brusca, caída de la RVS e isquemia coronaria; se prefieren técnicas tituladas."
+    },
+    {
+     "q": "¿Cuáles son las metas hemodinámicas en la estenosis aórtica grave?",
+     "tipo": "select",
+     "opciones": [
+      "Taquicardia y vasodilatación",
+      "Sinusal, FC baja y RVS mantenida",
+      "Hipovolemia relativa permisiva",
+      "Hipotensión controlada (PAM 50)"
+     ],
+     "ans": 1,
+     "exp": "El gasto está fijo por la obstrucción: se necesitan la contracción auricular, tiempo diastólico y una RVS suficiente para la perfusión coronaria."
+    },
+    {
+     "q": "Calcule la fracción de eyección (%).",
+     "tipo": "calculo",
+     "formula": "(120 − 54) ÷ 120 × 100",
+     "rango": [
+      55,
+      55
+     ],
+     "unidad": "%",
+     "exp": "FE = 66 / 120 × 100 = 55%."
+    },
+    {
+     "q": "Calcule el volumen sistólico (mL).",
+     "tipo": "calculo",
+     "formula": "120 − 54",
+     "rango": [
+      66,
+      66
+     ],
+     "unidad": "mL",
+     "exp": "VS = VTD − VTS = 66 mL."
+    },
+    {
+     "q": "Calcule el gasto cardíaco (L/min).",
+     "tipo": "calculo",
+     "formula": "70 lpm × 0.066 L",
+     "rango": [
+      4.6,
+      4.7
+     ],
+     "unidad": "L/min",
+     "exp": "70 × 0.066 = 4.62 L/min."
+    },
+    {
+     "q": "Calcule la PAM (mmHg).",
+     "tipo": "calculo",
+     "formula": "70 + (130 − 70) / 3",
+     "rango": [
+      90,
+      90
+     ],
+     "unidad": "mmHg",
+     "exp": "PAM = 70 + 60/3 = 90 mmHg."
+    },
+    {
+     "q": "Calcule la presión de perfusión coronaria (PAD − PFDVI), en mmHg.",
+     "tipo": "calculo",
+     "formula": "70 − 20",
+     "rango": [
+      50,
+      50
+     ],
+     "unidad": "mmHg",
+     "exp": "PPC = 70 − 20 = 50 mmHg; si cae la PAD, la perfusión del VI hipertrófico se compromete."
+    },
+    {
+     "q": "Tras la inducción la PA cae a 85/45 mmHg con FC 72 lpm. ¿Qué vasopresor elige?",
+     "tipo": "select",
+     "opciones": [
+      "Efedrina en dosis altas para subir la FC",
+      "Fenilefrina: aumenta la RVS sin taquicardia",
+      "Nitroglicerina",
+      "Dobutamina"
+     ],
+     "ans": 1,
+     "exp": "La fenilefrina restaura la RVS y la presión diastólica sin taquicardia, que sería deletérea en la estenosis aórtica."
+    },
+    {
+     "q": "Con la dilución de 10 mg en 100 mL, ¿cuántos mL contienen un bolo de 100 mcg?",
+     "tipo": "calculo",
+     "formula": "100 mcg ÷ 100 mcg/mL",
+     "rango": [
+      1,
+      1
+     ],
+     "unidad": "mL",
+     "exp": "10 mg / 100 mL = 100 mcg/mL → 100 ÷ 100 = 1 mL."
+    },
+    {
+     "q": "Aparece fibrilación auricular rápida con hipotensión. ¿Conducta?",
+     "tipo": "select",
+     "opciones": [
+      "Esperar a que revierta sola",
+      "Cardioversión sincronizada",
+      "Digoxina por vía oral",
+      "Profundizar el halogenado"
+     ],
+     "ans": 1,
+     "exp": "En la estenosis aórtica la contracción auricular aporta hasta 40% del llenado: una FA rápida con inestabilidad se cardiovierte."
+    }
+   ]
+  }
+ ]
+});
 
 // ─── CASOS CLÍNICOS INTEGRADORES (10 preguntas de los talleres evaluados) ───
 // Combinaciones: via+f1 · via+f1+dolor · dolor+f2 · f2+liq+pre (6 casos c/u)
@@ -10670,6 +13212,7 @@ const state = {
   university: '',
   selectedTopics: [],
   examType: 'final',
+  grupo: 'estudiante',
   theoryQuestions: [],
   theoryIdx: 0,
   theoryAnswers: [],
@@ -10716,7 +13259,45 @@ const THEORY_TIME = 1200;     // 20 minutos
 const N_CASES = 1;            // un solo caso clínico (10 preguntas)
 const CASE_TIME_FIXED = 35 * 60; // 35 minutos para el caso clínico
 const W_THEORY = 0.50, W_CASE = 0.50;
-const TIPO_LABEL = { final: 'Examen final', parcial: 'Parcial' };
+const TIPO_LABEL = { final: 'Examen final', parcial: 'Parcial', examen1: 'Examen 1', examen2: 'Examen 2', examen3: 'Examen 3', examen4: 'Examen 4' };
+// ── Grupos: estudiantes (talleres automáticos según la universidad) e internos (talleres a mano) ──
+const UNIS_EST = [
+  ['Universidad del Rosario', 2], ['Universidad de La Sabana', 3], ['Universidad San Martín', 3],
+  ['Universidad Antonio Nariño', 3], ['Universidad El Bosque', 4], ['Universidad UDCA', 6]
+];
+const UNIS_INT = UNIS_EST.map(u => u[0]).concat(['Universidad Militar Nueva Granada', 'Universidad Nacional de Colombia']);
+const GRUPO_LABEL = { estudiante: 'Estudiante', interno: 'Interno' };
+function grupoActual() { return document.getElementById('inp-grupo').value; }
+function esInterno() { return grupoActual() === 'interno'; }
+// Etiqueta del taller: los internos no siguen las semanas de los estudiantes → sin «S1, S2…»
+function tLabel(id, interno) {
+  const t = TOPICS.find(x => x.id === id); if (!t) return id;
+  return (interno ? '' : 'S' + t.week + ' ') + t.label;
+}
+function setGrupo(g) {
+  document.getElementById('inp-grupo').value = g;
+  document.querySelectorAll('#grp-sw .grp-b').forEach(b => b.classList.toggle('on', b.dataset.g === g));
+  const uni = document.getElementById('inp-uni'), prev = uni.value;
+  const opts = g === 'interno'
+    ? UNIS_INT.map(n => `<option value="${n}">${n}</option>`)
+    : UNIS_EST.map(([n, w]) => `<option value="${n}" data-weeks="${w}">${n} · ${w} semanas</option>`);
+  uni.innerHTML = '<option value="">— Seleccione la universidad —</option>' + opts.join('');
+  if ([...uni.options].some(o => o.value === prev)) uni.value = prev;
+  const tipo = document.getElementById('inp-tipo');
+  tipo.innerHTML = g === 'interno'
+    ? [1, 2, 3, 4].map(n => `<option value="examen${n}">Examen ${n}</option>`).join('')
+    : '<option value="final">Examen final</option><option value="parcial">Parcial</option>';
+  document.getElementById('topics-grid').classList.toggle('no-week', g === 'interno');
+  // Los talleres de internado (regional, obstetricia, RCP, fisiología CV) solo aparecen para internos
+  document.querySelectorAll('#topics-grid .topic-item').forEach(it => {
+    const t = TOPICS.find(x => x.id === it.querySelector('input').value);
+    const show = g === 'interno' || !t.interno;
+    it.style.display = show ? '' : 'none';
+    if (!show) { it.querySelector('input').checked = false; it.classList.remove('selected'); }
+  });
+  document.getElementById('btn-auto').style.display = g === 'interno' ? 'none' : '';
+  applyAutoSelection();
+}
 
 function semanasUniv() {
   const opt = document.getElementById('inp-uni').selectedOptions[0];
@@ -10729,7 +13310,7 @@ function talleresAuto(w, tipo) {
   const p = semanaParcial(w);
   let desde = 1, hasta = w;
   if (p) { if (tipo === 'parcial') hasta = p; else desde = p + 1; }
-  return TOPICS.filter(t => t.week >= desde && t.week <= hasta).map(t => t.id);
+  return TOPICS.filter(t => !t.interno && t.week >= desde && t.week <= hasta).map(t => t.id);
 }
 
 function setTopicsChecked(ids) {
@@ -10740,6 +13321,14 @@ function setTopicsChecked(ids) {
 }
 
 function applyAutoSelection() {
+  if (esInterno()) {
+    const info = document.getElementById('auto-info');
+    clearTopics();
+    info.className = 'auto-info warn';
+    info.innerHTML = '🩺 <strong>Internos:</strong> no hay talleres preseleccionados. Marque los talleres que entran en este examen.';
+    info.style.display = 'block';
+    return;
+  }
   const w = semanasUniv();
   const tipoSel = document.getElementById('inp-tipo');
   const info = document.getElementById('auto-info');
@@ -10786,6 +13375,7 @@ function initSetup() {
 
 function selectAllTopics() {
   document.querySelectorAll('#topics-grid input').forEach(cb => {
+    if (cb.closest('.topic-item').style.display === 'none') return;
     cb.checked = true;
     cb.closest('.topic-item').classList.add('selected');
   });
@@ -10815,6 +13405,7 @@ function startExam() {
   const name = [n1, a1, a2].filter(Boolean).join(' ');
   const uni = document.getElementById('inp-uni').value;
   const tipo = document.getElementById('inp-tipo').value;
+  const grupo = grupoActual();
   // Orden de la rotación (semana), no el orden de clic
   const selected = TOPICS.map(t => t.id).filter(id => document.querySelector(`#topics-grid input[value="${id}"]`).checked);
   const err = document.getElementById('setup-error');
@@ -10830,6 +13421,7 @@ function startExam() {
   state.university = uni;
   state.selectedTopics = selected;
   state.examType = tipo;
+  state.grupo = grupo;
 
   // 15 preguntas teóricas repartidas en partes iguales; opciones barajadas con la
   // respuesta correcta distribuida de forma balanceada entre A, B, C y D
@@ -10838,7 +13430,7 @@ function startExam() {
   state.theoryIdx = 0;
   state.theoryAnswers = [];
 
-  const sub = name + ' · ' + uni + ' · ' + TIPO_LABEL[tipo];
+  const sub = name + ' · ' + GRUPO_LABEL[grupo] + ' · ' + uni + ' · ' + TIPO_LABEL[tipo];
   document.getElementById('theory-student-name').textContent = sub;
 
   // Show instructions screen first
@@ -10847,8 +13439,8 @@ function startExam() {
 
 function showInstructions() {
   document.getElementById('instr-student-name').textContent =
-    state.studentName + ' · ' + state.university + ' · ' + TIPO_LABEL[state.examType];
-  const labels = state.selectedTopics.map(id => { const t = TOPICS.find(x => x.id === id); return 'S' + t.week + ' ' + t.label; });
+    state.studentName + ' · ' + GRUPO_LABEL[state.grupo] + ' · ' + state.university + ' · ' + TIPO_LABEL[state.examType];
+  const labels = state.selectedTopics.map(id => tLabel(id, state.grupo === 'interno'));
   const cnt = {};
   state.theoryQuestions.forEach(q => { cnt[q.topic] = (cnt[q.topic] || 0) + 1; });
   const reparto = state.selectedTopics.map(id => `${TOPICS.find(x => x.id === id).label}: ${cnt[id] || 0}`).join(' · ');
@@ -11024,12 +13616,21 @@ function nextTheoryQuestion() {
 }
 
 function autoFinishTheory() {
-  if (_selectedOption !== null) confirmTheoryAnswer();
-  finishTheory();
+  // Se acabó el tiempo: se califica lo respondido y las preguntas sin responder cuentan como incorrectas
+  const pending = document.getElementById('theory-confirm-btn');
+  if (_selectedOption !== null && pending && pending.style.display !== 'none') confirmTheoryAnswer();
+  finishTheory(true);
 }
 
-function finishTheory() {
+function finishTheory(porTiempo) {
   stopTimer();
+  // Completar las preguntas que quedaron sin responder (cuentan como incorrectas)
+  for (let i = state.theoryAnswers.length; i < state.theoryQuestions.length; i++) {
+    const q = state.theoryQuestions[i];
+    state.theoryAnswers.push({ q: q.q, selected: null, correct: false, correctIdx: q.ans, exp: q.exp, topic: q.topic, sinResp: true });
+  }
+  const tb = document.getElementById('theory-timeout-banner');
+  if (tb) tb.style.display = porTiempo ? 'block' : 'none';
   const correct = state.theoryAnswers.filter(a => a.correct).length;
   state.theoryScore = (correct / state.theoryQuestions.length) * 5;
 
@@ -11043,8 +13644,8 @@ function finishTheory() {
     <div style="font-size: 14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#000;margin-bottom:10px;">Resumen de respuestas</div>
     ${state.theoryAnswers.map((a, i) => `
       <div style="display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-bottom:1px solid #e2e8f0;font-size: 15px;">
-        <span style="color:${a.correct?'#059669':'#dc2626'};font-size: 18px;flex-shrink:0;">${a.correct?'✓':'✗'}</span>
-        <span style="color:#000;line-height:1.4;">P${i+1}. ${a.q.substring(0,80)}…</span>
+        <span style="color:${a.correct?'#00875A':'#D7002E'};font-size: 18px;flex-shrink:0;font-weight:800;">${a.correct?'✓':'✗'}</span>
+        <span style="color:#000;line-height:1.4;">P${i+1}. ${a.q.substring(0,80)}…${a.sinResp?' <b style="color:#D7002E;">(sin responder)</b>':''}</span>
       </div>
     `).join('')}
   `;
@@ -11069,7 +13670,7 @@ function showResults() {
   const date = new Date().toLocaleDateString('es-CO', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
 
   document.getElementById('result-name').textContent = state.studentName;
-  document.getElementById('result-uni').textContent = state.university + ' · ' + TIPO_LABEL[state.examType];
+  document.getElementById('result-uni').textContent = GRUPO_LABEL[state.grupo] + ' · ' + state.university + ' · ' + TIPO_LABEL[state.examType];
   document.getElementById('result-date').textContent = date;
   document.getElementById('result-theory').textContent = state.theoryScore.toFixed(1);
 
@@ -11108,7 +13709,7 @@ function showResults() {
           <span style="color:${a.correct?'#059669':'#dc2626'};font-size: 17px;flex-shrink:0;margin-top:1px;">${a.correct?'✓':'✗'}</span>
           <div>
             <div style="font-weight:600;color:#000;margin-bottom:2px;">P${i+1}: ${a.q.substring(0,70)}…</div>
-            <div style="color:#000;font-size: 14px;">Respuesta correcta: ${letters[a.correctIdx]} · Taller: ${topicLabel}</div>
+            <div style="color:#000;font-size: 14px;">${a.sinResp ? '<b style="color:#D7002E;">Sin responder</b> · ' : ''}Respuesta correcta: ${letters[a.correctIdx]} · Taller: ${topicLabel}</div>
           </div>
         </div>`;
       }).join('')}
@@ -11154,27 +13755,27 @@ function renderPrintSheet(final, hasCase) {
   const date = new Date().toLocaleDateString('es-CO', { year:'numeric', month:'long', day:'numeric' });
   const rows = state.theoryQuestions.map((q, i) => {
     const a = state.theoryAnswers[i];
-    const marc = a ? L[a.selected] : '—';
-    const res = a ? (a.correct ? '<span class="ok">✓</span>' : '<span class="bad">✗</span>') : '<span class="bad">Sin responder</span>';
+    const marc = a && a.selected != null ? L[a.selected] : '—';
+    const res = a && !a.sinResp ? (a.correct ? '<span class="ok">✓</span>' : '<span class="bad">✗</span>') : '<span class="bad">Sin responder</span>';
     return `<tr><td>${i + 1}</td><td>${short(lab(q.topic), 28)}</td><td>${short(q.q, 92)}</td><td style="text-align:center">${L[q.ans]}</td><td style="text-align:center">${marc}</td><td style="text-align:center">${res}</td></tr>`;
   }).join('');
   const nOk = state.theoryAnswers.filter(a => a.correct).length;
   const cr = (caseState.results || [])[0];
   const caseHTML = cr ? `
     <div><strong>${esc(cr.titulo)}</strong> · ${esc(cr.label || lab(cr.topic))} · Aciertos: <strong>${cr.correct}/${cr.total}</strong>${cr.porTaller ? ' (' + Object.entries(cr.porTaller).map(([k, v]) => esc(lab(k)) + ' ' + v[0] + '/' + v[1]).join(' · ') + ')' : ''}</div>
-    <div class="ps-case">${(cr.oks || []).map((ok, i) => `<span class="${ok ? 'ok' : 'bad'}">P${i + 1} ${ok ? '✓' : '✗'}${cr.talleresQ && cr.porTaller && Object.keys(cr.porTaller).length > 1 ? ' <small style="font-weight:600">' + ({via:'VA',f1:'F1',dolor:'DOL',f2:'F2',liq:'LIQ',pre:'VPA'}[cr.talleresQ[i]] || '') + '</small>' : ''}</span>`).join('')}</div>` : '<div>Sin caso clínico.</div>';
+    <div class="ps-case">${(cr.oks || []).map((ok, i) => `<span class="${ok ? 'ok' : 'bad'}">P${i + 1} ${ok ? '✓' : '✗'}${cr.talleresQ && cr.porTaller && Object.keys(cr.porTaller).length > 1 ? ' <small style="font-weight:600">' + ({via:'VA',f1:'F1',dolor:'DOL',f2:'F2',liq:'LIQ',pre:'VPA',reg:'REG',obs:'OBS',rcp:'RCP',fcv:'FCV'}[cr.talleresQ[i]] || '') + '</small>' : ''}</span>`).join('')}</div>` : '<div>Sin caso clínico.</div>';
   document.getElementById('print-sheet').innerHTML = `
     <div class="ps-head">
       <div><div class="ps-title">EVALUACIÓN DE ANESTESIOLOGÍA</div>
-      <div class="ps-sub">Rotación de pregrado · Hospitales de Kennedy y Bosa · Subred Integrada de Servicios de Salud Suroccidente</div></div>
+      <div class="ps-sub">${state.grupo === 'interno' ? 'Internado' : 'Rotación de estudiantes'} · Hospitales de Kennedy y Bosa · Subred Integrada de Servicios de Salud Suroccidente</div></div>
       <div class="ps-sub" style="text-align:right">${date}<br>Dr. Andrés Robayo C. · Coordinación académica</div>
     </div>
     <div class="ps-row">
       <div class="ps-info"><table>
-        <tr><td>Estudiante</td><td>${esc(state.studentName)}</td></tr>
+        <tr><td>${state.grupo === 'interno' ? 'Interno' : 'Estudiante'}</td><td>${esc(state.studentName)}</td></tr>
         <tr><td>Universidad</td><td>${esc(state.university)}</td></tr>
         <tr><td>Tipo de examen</td><td>${TIPO_LABEL[state.examType]}</td></tr>
-        <tr><td>Talleres</td><td>${state.selectedTopics.map(id => 'S' + TOPICS.find(t => t.id === id).week + ' ' + lab(id)).join(' · ')}</td></tr>
+        <tr><td>Talleres</td><td>${state.selectedTopics.map(id => tLabel(id, state.grupo === 'interno')).join(' · ')}</td></tr>
       </table></div>
       <div class="ps-score"><div class="lab">Teórico 50%</div><div class="val">${state.theoryScore.toFixed(1)}</div><div style="font-size:7.5pt">${nOk}/${state.theoryQuestions.length}</div></div>
       <div class="ps-score"><div class="lab">Caso 50%</div><div class="val">${hasCase ? state.caseScore.toFixed(1) : '—'}</div><div style="font-size:7.5pt">${cr ? cr.correct + '/' + cr.total : ''}</div></div>
@@ -11202,7 +13803,7 @@ async function enviarNotaSheet(final, hasCase) {
   const payload = {
     action: 'examen', clave: CLAVE_EXAMEN,
     nombre: state.studentName, nombre1: state.nombre1, apellido1: state.apellido1, apellido2: state.apellido2,
-    universidad: state.university, tipo: TIPO_LABEL[state.examType],
+    universidad: state.university, tipo: TIPO_LABEL[state.examType], grupo: GRUPO_LABEL[state.grupo || 'estudiante'],
     final: Number(final.toFixed(2))
   };
   set('⏳ Guardando la nota en el Sheet…', '#E65100');
@@ -11235,8 +13836,9 @@ function newExam() {
   stopTimer();
   ['inp-nombre1', 'inp-apellido1', 'inp-apellido2'].forEach(id => { const el = document.getElementById(id); el.value = ''; el.disabled = false; });
   document.getElementById('inp-sin-ap2').checked = false;
+  setGrupo(grupoActual());
   document.getElementById('inp-uni').value = '';
-  document.getElementById('inp-tipo').value = 'final';
+  document.getElementById('inp-tipo').value = esInterno() ? 'examen1' : 'final';
   applyAutoSelection();
   clearTopics();
   document.getElementById('setup-error').style.display = 'none';
@@ -11305,6 +13907,7 @@ function nextCase() {
 function loadCase() {
   // ── Reset completo del estado del caso ──
   caseState.submitted = false;
+  caseState.porTiempo = false;
   caseState.sectionScores = {};
   caseState.activeSections = [];
   if (caseState.timerInterval) { clearInterval(caseState.timerInterval); caseState.timerInterval = null; }
@@ -11386,12 +13989,13 @@ function renderCase() {
       inputHTML = `
         <div class="calc-row">
           <div class="calc-label">${preg.q}</div>
-          <input class="calc-input" type="text" inputmode="decimal" id="case-inp-${idx}" placeholder="Ej: 21,6 o 21.6" autocomplete="off">
+          <input class="calc-input" type="text" inputmode="decimal" id="case-inp-${idx}" placeholder="Un solo número" autocomplete="off" oninput="soloNumero(this)">
           <span class="calc-unit">${preg.unidad || ''}</span>
         </div>
         <div class="calc-hint" style="margin-left:8px;margin-top:4px;color:#000;font-size: 13px;">
-          Proponga y calcule el valor. Puede usar coma (,) o punto (.) para los decimales. Se acepta un rango de valores en el resultado.
-        </div>`;
+          ✍️ Escriba <b>UN SOLO NÚMERO</b> (ej.: 21.6), <b>no un rango</b>. Puede usar coma o punto para los decimales. Si su número está dentro de lo que acepta la guía, se califica como correcto.
+        </div>
+        <div class="num-warn" id="case-warn-${idx}">⚠️ Escriba un solo número, sin rangos (100-200), letras ni unidades.</div>`;
     }
 
     div.innerHTML = `
@@ -11417,6 +14021,7 @@ function startCaseTimer() {
     updateCaseTimerUI();
     if (caseState.timeRemaining <= 0) {
       clearInterval(caseState.timerInterval);
+      caseState.porTiempo = true;
       submitCase();
     }
   }, 1000);
@@ -11440,8 +14045,297 @@ function updateCaseTimerUI() {
 // ═══════════════════════════════════════════════════════════════
 //  CALIFICAR Y ENVIAR CASO
 // ═══════════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════
+//  EXAMEN EN PAPEL — 10 de selección múltiple + 5 de caso clínico, al azar en cada descarga
+// ═══════════════════════════════════════════════════════
+function cssPapel(k){ return `@page{size:letter;margin:11mm 12mm;}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+body{font-family:Arial,Helvetica,sans-serif;font-size:${(8.4*k).toFixed(2)}pt;color:#000;background:#fff;line-height:1.32;}
+.wrap{max-width:820px;margin:0 auto;padding:14px;}
+.bar{display:flex;gap:10px;justify-content:center;padding:10px;background:#0A2463;position:sticky;top:0;z-index:5;}
+.bar button{font:inherit;font-weight:800;font-size:15px;border:2.5px solid #fff;border-radius:10px;padding:9px 18px;cursor:pointer;background:#0057FF;color:#fff;}
+h1{font-size:${(13.5*k).toFixed(2)}pt;color:#0A2463;display:inline;}
+.sub{font-weight:700;color:#0A2463;font-size:${(8*k).toFixed(2)}pt;display:inline;margin-left:6px;}
+.head{border:1.5px solid #0A2463;border-radius:6px;padding:${(5*k).toFixed(2)}px 9px;margin:${(5*k).toFixed(2)}px 0 ${(5*k).toFixed(2)}px;}
+.grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:4px 12px;margin-top:3px;}
+.grid div{border-bottom:1px solid #000;padding-top:${(12*k).toFixed(2)}px;font-size:${(7.8*k).toFixed(2)}pt;font-weight:700;}
+.meta{display:flex;flex-wrap:wrap;gap:2px 12px;font-size:${(7.8*k).toFixed(2)}pt;}
+.ins{border-left:4px solid #0057FF;padding:${(3*k).toFixed(2)}px 8px;margin:${(5*k).toFixed(2)}px 0 ${(6*k).toFixed(2)}px;font-size:${(7.6*k).toFixed(2)}pt;}
+.part{background:#0A2463;color:#fff;font-weight:800;font-size:${(8.8*k).toFixed(2)}pt;padding:${(3*k).toFixed(2)}px 9px;border-radius:4px;margin:${(7*k).toFixed(2)}px 0 ${(6*k).toFixed(2)}px;}
+.cols{column-count:2;column-gap:${(16*k).toFixed(2)}px;}
+.q{break-inside:avoid;page-break-inside:avoid;margin-bottom:${(7*k).toFixed(2)}px;padding-bottom:${(6*k).toFixed(2)}px;border-bottom:1px solid #0A2463;}
+.q.wide{column-span:all;}
+.n{display:inline-block;background:#0A2463;color:#fff;font-weight:800;border-radius:3px;padding:0 5px;margin-right:5px;font-size:${(7.8*k).toFixed(2)}pt;}
+.qt{font-weight:700;margin-bottom:${(3*k).toFixed(2)}px;}
+.tp{font-weight:400;font-size:${(7.4*k).toFixed(2)}pt;color:#0057FF;}
+.ops{display:grid;grid-template-columns:1fr 1fr;gap:${(3*k).toFixed(2)}px 10px;}
+.op{display:flex;gap:5px;align-items:flex-start;}
+.bx{display:inline-flex;align-items:center;justify-content:center;min-width:${(13*k).toFixed(2)}px;height:${(13*k).toFixed(2)}px;border:1px solid #000;border-radius:50%;font-size:${(6.8*k).toFixed(2)}pt;font-weight:800;flex-shrink:0;margin-top:1px;}
+.lines div{border-bottom:1px solid #000;height:${(20*k).toFixed(2)}px;}
+.calc .dev{border:1px dashed #0A2463;border-radius:4px;height:${(46*k).toFixed(2)}px;margin:${(3*k).toFixed(2)}px 0 ${(4*k).toFixed(2)}px;}
+.calc .res{font-weight:700;}
+.blank{display:inline-block;min-width:80px;border-bottom:1px solid #000;}
+.caso{border:1.5px solid #00875A;border-radius:6px;padding:${(6*k).toFixed(2)}px 9px;margin-bottom:${(7*k).toFixed(2)}px;}
+.ct{font-weight:800;font-size:${(8.8*k).toFixed(2)}pt;color:#00875A;margin-bottom:${(2*k).toFixed(2)}px;}
+.cd{margin-bottom:${(4*k).toFixed(2)}px;}
+.dt{display:flex;flex-wrap:wrap;gap:${(1*k).toFixed(2)}px 12px;font-size:${(7.6*k).toFixed(2)}pt;}
+.ap{border-collapse:collapse;width:100%;font-size:${(7.8*k).toFixed(2)}pt;margin-top:${(3*k).toFixed(2)}px;}
+.ap th,.ap td{border:1px solid #0A2463;padding:${(3*k).toFixed(2)}px 5px;vertical-align:top;text-align:left;}
+.ap th{background:#0A2463;color:#fff;}
+.key h2{font-size:13pt;color:#D7002E;margin-bottom:4px;}
+.kt{border-collapse:collapse;width:100%;font-size:8pt;margin-bottom:8px;}
+.kt th,.kt td{border:1px solid #0A2463;padding:2px 4px;vertical-align:top;text-align:left;}
+.kt th{background:#D7002E;color:#fff;}
+.kt td.ex{font-size:7.4pt;}
+.warn{border:1.5px solid #D7002E;border-radius:6px;padding:3px 8px;font-weight:700;color:#D7002E;margin-bottom:6px;}
+.foot{margin-top:${(6*k).toFixed(2)}px;font-size:7pt;text-align:center;}
+`; }
+function descargarExamenPapel() {
+  const err = document.getElementById('setup-error');
+  const uni = document.getElementById('inp-uni').value;
+  const tipo = document.getElementById('inp-tipo').value;
+  const grupo = grupoActual();
+  const sel = TOPICS.map(t => t.id).filter(id => {
+    const cb = document.querySelector(`#topics-grid input[value="${id}"]`);
+    return cb && cb.checked && cb.closest('.topic-item').style.display !== 'none';
+  });
+  if (!uni) { err.textContent = 'Para descargar el examen en papel, seleccione la universidad.'; err.style.display = 'block'; return; }
+  if (!sel.length) { err.textContent = 'Para descargar el examen en papel, seleccione al menos 1 taller.'; err.style.display = 'block'; return; }
+  err.style.display = 'none';
+
+  const strip = t => String(t == null ? '' : t).replace(/<[^>]*>/g, '');
+  const e = t => strip(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const L = ['A', 'B', 'C', 'D', 'E', 'F'];
+  const codigo = Math.random().toString(36).slice(2, 6).toUpperCase() + '-' + Date.now().toString(36).slice(-4).toUpperCase();
+  const fecha = new Date().toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' });
+  const lab = id => (TOPICS.find(t => t.id === id) || {}).label || id;
+
+  // ── Parte A: 10 de selección múltiple, repartidas entre los talleres y con la respuesta en posición al azar
+  const mcq = balanceAnswerPositions(shuffle(selectDistributed(THEORY_BANK, sel, 10)));
+
+  // ── Parte B: un caso clínico al azar de los talleres elegidos (misma lógica del examen en línea)
+  const prevSel = state.selectedTopics;
+  state.selectedTopics = sel;
+  const caso = (buildCaseQueue() || [])[0];
+  state.selectedTopics = prevSel;
+
+  const items = [];        // 5 ítems del caso
+  if (caso) {
+    // Solo preguntas que se entienden solas (sin «la dosis que propuso», «esa mezcla», etc.)
+    const depende = /propus|propuest|eligi[oó]|\besa\b|\bese\b|anterior|dicha/i;
+    let qs = shuffle(caso.preguntas.map((p, i) => ({ ...p, _i: i })).filter(p => !depende.test(p.q)));
+    if (qs.length < 5) qs = shuffle(caso.preguntas.map((p, i) => ({ ...p, _i: i })));
+    const selects = qs.filter(p => p.tipo === 'select');
+    let usados = new Set();
+    // Aparear (al azar): 3 preguntas de selección del caso con sus respuestas correctas desordenadas
+    if (selects.length >= 4 && Math.random() < 0.6) {
+      const grupoA = selects.slice(0, 3);
+      grupoA.forEach(p => usados.add(p._i));
+      const resp = shuffle(grupoA.map((p, k) => ({ k, txt: p.opciones[p.ans] })));
+      items.push({ _i: Math.min(...grupoA.map(p => p._i)), tipo: 'aparear', filas: grupoA.map(p => p.q), resp: resp.map(r => r.txt),
+        clave: grupoA.map((p, k) => L[resp.findIndex(r => r.k === k)]), exps: grupoA.map(p => strip(p.exp)) });
+    }
+    // Resto del caso: mezcla equilibrada (2–3 cálculos abiertos y el resto de selección múltiple o respuesta abierta)
+    const libres = qs.filter(p => !usados.has(p._i));
+    const calcs = libres.filter(p => p.tipo !== 'select'), sels = libres.filter(p => p.tipo === 'select');
+    const faltan = 5 - items.length;
+    let nCalc = Math.min(calcs.length, Math.min(faltan, 2 + Math.floor(Math.random() * 2)));
+    if (sels.length < faltan - nCalc) nCalc = Math.min(calcs.length, faltan - sels.length);
+    const elegidas = shuffle([...calcs.slice(0, nCalc), ...sels.slice(0, faltan - nCalc)]);
+    let abiertas = 0;
+    for (const p of elegidas) {
+      if (p.tipo === 'select') {
+        // Selección múltiple o respuesta abierta (al azar; máximo 1 abierta por examen)
+        if (abiertas < 1 && Math.random() < 0.5) { abiertas++; items.push({ _i: p._i, tipo: 'abierta', q: p.q, clave: p.opciones[p.ans], exp: strip(p.exp) }); }
+        else items.push({ _i: p._i, tipo: 'select', q: p.q, opciones: p.opciones, clave: L[p.ans], exp: strip(p.exp) });
+      } else {
+        const r = Array.isArray(p.rango) ? (p.rango[0] === p.rango[1] ? `${p.rango[0]}` : `entre ${p.rango[0]} y ${p.rango[1]}`) : `${p.respuesta}`;
+        items.push({ _i: p._i, tipo: 'calculo', q: p.q, unidad: p.unidad || '', clave: `${r} ${p.unidad || ''}`.trim(), formula: p.formula || '', exp: strip(p.exp) });
+      }
+    }
+    items.sort((a, b) => a._i - b._i); // en el orden del caso (cronológico)
+  }
+
+  const tipoTxt = TIPO_LABEL[tipo] || '';
+  const talleres = sel.map(lab).join(' · ');
+  const etiquetaItem = { select: 'Selección múltiple', abierta: 'Respuesta abierta', calculo: 'Cálculo (respuesta abierta)', aparear: 'Aparear' };
+
+  const partA = mcq.map((q, i) => `
+    <div class="q"><div class="qt"><span class="n">${i + 1}</span>${e(q.q)}</div>
+      <div class="ops">${q.opts.map((o, j) => `<div class="op"><span class="bx">${L[j]}</span>${e(o)}</div>`).join('')}</div>
+    </div>`).join('');
+
+  const partB = items.map((it, i) => {
+    const n = 11 + i;
+    let body = '';
+    const num = `<span class="n">${n}</span>`;
+    if (it.tipo === 'select') body = `<div class="qt">${num}${e(it.q)}</div><div class="ops">${it.opciones.map((o, j) => `<div class="op"><span class="bx">${L[j]}</span>${e(o)}</div>`).join('')}</div>`;
+    else if (it.tipo === 'abierta') body = `<div class="qt">${num}${e(it.q)} <i class="tp">(respuesta abierta)</i></div><div class="lines"><div></div><div></div></div>`;
+    else if (it.tipo === 'calculo') body = `<div class="qt">${num}${e(it.q)} <i class="tp">(cálculo)</i></div><div class="calc"><div class="dev"></div><div class="res">Resultado (un solo número): <span class="blank"></span> ${e(it.unidad)}</div></div>`;
+    else body = `<div class="qt">${num}Aparear: escriba en cada casilla la letra de la respuesta correcta (cada letra se usa una vez).</div>
+      <table class="ap"><tr><th style="width:50%">Pregunta</th><th style="width:9%">Letra</th><th>Respuesta</th></tr>
+      ${it.filas.map((f, k) => `<tr><td><b>${k + 1}.</b> ${e(f)}</td><td class="lt"></td><td><b>${L[k]}.</b> ${e(it.resp[k])}</td></tr>`).join('')}</table>`;
+    return `<div class="q${it.tipo === 'aparear' ? ' wide' : ''}">${body}</div>`;
+  }).join('');
+
+  const casoHTML = caso ? `
+    <div class="caso"><div class="ct">🏥 ${e(caso.titulo)}</div>
+      <div class="cd">${e(caso.descripcion)}</div>
+      ${(caso.datos || []).length ? `<div class="dt">${caso.datos.map(d => `<span><b>${e(d.label)}:</b> ${e(d.valor)}</span>`).join('')}</div>` : ''}
+    </div>` : '<p>No hay caso clínico disponible para los talleres elegidos.</p>';
+
+  const claveA = mcq.map((q, i) => `<tr><td>${i + 1}</td><td><b>${L[q.ans]}</b></td><td>${e(q.opts[q.ans])}</td><td class="ex">${e(strip(q.exp))}</td></tr>`).join('');
+  const claveB = items.map((it, i) => {
+    const n = 11 + i;
+    if (it.tipo === 'aparear') return `<tr><td>${n}</td><td><b>${it.clave.map((c, k) => (k + 1) + '→' + c).join(' · ')}</b></td><td>Aparear (⅓ de punto por pareja)</td><td class="ex">${it.exps.map((x, k) => (k + 1) + '. ' + e(x)).join('<br>')}</td></tr>`;
+    if (it.tipo === 'calculo') return `<tr><td>${n}</td><td><b>${e(it.clave)}</b></td><td>${e(it.formula)}</td><td class="ex">${e(it.exp)}</td></tr>`;
+    return `<tr><td>${n}</td><td><b>${e(it.clave)}</b></td><td>${it.tipo === 'select' ? e(it.q).slice(0, 80) + '…' : 'Respuesta abierta: debe contener esta idea'}</td><td class="ex">${e(it.exp)}</td></tr>`;
+  }).join('');
+
+  const doc = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Examen de Anestesiología — ${e(tipoTxt)} — ${codigo}</title>
+<style>
+</style><style id="st">${cssPapel(1.2)}</style><style>@media print{.bar{display:none;}.wrap{padding:0;max-width:none;}}
+</style></head><body>
+<div class="bar"><button onclick="window.print()">🖨 Imprimir / Guardar como PDF</button></div>
+<div class="wrap">
+  <h1>Evaluación de Anestesiología</h1>
+  <div class="sub">${grupo === 'interno' ? 'Internado' : 'Rotación de estudiantes'} · Hospitales de Kennedy y Bosa · Subred Suroccidente · ${e(tipoTxt)}</div>
+  <div class="head">
+    <div class="meta"><span><b>Universidad:</b> ${e(uni)}</span><span><b>Talleres:</b> ${e(talleres)}</span><span><b>Código del examen:</b> ${codigo}</span></div>
+    <div class="grid"><div>Nombre completo:</div><div>Documento:</div><div>Fecha: ${fecha}</div><div>Firma:</div></div>
+  </div>
+  <div class="ins"><b>Instrucciones:</b> 15 preguntas. <b>Parte A</b> (1–10): selección múltiple con una sola respuesta correcta; marque con una X la letra. <b>Parte B</b> (11–15): preguntas sobre el caso clínico (selección múltiple, aparear, respuesta abierta o cálculo). En los cálculos escriba el desarrollo y <b>UN SOLO NÚMERO</b> como resultado, con su unidad. Puede usar calculadora; no se permite el celular. Cada pregunta vale lo mismo (en aparear, cada pareja vale ⅓). Nota = aciertos ÷ 15 × 5.0.</div>
+  <div class="part">PARTE A — Selección múltiple (1–10) · marque con X una sola letra</div>
+  <div class="cols">${partA}</div>
+  <div class="part" style="background:#00875A;">PARTE B — Caso clínico (11–15)</div>
+  ${casoHTML}
+  <div class="cols">${partB}</div>
+  <div class="foot">© Dr. Andrés Robayo C. · Material de uso académico · Código ${codigo}</div>
+
+</div>
+<script>
+${cssPapel.toString()}
+// Ajusta el tamaño de letra y los espacios para que el examen llene 2 hojas carta sin pasarse
+function ajustar(){
+  var w=document.querySelector('.wrap'), st=document.getElementById('st');
+  var pw=w.style.width, pm=w.style.maxWidth, pp=w.style.padding;
+  w.style.maxWidth='none'; w.style.width='725px'; w.style.padding='0';
+  var best=0.85;
+  for(var k=1.5;k>=0.85;k-=0.025){ st.textContent=cssPapel(k); if(w.scrollHeight<=2*973*LIM){ best=k; break; } }
+  st.textContent=cssPapel(best);
+  w.style.width=pw; w.style.maxWidth=pm; w.style.padding=pp;
+}
+var LIM=0.9;
+ajustar(); window.addEventListener('beforeprint', ajustar);
+<\/script>
+</body></html>`;
+
+  // ── Guía de respuestas del docente: archivo aparte, guardado en este navegador y protegido con clave
+  const estilo = doc.match(/<style[\s\S]*<\/style>/)[0];
+  const guia = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía de respuestas — Examen ${codigo}</title>${estilo}</head><body>
+<div class="bar"><button onclick="window.print()">🖨 Imprimir / Guardar como PDF</button></div>
+<div class="wrap">
+  <h1 style="color:#D7002E;">🔑 Guía de respuestas — SOLO DOCENTE</h1>
+  <div class="sub">Examen en papel · Código <b>${codigo}</b></div>
+  <div class="head"><div class="meta"><span><b>Grupo:</b> ${grupo === 'interno' ? 'Internos' : 'Estudiantes'}</span><span><b>Universidad:</b> ${e(uni)}</span><span><b>Tipo:</b> ${e(tipoTxt)}</span><span><b>Talleres:</b> ${e(talleres)}</span><span><b>Generado:</b> ${fecha}</span></div></div>
+  <div class="warn">Verifique que el código ${codigo} coincida con el del examen que va a calificar. Nota = aciertos ÷ 15 × 5.0 (en aparear, cada pareja vale ⅓).</div>
+  <div class="part">PARTE A — Selección múltiple (1–10)</div>
+  <table class="kt"><tr><th>#</th><th>Respuesta</th><th>Opción correcta</th><th>Explicación</th></tr>${claveA}</table>
+  <div class="part" style="background:#00875A;">PARTE B — Caso clínico (11–15)${caso ? ' · ' + e(caso.titulo) : ''}</div>
+  <table class="kt"><tr><th>#</th><th>Respuesta</th><th>Detalle</th><th>Explicación</th></tr>${claveB}</table>
+  <div class="foot">© Dr. Andrés Robayo C. · Material de uso académico · Código ${codigo}</div>
+</div></body></html>`;
+  try {
+    const lista = JSON.parse(localStorage.getItem('papel_claves') || '[]');
+    lista.unshift({ codigo, fecha: new Date().toLocaleString('es-CO'), uni, tipo: tipoTxt, grupo, html: guia });
+    localStorage.setItem('papel_claves', JSON.stringify(lista.slice(0, 30)));
+  } catch (x) {}
+  window.__ultimaGuia = { codigo, html: guia };
+
+  const nombre = `examen-papel-${(grupo === 'interno' ? 'internos' : 'estudiantes')}-${codigo}.html`;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([doc], { type: 'text/html;charset=utf-8' }));
+  a.download = nombre;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+}
+
+// ── Guía de respuestas (docente, con clave) ──
+function _hk(s) { let x = 0x811c9dc5; for (let i = 0; i < s.length; i++) { x ^= s.charCodeAt(i); x = Math.imul(x, 0x01000193) >>> 0; } return x.toString(36); }
+function guiasGuardadas() {
+  let l = []; try { l = JSON.parse(localStorage.getItem('papel_claves') || '[]'); } catch (x) {}
+  if (window.__ultimaGuia && !l.some(g => g.codigo === window.__ultimaGuia.codigo)) l.unshift({ codigo: window.__ultimaGuia.codigo, fecha: 'esta sesión', uni: '', tipo: '', html: window.__ultimaGuia.html });
+  return l;
+}
+let __modoDocente = 'guia';
+function accionDocente() { if (__modoDocente === 'examen') descargarExamenConClave(); else descargarGuiaDocente(); }
+function descargarExamenConClave() {
+  const msg = document.getElementById('doc-msg');
+  if (_hk(document.getElementById('doc-pass').value.trim()) !== 'ud1g03') { msg.textContent = '✗ Clave incorrecta.'; return; }
+  cerrarDocente();
+  descargarExamenPapel();
+}
+function abrirDocente(modo) {
+  __modoDocente = modo === 'examen' ? 'examen' : 'guia';
+  const ex = __modoDocente === 'examen';
+  if (ex) {
+    // Validar antes de pedir la clave
+    const err = document.getElementById('setup-error');
+    const sel = [...document.querySelectorAll('#topics-grid input')].filter(cb => cb.checked && cb.closest('.topic-item').style.display !== 'none');
+    if (!document.getElementById('inp-uni').value) { err.textContent = 'Para descargar el examen en papel, seleccione la universidad.'; err.style.display = 'block'; return; }
+    if (!sel.length) { err.textContent = 'Para descargar el examen en papel, seleccione al menos 1 taller.'; err.style.display = 'block'; return; }
+  }
+  document.getElementById('doc-tt').textContent = ex ? '🔒 Examen en papel — Docente' : '🔑 Guía de respuestas — Docente';
+  document.getElementById('doc-ss').textContent = ex ? 'Ingrese la clave del docente para descargar un examen nuevo y aleatorio.' : 'Elija el examen descargado (por su código) e ingrese la clave del docente.';
+  document.getElementById('doc-selwrap').style.display = ex ? 'none' : '';
+  document.getElementById('doc-go').textContent = ex ? '⬇ Descargar examen' : '⬇ Descargar guía';
+  const m = document.getElementById('doc-modal'), l = guiasGuardadas();
+  document.getElementById('doc-pass').value = '';
+  document.getElementById('doc-msg').textContent = '';
+  document.getElementById('doc-sel').innerHTML = l.length
+    ? l.map((g, i) => `<option value="${i}">${g.codigo} · ${g.uni || ''} · ${g.tipo || ''} · ${g.fecha}</option>`).join('')
+    : '<option value="">— Aún no se ha descargado ningún examen en este navegador —</option>';
+  m.style.display = 'flex';
+  setTimeout(() => document.getElementById('doc-pass').focus(), 50);
+}
+function cerrarDocente() { document.getElementById('doc-modal').style.display = 'none'; }
+function descargarGuiaDocente() {
+  const msg = document.getElementById('doc-msg');
+  if (_hk(document.getElementById('doc-pass').value.trim()) !== 'ud1g03') { msg.textContent = '✗ Clave incorrecta.'; return; }
+  const l = guiasGuardadas(), g = l[parseInt(document.getElementById('doc-sel').value)];
+  if (!g) { msg.textContent = 'Primero descargue un examen en papel: la guía corresponde a ese examen.'; return; }
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([g.html], { type: 'text/html;charset=utf-8' }));
+  a.download = `guia-respuestas-${g.codigo}.html`;
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  msg.textContent = '✓ Guía del examen ' + g.codigo + ' descargada.';
+}
+
+// Casillas de cálculo: solo un número (dígitos y un separador decimal). Avisa si intentan escribir un rango o texto.
+function esNumeroUnico(v) { return /^\s*\d+([.,]\d*)?\s*$/.test(v); }
+function soloNumero(el) {
+  const v = el.value.trim();
+  const ok = v === '' || esNumeroUnico(v);
+  const w = document.getElementById(el.id.replace('case-inp-', 'case-warn-'));
+  if (w) w.classList.toggle('show', !ok);
+  el.classList.toggle('bad-format', !ok);
+}
 function submitCase() {
   if (caseState.submitted) return;
+  // Antes de enviar a mano: no se permiten rangos ni texto en las casillas de cálculo
+  if (!caseState.porTiempo) {
+    const malos = [...document.querySelectorAll('#case-sections-area .calc-input')].filter(el => el.value.trim() !== '' && !esNumeroUnico(el.value));
+    if (malos.length) {
+      malos.forEach(soloNumero);
+      malos[0].scrollIntoView({ behavior: 'smooth', block: 'center' }); malos[0].focus();
+      alert('⚠️ Hay ' + malos.length + ' casilla(s) con un rango o texto. Escriba UN SOLO NÚMERO en cada casilla de cálculo (ej.: 21.6).');
+      return;
+    }
+  }
   caseState.submitted = true;
   clearInterval(caseState.timerInterval);
   document.getElementById('case-submit-btn').disabled = true;
@@ -11451,16 +14345,18 @@ function submitCase() {
   const preguntas = caso.preguntas || [];
   let totalCorrect = 0;
   const breakdown = [];
+  const review = [];
 
   preguntas.forEach((preg, idx) => {
     const inputEl = document.getElementById(`case-inp-${idx}`);
     const ansEl   = document.getElementById(`case-ans-${idx}`);
     if (!inputEl) return;
+    const rawVal = (inputEl.value || '').trim();
 
     let isOk = false;
     if (preg.tipo === 'calculo') {
       const raw = (inputEl.value || '').trim().replace(/\s+/g, '').replace(',', '.');
-      const val = parseFloat(raw);
+      const val = /^\d+(\.\d*)?$/.test(raw) ? parseFloat(raw) : NaN; // un rango o texto se califica como incorrecto
       let expectedTxt;
       if (Array.isArray(preg.rango)) {
         const lo = preg.rango[0], hi = preg.rango[1];
@@ -11475,7 +14371,7 @@ function submitCase() {
       ansEl.className = 'calc-answer show';
       ansEl.style.color = isOk ? '#1B5E20' : '#C62828';
       const leadTxt = isOk ? '\u2713 Correcto. '
-        : (Array.isArray(preg.rango) ? `\u2717 Rango aceptable: <strong>${expectedTxt}</strong>. `
+        : (Array.isArray(preg.rango) ? (preg.rango[0] === preg.rango[1] ? `\u2717 La respuesta era <strong>${preg.rango[0]} ${preg.unidad || ''}</strong>. ` : `\u2717 Se aceptaba cualquier número entre <strong>${preg.rango[0]} y ${preg.rango[1]} ${preg.unidad || ''}</strong>. `)
                                      : `\u2717 Respuesta esperada: <strong>${expectedTxt}</strong>. `);
       ansEl.innerHTML = leadTxt + `<em>${preg.exp}</em>`;
     } else if (preg.tipo === 'select') {
@@ -11489,6 +14385,18 @@ function submitCase() {
     }
     if (isOk) totalCorrect++;
     inputEl.disabled = true;
+    // Revisión: lo que respondió el estudiante y la respuesta correcta
+    let dada, correcta;
+    if (preg.tipo === 'select') {
+      dada = rawVal === '' ? '' : preg.opciones[parseInt(rawVal)];
+      correcta = preg.opciones[preg.ans];
+    } else {
+      dada = rawVal === '' ? '' : rawVal + ' ' + (preg.unidad || '');
+      correcta = Array.isArray(preg.rango)
+        ? (preg.rango[0] === preg.rango[1] ? preg.rango[0] + ' ' + (preg.unidad || '') : 'cualquier número entre ' + preg.rango[0] + ' y ' + preg.rango[1] + ' ' + (preg.unidad || ''))
+        : preg.respuesta + ' ' + (preg.unidad || '');
+    }
+    review.push({ n: idx + 1, q: preg.q, tipo: preg.tipo, dada: dada.trim(), correcta: String(correcta).trim(), formula: preg.formula || '', exp: preg.exp || '', ok: isOk });
     breakdown.push({ taller: preg.taller || caso.topic, label: `Pregunta ${idx + 1}` + (preg.taller ? ' · ' + ((TOPICS.find(t => t.id === preg.taller) || {}).label || '') : ''), correct: isOk ? 1 : 0, total: 1, score: isOk ? 5.0 : 0.0, key: null });
   });
 
@@ -11501,63 +14409,64 @@ function submitCase() {
   const sumT = caseState.results.reduce((s, r) => s + r.total, 0);
   caseState.lastScore = preguntas.length > 0 ? (totalCorrect / preguntas.length) * 5.0 : 0;
   state.caseScore = sumT > 0 ? (sumC / sumT) * 5.0 : 0;
-  setTimeout(() => showCaseResults(breakdown), 1500);
+  setTimeout(() => showCaseResults(breakdown, review), 600);
 }
 
-function showCaseResults(breakdown) {
+function showCaseResults(breakdown, review) {
   const score = caseState.lastScore;
   const n = caseState.queue.length, i = caseState.qi;
   const last = i >= n - 1;
-  document.getElementById('case-results-title').textContent = n > 1 ? `Resultados — Caso ${i + 1} de ${n}` : 'Resultados — Caso Clínico';
+  review = review || [];
+  document.getElementById('case-results-title').textContent = n > 1 ? `Revisión — Caso ${i + 1} de ${n}` : 'Revisión — Caso Clínico';
   document.getElementById('case-score-label').textContent = n > 1 ? `Nota del caso ${i + 1}` : 'Nota Caso Clínico';
   document.getElementById('case-score-sub').textContent = last && n > 1
     ? `sobre 5.0 · Nota de la Parte B (${n} casos): ${state.caseScore.toFixed(1)}`
     : 'sobre 5.0';
-  const nb = document.getElementById('case-next-btn');
-  if (last) { nb.textContent = '🏆 Ver Nota Final del Examen →'; nb.onclick = goToFinalResults; }
-  else { nb.textContent = `Continuar al Caso ${i + 2} de ${n} →`; nb.onclick = nextCase; }
   const scoreEl = document.getElementById('case-final-score');
   scoreEl.textContent = score.toFixed(1);
   scoreEl.style.color = score >= 4 ? '#10b981' : score >= 3 ? '#0284c7' : score >= 2 ? '#f59e0b' : '#f43f5e';
 
-  // Breakdown por sección con tarjetas coloreadas
-  const SECTION_COLORS = {
-    preox:  { bg:'#eff6ff', border:'#3b82f6', accent:'#1d4ed8' },
-    vent:   { bg:'#f0fdf4', border:'#22c55e', accent:'#15803d' },
-    hipn:   { bg:'#fdf4ff', border:'#c084fc', accent:'#7e22ce' },
-    opio:   { bg:'#fff7ed', border:'#fb923c', accent:'#c2410c' },
-    nvpo:   { bg:'#fef2f2', border:'#f87171', accent:'#b91c1c' },
-    ritmos: { bg:'#fff1f2', border:'#f43f5e', accent:'#be123c' },
-    local:  { bg:'#ecfdf5', border:'#34d399', accent:'#047857' },
-  };
+  // La nota y el botón de continuar quedan ocultos hasta que el estudiante revise sus respuestas
+  const scoreCard = document.querySelector('#screen-case-results .case-result-card');
+  const nb = document.getElementById('case-next-btn');
+  scoreCard.style.display = 'none';
+  nb.style.display = 'none';
+  if (last) { nb.textContent = '🏆 Ver Nota Final del Examen →'; nb.onclick = goToFinalResults; }
+  else { nb.textContent = `Continuar al Caso ${i + 2} de ${n} →`; nb.onclick = nextCase; }
 
+  const ok = review.filter(r => r.ok).length, bad = review.length - ok;
+  const e = t => String(t == null ? '' : t).replace(/&/g, '&amp;').replace(/</g, '&lt;');
   const bdEl = document.getElementById('case-section-breakdown');
-  try {
-  bdEl.innerHTML = '<h3 style="font-size: 16px;font-weight:700;color:var(--navy);margin:16px 0 10px;">Detalle por pregunta</h3>' +
-    breakdown.map(b => {
-      const col = SECTION_COLORS[b.key] || { bg:'#f8fafc', border:'#94a3b8', accent:'#475569' };
-      const total = b.total || 1;
-      const correct = b.correct || 0;
-      const bscore = (b.score !== undefined && b.score !== null) ? b.score : (correct / total) * 5.0;
-      const pct = Math.round(correct / total * 100);
-      const barColor = bscore >= 4 ? '#10b981' : bscore >= 3 ? '#0284c7' : bscore >= 2 ? '#f59e0b' : '#f43f5e';
-      return `
-        <div style="background:${col.bg};border:1.5px solid ${col.border};border-radius:10px;padding:14px 16px;margin-bottom:10px;">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-            <span style="font-weight:700;font-size: 16px;color:${col.accent};">${b.label}</span>
-            <span style="font-family:var(--mono);font-size:22px;font-weight:700;color:${barColor};">${bscore.toFixed(1)}<span style="font-size: 14px;color:#94a3b8;">/5.0</span></span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;">
-            <div style="flex:1;height:8px;background:rgba(0,0,0,.08);border-radius:99px;overflow:hidden;">
-              <div style="height:100%;width:${pct}%;background:${barColor};border-radius:99px;transition:width .6s;"></div>
-            </div>
-            <span style="font-size: 14px;color:#000;white-space:nowrap;">${correct}/${total} correctas (${pct}%)</span>
-          </div>
-        </div>`;
-    }).join('');
-  } catch (e) {
-    if (bdEl) bdEl.innerHTML = '';
-    console.error('Error al renderizar el detalle del caso:', e);
+  bdEl.innerHTML = `
+    <div class="rv-head">
+      <div class="rv-t">📋 Revisa tus respuestas</div>
+      <div class="rv-sum"><span class="rv-ok">✓ ${ok} correcta${ok === 1 ? '' : 's'}</span><span class="rv-bad">✗ ${bad} incorrecta${bad === 1 ? '' : 's'}</span></div>
+    </div>
+    ${review.map(r => `
+      <div class="rv-item ${r.ok ? 'ok' : 'bad'}">
+        <div class="rv-top"><span class="rv-n">P${r.n}</span><span class="rv-mark">${r.ok ? '✓ Correcta' : '✗ Incorrecta'}</span></div>
+        <div class="rv-q">${e(r.q)}</div>
+        <div class="rv-row"><b>Tu respuesta:</b> ${r.dada ? e(r.dada) : '<i>Sin responder</i>'}</div>
+        ${r.ok ? '' : `<div class="rv-row rv-right"><b>Respuesta correcta:</b> ${e(r.correcta)}${r.tipo === 'calculo' && r.formula ? ` <span class="rv-f">(${e(r.formula)})</span>` : ''}</div>`}
+        ${r.exp ? `<div class="rv-exp">${e(r.exp)}</div>` : ''}
+      </div>`).join('')}
+    <button type="button" class="btn btn-primary btn-full btn-lg rv-go" id="rv-go">✅ Ya revisé mis respuestas · Ver mi nota →</button>`;
+  document.getElementById('rv-go').onclick = () => {
+    document.getElementById('rv-go').remove();
+    document.getElementById('case-results-title').textContent = n > 1 ? `Resultados — Caso ${i + 1} de ${n}` : 'Resultados — Caso Clínico';
+    scoreCard.style.display = '';
+    nb.style.display = '';
+    scoreCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+  // La nota aparece debajo de la revisión, junto al botón de continuar, cuando se revela
+  bdEl.parentNode.insertBefore(scoreCard, nb);
+  // Si el caso se cerró porque se acabó el tiempo: aviso + nota visible de inmediato
+  if (caseState.porTiempo) {
+    bdEl.insertAdjacentHTML('afterbegin', '<div class="timeout-banner">⏰ <b>Se acabó el tiempo del caso clínico.</b> La sección se cerró automáticamente y se calificó lo respondido; las casillas vacías cuentan como incorrectas.</div>');
+    document.getElementById('rv-go').remove();
+    document.getElementById('case-results-title').textContent = n > 1 ? `Resultados — Caso ${i + 1} de ${n}` : 'Resultados — Caso Clínico';
+    scoreCard.style.display = '';
+    nb.style.display = '';
   }
 
   showScreen('screen-case-results');
@@ -11572,6 +14481,7 @@ function goToFinalResults() {
 // ═══════════════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded', () => {
   initSetup();
+  setGrupo('estudiante');
 });
 
 // ═══════════════════════════════════════════════════════
