@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Examen Práctico Anestesiología</title>
+<style>
+  :root{
+    --navy:#0b2545; --azul:#1352c9; --verde:#0a8f3c; --rojo:#d0021b;
+    --naranja:#e86a00; --blanco:#ffffff; --texto:#0b2545; --borde:#1352c9;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Segoe UI,Roboto,Arial,sans-serif;background:var(--blanco);color:var(--texto);padding-bottom:110px}
+  header{background:var(--navy);color:#fff;padding:16px}
+  header h1{margin:0;font-size:1.35rem}
+  header p{margin:4px 0 0;font-size:.9rem}
+  main{max-width:900px;margin:0 auto;padding:16px}
+  .card{border:2px solid var(--borde);border-radius:10px;padding:14px;margin-bottom:16px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+  label{font-weight:700;font-size:.85rem;display:block;margin-bottom:4px}
+  input,select,textarea{width:100%;padding:9px;border:2px solid var(--navy);border-radius:6px;font-size:1rem;color:var(--texto);background:#fff;font-family:inherit}
+  .regla{border-left:6px solid var(--naranja);padding:10px 12px;font-size:.92rem;margin-bottom:16px;border-radius:4px;border-top:2px solid var(--naranja);border-right:2px solid var(--naranja);border-bottom:2px solid var(--naranja)}
+  h2{background:var(--azul);color:#fff;margin:-14px -14px 10px;padding:10px 14px;border-radius:8px 8px 0 0;font-size:1.05rem;display:flex;justify-content:space-between}
+  .item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--azul)}
+  .item:last-child{border-bottom:none}
+  .txt{flex:1;font-size:.98rem}
+  .letra{display:inline-block;min-width:22px;font-weight:800;color:var(--azul)}
+  .crit{display:inline-block;background:var(--rojo);color:#fff;font-size:.7rem;font-weight:700;padding:2px 6px;border-radius:4px;margin-left:6px;vertical-align:middle}
+  .btns{display:flex;gap:6px;flex-shrink:0}
+  .b{border:2px solid var(--navy);background:#fff;color:var(--navy);padding:8px 10px;border-radius:6px;font-weight:700;cursor:pointer;font-size:.85rem;min-width:52px}
+  .b.si.on{background:var(--verde);border-color:var(--verde);color:#fff}
+  .b.no.on{background:var(--rojo);border-color:var(--rojo);color:#fff}
+  .dosis{border:2px dashed var(--azul);border-radius:8px;padding:10px;margin-bottom:8px;font-size:.92rem}
+  .dosis b{color:var(--azul)}
+  .barra{position:fixed;left:0;right:0;bottom:0;background:var(--navy);color:#fff;padding:10px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;z-index:5}
+  .nota{font-size:1.8rem;font-weight:800}
+  .estado{padding:6px 12px;border-radius:6px;font-weight:800}
+  .estado.ok{background:var(--verde)} .estado.mal{background:var(--rojo)} .estado.pend{background:var(--naranja)}
+  .acc{display:flex;gap:8px;flex-wrap:wrap}
+  .acc button{border:2px solid #fff;background:var(--azul);color:#fff;padding:9px 12px;border-radius:6px;font-weight:700;cursor:pointer}
+  .acc button.verde{background:var(--verde)}
+  table{width:100%;border-collapse:collapse;font-size:.9rem}
+  th{background:var(--navy);color:#fff;padding:6px;text-align:left}
+  td{border-bottom:1px solid var(--azul);padding:6px}
+  .hidden{display:none}
+  .printonly{display:none}
+  @media (max-width:600px){ .item{flex-direction:column;align-items:flex-start} }
+  @media print{
+    @page{size:letter;margin:10mm}
+    body{padding:0;font-size:11px}
+    header{padding:6px 10px} header h1{font-size:15px}
+    .barra,.acc,#registros,.noprint{display:none!important}
+    .printonly{display:block}
+    main{padding:0;max-width:none}
+    .card{padding:6px;margin-bottom:6px;break-inside:avoid}
+    h2{margin:-6px -6px 4px;padding:4px 8px;font-size:12px}
+    .item{padding:2px 0;flex-direction:row}
+    .b{padding:1px 6px;font-size:10px;min-width:auto}
+    .b:not(.on){display:none}
+    input,select,textarea{border:none;padding:0;font-size:11px}
+    .regla,.dosis{display:none}
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>EXAMEN PRÁCTICO — ROTACIÓN DE ANESTESIOLOGÍA</h1>
+  <p>Subred Integrada de Servicios de Salud Suroccidente · Pregrado</p>
+</header>
+
+<main>
+  <div class="card">
+    <div class="grid">
+      <div><label>Estudiante</label><input id="estudiante" placeholder="Nombre y apellidos"></div>
+      <div><label>Universidad</label>
+        <select id="universidad">
+          <option value="">— Seleccione —</option>
+          <option>La Sabana</option><option>El Bosque</option><option>San Martín</option>
+          <option>UDCA</option><option>Antonio Nariño</option><option>Rosario</option>
+        </select></div>
+      <div><label>Sede</label>
+        <select id="sede"><option value="">— Seleccione —</option><option>Kennedy</option><option>Bosa</option><option>Tintal</option><option>Fontibón</option></select></div>
+      <div><label>Evaluador</label><input id="evaluador" placeholder="Anestesiólogo que evalúa"></div>
+      <div><label>Fecha</label><input id="fecha" type="date"></div>
+    </div>
+  </div>
+
+  <div class="regla noprint">
+    <b>CÓMO CALIFICAR:</b> marque <b>✔</b> SOLO si el estudiante lo hace <b>correctamente y sin ayuda</b>. Si duda, o si usted tuvo que indicarle, marque <b>✘</b>.<br>
+    <b>Nota</b> = (ítems aprobados ÷ total) × 5. Si falla <b>CUALQUIER ítem CRÍTICO</b>, la nota máxima es <b>2.9</b> (no aprueba).
+  </div>
+
+  <div id="estaciones"></div>
+
+  <div class="card">
+    <label>Observaciones</label>
+    <textarea id="obs" rows="2" placeholder="Opcional"></textarea>
+    <div class="printonly" style="margin-top:8px">
+      <b>Resultado:</b> <span id="pResumen"></span><br><br>
+      Firma evaluador: ______________________________
+    </div>
+  </div>
+
+  <div class="card hidden" id="registros">
+    <h2><span>Estudiantes evaluados (este equipo)</span><span id="nReg"></span></h2>
+    <div style="overflow-x:auto"><table id="tabla"></table></div>
+    <div class="acc" style="margin-top:10px">
+      <button class="verde" id="btnPend" onclick="enviarPendientes()">Enviar pendientes al Sheet</button>
+      <button onclick="exportarCSV()">Exportar a Excel (CSV)</button>
+      <button style="background:var(--rojo)" onclick="borrarRegistros()">Borrar registros</button>
+    </div>
+  </div>
+</main>
+
+<div class="barra">
+  <div><div style="font-size:.8rem">Marcados <span id="prog">0/0</span> · Aprobados <span id="aprob">0</span></div>
+       <div class="nota" id="nota">—</div></div>
+  <div class="estado pend" id="estado">INCOMPLETO</div>
+  <div class="acc">
+    <button onclick="window.print()">Imprimir</button>
+    <button class="verde" id="btnGuardar" onclick="guardar()">Guardar y siguiente</button>
+    <button onclick="toggleReg()">Registros</button>
+  </div>
+</div>
+
+<script>
+/* ═══ CONEXIÓN CON GOOGLE SHEETS · pestaña «Notas de examen práctico» ═══
+   CLAVE_PRACTICO debe ser IGUAL a la propiedad CLAVE_PRACTICO del proyecto de Apps Script. */
+const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz1a0UhMA1WdJeyUk3npQxNpyuaXJJxSwmtBLvJNfGBehg_1htyoiOZ4u9_F2LfFvSg/exec';
+const CLAVE_PRACTICO = 'examenpractico2026';
+
+const ESTACIONES = [
+  { nombre: "1. Chequeo de máquina y monitoría", items: [
+    { t: "Identifica si el vaporizador está lleno o vacío", c: false },
+    { t: "Identifica la válvula APL", c: false },
+    { t: "Coloca en el flujómetro aire 2 L/min y oxígeno 2 L/min", c: false },
+    { t: "Arma el dispositivo con circuito, máscara y línea de capnografía", c: false },
+    { t: "Identifica la cal sodada", c: false },
+    { t: "Coloca monitoría básica: PANI, ECG y SpO2", c: true }
+  ]},
+  { nombre: "2. Valoración preanestésica (caso)", items: [
+    { t: "Confirma identidad, procedimiento y consentimiento", c: false },
+    { t: "Pregunta ayuno", c: false },
+    { t: "Pregunta antecedentes, medicamentos y ALERGIAS", c: true },
+    { t: "Evalúa vía aérea: Mallampati, apertura oral, distancia tiromentoniana", c: false },
+    { t: "Clasifica ASA correctamente", c: false }
+  ]},
+  { nombre: "3. Vía aérea (simulador)", items: [
+    { t: "Posiciona en olfateo", c: false },
+    { t: "Preoxigena adecuadamente", c: false },
+    { t: "Ventila con máscara: técnica C-E y buen sello", c: false },
+    { t: "Verifica ventilación efectiva (expansión torácica / capnografía)", c: true },
+    { t: "Usa dispositivo de rescate (cánula orofaríngea o máscara laríngea)", c: false },
+    { t: "Realiza laringoscopia de forma adecuada", c: false },
+    { t: "Intubación exitosa", c: false },
+    { t: "Fijación adecuada del tubo orotraqueal", c: false }
+  ]},
+  { nombre: "4. Farmacología aplicada", dosis: true, items: [
+    { t: "Calcula dosis de propofol para el peso", c: false },
+    { t: "Calcula dosis de fentanilo para el peso", c: false },
+    { t: "Calcula dosis de rocuronio para el peso", c: false },
+    { t: "Sabe envasar de manera correcta un medicamento", c: false }
+  ]},
+  { nombre: "5. Vía intravenosa y líquidos", items: [
+    { t: "Identifica el catéter intravenoso y sus calibres", c: false },
+    { t: "Identifica el equipo de venoclisis (macrogoteo / microgoteo)", c: false },
+    { t: "Identifica los líquidos endovenosos (SSN 0.9%, Lactato de Ringer, dextrosa)", c: false },    { t: "Sabe manejar la llave de tres vías de forma correcta", c: false }
+  ]}
+];
+
+const KEY = "examenPractico_v1";
+let estado = {};
+let total = 0;
+
+function render() {
+  const cont = document.getElementById("estaciones");
+  let html = "", idx = 0;
+  ESTACIONES.forEach(function (e) {
+    html += '<div class="card"><h2><span>' + e.nombre + '</span><span class="sub" data-e="' + e.nombre + '"></span></h2>';
+    if (e.dosis) {
+      html += '<div class="dosis noprint">Peso del caso (kg): <input id="peso" type="number" style="width:90px;display:inline-block" oninput="calcDosis()"> ' +
+              '<span id="refDosis">— ingrese el peso para ver los rangos de referencia</span></div>';
+    }
+    e.items.forEach(function (it, j) {
+      html += '<div class="item"><div class="txt"><span class="letra">' + String.fromCharCode(97 + j) + '.</span> ' + it.t + (it.c ? '<span class="crit">CRÍTICO</span>' : '') + '</div>' +
+              '<div class="btns"><button class="b si" data-i="' + idx + '" data-v="A">✔</button>' +
+              '<button class="b no" data-i="' + idx + '" data-v="N">✘</button></div></div>';
+      it.i = idx; idx++;
+    });
+    html += "</div>";
+  });
+  total = idx;
+  cont.innerHTML = html;
+  cont.querySelectorAll(".b").forEach(function (b) {
+    b.addEventListener("click", function () {
+      const i = b.dataset.i;
+      estado[i] = (estado[i] === b.dataset.v) ? undefined : b.dataset.v;
+      if (estado[i] === undefined) delete estado[i];
+      pintar();
+    });
+  });
+}
+
+function calcDosis() {
+  const p = parseFloat(document.getElementById("peso").value);
+  const r = document.getElementById("refDosis");
+  if (!p || p <= 0) { r.textContent = "— ingrese el peso para ver los rangos de referencia"; return; }
+  const f = function (a, b, u) { return (Math.round(a * p * 10) / 10) + "–" + (Math.round(b * p * 10) / 10) + " " + u; };
+  r.innerHTML = "Propofol <b>" + f(1.5, 2.5, "mg") + "</b> · Fentanilo <b>" + f(1, 3, "mcg") + "</b> · Rocuronio <b>" + f(0.6, 1.2, "mg") + "</b>";
+}
+
+function calcular() {
+  let marc = 0, ap = 0, critFall = [];
+  ESTACIONES.forEach(function (e) {
+    e.items.forEach(function (it) {
+      const v = estado[it.i];
+      if (v) marc++;
+      if (v === "A") ap++;
+      if (v === "N" && it.c) critFall.push(it.t);
+    });
+  });
+  let nota = Math.round((ap / total) * 5 * 10) / 10;
+  if (critFall.length) nota = Math.min(nota, 2.9);
+  const uni = document.getElementById("universidad").value;
+  const min = uni === "La Sabana" ? 3.5 : 3.0;
+  return { marc: marc, ap: ap, critFall: critFall, nota: nota, min: min, completo: marc === total };
+}
+
+function pintar() {
+  document.querySelectorAll(".b").forEach(function (b) {
+    b.classList.toggle("on", estado[b.dataset.i] === b.dataset.v);
+  });
+  const r = calcular();
+  document.getElementById("prog").textContent = r.marc + "/" + total;
+  document.getElementById("aprob").textContent = r.ap;
+  document.getElementById("nota").textContent = r.marc ? r.nota.toFixed(1) : "—";
+  const est = document.getElementById("estado");
+  let txt;
+  if (!r.completo) { est.className = "estado pend"; txt = "INCOMPLETO (" + (total - r.marc) + " sin marcar)"; }
+  else if (r.nota >= r.min) { est.className = "estado ok"; txt = "APROBADO"; }
+  else { est.className = "estado mal"; txt = r.critFall.length ? "NO APROBADO · falló ítem crítico" : "NO APROBADO"; }
+  est.textContent = txt;
+  document.getElementById("pResumen").textContent =
+    r.ap + "/" + total + " ítems aprobados · Nota " + r.nota.toFixed(1) + " · " + txt +
+    (r.critFall.length ? " · Críticos fallados: " + r.critFall.join("; ") : "");
+}
+
+function leerReg() { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } }
+function escribirReg(a) { try { localStorage.setItem(KEY, JSON.stringify(a)); return true; } catch (e) { return false; } }
+
+function nuevoId() {
+  const a = (window.crypto && crypto.getRandomValues) ? crypto.getRandomValues(new Uint32Array(2)) : [Math.random() * 4e9, Math.random() * 4e9];
+  return "EP-" + Date.now().toString(36).toUpperCase() + "-" + Math.floor(a[0]).toString(36).toUpperCase().slice(0, 4) + Math.floor(a[1]).toString(36).toUpperCase().slice(0, 4);
+}
+function hoyLocal() {
+  const d = new Date(), p = function (n) { return String(n).padStart(2, "0"); };
+  return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate());
+}
+
+/* Envía UN registro al Sheet. Devuelve "" si quedó guardado, o el motivo del error. */
+async function enviarSheet(x) {
+  if (!/^https:\/\/script\.google\.com\//.test(SHEETS_URL)) return "El envío no está configurado.";
+  const ctrl = ("AbortController" in window) ? new AbortController() : null;
+  const tmo = setTimeout(function () { if (ctrl) ctrl.abort(); }, 30000);
+  try {
+    const r = await fetch(SHEETS_URL, { method: "POST", body: JSON.stringify({
+      action: "practico", clave: CLAVE_PRACTICO, id: x.id, tipo: "Pregrado",
+      estudiante: x.estudiante, universidad: x.universidad, sede: x.sede, evaluador: x.evaluador, fecha: x.fecha,
+      aprobados: x.aprobados, total: x.total, criticos: x.criticos, nota: x.nota, resultado: x.resultado, obs: x.obs
+    }), signal: ctrl ? ctrl.signal : undefined });
+    const d = await r.json();
+    if (!d.ok) return d.error || "Error del servidor.";
+    const reg = leerReg();
+    reg.forEach(function (y) { if (y.id === x.id) y.sheet = "Enviado"; });
+    escribirReg(reg);
+    return "";
+  } catch (e) {
+    return (e && e.name === "AbortError") ? "El servidor no respondió." : "Sin conexión con el servidor.";
+  } finally { clearTimeout(tmo); }
+}
+
+async function enviarPendientes() {
+  const reg = leerReg();
+  let cambio = false;
+  reg.forEach(function (x) { if (!x.id) { x.id = nuevoId(); cambio = true; } });
+  if (cambio) escribirReg(reg);
+  const pend = reg.filter(function (x) { return x.sheet !== "Enviado"; });
+  if (!pend.length) { alert("No hay registros pendientes: todo está en el Sheet."); return; }
+  const b = document.getElementById("btnPend"); b.disabled = true;
+  let ok = 0, error = "";
+  for (let i = 0; i < pend.length; i++) {
+    b.textContent = "Enviando " + (i + 1) + "/" + pend.length + "…";
+    const e = await enviarSheet(pend[i]);
+    if (e) error = e; else ok++;
+  }
+  b.disabled = false; b.textContent = "Enviar pendientes al Sheet";
+  tablaReg();
+  alert(ok + " de " + pend.length + " registro(s) enviados al Sheet." + (error ? "\n⚠ Los demás siguen pendientes: " + error : ""));
+}
+
+async function guardar() {
+  const nom = document.getElementById("estudiante").value.trim();
+  const uni = document.getElementById("universidad").value;
+  const r = calcular();
+  if (!nom || !uni) { alert("Escriba el nombre del estudiante y seleccione la universidad."); return; }
+  if (!r.completo) { alert("Faltan " + (total - r.marc) + " ítems por marcar. Todos deben quedar en ✔ o ✘."); return; }
+  const reg = leerReg();
+  const nuevo = {
+    id: nuevoId(), sheet: "Pendiente",
+    estudiante: nom, universidad: uni,
+    sede: document.getElementById("sede").value,
+    evaluador: document.getElementById("evaluador").value.trim(),
+    fecha: document.getElementById("fecha").value,
+    aprobados: r.ap, total: total, criticos: r.critFall.join(" | "),
+    nota: r.nota.toFixed(1), resultado: r.nota >= r.min ? "APROBADO" : "NO APROBADO",
+    obs: document.getElementById("obs").value.trim()
+  };
+  reg.push(nuevo);
+  if (!escribirReg(reg)) { alert("No se pudo guardar en este navegador. Imprima el formato."); return; }
+  const btn = document.getElementById("btnGuardar");
+  btn.disabled = true; btn.textContent = "Enviando…";
+  const error = await enviarSheet(nuevo);
+  btn.disabled = false; btn.textContent = "Guardar y siguiente";
+  alert("Guardado: " + nom + " — Nota " + r.nota.toFixed(1) + (error
+    ? "\n\n⚠ NO se pudo enviar al Sheet (" + error + ").\nQuedó PENDIENTE en este equipo: abra «Registros» y oprima «Enviar pendientes al Sheet»."
+    : "\n\n✓ Enviado al Google Sheet."));
+  estado = {};
+  document.getElementById("estudiante").value = "";
+  document.getElementById("obs").value = "";
+  pintar(); tablaReg();
+  window.scrollTo(0, 0);
+}
+
+function tablaReg() {
+  const reg = leerReg();
+  document.getElementById("nReg").textContent = reg.length;
+  let h = "<tr><th>Estudiante</th><th>Universidad</th><th>Sede</th><th>Fecha</th><th>Ítems</th><th>Nota</th><th>Resultado</th><th>Sheet</th></tr>";
+  reg.forEach(function (x) {
+    h += "<tr><td>" + esc(x.estudiante) + "</td><td>" + esc(x.universidad) + "</td><td>" + esc(x.sede) + "</td><td>" + esc(x.fecha) +
+         "</td><td>" + x.aprobados + "/" + x.total + "</td><td><b>" + x.nota + "</b></td><td style=\"color:" +
+         (x.resultado === "APROBADO" ? "var(--verde)" : "var(--rojo)") + ";font-weight:700\">" + x.resultado + "</td>" +
+         (x.sheet === "Enviado" ? "<td style=\"color:var(--verde);font-weight:700\">✔ Enviado</td>" : "<td style=\"color:var(--naranja);font-weight:700\">⏳ Pendiente</td>") + "</tr>";
+  });
+  document.getElementById("tabla").innerHTML = h;
+}
+
+function esc(s) { return String(s || "").replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+function toggleReg() { const d = document.getElementById("registros"); d.classList.toggle("hidden"); tablaReg(); if (!d.classList.contains("hidden")) d.scrollIntoView(); }
+
+function exportarCSV() {
+  const reg = leerReg();
+  if (!reg.length) { alert("No hay registros."); return; }
+  const cols = ["estudiante", "universidad", "sede", "evaluador", "fecha", "aprobados", "total", "criticos", "nota", "resultado", "obs", "id", "sheet"];
+  let csv = "\uFEFF" + cols.join(";") + "\n";
+  reg.forEach(function (x) { csv += cols.map(function (c) { return '"' + String(x[c] == null ? "" : x[c]).replace(/"/g, '""') + '"'; }).join(";") + "\n"; });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+  a.download = "examen_practico_" + new Date().toISOString().slice(0, 10) + ".csv";
+  a.click();
+}
+
+function borrarRegistros() {
+  if (confirm("¿Borrar TODOS los registros guardados en este equipo?")) { escribirReg([]); tablaReg(); }
+}
+
+document.getElementById("fecha").value = hoyLocal();
+document.getElementById("universidad").addEventListener("change", pintar);
+render(); pintar();
+</script>
+</body>
+</html>

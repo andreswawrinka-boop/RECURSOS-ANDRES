@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14213D">
+<title>Registro BNM – Tesis</title>
+<style>
+  :root{
+    --navy:#14213D; --azul:#0057FF; --verde:#00A86B; --rojo:#E63946;
+    --naranja:#FF7A00; --morado:#4B2E83; --fondo:#EEF3FF; --blanco:#FFFFFF;
+    --borde:#3A4A7A; --texto:#14213D;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--fondo);color:var(--texto);font-size:16px}
+  header{background:var(--navy);color:#fff;padding:14px 16px calc(14px);position:sticky;top:0;z-index:20}
+  header h1{margin:0;font-size:18px}
+  header .sub{font-size:13px;opacity:.95}
+  .barra{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:8px}
+  .pend{background:var(--naranja);color:#fff;border:none;border-radius:20px;padding:6px 12px;font-weight:700;font-size:13px;display:none}
+  .crono{background:#000;color:#00FF9C;font-family:ui-monospace,Menlo,monospace;font-size:28px;font-weight:800;border-radius:10px;padding:4px 12px;display:none}
+  main{max-width:680px;margin:0 auto;padding:12px 16px 120px}
+  section{background:var(--blanco);border:2px solid var(--navy);border-radius:14px;margin:14px 0;overflow:hidden}
+  section>h2{margin:0;background:var(--azul);color:#fff;font-size:17px;padding:12px 14px;cursor:pointer;display:flex;justify-content:space-between}
+  section.mon>h2{background:var(--morado)}
+  section.cierre>h2{background:var(--navy)}
+  .cuerpo{padding:14px}
+  .cerrada .cuerpo{display:none}
+  label{display:block;font-weight:700;font-size:14px;margin:12px 0 4px}
+  .ayuda{font-weight:400;font-size:12.5px;color:var(--borde)}
+  input[type=text],input[type=number],input[type=date],input[type=time],select,textarea{width:100%;font-size:17px;padding:11px 12px;border:2px solid var(--borde);border-radius:10px;background:#fff;color:var(--texto)}
+  input:focus,select:focus,textarea:focus{outline:3px solid var(--azul);border-color:var(--azul)}
+  .fila{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .fila3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .seg{display:flex;flex-wrap:wrap;gap:8px}
+  .seg input{display:none}
+  .seg label{margin:0;border:2px solid var(--azul);color:var(--azul);border-radius:10px;padding:10px 14px;font-size:15px;cursor:pointer;flex:1 1 auto;text-align:center}
+  .seg input:checked+label{background:var(--azul);color:#fff}
+  .calc{background:var(--navy);color:#fff;border-radius:10px;padding:10px 12px;margin-top:10px;font-size:14px;line-height:1.5}
+  .calc b{color:#00FF9C}
+  .evento{display:grid;grid-template-columns:1fr 112px;gap:8px;align-items:center;margin:10px 0}
+  .evento button{min-height:52px}
+  .evento input{text-align:center;font-family:ui-monospace,Menlo,monospace}
+  button{font-size:16px;font-weight:800;border:none;border-radius:12px;padding:14px;color:#fff;background:var(--azul);cursor:pointer}
+  button:active{transform:scale(.98)}
+  .b-verde{background:var(--verde)} .b-rojo{background:var(--rojo)} .b-naranja{background:var(--naranja)} .b-morado{background:var(--morado)} .b-navy{background:var(--navy)}
+  .b-borde{background:#fff;color:var(--navy);border:2px solid var(--navy)}
+  .grande{width:100%;font-size:19px;padding:18px}
+  .hecho{outline:4px solid #00FF9C}
+  .umbral{background:var(--rojo);color:#fff;border-radius:10px;padding:10px 12px;font-weight:800;margin-top:10px;display:none}
+  .aviso{background:#FFE14D;color:#14213D;border:2px solid #14213D;border-radius:10px;padding:10px;font-size:14px;margin-top:10px}
+  .pie{position:fixed;left:0;right:0;bottom:0;background:var(--navy);padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;gap:10px;z-index:30}
+  .pie button{flex:1}
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:90px;background:#000;color:#fff;padding:12px 18px;border-radius:12px;font-weight:700;z-index:40;display:none;max-width:90%;text-align:center}
+  dialog{border:3px solid var(--navy);border-radius:14px;max-width:560px;width:92%}
+  dialog h3{margin-top:0}
+  dialog::backdrop{background:rgba(20,33,61,.75)}
+  .resumen-lista{font-size:14px;line-height:1.6;max-height:50vh;overflow:auto}
+  .config{font-size:13px;text-align:center;margin-top:18px}
+  .config a{color:var(--azul);font-weight:700}
+</style>
+</head>
+<body>
+<header>
+  <h1>Registro BNM · Variabilidad interindividual</h1>
+  <div class="sub">Hospitales de Kennedy y Bosa · Subred Suroccidente</div>
+  <div class="barra">
+    <div class="crono" id="crono">00:00</div>
+    <button class="pend" id="btnPend" onclick="enviarPendientes()">0 pendientes ⟳</button>
+  </div>
+</header>
+
+<main>
+<!-- 1. IDENTIFICACIÓN -->
+<section id="s1"><h2 onclick="tog('s1')">1. Identificación <span>▾</span></h2><div class="cuerpo">
+  <label>Sede</label>
+  <div class="seg">
+    <input type="radio" name="sede" id="sKEN" value="Kennedy"><label for="sKEN">Kennedy</label>
+    <input type="radio" name="sede" id="sBOS" value="Bosa"><label for="sBOS">Bosa</label>
+  </div>
+  <label>Código del paciente</label>
+  <div class="calc" id="codigoInfo">El código (BNM-001, BNM-002…) se asigna automáticamente y en orden al guardar. Nunca se repite.</div>
+  <label>Fecha de la cirugía</label>
+  <input type="date" id="fecha_cirugia">
+</div></section>
+
+<!-- 2. PACIENTE -->
+<section id="s2"><h2 onclick="tog('s2')">2. Paciente <span>▾</span></h2><div class="cuerpo">
+  <div class="fila">
+    <div><label>Edad (años)</label><input type="number" id="edad" inputmode="numeric" min="18" max="110"></div>
+    <div><label>ASA</label><select id="asa"><option value="">—</option><option>I</option><option>II</option><option>III</option></select></div>
+  </div>
+  <label>Sexo</label>
+  <div class="seg">
+    <input type="radio" name="sexo" id="sxF" value="Femenino"><label for="sxF">Femenino</label>
+    <input type="radio" name="sexo" id="sxM" value="Masculino"><label for="sxM">Masculino</label>
+  </div>
+  <div class="fila">
+    <div><label>Peso real (kg)</label><input type="number" id="peso" inputmode="decimal" step="0.1"></div>
+    <div><label>Talla (cm)</label><input type="number" id="talla" inputmode="decimal" step="0.1"></div>
+  </div>
+  <div class="calc" id="calcPeso">IMC y peso ideal se calculan solos.</div>
+  <label>Comorbilidades</label>
+  <div class="seg">
+    <input type="checkbox" id="erc"><label for="erc">ERC</label>
+    <input type="checkbox" id="hepatopatia"><label for="hepatopatia">Hepatopatía</label>
+  </div>
+  <label>Creatinina (mg/dL) <span class="ayuda">(solo si hay reporte; puede quedar vacía)</span></label><input type="number" id="creatinina" inputmode="decimal" step="0.01">
+</div></section>
+
+<!-- 3. ANESTESIA -->
+<section id="s3"><h2 onclick="tog('s3')">3. Contexto anestésico <span>▾</span></h2><div class="cuerpo">
+  <label>Tipo de cirugía</label>
+  <select id="tipo_cirugia"><option value="">—</option><option>Abdominal</option><option>Torácica</option><option>Ortopédica</option><option>Urológica</option><option>Otra</option></select>
+  <label>Agente inhalado</label>
+  <div class="seg">
+    <input type="radio" name="inhalado" id="iSEV" value="Sevoflurano"><label for="iSEV">Sevoflurano</label>
+    <input type="radio" name="inhalado" id="iDES" value="Desflurano"><label for="iDES">Desflurano</label>
+    <input type="radio" name="inhalado" id="iNO" value="Ninguno (TIVA)"><label for="iNO">Ninguno (TIVA)</label>
+  </div>
+  <label>Concentración en el vaporizador (%)</label><input type="number" id="vaporizador" inputmode="decimal" step="0.1">
+  <div class="fila">
+    <div><label>Temp. tenar inicial (°C)</label><input type="number" id="temp_inicial" inputmode="decimal" step="0.1"></div>
+    <div><label>Temp. tenar mínima (°C)</label><input type="number" id="temp_minima" inputmode="decimal" step="0.1"></div>
+  </div>
+  <div class="ayuda">Transductor de piel en la eminencia tenar; mano cubierta (meta ≥ 32 °C). Registre cada 15 min y anote aquí la mínima.</div>
+  <label>Fármacos concomitantes</label>
+  <div class="seg">
+    <input type="checkbox" id="magnesio"><label for="magnesio">Sulfato de Mg</label>
+    <input type="checkbox" id="aminoglucosido"><label for="aminoglucosido">Aminoglucósido</label>
+    <input type="checkbox" id="succinilcolina"><label for="succinilcolina">Succinilcolina previa</label>
+  </div>
+  <div class="aviso" id="avisoSux" style="display:none">⚠️ Succinilcolina antes del BNM no despolarizante = CRITERIO DE EXCLUSIÓN.</div>
+</div></section>
+
+<!-- 4. BLOQUEANTE Y TOF -->
+<section id="s4" class="mon"><h2 onclick="tog('s4')">4. Bloqueante y monitoreo TOF <span>▾</span></h2><div class="cuerpo">
+  <label>Bloqueante</label>
+  <div class="seg">
+    <input type="radio" name="bloqueante" id="bROC" value="Rocuronio"><label for="bROC">Rocuronio</label>
+    <input type="radio" name="bloqueante" id="bVEC" value="Vecuronio"><label for="bVEC">Vecuronio</label>
+    <input type="radio" name="bloqueante" id="bCIS" value="Cisatracurio"><label for="bCIS">Cisatracurio</label>
+  </div>
+  <label>Dosis administrada (mg)</label><input type="number" id="dosis_mg" inputmode="decimal" step="0.1">
+  <div class="calc" id="calcDosis">Dosis en mg/kg (real · ideal) se calcula sola.</div>
+
+  <label>Razón TOF basal <span class="ayuda">(después de calibrar, antes del bolo; ej. 1,05)</span></label>
+  <input type="number" id="tof_basal" inputmode="decimal" step="0.01">
+  <div class="umbral" id="umbral"></div>
+
+  <button type="button" class="grande b-verde" id="btnBolo" style="margin-top:16px" onclick="iniciarBolo()">▶ BOLO ADMINISTRADO (tiempo 0)</button>
+  <div class="ayuda" style="margin-top:6px">Presione en el momento exacto del bolo. El cronómetro sigue aunque bloquee el celular o cierre la página.</div>
+
+  <h3 style="margin:18px 0 4px">Eventos <span class="ayuda">(toque el botón cuando ocurra; el tiempo se puede editar en m:ss)</span></h3>
+  <div class="evento"><button type="button" class="b-morado" onclick="marcar('t_tof0')">TOF = 0</button><input type="text" id="t_tof0" placeholder="m:ss" inputmode="numeric"></div>
+  <label>Depresión máxima de T1 (%)</label><input type="number" id="t1_max" inputmode="decimal" step="1" max="100">
+  <div class="evento"><button type="button" class="b-azul" onclick="marcar('t_t2')">Reaparece T2 (TOF ≥ 2)</button><input type="text" id="t_t2" placeholder="m:ss" inputmode="numeric"></div>
+  <div class="evento"><button type="button" class="b-verde" onclick="marcar('t_tof09')">TOF norm ≥ 0,9</button><input type="text" id="t_tof09" placeholder="m:ss" inputmode="numeric"></div>
+
+  <label>Reversor</label>
+  <div class="seg">
+    <input type="radio" name="reversor" id="rNO" value="Ninguno"><label for="rNO">Ninguno</label>
+    <input type="radio" name="reversor" id="rSUG" value="Sugammadex"><label for="rSUG">Sugammadex</label>
+    <input type="radio" name="reversor" id="rNEO" value="Neostigmina"><label for="rNEO">Neostigmina</label>
+  </div>
+  <div id="bloqueRev" style="display:none">
+    <div class="evento"><button type="button" class="b-naranja" onclick="marcar('t_reversor')">Reversor administrado</button><input type="text" id="t_reversor" placeholder="m:ss" inputmode="numeric"></div>
+    <label>Dosis del reversor (mg)</label><input type="number" id="dosis_reversor" inputmode="decimal" step="0.1">
+  </div>
+  <label>¿Redosis del bloqueante?</label>
+  <div class="seg">
+    <input type="radio" name="redosis" id="rdNO" value="No" checked><label for="rdNO">No</label>
+    <input type="radio" name="redosis" id="rdSI" value="Sí"><label for="rdSI">Sí</label>
+  </div>
+  <div id="bloqueRedosis" style="display:none">
+    <div class="evento"><button type="button" class="b-naranja" onclick="marcar('t_redosis')">Primera redosis</button><input type="text" id="t_redosis" placeholder="m:ss" inputmode="numeric"></div>
+    <div class="ayuda">Los eventos que aún no hayan ocurrido se censuran en el momento de la redosis.</div>
+  </div>
+  <div class="evento"><button type="button" class="b-rojo" onclick="marcar('t_fin')">■ Fin del monitoreo</button><input type="text" id="t_fin" placeholder="m:ss" inputmode="numeric"></div>
+  <div class="ayuda">"Fin del monitoreo" es obligatorio: si un evento no ocurrió, ese tiempo se usa como censura en el análisis.</div>
+</div></section>
+
+<!-- 5. CIERRE -->
+<section id="s5" class="cierre"><h2 onclick="tog('s5')">5. Cierre <span>▾</span></h2><div class="cuerpo">
+  <label>Duración del procedimiento <span class="ayuda">(de la incisión al cierre de piel, según el registro anestésico)</span></label>
+  <div class="fila">
+    <div><label>Hora de incisión</label><input type="time" id="hora_incision"></div>
+    <div><label>Hora de cierre de piel</label><input type="time" id="hora_cierre"></div>
+  </div>
+  <div class="calc" id="calcDur">La duración se calcula sola.</div>
+  <input type="hidden" id="duracion">
+  <label>¿Retirado del estudio?</label>
+  <div class="seg">
+    <input type="radio" name="retirado" id="retNO" value="No" checked><label for="retNO">No</label>
+    <input type="radio" name="retirado" id="retSI" value="Sí"><label for="retSI">Sí</label>
+  </div>
+  <div id="bloqueRetiro" style="display:none">
+    <label>Motivo de retiro</label>
+    <select id="motivo_retiro"><option value="">—</option><option>Pérdida de calidad del registro aceleromiográfico</option><option>Modificación no protocolizada del plan anestésico</option><option>Evento adverso grave</option><option>Otro</option></select>
+  </div>
+  <label>Observaciones</label><textarea id="observaciones" rows="3"></textarea>
+  <div class="config"><a href="#" onclick="configurar();return false">⚙︎ Configuración</a> · <a href="#" onclick="exportarCSV();return false">⬇ Descargar mis registros (CSV)</a></div>
+</div></section>
+</main>
+
+<div class="pie">
+  <button type="button" class="b-borde" onclick="nuevo()">Nuevo</button>
+  <button type="button" class="b-verde" style="flex:2" onclick="revisar()">Revisar y guardar</button>
+</div>
+<div class="toast" id="toast"></div>
+
+<dialog id="dlg">
+  <h3>Revisar antes de guardar</h3>
+  <div class="resumen-lista" id="resumen"></div>
+  <div style="display:flex;gap:10px;margin-top:14px">
+    <button type="button" class="b-borde" style="flex:1" onclick="dlg.close()">Corregir</button>
+    <button type="button" class="b-verde" style="flex:2" onclick="guardar()">Guardar</button>
+  </div>
+</dialog>
+
+<dialog id="dlgPreg">
+  <h3 id="pregTitulo">¿Confirmar?</h3>
+  <p id="pregTexto" style="font-size:15px"></p>
+  <div style="display:flex;gap:10px;margin-top:14px">
+    <button type="button" class="b-borde" style="flex:1" id="pregNo">Cancelar</button>
+    <button type="button" class="b-rojo" style="flex:2" id="pregSi">Sí</button>
+  </div>
+</dialog>
+<dialog id="dlgConf">
+  <h3>Configuración</h3>
+  <label>URL de Apps Script (termina en /exec)</label><input type="text" id="cfgUrl" autocapitalize="off" autocorrect="off" spellcheck="false">
+  <label>Clave (la misma de Codigo.gs)</label><input type="text" id="cfgClave" autocapitalize="off" autocorrect="off" spellcheck="false">
+  <div style="display:flex;gap:10px;margin-top:14px">
+    <button type="button" class="b-borde" style="flex:1" onclick="$('dlgConf').close()">Cancelar</button>
+    <button type="button" class="b-verde" style="flex:2" onclick="guardarConfig()">Guardar</button>
+  </div>
+</dialog>
+
+<script>
+/* ====== CONFIGURACIÓN (pegue aquí su URL de Apps Script y la misma clave) ====== */
+let URL_SCRIPT = 'https://script.google.com/macros/s/AKfycby9YnM-M_SkDQf87eMAJWQylqKxfMStw7MfKJsFhjjDtjWhezxkGVXE-1A8kX7-7shX/exec';
+let CLAVE = 'tesis2026';
+const VERSION = '1.5';
+/* ============================================================================== */
+const $ = id => document.getElementById(id);
+const LS = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+};
+URL_SCRIPT = LS.get('bnm2_url', URL_SCRIPT);
+CLAVE = LS.get('bnm2_clave', CLAVE);
+
+const CAMPOS = ['fecha_cirugia','edad','asa','peso','talla','creatinina','tipo_cirugia','vaporizador','temp_inicial','temp_minima',
+  'dosis_mg','tof_basal','t_tof0','t1_max','t_t2','t_tof09','t_reversor','dosis_reversor','t_redosis','t_fin','hora_incision','hora_cierre','duracion','motivo_retiro','observaciones'];
+const CHECKS = ['erc','hepatopatia','magnesio','aminoglucosido','succinilcolina'];
+const RADIOS = ['sede','sexo','inhalado','bloqueante','reversor','redosis','retirado'];
+const TIEMPOS = ['t_tof0','t_t2','t_tof09','t_reversor','t_redosis','t_fin'];
+
+function tog(id) { $(id).classList.toggle('cerrada'); }
+function toast(msg, ms = 2200) { const t = $('toast'); t.textContent = msg; t.style.display = 'block'; clearTimeout(t._h); t._h = setTimeout(() => t.style.display = 'none', ms); }
+function num(id) { const v = String($(id).value).replace(',', '.'); return v === '' ? null : Number(v); }
+function radio(n) { const r = document.querySelector('input[name="' + n + '"]:checked'); return r ? r.value : ''; }
+function co(x) { return String(x).replace('.', ','); }
+function r2(x, d = 2) { return x === null || !isFinite(x) ? '' : Math.round(x * 10 ** d) / 10 ** d; }
+
+/* ---------- tiempos ---------- */
+function fmt(s) { if (s === null || s === '' || isNaN(s)) return ''; s = Math.max(0, Math.round(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
+function aSeg(txt) {
+  txt = String(txt || '').trim(); if (!txt) return null;
+  if (txt.includes(':')) { const [m, s] = txt.split(':'); return Number(m) * 60 + Number(s || 0); }
+  return Number(txt.replace(',', '.')) * 60; // solo minutos
+}
+let t0 = LS.get('bnm_t0', null), timer = null;
+function preguntar(titulo, texto, si = 'Sí', no = 'Cancelar') {
+  return new Promise(res => {
+    const dg = $('dlgPreg');
+    $('pregTitulo').textContent = titulo; $('pregTexto').textContent = texto;
+    $('pregSi').textContent = si; $('pregNo').textContent = no;
+    const fin = v => { dg.close(); res(v); };
+    $('pregSi').onclick = () => fin(true); $('pregNo').onclick = () => fin(false);
+    dg.oncancel = e => { e.preventDefault(); fin(false); };
+    dg.showModal();
+  });
+}
+async function iniciarBolo() {
+  if (t0 && !(await preguntar('¿Reiniciar el tiempo 0?', 'Ya hay un bolo registrado. Se borrarán los tiempos marcados.', 'Sí, reiniciar'))) return;
+  t0 = Date.now(); LS.set('bnm_t0', t0);
+  TIEMPOS.forEach(id => $(id).value = '');
+  $('btnBolo').textContent = '✔ Bolo a las ' + new Date(t0).toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  $('btnBolo').classList.add('hecho');
+  arrancarCrono(); guardarBorrador(); toast('Tiempo 0 registrado');
+  if (navigator.vibrate) navigator.vibrate(80);
+}
+function arrancarCrono() {
+  if (!t0) return; $('crono').style.display = 'block';
+  clearInterval(timer);
+  timer = setInterval(() => { $('crono').textContent = fmt((Date.now() - t0) / 1000); }, 500);
+}
+async function marcar(id) {
+  if (!t0) { toast('Primero presione BOLO ADMINISTRADO'); return; }
+  if ($(id).value && !(await preguntar('¿Reemplazar el tiempo?', 'Este evento ya tiene un tiempo registrado (' + $(id).value + ').', 'Sí, reemplazar'))) return;
+  $(id).value = fmt((Date.now() - t0) / 1000);
+  $(id).classList.add('hecho'); guardarBorrador();
+  if (navigator.vibrate) navigator.vibrate(60);
+  toast('Registrado: ' + $(id).value);
+  if (id === 't_fin') clearInterval(timer);
+}
+
+/* ---------- cálculos ---------- */
+function calcular() {
+  const p = num('peso'), t = num('talla'), sx = radio('sexo');
+  let imc = null, pi = null, pm = null;
+  if (p && t) {
+    imc = p / ((t / 100) ** 2);
+    if (sx) {
+      pi = (sx === 'Masculino' ? 50 : 45.5) + 0.91 * (t - 152.4);           // Devine
+      pm = sx === 'Masculino' ? 9270 * p / (6680 + 216 * imc) : 9270 * p / (8780 + 244 * imc); // Janmahasatian
+    }
+  }
+  $('calcPeso').innerHTML = imc ? `IMC <b>${co(r2(imc, 1))}</b> kg/m² · Peso ideal <b>${pi ? co(r2(pi, 1)) : '—'}</b> kg` : 'IMC y peso ideal se calculan solos.';
+  const d = num('dosis_mg');
+  $('calcDosis').innerHTML = (d && p) ? `mg/kg real <b>${co(r2(d / p, 3))}</b> · ideal <b>${pi ? co(r2(d / pi, 3)) : '—'}</b>` : 'Dosis en mg/kg (real · ideal) se calcula sola.';
+  const b = num('tof_basal');
+  if (b) { $('umbral').style.display = 'block'; $('umbral').textContent = `Meta en pantalla del TOF-Watch: razón ≥ ${co(r2(0.9 * b, 2))} (= 0,9 normalizado)`; }
+  else $('umbral').style.display = 'none';
+  const hi = $('hora_incision').value, hc = $('hora_cierre').value;
+  if (hi && hc) {
+    let m = (Number(hc.slice(0, 2)) * 60 + Number(hc.slice(3, 5))) - (Number(hi.slice(0, 2)) * 60 + Number(hi.slice(3, 5)));
+    if (m < 0) m += 1440; // cirugía que pasa la medianoche
+    $('duracion').value = m; $('calcDur').innerHTML = `Duración: <b>${m} min</b>`;
+  } else { $('duracion').value = ''; $('calcDur').textContent = 'La duración se calcula sola.'; }
+  $('avisoSux').style.display = $('succinilcolina').checked ? 'block' : 'none';
+  $('bloqueRev').style.display = (radio('reversor') && radio('reversor') !== 'Ninguno') ? 'block' : 'none';
+  $('bloqueRedosis').style.display = radio('redosis') === 'Sí' ? 'block' : 'none';
+  $('bloqueRetiro').style.display = radio('retirado') === 'Sí' ? 'block' : 'none';
+  return { imc, pi, pm };
+}
+
+/* ---------- datos ---------- */
+function recoger() {
+  const c = calcular(), d = {};
+  CAMPOS.forEach(k => d[k] = $(k).value.trim());
+  CHECKS.forEach(k => d[k] = $(k).checked ? 'Sí' : 'No');
+  RADIOS.forEach(k => d[k] = radio(k));
+  ['edad','peso','talla','creatinina','vaporizador','temp_inicial','temp_minima','dosis_mg','tof_basal','t1_max','dosis_reversor','duracion']
+    .forEach(k => d[k] = num(k) === null ? '' : num(k));
+  TIEMPOS.forEach(k => { const s = aSeg($(k).value); d[k] = s === null ? '' : Math.round(s); });
+  d.imc = r2(c.imc, 1); d.peso_ideal = r2(c.pi, 1); d.peso_magro = r2(c.pm, 1);
+  d.dosis_kg_real = d.dosis_mg && d.peso ? r2(d.dosis_mg / d.peso, 3) : '';
+  d.dosis_kg_ideal = d.dosis_mg && c.pi ? r2(d.dosis_mg / c.pi, 3) : '';
+  d.dosis_kg_magro = d.dosis_mg && c.pm ? r2(d.dosis_mg / c.pm, 3) : '';
+  d.umbral_09 = d.tof_basal ? r2(0.9 * d.tof_basal, 2) : '';
+  if (d.reversor === 'Ninguno') { d.t_reversor = ''; d.dosis_reversor = ''; }
+  if (d.retirado !== 'Sí') d.motivo_retiro = '';
+  if (d.redosis !== 'Sí') d.t_redosis = '';
+  d.version = VERSION;
+  return d;
+}
+function problemas(d) {
+  const err = [], av = [];
+  if (!d.sede) err.push('Sede');
+  if (!d.edad) err.push('Edad'); else if (d.edad < 18) err.push('Edad < 18 (criterio de inclusión)');
+  if (!d.sexo) err.push('Sexo');
+  if (!d.peso) err.push('Peso'); if (!d.talla) err.push('Talla');
+  if (!d.asa) err.push('ASA');
+  if (!d.bloqueante) err.push('Bloqueante'); if (!d.dosis_mg) err.push('Dosis (mg)');
+  if (!d.tof_basal) err.push('Razón TOF basal');
+  if (d.t_fin === '') err.push('Fin del monitoreo');
+  if (!d.reversor) err.push('Reversor (marque "Ninguno" si no se usó)');
+  if (d.redosis === 'Sí' && d.t_redosis === '') err.push('Tiempo de la primera redosis');
+  if (!d.hora_incision || !d.hora_cierre) err.push('Horas de incisión y cierre de piel');
+  if (d.duracion !== '' && d.duracion > 900) av.push('Duración > 15 h: verifique las horas.');
+  if (d.succinilcolina === 'Sí') av.push('Succinilcolina previa: el paciente cumple criterio de exclusión.');
+  if (d.peso && (d.peso < 30 || d.peso > 250)) av.push('Peso fuera de rango esperado.');
+  if (d.talla && (d.talla < 120 || d.talla > 220)) av.push('Talla fuera de rango esperado.');
+  if (d.tof_basal && (d.tof_basal < 0.7 || d.tof_basal > 1.6)) av.push('TOF basal inusual (verifique calibración).');
+  if (d.temp_minima && d.temp_minima < 32) av.push('Temperatura tenar < 32 °C.');
+  if (d.dosis_kg_real && (d.dosis_kg_real > 2)) av.push('Dosis > 2 mg/kg: ¿escribió mg/kg en lugar de mg?');
+  const orden = [['t_tof0','t_t2'],['t_t2','t_tof09']];
+  orden.forEach(([a, b]) => { if (d[a] !== '' && d[b] !== '' && d[a] > d[b]) av.push(`Tiempo de ${a} mayor que ${b}.`); });
+  if (d.t_fin !== '') TIEMPOS.forEach(k => { if (k !== 't_fin' && d[k] !== '' && d[k] > d.t_fin) av.push(`${k} es posterior al fin del monitoreo.`); });
+  return { err, av };
+}
+const ETIQ = { t_tof0: 'TOF = 0', t_t2: 'Reaparece T2', t_tof09: 'TOF norm ≥ 0,9', t_reversor: 'Reversor', t_redosis: 'Primera redosis', t_fin: 'Fin del monitoreo' };
+function revisar() {
+  const d = recoger(), p = problemas(d);
+  let h = '';
+  if (p.err.length) h += `<div class="aviso" style="background:#E63946;color:#fff">Faltan: <b>${p.err.join(', ')}</b></div>`;
+  if (p.av.length) h += `<div class="aviso">${p.av.join('<br>')}</div>`;
+  h += `<p><b>Código: se asigna al guardar</b><br>${d.sede} · ${d.edad} años · ${d.sexo} · ASA ${d.asa}<br>
+  ${d.peso} kg / ${d.talla} cm · IMC ${d.imc} · Peso ideal ${d.peso_ideal}<br>
+  <b>${d.bloqueante}</b> ${d.dosis_mg} mg (${d.dosis_kg_real} mg/kg real · ${d.dosis_kg_ideal} ideal)<br>
+  Cirugía ${d.hora_incision || '—'} → ${d.hora_cierre || '—'} (${d.duracion !== '' ? d.duracion + ' min' : '—'})<br>
+  TOF basal ${d.tof_basal} · Inhalado ${d.inhalado || '—'} ${d.vaporizador !== '' ? d.vaporizador + ' %' : ''}</p>`;
+  h += TIEMPOS.filter(k => !(k === 't_reversor' && d.reversor === 'Ninguno') && !(k === 't_redosis' && d.redosis !== 'Sí')).map(k => `${ETIQ[k]}: <b>${d[k] === '' ? '—' : fmt(d[k]) + ' (' + d[k] + ' s)'}</b>`).join('<br>');
+  h += `<br>Reversor: <b>${d.reversor}</b>${d.dosis_reversor ? ' ' + d.dosis_reversor + ' mg' : ''}`;
+  $('resumen').innerHTML = h;
+  dlg.querySelector('.b-verde').disabled = p.err.length > 0;
+  dlg.querySelector('.b-verde').style.opacity = p.err.length ? .4 : 1;
+  dlg.showModal();
+}
+/* ---------- salida para el Excel / R: nombres snake_case, códigos sin tildes, binarias 0/1 ---------- */
+const MAPA = {
+  sede: { 'Kennedy': 'kennedy', 'Bosa': 'bosa' },
+  sexo: { 'Femenino': 'femenino', 'Masculino': 'masculino' },
+  asa: { 'I': 1, 'II': 2, 'III': 3 },
+  tipo_cirugia: { 'Abdominal': 'abdominal', 'Torácica': 'toracica', 'Ortopédica': 'ortopedica', 'Urológica': 'urologica', 'Otra': 'otra' },
+  inhalado: { 'Sevoflurano': 'sevoflurano', 'Desflurano': 'desflurano', 'Ninguno (TIVA)': 'ninguno' },
+  bloqueante: { 'Rocuronio': 'rocuronio', 'Vecuronio': 'vecuronio', 'Cisatracurio': 'cisatracurio' },
+  reversor: { 'Ninguno': 'ninguno', 'Sugammadex': 'sugammadex', 'Neostigmina': 'neostigmina' },
+  motivo_retiro: { 'Pérdida de calidad del registro aceleromiográfico': 'perdida_calidad', 'Modificación no protocolizada del plan anestésico': 'cambio_plan', 'Evento adverso grave': 'evento_adverso', 'Otro': 'otro' }
+};
+const m = (k, v) => (v === '' || v === undefined) ? '' : (MAPA[k][v] !== undefined ? MAPA[k][v] : v);
+const b01 = v => v === 'Sí' ? 1 : 0;
+// estado: 1 = evento observado; 2 = reversor antes del evento (riesgo competitivo); 0 = censurado al fin del monitoreo
+// la redosis censura (estado 0) en su momento si ocurre antes del evento y del reversor
+function desenlace(t, rev, red, fin) {
+  const lim = [rev, red].filter(x => x !== '');
+  const primero = lim.length ? Math.min(...lim) : '';
+  if (t !== '' && (primero === '' || t <= primero)) return [t, 1];
+  if (rev !== '' && rev === primero) return [rev, 2];
+  if (red !== '') return [red, 0];
+  return [fin, 0];
+}
+function paraR(d) {
+  const rev = d.reversor !== 'Ninguno' ? d.t_reversor : '';
+  const red = d.redosis === 'Sí' ? d.t_redosis : '';
+  const ini = (d.t_tof0 !== '' && (red === '' || d.t_tof0 <= red)) ? [d.t_tof0, 1] : [red !== '' ? red : d.t_fin, 0];
+  const t2 = desenlace(d.t_t2, rev, red, d.t_fin), r9 = desenlace(d.t_tof09, rev, red, d.t_fin);
+  return {
+    codigo: '', sede: m('sede', d.sede), fecha_cirugia: d.fecha_cirugia,
+    edad_anios: d.edad, sexo: m('sexo', d.sexo), peso_kg: d.peso, talla_cm: d.talla, imc: d.imc,
+    peso_ideal_kg: d.peso_ideal, asa: m('asa', d.asa),
+    erc: b01(d.erc), hepatopatia: b01(d.hepatopatia), creatinina_mg_dl: d.creatinina,
+    tipo_cirugia: m('tipo_cirugia', d.tipo_cirugia), hora_incision: d.hora_incision, hora_cierre: d.hora_cierre, duracion_min: d.duracion,
+    inhalado: m('inhalado', d.inhalado), vaporizador_pct: d.vaporizador,
+    temp_tenar_inicial_c: d.temp_inicial, temp_tenar_minima_c: d.temp_minima,
+    magnesio: b01(d.magnesio), aminoglucosido: b01(d.aminoglucosido), succinilcolina_previa: b01(d.succinilcolina),
+    bloqueante: m('bloqueante', d.bloqueante), dosis_mg: d.dosis_mg,
+    dosis_mgkg_real: d.dosis_kg_real, dosis_mgkg_ideal: d.dosis_kg_ideal,
+    tof_basal: d.tof_basal,
+    t_tof0_seg: d.t_tof0, t1_dep_max_pct: d.t1_max, t_t2_seg: d.t_t2, t_tof09_seg: d.t_tof09,
+    reversor: m('reversor', d.reversor), reversor_dosis_mg: d.dosis_reversor, t_reversor_seg: d.t_reversor,
+    redosis: b01(d.redosis), t_redosis_seg: d.t_redosis, t_fin_seg: d.t_fin,
+    inicio_tiempo_seg: ini[0], inicio_evento: ini[1],
+    t2_tiempo_seg: t2[0], t2_estado: t2[1],
+    rec09_tiempo_seg: r9[0], rec09_estado: r9[1],
+    retirado: b01(d.retirado), motivo_retiro: m('motivo_retiro', d.motivo_retiro),
+    observaciones: d.observaciones, version_app: d.version
+  };
+}
+async function guardar() {
+  const d = paraR(recoger());
+  d.id_registro = 'R' + Date.now() + Math.random().toString(36).slice(2, 7);
+  d.clave = CLAVE;
+
+  const hist = LS.get('bnm_historial', []); hist.push(d); LS.set('bnm_historial', hist);
+  const cola = LS.get('bnm_cola', []); cola.push(d); LS.set('bnm_cola', cola);
+  dlg.close();
+  const asignados = {};
+  const ok = await enviarPendientes(true, asignados);
+  if (ok && asignados[d.id_registro]) { toast('✔ Guardado como ' + asignados[d.id_registro], 3500); limpiar(); }
+  else if (ok) { toast('✔ Guardado en el Excel'); limpiar(); }
+  else { toast('Sin conexión: quedó guardado en el celular y recibirá su código al enviarse', 4000); limpiar(); }
+}
+async function enviarPendientes(silencioso, asignados = {}) {
+  let cola = LS.get('bnm_cola', []);
+  if (!cola.length) { actualizarPend(); return true; }
+  if (!URL_SCRIPT || URL_SCRIPT.startsWith('PEGAR')) { if (!silencioso) toast('Falta configurar la URL del Sheet (⚙︎)'); actualizarPend(); return false; }
+  const restantes = []; let ultimoError = '';
+  for (const d of cola) {
+    d.clave = CLAVE;   // siempre la clave ACTUAL (no la que había cuando se guardó)
+    try {
+      const r = await fetch(URL_SCRIPT, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(d) });
+      const j = await r.json();
+      if (!j.ok) { restantes.push(d); ultimoError = j.error || 'respuesta inválida del Sheet'; }
+      else if (j.codigo) {
+        asignados[d.id_registro] = j.codigo;
+        const hist = LS.get('bnm_historial', []);
+        hist.forEach(h => { if (h.id_registro === d.id_registro) h.codigo = j.codigo; });
+        LS.set('bnm_historial', hist);
+      }
+    } catch (e) { restantes.push(d); ultimoError = 'no hay conexión con el Sheet (revise señal y URL en ⚙︎)'; }
+  }
+  LS.set('bnm_cola', restantes); actualizarPend();
+  if (!silencioso && !restantes.length) toast('✔ Pendientes enviados: ' + Object.values(asignados).join(', '), 3500);
+  if (!silencioso && restantes.length) toast('No se pudo enviar: ' + ultimoError, 5000);
+  verSiguiente();
+  return restantes.length === 0;
+}
+function actualizarPend() {
+  const n = LS.get('bnm_cola', []).length, b = $('btnPend');
+  b.style.display = n ? 'inline-block' : 'none'; b.textContent = n + (n === 1 ? ' pendiente ⟳' : ' pendientes ⟳');
+}
+async function verSiguiente() {
+  if (!URL_SCRIPT || URL_SCRIPT.startsWith('PEGAR')) return;
+  try {
+    const r = await fetch(`${URL_SCRIPT}?accion=siguiente&clave=${encodeURIComponent(CLAVE)}`);
+    const j = await r.json();
+    if (j.ok) $('codigoInfo').innerHTML = `Próximo código en la base: <b>${j.siguiente}</b> (definitivo al guardar; nunca se repite). Registros: ${j.total}`;
+  } catch (e) {}
+}
+
+/* ---------- borrador (no se pierde si se cierra la página) ---------- */
+function guardarBorrador() {
+  const b = { v: {}, c: {}, r: {} };
+  CAMPOS.forEach(k => b.v[k] = $(k).value); CHECKS.forEach(k => b.c[k] = $(k).checked); RADIOS.forEach(k => b.r[k] = radio(k));
+  LS.set('bnm_borrador', b);
+}
+function cargarBorrador() {
+  const b = LS.get('bnm_borrador', null);
+  if (b) {
+    CAMPOS.forEach(k => { if (b.v && b.v[k] !== undefined) $(k).value = b.v[k]; });
+    CHECKS.forEach(k => { if (b.c) $(k).checked = !!b.c[k]; });
+    RADIOS.forEach(k => { if (b.r && b.r[k]) { const el = document.querySelector(`input[name="${k}"][value="${b.r[k]}"]`); if (el) el.checked = true; } });
+  }
+  if (!$('fecha_cirugia').value) $('fecha_cirugia').value = new Date().toLocaleDateString('en-CA');
+  if (t0) { $('btnBolo').textContent = '✔ Bolo a las ' + new Date(t0).toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit', second: '2-digit' }); $('btnBolo').classList.add('hecho'); if (!$('t_fin').value) arrancarCrono(); }
+  TIEMPOS.forEach(k => { if ($(k).value) $(k).classList.add('hecho'); });
+  calcular();
+}
+function limpiar() {
+  document.querySelectorAll('main input[type=text],main input[type=number],main input[type=time],main input[type=hidden],main textarea').forEach(i => { i.value = ''; i.classList.remove('hecho'); });
+  document.querySelectorAll('main select').forEach(s => s.value = '');
+  CHECKS.forEach(k => $(k).checked = false);
+  RADIOS.forEach(k => document.querySelectorAll(`input[name="${k}"]`).forEach(r => r.checked = false));
+  $('retNO').checked = true; $('rdNO').checked = true;
+  $('fecha_cirugia').value = new Date().toLocaleDateString('en-CA');
+  t0 = null; LS.set('bnm_t0', null); clearInterval(timer); $('crono').style.display = 'none';
+  $('btnBolo').textContent = '▶ BOLO ADMINISTRADO (tiempo 0)'; $('btnBolo').classList.remove('hecho');
+  document.querySelectorAll('section').forEach(sec => sec.classList.remove('cerrada'));
+  LS.set('bnm_borrador', null); calcular(); verSiguiente(); window.scrollTo(0, 0);
+}
+async function nuevo() {
+  if (await preguntar('¿Registrar un paciente nuevo?', 'Se borrarán del formulario todos los datos que no haya guardado.', 'Sí, nuevo paciente')) {
+    limpiar(); toast('Formulario listo para un paciente nuevo');
+  }
+}
+function configurar() {
+  $('cfgUrl').value = URL_SCRIPT.startsWith('PEGAR') ? '' : URL_SCRIPT; $('cfgClave').value = CLAVE;
+  $('dlgConf').showModal();
+}
+function guardarConfig() {
+  URL_SCRIPT = $('cfgUrl').value.trim(); CLAVE = $('cfgClave').value.trim();
+  LS.set('bnm2_url', URL_SCRIPT); LS.set('bnm2_clave', CLAVE); $('dlgConf').close();
+  toast('Configuración guardada'); enviarPendientes(); verSiguiente();
+}
+function exportarCSV() {
+  const h = LS.get('bnm_historial', []); if (!h.length) { toast('No hay registros en este celular'); return; }
+  const cols = Object.keys(h[0]).filter(k => k !== 'clave');
+  const esc = v => '"' + String(v === undefined ? '' : v).replace(/"/g, '""') + '"';
+  const csv = '\ufeff' + cols.join(',') + '\n' + h.map(r => cols.map(c => esc(r[c])).join(',')).join('\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = 'registros_bnm_' + new Date().toLocaleDateString('en-CA') + '.csv'; a.click();
+}
+
+/* ---------- eventos ---------- */
+document.addEventListener('input', () => { calcular(); guardarBorrador(); });
+document.addEventListener('change', e => {
+  calcular(); guardarBorrador();
+});
+window.addEventListener('online', () => enviarPendientes(true));
+document.addEventListener('visibilitychange', () => { if (!document.hidden && t0 && !$('t_fin').value) arrancarCrono(); });
+const dlg = $('dlg');
+cargarBorrador(); actualizarPend(); enviarPendientes(true); verSiguiente();
+</script>
+</body>
+</html>
