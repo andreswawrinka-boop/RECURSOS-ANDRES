@@ -6,330 +6,171 @@
 <title>Centro Académico · Anestesiología</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink:#0B1026;
-    --navy:#0A2463;
-    --indigo:#2B0FA8;
-    --blue:#0057FF;
-    --violet:#6A1BE0;
-    --red:#D7002E;
-    --green:#00875A;
-    --teal:#007C89;
-    --orange:#E35A00;
-    --magenta:#C2006B;
-    --amber:#B45309;
-    --gold:#FFB800;
-    --r:18px;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{margin:0;min-height:100vh;font-family:'Manrope',system-ui,sans-serif;color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;font-size:15px}
-  a{color:inherit}
-  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
-
-  /* ═══════ BARRA SUPERIOR ═══════ */
-  .top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 0}
-  .brand{display:flex;align-items:center;gap:10px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:17px;letter-spacing:-.01em;text-decoration:none}
-  .brand i{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-style:normal;font-size:19px;background:linear-gradient(135deg,var(--orange),var(--magenta))}
-  .brand small{display:block;font-family:'Manrope',sans-serif;font-weight:800;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
-  .sites{display:flex;gap:6px}
-  .sites span{font-size:12px;font-weight:800;padding:6px 12px;border-radius:999px;color:#fff}
-
-  /* ═══════ HERO ═══════ */
-  .hero{position:relative;overflow:hidden;border-radius:26px;color:#fff;padding:30px 32px;
-    background:
-      radial-gradient(420px 260px at 92% 0%, #FF7A00 0%, transparent 60%),
-      linear-gradient(120deg,var(--blue) 0%,var(--violet) 55%,var(--magenta) 100%);
-    display:grid;grid-template-columns:1fr auto;gap:28px;align-items:center}
-  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;
-    background-image:radial-gradient(#fff 1.1px,transparent 1.5px);background-size:22px 22px;opacity:.16;
-    mask-image:linear-gradient(90deg,transparent 0%,#000 70%)}
-  .hero>*{position:relative}
-  .eyebrow{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--violet);padding:5px 12px;border-radius:999px;font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
-  .eyebrow b{width:7px;height:7px;border-radius:50%;background:var(--red)}
-  h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(32px,4.8vw,54px);line-height:1;letter-spacing:-.035em;margin:14px 0 10px}
-  h1 em{font-style:normal;color:var(--gold)}
-  .lead{max-width:520px;margin:0;font-size:15.5px;line-height:1.55;font-weight:600}
-  .stats{display:grid;grid-template-columns:repeat(2,minmax(112px,1fr));gap:10px}
-  .stat{background:#fff;color:var(--ink);border-radius:16px;padding:12px 16px}
-  .stat b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:30px;font-weight:800;line-height:1;letter-spacing:-.02em;color:var(--c)}
-  .stat span{display:block;margin-top:4px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
-
-  /* ═══════ BUSCADOR + FILTROS (fijo) ═══════ */
-  .toolbar{position:sticky;top:0;z-index:10;background:#fff;padding:14px 0 12px;margin-top:6px;border-bottom:2px solid var(--ink)}
-  .tb{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-  .sb{flex:1 1 320px;display:flex;align-items:center;gap:8px;border:2px solid var(--ink);border-radius:14px;padding:4px 6px 4px 14px;transition:box-shadow .15s,border-color .15s}
-  .sb:focus-within{border-color:var(--blue);box-shadow:0 0 0 4px #0057FF33}
-  .sb svg{flex:none}
-  .sb input{flex:1;border:none;outline:none;font:inherit;font-size:15px;font-weight:700;color:var(--ink);background:transparent;padding:9px 2px;min-width:0}
-  .sb input::placeholder{color:var(--navy);opacity:.75}
-  .sb kbd{font-family:inherit;font-size:11.5px;font-weight:800;background:var(--ink);color:#fff;border-radius:7px;padding:3px 8px}
-  .sb .count{background:var(--blue);color:#fff;font-weight:800;font-size:12.5px;border-radius:10px;padding:8px 12px;white-space:nowrap}
-  .filters{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px}
-  .filters::-webkit-scrollbar{display:none}
-  .filters button{flex:none;font:inherit;font-size:13px;font-weight:800;cursor:pointer;border-radius:999px;padding:8px 14px;border:2px solid var(--fc);color:var(--fc);background:#fff;transition:background .15s,color .15s,transform .15s}
-  .filters button:hover{transform:translateY(-1px)}
-  .filters button.on{background:var(--fc);color:#fff}
-
-  /* ═══════ SECCIONES ═══════ */
-  main{padding-bottom:30px}
-  .sec-h{display:flex;align-items:center;gap:12px;margin:30px 0 14px}
-  .sec-h .n{width:36px;height:36px;flex:none;border-radius:11px;display:grid;place-items:center;background:var(--sc);color:#fff;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:15px}
-  .sec-h h2{margin:0;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:21px;letter-spacing:-.02em;line-height:1.1}
-  .sec-h p{margin:2px 0 0;font-size:13px;font-weight:700;color:var(--sc)}
-  .sec-h .ln{flex:1;height:2px;border-radius:2px;background:var(--sc)}
-  .sec-h .cnt{font-size:12px;font-weight:800;color:var(--sc);border:2px solid var(--sc);border-radius:999px;padding:3px 10px;white-space:nowrap}
-
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:12px}
-
-  /* ═══════ TARJETAS ═══════ */
-  .card{display:flex;align-items:center;gap:13px;padding:12px 14px 12px 12px;border-radius:var(--r);background:#fff;border:2px solid var(--accent);text-decoration:none;
-    transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .2s;animation:up .45s cubic-bezier(.2,.8,.2,1) both}
-  .card:hover{transform:translateY(-3px);box-shadow:0 14px 26px -14px var(--accent)}
-  .card:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
-  .icon{width:48px;height:48px;flex:none;border-radius:14px;display:grid;place-items:center;font-size:23px;background:var(--accent);transition:transform .25s}
-  .card:hover .icon{transform:rotate(-8deg) scale(1.05)}
-  .txt{flex:1;min-width:0}
-  .tag{display:block;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
-  .card h3{margin:2px 0 0;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:16.5px;line-height:1.2;letter-spacing:-.01em;color:var(--ink)}
-  .go{width:30px;height:30px;flex:none;border-radius:50%;display:grid;place-items:center;border:2px solid var(--accent);color:var(--accent);font-weight:800;font-size:15px;transition:all .2s}
-  .card:hover .go{background:var(--accent);color:#fff;transform:translateX(2px)}
-
-  .empty{display:none;margin-top:28px;padding:26px;text-align:center;border-radius:20px;background:linear-gradient(120deg,var(--blue),var(--violet));color:#fff;font-weight:800;font-size:15px}
-  .empty span{display:block;font-size:34px;margin-bottom:4px}
-
-  footer{margin-top:36px;padding:22px 0 28px;text-align:center;border-top:2px solid var(--ink)}
-  footer .f1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:17px}
-  footer .f2{margin-top:3px;font-size:12.5px;font-weight:700;color:var(--violet)}
-  footer .bar{height:5px;max-width:180px;margin:12px auto 0;border-radius:5px;background:linear-gradient(90deg,var(--blue),var(--violet),var(--magenta),var(--orange),var(--gold))}
-
-  @keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-
-  @media(max-width:820px){
-    .hero{grid-template-columns:1fr;padding:24px 22px;gap:20px}
-    .stats{grid-template-columns:repeat(4,1fr)}
-    .sites{display:none}
-  }
-  @media(max-width:560px){
-    .wrap{padding:0 14px}
-    .stats{grid-template-columns:repeat(2,1fr)}
-    .sb kbd{display:none}
-    .sec-h .ln{display:none}
-    .sec-h .cnt{margin-left:auto}
-    .grid{grid-template-columns:1fr;gap:10px}
-  }
-  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+:root{--ink:#0B1026;--gold:#FFB800;--blue:#0057FF;--magenta:#C2006B}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;font-family:'Nunito',system-ui,sans-serif;color:#fff;-webkit-font-smoothing:antialiased;
+  background:linear-gradient(165deg,#C2006B 0%,#FF3D00 42%,#E3006A 70%,#6A1BE0 100%) fixed}
+.blob{position:fixed;border-radius:50%;filter:blur(70px);opacity:.55;pointer-events:none;z-index:0;animation:float 14s ease-in-out infinite alternate}
+.b1{width:420px;height:420px;background:#FFB800;top:-120px;right:-80px}
+.b2{width:380px;height:380px;background:#0057FF;bottom:-140px;left:-100px;animation-delay:-6s}
+@keyframes float{to{transform:translate(40px,60px) scale(1.15)}}
+.page{position:relative;z-index:1}
+.wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+.top{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:19px}
+.brand i{width:44px;height:44px;border-radius:46% 54% 42% 58%/55% 45% 55% 45%;display:grid;place-items:center;font-style:normal;font-size:22px;background:#fff}
+.brand small{display:block;font-family:'Nunito',sans-serif;font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.sites{font-weight:800;font-size:13px;background:#fff;color:var(--magenta);border-radius:999px;padding:7px 14px}
+.hero{text-align:center;padding:26px 0 28px}
+h1{margin:0;font-family:'Fredoka',sans-serif;font-weight:700;font-size:clamp(44px,8vw,92px);line-height:.95;letter-spacing:-.02em;text-shadow:0 6px 0 #6A1BE0}
+h1 span{display:inline-block;transform:rotate(-3deg);background:#fff;color:#FF3D00;text-shadow:none;padding:0 .22em .06em;border-radius:30px 40px 34px 44px;margin-top:8px}
+.lead{max-width:560px;margin:18px auto 0;font-size:17px;line-height:1.5;font-weight:700}
+.stats{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:24px}
+.stat{width:104px;height:104px;border-radius:50%;background:#fff;color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 8px 0 var(--c)}
+.stat:nth-child(odd){transform:rotate(-6deg)}.stat:nth-child(even){transform:rotate(5deg) translateY(6px)}
+.stat b{font-family:'Fredoka',sans-serif;font-size:34px;font-weight:700;line-height:1;color:var(--c)}
+.stat span{font-size:10.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
+.toolbar{position:sticky;top:0;z-index:10;padding:12px 0;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:#D4005Acc}
+.tb{display:flex;flex-direction:column;gap:10px;align-items:center}
+.sb{width:100%;max-width:640px;display:flex;align-items:center;gap:8px;background:#fff;border-radius:999px;padding:5px 6px 5px 20px;box-shadow:0 8px 0 #6A1BE0}
+.sb input{flex:1;border:none;outline:none;font:inherit;font-size:16.5px;font-weight:800;color:var(--ink);background:transparent;padding:10px 0;min-width:0}
+.sb input::placeholder{color:#C2006B;opacity:.85}
+.sb kbd{display:none}
+.sb .count{background:linear-gradient(90deg,#FF3D00,#C2006B);color:#fff;font-weight:900;font-size:13px;border-radius:999px;padding:9px 14px;white-space:nowrap}
+.filters{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;max-width:100%;padding:2px}
+.filters::-webkit-scrollbar{display:none}
+.filters button{flex:none;display:flex;align-items:center;gap:7px;font:inherit;font-size:14px;font-weight:800;cursor:pointer;border-radius:999px;padding:7px 8px 7px 14px;border:2.5px solid #fff;color:#fff;background:transparent;transition:.15s}
+.filters button i{font-style:normal;font-size:12px;min-width:22px;padding:1px 6px;border-radius:999px;background:#fff;color:var(--fc)}
+.filters button.on{background:#fff;color:var(--fc)}
+.filters button.on i{background:var(--fc);color:#fff}
+#app section{margin-top:40px}
+.sec-h{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.sec-h .n{width:50px;height:50px;flex:none;display:grid;place-items:center;background:#fff;color:var(--sc);font-family:'Fredoka',sans-serif;font-weight:700;font-size:20px;border-radius:42% 58% 50% 50%/55% 45% 55% 45%;transform:rotate(-8deg)}
+.sec-h h2{margin:0;font-family:'Fredoka',sans-serif;font-weight:600;font-size:clamp(22px,3vw,30px);line-height:1.05}
+.sec-h p{margin:3px 0 0;font-size:14px;font-weight:700}
+.sec-h .ln{flex:1;height:0;border-top:3px dotted #fff}
+.sec-h .cnt{font-weight:900;font-size:12.5px;background:#fff;color:var(--sc);border-radius:999px;padding:5px 12px;white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:22px 18px}
+.card{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;padding:16px 14px;background:#fff;color:var(--ink);text-decoration:none;
+  border-radius:44% 56% 52% 48%/52% 44% 56% 48%;box-shadow:0 9px 0 var(--accent);
+  transition:transform .35s cubic-bezier(.3,1.5,.5,1),border-radius .6s,box-shadow .2s;animation:pop .5s cubic-bezier(.3,1.5,.5,1) both}
+.grid .card:nth-child(3n+1){transform:rotate(-3deg);border-radius:56% 44% 48% 52%/46% 56% 44% 54%}
+.grid .card:nth-child(3n+2){transform:rotate(2deg)}
+.grid .card:nth-child(3n){transform:rotate(-1deg);border-radius:50% 50% 42% 58%/58% 48% 52% 42%}
+.grid .card:hover{transform:rotate(0) scale(1.07);border-radius:50%;box-shadow:0 13px 0 var(--accent)}
+.card:focus-visible{outline:4px solid #fff;outline-offset:5px}
+.icon{width:54px;height:54px;flex:none;border-radius:50%;display:grid;place-items:center;font-size:26px;background:var(--accent)}
+.tag{display:block;font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.card h3{margin:1px 0 0;font-family:'Fredoka',sans-serif;font-weight:600;font-size:16px;line-height:1.12}
+.go{display:none}
+.empty{display:none;margin:30px auto 0;max-width:520px;padding:26px;text-align:center;border-radius:40px;background:#fff;color:var(--magenta);font-family:'Fredoka',sans-serif;font-weight:600;font-size:18px}
+footer{text-align:center;padding:50px 20px 34px;font-weight:800;font-size:13.5px}
+footer b{display:block;font-family:'Fredoka',sans-serif;font-weight:600;font-size:20px}
+@keyframes pop{from{opacity:0;scale:.6}to{opacity:1;scale:1}}
+@media(max-width:600px){.wrap{padding:0 14px}.sites{display:none}.grid{grid-template-columns:repeat(2,1fr);gap:18px 14px}.card h3{font-size:14.5px}.icon{width:46px;height:46px;font-size:22px}
+  .stat{width:78px;height:78px}.stat b{font-size:25px}.stat span{font-size:8.5px}.stats{gap:8px}.sec-h .ln{display:none}.sec-h .cnt{margin-left:auto}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 
+<div class="blob b1"></div><div class="blob b2"></div>
+<div class="page">
 <div class="wrap">
   <nav class="top">
-    <a class="brand" href="#"><i>🩺</i><div>Anestesiología<small>Subred Suroccidente</small></div></a>
-    <div class="sites">
-      <span style="background:var(--blue)">Kennedy</span>
-      <span style="background:var(--violet)">Bosa</span>
-      <span style="background:var(--magenta)">Tintal</span>
-    </div>
+    <div class="brand"><i>🩺</i><div>Anestesiología<small>Subred Suroccidente</small></div></div>
+    <span class="sites">📍 Kennedy · Bosa · Tintal</span>
   </nav>
-
   <header class="hero">
-    <div>
-      <span class="eyebrow"><b></b>Material académico</span>
-      <h1>Centro <em>Académico</em></h1>
-      <p class="lead">Notas, rotación y cronograma, exámenes y guías de anestesiología, todo en un mismo lugar.</p>
-    </div>
+    <h1>Centro<br><span>Académico</span></h1>
+    <p class="lead">Notas, rotación y cronograma, exámenes y guías de anestesiología, todo en un mismo lugar.</p>
     <div class="stats">
-      <div class="stat" style="--c:var(--orange)"><b id="st-total">—</b><span>Recursos</span></div>
-      <div class="stat" style="--c:var(--violet)"><b>4</b><span>Áreas</span></div>
-      <div class="stat" style="--c:var(--blue)"><b id="st-tools">—</b><span>Herramientas</span></div>
-      <div class="stat" style="--c:var(--magenta)"><b id="st-guias">—</b><span>Guías</span></div>
+      <div class="stat" style="--c:#E35A00"><b id="st-total">—</b><span>Recursos</span></div>
+      <div class="stat" style="--c:#6A1BE0"><b id="st-areas">—</b><span>Áreas</span></div>
+      <div class="stat" style="--c:#0057FF"><b id="st-tools">—</b><span>Herramientas</span></div>
+      <div class="stat" style="--c:#C2006B"><b id="st-guias">—</b><span>Guías</span></div>
     </div>
   </header>
 </div>
-
-<div class="toolbar">
-  <div class="wrap tb">
-    <label class="sb">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0B1026" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input id="search" type="search" placeholder="Buscar: cesárea, gases, notas…" aria-label="Buscar material" autocomplete="off">
-      <kbd>/</kbd>
-      <span class="count" id="counter">— recursos</span>
-    </label>
-    <div class="filters" id="filters">
-      <button type="button" class="on" data-f="all" style="--fc:#0B1026">✨ Todo</button>
-      <button type="button" data-f="s1" style="--fc:#E35A00">📚 Herramientas</button>
-      <button type="button" data-f="s2" style="--fc:#6A1BE0">🩺 Especialidades</button>
-      <button type="button" data-f="s3" style="--fc:#D7002E">⚗️ Fisiología</button>
-      <button type="button" data-f="s4" style="--fc:#007C89">📐 Investigación</button>
-    </div>
-  </div>
-</div>
-
+<div class="toolbar"><div class="wrap tb">
+  <label class="sb">🔎<input id="search" type="search" placeholder="¿Qué buscas hoy?" aria-label="Buscar material" autocomplete="off"><kbd>/</kbd><span class="count" id="counter">—</span></label>
+  <div class="filters" id="filters"></div>
+</div></div>
 <main class="wrap">
-
-  <!-- ═══════ 01 · HERRAMIENTAS ═══════ -->
-  <section data-s="s1" data-kind="tools">
-    <div class="sec-h" style="--sc:#E35A00">
-      <span class="n">01</span>
-      <div><h2>Herramientas académicas</h2><p>Para el día a día de la rotación</p></div>
-      <span class="ln"></span><span class="cnt"></span>
-    </div>
-    <div class="grid">
-      <a class="card" href="bienvenida.html" data-name="bienvenida inicio rotación primer día estudiantes whatsapp" style="--accent:#00875A">
-        <span class="icon">👋</span><span class="txt"><span class="tag">Inicio</span><h3>Bienvenida</h3></span><span class="go">→</span>
-      </a>
-      <a class="card" href="notas.html" data-name="notas calificaciones notas académicas" style="--accent:#0057FF">
-        <span class="icon">📊</span><span class="txt"><span class="tag">Herramienta</span><h3>Notas</h3></span><span class="go">→</span>
-      </a>
-      <a class="card" href="generador-rotacion-y-cronograma.html" data-name="rotación rotacion cronograma distribución salas programación calendario generador talleres exámenes" style="--accent:#E35A00">
-        <span class="icon">📅</span><span class="txt"><span class="tag">Herramienta</span><h3>Rotación y cronograma</h3></span><span class="go">→</span>
-      </a>
-      <a class="card" href="xamen.html" data-name="examen teórico teorico xamen evaluación prueba preguntas" style="--accent:#D7002E">
-        <span class="icon">📝</span><span class="txt"><span class="tag">Evaluación</span><h3>Examen teórico</h3></span><span class="go">→</span>
-      </a>
-      <a class="card" href="examen_practico.html" data-name="examen práctico practico lista de chequeo evaluación habilidades" style="--accent:#C2006B">
-        <span class="icon">✅</span><span class="txt"><span class="tag">Evaluación</span><h3>Examen práctico</h3></span><span class="go">→</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- ═══════ 02 · ESPECIALIDADES ═══════ -->
-  <section data-s="s2">
-    <div class="sec-h" style="--sc:#6A1BE0">
-      <span class="n">02</span>
-      <div><h2>Anestesia por especialidad</h2><p>Obstetricia, pediatría, neuro, tórax y más</p></div>
-      <span class="ln"></span><span class="cnt"></span>
-    </div>
-    <div class="grid">
-      <a class="card" href="anestesia-cesarea.html" data-name="anestesia cesárea cesarea anestesia-cesarea obstetricia raquídea parto" style="--accent:#6A1BE0">
-        <span class="icon">🤰</span><span class="txt"><span class="tag">Obstetricia</span><h3>Anestesia para Cesárea</h3></span><span class="go">→</span>
-      </a>
-      <a class="card" href="fetal-exit.html" data-name="fetal exit fetal-exit vía aérea obstetricia ex utero" style="--accent:#B45309">
-        <span class="icon">👶</span><span class="txt"><span class="tag">Obstetricia</span><h3>Fetal EXIT</h3></span><span class="go">→</span>
-      </a>
-      <a class="card" href="anestesia-neonatal.html" data-name="anestesia neonatal anestesia-neonatal neonatos neonatal" style="--accent:#007C89">
-        <span class="icon">🍼</span><span class="txt"><span class="tag">Pediatría</span><h3>Anestesia Neonatal</h3></span><span class="go">→</span>
-      </a>
-      <a class="card" href="analgesia-pediatrica.html" data-name="analgesia pediátrica analgesia-pediatrica pediatría dolor" style="--accent:#C2006B">
-        <span class="icon">🧒</span><span class="txt"><span class="tag">Pediatría</span><h3>Analgesia Pediátrica</h3></span><span class="go">→</span>
-      </a>
-      <a class="card" href="craneotomiadespierto.html" data-name="craneotomía despierto craneotomiadespierto neuroanestesia" style="--accent:#8A00D4">
-        <span class="icon">🧠</span><span class="txt"><span class="tag">Neuroanestesia</span><h3>Craneotomía Despierto</h3></span><span class="go">→</span>
-      </a>
-      <a class="card" href="ventilacion-unipulmonar.html" data-name="ventilación unipulmonar ventilacion-unipulmonar ventilación pulmonar tórax tubo doble luz" style="--accent:#0057FF">
-        <span class="icon">🫁</span><span class="txt"><span class="tag">Tórax</span><h3>Ventilación Unipulmonar</h3></span><span class="go">→</span>
-      </a>
-      <a class="card" href="anestesia-imagenes.html" data-name="anestesia imágenes anestesia-imagenes imagenes radiología resonancia" style="--accent:#2B0FA8">
-        <span class="icon">🖥️</span><span class="txt"><span class="tag">Fuera de quirófano</span><h3>Anestesia en Imágenes</h3></span><span class="go">→</span>
-      </a>
-      <a class="card" href="accesos-vasculares.html" data-name="accesos vasculares accesos-vasculares catéter venoso central arterial ecografía canalización" style="--accent:#D7002E">
-        <span class="icon">💉</span><span class="txt"><span class="tag">Procedimientos</span><h3>Accesos Vasculares</h3></span><span class="go">→</span>
-      </a>
-      <a class="card" href="guia_ucpa.html" data-name="ucpa guia_ucpa recuperación postanestésica" style="--accent:#00875A">
-        <span class="icon">🏥</span><span class="txt"><span class="tag">Postoperatorio</span><h3>UCPA</h3></span><span class="go">→</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- ═══════ 03 · FISIOLOGÍA ═══════ -->
-  <section data-s="s3">
-    <div class="sec-h" style="--sc:#D7002E">
-      <span class="n">03</span>
-      <div><h2>Fisiología y medicina perioperatoria</h2><p>Las bases que sostienen cada decisión</p></div>
-      <span class="ln"></span><span class="cnt"></span>
-    </div>
-    <div class="grid">
-      <a class="card" href="fisiologia-ecg.html" data-name="fisiología ecg fisiologia-ecg electrocardiograma cardiovascular" style="--accent:#D7002E">
-        <span class="icon">❤️</span><span class="txt"><span class="tag">Fisiología</span><h3>Fisiología y ECG</h3></span><span class="go">→</span>
-      </a>
-      <a class="card" href="gases.html" data-name="gases arteriales gases.html ácido base acido base" style="--accent:#0057FF">
-        <span class="icon">🧪</span><span class="txt"><span class="tag">Fisiología</span><h3>Gases Arteriales</h3></span><span class="go">→</span>
-      </a>
-      <a class="card" href="diskalemias.html" data-name="diskalemias potasio hipokalemia hiperkalemia hipopotasemia hiperpotasemia electrolitos" style="--accent:#E35A00">
-        <span class="icon">⚡</span><span class="txt"><span class="tag">Perioperatoria</span><h3>Diskalemias</h3></span><span class="go">→</span>
-      </a>
-      <a class="card" href="glucosa-perioperatoria.html" data-name="glucosa perioperatoria glucosa-perioperatoria diabetes metabolismo insulina" style="--accent:#00875A">
-        <span class="icon">🩸</span><span class="txt"><span class="tag">Perioperatoria</span><h3>Glucosa Perioperatoria</h3></span><span class="go">→</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- ═══════ 04 · INVESTIGACIÓN ═══════ -->
-  <section data-s="s4">
-    <div class="sec-h" style="--sc:#007C89">
-      <span class="n">04</span>
-      <div><h2>Investigación y bioestadística</h2><p>De la pregunta clínica al análisis</p></div>
-      <span class="ln"></span><span class="cnt"></span>
-    </div>
-    <div class="grid">
-      <a class="card" href="tesis_bnm.html" data-name="tesis registro bnm bloqueantes neuromusculares maestría datos" style="--accent:#0057FF">
-        <span class="icon">🎓</span><span class="txt"><span class="tag">Tesis</span><h3>Tesis</h3></span><span class="go">→</span>
-      </a>
-      <a class="card" href="guia_investigacion_anestesiologia_1.html" data-name="investigación investigacion guia_investigacion_anestesiologia protocolo metodología" style="--accent:#007C89">
-        <span class="icon">🔎</span><span class="txt"><span class="tag">Investigación</span><h3>Guía de Investigación en Anestesiología</h3></span><span class="go">→</span>
-      </a>
-      <a class="card" href="diseño-experimental.html" data-name="diseño experimental diseño-experimental investigación experimentos" style="--accent:#6A1BE0">
-        <span class="icon">🔬</span><span class="txt"><span class="tag">Bioestadística</span><h3>Diseño Experimental</h3></span><span class="go">→</span>
-      </a>
-      <a class="card" href="probabilidad.html" data-name="probabilidad estadística estadistica distribuciones" style="--accent:#B45309">
-        <span class="icon">🎲</span><span class="txt"><span class="tag">Bioestadística</span><h3>Probabilidad</h3></span><span class="go">→</span>
-      </a>
-    </div>
-  </section>
-
-  <div class="empty" id="empty"><span>🤷</span>No encontramos ningún recurso con esa búsqueda.</div>
+  <div id="app"></div>
+  <div class="empty" id="empty">🤷 No encontramos nada con esa búsqueda</div>
 </main>
-
-<footer class="wrap">
-  <div class="f1">Centro Académico · Anestesiología</div>
-  <div class="f2">Subred Integrada de Servicios de Salud Suroccidente</div>
-  <div class="bar"></div>
-</footer>
-
+<footer><b>Centro Académico · Anestesiología</b>Subred Integrada de Servicios de Salud Suroccidente</footer>
+</div>
 <script>
+const DATA=[{"id": "s1", "n": "01", "t": "Herramientas académicas", "p": "Para el día a día de la rotación", "c": "#E35A00", "e": "📚", "f": "Herramientas", "tools": true, "items": [["bienvenida.html", "👋", "Inicio", "Bienvenida", "#00875A", "bienvenida inicio rotación primer día estudiantes whatsapp"], ["notas.html", "📊", "Herramienta", "Notas", "#0057FF", "notas calificaciones notas académicas"], ["generador-rotacion-y-cronograma.html", "📅", "Herramienta", "Rotación y cronograma", "#E35A00", "rotación rotacion cronograma distribución salas programación calendario generador talleres exámenes"], ["xamen.html", "📝", "Evaluación", "Examen teórico", "#D7002E", "examen teórico teorico xamen evaluación prueba preguntas"], ["examen_practico.html", "✅", "Evaluación", "Examen práctico", "#C2006B", "examen práctico practico lista de chequeo evaluación habilidades"]]}, {"id": "s2", "n": "02", "t": "Anestesia por especialidad", "p": "Obstetricia, pediatría, neuro, tórax y más", "c": "#6A1BE0", "e": "🩺", "f": "Especialidades", "items": [["anestesia-cesarea.html", "🤰", "Obstetricia", "Anestesia para Cesárea", "#6A1BE0", "anestesia cesárea cesarea obstetricia raquídea parto"], ["fetal-exit.html", "👶", "Obstetricia", "Fetal EXIT", "#B45309", "fetal exit vía aérea obstetricia ex utero"], ["anestesia-neonatal.html", "🍼", "Pediatría", "Anestesia Neonatal", "#007C89", "anestesia neonatal neonatos"], ["analgesia-pediatrica.html", "🧒", "Pediatría", "Analgesia Pediátrica", "#C2006B", "analgesia pediátrica pediatría dolor"], ["craneotomiadespierto.html", "🧠", "Neuroanestesia", "Craneotomía Despierto", "#8A00D4", "craneotomía despierto neuroanestesia"], ["ventilacion-unipulmonar.html", "🫁", "Tórax", "Ventilación Unipulmonar", "#0057FF", "ventilación unipulmonar pulmonar tórax tubo doble luz"], ["anestesia-imagenes.html", "🖥️", "Fuera de quirófano", "Anestesia en Imágenes", "#2B0FA8", "anestesia imágenes imagenes radiología resonancia"], ["accesos-vasculares.html", "💉", "Procedimientos", "Accesos Vasculares", "#D7002E", "accesos vasculares catéter venoso central arterial ecografía canalización"], ["guia_ucpa.html", "🏥", "Postoperatorio", "UCPA", "#00875A", "ucpa recuperación postanestésica"]]}, {"id": "s3", "n": "03", "t": "Fisiología y medicina perioperatoria", "p": "Las bases que sostienen cada decisión", "c": "#D7002E", "e": "⚗️", "f": "Fisiología", "items": [["fisiologia-ecg.html", "❤️", "Fisiología", "Fisiología y ECG", "#D7002E", "fisiología ecg electrocardiograma cardiovascular"], ["gases.html", "🧪", "Fisiología", "Gases Arteriales", "#0057FF", "gases arteriales ácido base acido base"], ["diskalemias.html", "⚡", "Perioperatoria", "Diskalemias", "#E35A00", "diskalemias potasio hipokalemia hiperkalemia hipopotasemia hiperpotasemia electrolitos"], ["glucosa-perioperatoria.html", "🩸", "Perioperatoria", "Glucosa Perioperatoria", "#00875A", "glucosa perioperatoria diabetes metabolismo insulina"]]}, {"id": "s4", "n": "04", "t": "Investigación y bioestadística", "p": "De la pregunta clínica al análisis", "c": "#007C89", "e": "📐", "f": "Investigación", "items": [["tesis_bnm.html", "🎓", "Tesis", "Tesis", "#0057FF", "tesis registro bnm bloqueantes neuromusculares maestría datos"], ["guia_investigacion_anestesiologia_1.html", "🔎", "Investigación", "Guía de Investigación en Anestesiología", "#007C89", "investigación investigacion protocolo metodología"], ["diseño-experimental.html", "🔬", "Bioestadística", "Diseño Experimental", "#6A1BE0", "diseño experimental investigación experimentos"], ["probabilidad.html", "🎲", "Bioestadística", "Probabilidad", "#B45309", "probabilidad estadística estadistica distribuciones"]]}];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const app=document.getElementById('app');
+app.innerHTML=DATA.map(s=>`
+<section data-s="${s.id}" style="--sc:${s.c}">
+  <div class="sec-h" style="--sc:${s.c}">
+    <span class="n">${s.n}</span>
+    <div class="sec-t"><h2>${esc(s.t)}</h2><p>${esc(s.p)}</p></div>
+    <span class="ln"></span><span class="cnt"></span>
+  </div>
+  <div class="grid">${s.items.map(([href,ic,tag,t,ac,kw])=>`
+    <a class="card" href="${encodeURI(href)}" data-name="${esc(kw+' '+href)}" style="--accent:${ac}">
+      <span class="icon">${ic}</span>
+      <span class="txt"><span class="tag">${esc(tag)}</span><h3>${esc(t)}</h3></span>
+      <span class="go">→</span>
+    </a>`).join('')}
+  </div>
+</section>`).join('');
+
+const filters=document.getElementById('filters');
+filters.innerHTML=`<button type="button" class="on" data-f="all" style="--fc:#0B1026"><span>✨ Todo</span><i></i></button>`+
+  DATA.map(s=>`<button type="button" data-f="${s.id}" style="--fc:${s.c}"><span>${s.e} ${esc(s.f)}</span><i></i></button>`).join('');
+
 const input=document.getElementById('search');
 const cards=[...document.querySelectorAll('.card')];
-const sections=[...document.querySelectorAll('main section')];
+const sections=[...document.querySelectorAll('#app section')];
 const counter=document.getElementById('counter');
 const empty=document.getElementById('empty');
 const norm=s=>(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
 let filtro='all';
 
-// contadores del encabezado
-const nTools=document.querySelectorAll('section[data-kind="tools"] .card').length;
+const nTools=DATA.filter(s=>s.tools).reduce((a,s)=>a+s.items.length,0);
 document.getElementById('st-total').textContent=cards.length;
+document.getElementById('st-areas').textContent=DATA.length;
 document.getElementById('st-tools').textContent=nTools;
 document.getElementById('st-guias').textContent=cards.length-nTools;
-
-// retraso escalonado de la animación
-cards.forEach((c,i)=>c.style.animationDelay=(Math.min(i,12)*35)+'ms');
+cards.forEach((c,i)=>c.style.animationDelay=(Math.min(i,14)*30)+'ms');
 
 function filterCards(){
   const q=norm(input.value.trim());
-  let visible=0;
+  let visible=0;const perSec={};
   sections.forEach(sec=>{
-    const okSec=filtro==='all'||sec.dataset.s===filtro;
-    let n=0;
+    let n=0,m=0;
     sec.querySelectorAll('.card').forEach(card=>{
-      const show=okSec&&(!q||norm(card.dataset.name+' '+card.textContent).includes(q));
+      const hit=!q||norm(card.dataset.name+' '+card.textContent).includes(q);
+      if(hit)m++;
+      const show=hit&&(filtro==='all'||sec.dataset.s===filtro);
       card.style.display=show?'':'none';
       if(show)n++;
     });
+    perSec[sec.dataset.s]=m;
     visible+=n;
     sec.style.display=n?'':'none';
     sec.querySelector('.cnt').textContent=`${n} ${n===1?'recurso':'recursos'}`;
   });
+  filters.querySelectorAll('button').forEach(b=>{
+    const f=b.dataset.f;
+    b.querySelector('i').textContent=f==='all'?Object.values(perSec).reduce((a,b)=>a+b,0):perSec[f];
+  });
   counter.textContent=`${visible} recurso${visible===1?'':'s'}`;
   empty.style.display=visible?'none':'block';
 }
-
-document.getElementById('filters').addEventListener('click',e=>{
+filters.addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;
   filtro=b.dataset.f;
-  document.querySelectorAll('#filters button').forEach(x=>x.classList.toggle('on',x===b));
+  filters.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
   filterCards();
 });
 input.addEventListener('input',filterCards);
